@@ -30,6 +30,7 @@
 .filmInfos {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 10px;
 }
 
 .voting {
@@ -39,4 +40,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.smileys {
+    margin-top: 10px;
+}
+
+.smiley {
+    font-size: 35px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.smiley:hover {
+    color: gray;
+}
+
+.smileyLaugh {
+    color: green;
+    font-size: 35px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.smileySad {
+    color: red;
+    font-size: 35px;
+    margin-right: 10px;
+    cursor: pointer;
 }
