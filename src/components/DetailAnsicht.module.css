@@ -1,0 +1,16 @@
+.detailsSection {
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+}
+
+.movieBox {
+    height: 500px;
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.detailsImage {
+
+}

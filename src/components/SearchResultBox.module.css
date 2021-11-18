@@ -1,0 +1,25 @@
+.movieContainer {
+    background-color: var(--main-color-white);
+    color: Black;
+    width: 200px;
+    border: 1px solid gray;
+    margin: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 150ms ease-in-out;
+}
+
+.movieContainer:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.movieImage {
+    width: 200px;
+}
+
+.movieTitle {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
