@@ -13,6 +13,9 @@ function App() {
 
     const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de"
 
+    function saveMovieToDb(movieDb) {
+        console.log(movieDb) //TODO
+    }
 
     async function getGenreNameFromApi(genreId) {
         const response = await fetch(genreUrl);
@@ -47,7 +50,7 @@ function App() {
                     saveSelectedMovie(movie)
                 }}/>} exact={true}/>
 
-                <Route path='/detailansicht' element={<DetailAnsicht movie={selectedMovie}/>} exact={true}/>
+                <Route path='/detailansicht' element={<DetailAnsicht parentCallback={(movieForDb) =>{saveMovieToDb(movieForDb)}} movie={selectedMovie}/>} exact={true}/>
 
                 <Route path='/' exact={true} element={<Hauptmenue/>}/>
 

@@ -42,7 +42,10 @@
     align-items: center;
 }
 
+/*----------------Smileys----------------*/
 .smileys {
+    display: flex;
+    justify-content: space-between;
     margin-top: 10px;
 }
 
@@ -56,15 +59,34 @@
 }
 
 .smileyLaugh {
-    color: green;
+    color: #28b028;
     font-size: 35px;
     margin-right: 10px;
     cursor: pointer;
 }
+.smileyLaugh:hover {
+    filter: saturate(0.5);
+}
 
 .smileySad {
-    color: red;
+    color: #d91212;
     font-size: 35px;
     margin-right: 10px;
     cursor: pointer;
+}
+.smileySad:hover {
+    filter: saturate(0.5);
+}
+
+
+
+.saveButton {
+    color: white;
+    background-color: var(--main-color);
+    border: none;
+    cursor: pointer;
+}
+
+.saveButton:hover {
+    filter: saturate(2) brightness(1.2);
 }

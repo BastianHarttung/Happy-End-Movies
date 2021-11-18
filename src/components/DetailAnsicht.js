@@ -10,8 +10,7 @@ const DetailAnsicht = (props) => {
     const genres = props.movie.genres ? props.movie.genres : []
 
     const [movieForDb, setMovieForDb] = useState(props.movie)
-
-    const [happyMovie, setHappyMovie] = useState()
+    const [happyMovie, setHappyMovie] = useState(' ')
 
     function saveInfosInVariable(movieHasHappyEnd) {
         setMovieForDb({...props.movie, has_happy_end: movieHasHappyEnd})
@@ -43,23 +42,24 @@ const DetailAnsicht = (props) => {
                     <div>
                         <div>Happy End ?</div>
                         <div className={classes.smileys}>
-                            <FaSmileBeam onClick={() => {
-                                setHappyMovie(true)
-                                saveInfosInVariable(true)
-                            }}
-                                         className={happyMovie ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
-                            <FaSadTear onClick={() => {
-                                setHappyMovie(false);
-                                saveInfosInVariable(false)
-                            }}
-                                       className={!happyMovie ? classes.smileySad : classes.smiley}></FaSadTear>
-                        </div>
-                    </div>
+                            <div>
+                                <FaSmileBeam onClick={() => {
+                                    setHappyMovie(true)
+                                    saveInfosInVariable(true)
+                                }}
+                                             className={happyMovie ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
+                                <FaSadTear onClick={() => {
+                                    setHappyMovie(false);
+                                    saveInfosInVariable(false)
+                                }}
+                                           className={!happyMovie ? classes.smileySad : classes.smiley}></FaSadTear>
+                            </div>
 
-                    {/*<button onClick={() => {
-                        console.log(movieForDb)
-                    }}>log
-                    </button>*/}
+                            <button onClick={() => { props.parentCallback(movieForDb) }} className={classes.saveButton}>Speichern und zurück</button>
+
+                        </div>
+
+                    </div>
 
                 </div>
             </div>
