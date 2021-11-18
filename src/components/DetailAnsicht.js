@@ -15,9 +15,17 @@ const DetailAnsicht = (props) => {
                      alt="Poster"/>
                 <div className={classes.detailsContainer}>
                     <h3>{props.movie.title}</h3>
-                    <div>
-                        {genres.map( (genre,index) => {return <div key={index}>{genre}</div>} )}
+
+                    <div className={classes.filmInfos}>
+                        <div>
+                            {genres.map((genre, index) => {
+                                return <div key={index}>{genre}</div>
+                            })}
+                        </div>
+                        <div className={classes.voting}>{props.movie.vote_average}</div>
                     </div>
+
+
                     <div>{props.movie.overview}</div>
                     <button>Happy End ?</button>
 

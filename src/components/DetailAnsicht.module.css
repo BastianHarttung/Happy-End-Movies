@@ -21,3 +21,22 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+.detailsContainer h3 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.filmInfos {
+    display: flex;
+    justify-content: space-between;
+}
+
+.voting {
+    width: 30px;
+    height: 30px;
+    background-color: orange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
