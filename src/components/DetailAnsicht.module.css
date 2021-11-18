@@ -14,3 +14,10 @@
     border: 1px solid black;
     margin-right: 30px;
 }
+
+.detailsContainer {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
