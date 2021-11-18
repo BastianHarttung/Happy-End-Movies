@@ -11,23 +11,45 @@ function App() {
 
     const [selectedMovie, setSelectedMovie] = useState({})
 
-    function saveSelectedMovie(movie) {
-        setSelectedMovie(movie)
-        console.log(movie)
+    const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de"
+
+
+    async function getGenreNameFromApi(genreId) {
+        const response = await fetch(genreUrl);
+        let data = await response.json();
+        const genre = data.genres.find(genre => genre.id === genreId)
+        return genre.name
     }
 
+    async function getGenreNames(movie) {
+        let genres = []
+        for (let i = 0; i < movie.genre_ids.length; i++) {
+            const genreName = await getGenreNameFromApi(movie.genre_ids[i])
+            genres.push(genreName)
+        }
+        return genres
+    }
+
+    async function saveSelectedMovie(movie) {
+        const genres = await getGenreNames(movie)
+        setSelectedMovie({...movie, genres})
+    }
+
+
     return (
-        <BrowserRouter >
+        <BrowserRouter>
 
             <Header/>
 
             <Routes>
 
-                <Route path='/bewertung' element={<Bewertung callback={(movie) => {saveSelectedMovie(movie)}}/>} exact={true} />
+                <Route path='/bewertung' element={<Bewertung callback={(movie) => {
+                    saveSelectedMovie(movie)
+                }}/>} exact={true}/>
 
-                <Route path='/detailansicht' element={<DetailAnsicht movie={selectedMovie} />} exact={true} />
+                <Route path='/detailansicht' element={<DetailAnsicht movie={selectedMovie}/>} exact={true}/>
 
-                <Route path='/' exact={true} element={<Hauptmenue />} />
+                <Route path='/' exact={true} element={<Hauptmenue/>}/>
 
             </Routes>
 
