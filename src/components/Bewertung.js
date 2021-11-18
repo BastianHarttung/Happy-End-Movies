@@ -5,9 +5,17 @@ import SearchResultBox from "./SearchResultBox";
 
 const Bewertung = (props) => {
 
+    const emptyMovieArray = [
+        {id: 1,title: 'Searching...', poster_path: null},
+        {id: 2,title: 'Searching...', poster_path: null},
+        {id: 3,title: 'Searching...', poster_path: null},
+        {id: 4,title: 'Searching...', poster_path: null},
+        {id: 5,title: 'Searching...', poster_path: null}
+    ]
     const url = 'https://api.themoviedb.org/3/search/movie?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&query='
+
     const [movieName, setMovieName] = useState('')
-    const [searchedMovies, setSearchedMovies] = useState([])
+    const [searchedMovies, setSearchedMovies] = useState(emptyMovieArray)
 
     return (
         <div className={classes.bewertungSection}>
@@ -26,8 +34,10 @@ const Bewertung = (props) => {
 
     async function searchMovie() {
         const movieTitle = movieName;
-        setSearchedMovies(await getJsonFromMovieDB(movieTitle));
-        setMovieName('')
+        if(movieTitle !== ''){
+            setSearchedMovies(await getJsonFromMovieDB(movieTitle));
+            setMovieName('')
+        }
     }
 
     async function getJsonFromMovieDB(movieName) {

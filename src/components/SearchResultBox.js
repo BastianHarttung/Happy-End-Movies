@@ -6,19 +6,24 @@ import {useState} from "react";
 
 const SearchResultBox = (props) => {
     const imageUrl = "https://image.tmdb.org/t/p/w500"
+    const ConditionalLink = ({children, to, condition}) => (!!condition && to)
+        ? <Link to={{
+                    pathname: `${to}`,
+                    hash: `#${props.movie.title}`}}
+                onClick={() => { props.parentCallback(props.movie) }}
+                className={classes.movieContainer}>{children}</Link>
+        : <div className={classes.movieContainer}>{children}</div>
 
-    return (
-        <Link to= "/detailansicht"
-              onClick={() =>{props.parentCallback(props.movie)} }
-              className={classes.movieContainer}>
+   return (
+        <ConditionalLink to ='/detailansicht' condition={props.movie.title !== 'Searching...'}>
 
             <img className={classes.movieImage}
-                 src={props.movie.poster_path != null ? imageUrl + props.movie.poster_path : emptyImage} alt="Poster"/>
+                              src={props.movie.poster_path != null ? imageUrl + props.movie.poster_path : emptyImage} alt="Poster"/>
             <div className={classes.movieTitle}>{props.movie.title}</div>
 
-        </Link>
-    )
+        </ConditionalLink>
+        )
 
-}
+        }
 
-export default SearchResultBox;
+        export default SearchResultBox;
