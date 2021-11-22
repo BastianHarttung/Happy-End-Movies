@@ -6,6 +6,10 @@ import Hauptmenue from "./components/Hauptmenue";
 import Bewertung from "./components/Bewertung";
 import DetailAnsicht from "./components/DetailAnsicht";
 import {useState} from "react";
+import firestoreDb from "./Firebase";
+
+import { doc, setDoc, updateDoc, collection, getDocs, addDoc } from 'firebase/firestore';
+//import firestoreDb from "./Firebase";
 
 function App() {
 
@@ -14,8 +18,13 @@ function App() {
     const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de"
     const fskUrl = "https://altersfreigaben.de/api2/s/"
 
-    function saveMovieToDb(movieDb) {
-        console.log(movieDb) //TODO
+    async function saveMovieToDb(movieDb) {
+        try{
+            const movie= await addDoc(collection(firestoreDb, 'movies'), movieDb);
+            console.log('ID: ' ,movie.id);
+        }catch (e) {
+            console.log('Error',e)
+        }
     }
 
     async function getGenreNameFromApi(genreId) {
