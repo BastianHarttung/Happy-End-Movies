@@ -1,7 +1,7 @@
 import classes from "./DetailAnsicht.module.css";
 import emptyImage from "../assets/img/movie-poster.png"
 import {useState} from "react";
-import {FaSmileBeam, FaSadTear} from "react-icons/all";
+import {FaSmileBeam, FaSadTear,FaMeh} from "react-icons/all";
 
 const DetailAnsicht = (props) => {
 
@@ -10,10 +10,18 @@ const DetailAnsicht = (props) => {
     const genres = props.movie.genres ? props.movie.genres : []
 
     const [movieForDb, setMovieForDb] = useState(props.movie)
-    const [happyMovie, setHappyMovie] = useState(' ')
+    const [happyMovie, setHappyMovie] = useState('neutral')
 
     function saveInfosInVariable(movieHasHappyEnd) {
         setMovieForDb({...props.movie, has_happy_end: movieHasHappyEnd})
+    }
+
+    function setColorForFsk(fsk) {
+        if(fsk === 0) return 'lightgray'
+        if(fsk === 6) return 'yellow'
+        if(fsk === 12) return 'green'
+        if(fsk === 16) return 'blue'
+        if(fsk === 18) return 'red'
     }
 
     return (
@@ -24,7 +32,11 @@ const DetailAnsicht = (props) => {
                 <div className={classes.detailsContainer}>
 
                     <div>
-                        <h3>{props.movie.title}</h3>
+
+                        <div className={classes.infosHead}>
+                            <h3>{props.movie.title}</h3>
+                            <div className={classes.fsk} style={{backgroundColor: setColorForFsk(props.movie.fsk)}}>{props.movie.fsk}</div>
+                        </div>
 
                         <div className={classes.filmInfos}>
                             <div>
@@ -40,14 +52,20 @@ const DetailAnsicht = (props) => {
                     </div>
 
                     <div>
-                        <div>Happy End ?</div>
+                        <div className={classes.happyEnd}>Happy End ?</div>
                         <div className={classes.smileys}>
                             <div>
                                 <FaSmileBeam onClick={() => {
                                     setHappyMovie(true)
                                     saveInfosInVariable(true)
                                 }}
-                                             className={happyMovie ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
+                                             className={ (happyMovie===true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
+                                <FaMeh onClick={() => {
+                                    setHappyMovie('neutral');
+                                    saveInfosInVariable('neutral')
+                                }}
+                                           className={ (happyMovie ==='neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
+
                                 <FaSadTear onClick={() => {
                                     setHappyMovie(false);
                                     saveInfosInVariable(false)

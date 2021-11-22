@@ -12,6 +12,7 @@ function App() {
     const [selectedMovie, setSelectedMovie] = useState({})
 
     const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de"
+    const fskUrl = "https://altersfreigaben.de/api2/s/"
 
     function saveMovieToDb(movieDb) {
         console.log(movieDb) //TODO
@@ -33,11 +34,20 @@ function App() {
         return genres
     }
 
-    async function saveSelectedMovie(movie) {
-        const genres = await getGenreNames(movie)
-        setSelectedMovie({...movie, genres})
+    //TODO Cors?
+    async function getFskFromApi(movieId) {
+        const fskUrlMovie = fskUrl + movieId +'/de'
+        console.log(fskUrlMovie)
+        const response = await fetch(fskUrlMovie);
+        let data = await response.json();
+        return data
     }
 
+    async function saveSelectedMovie(movie) {
+        const genres = await getGenreNames(movie)
+        const fsk = await getFskFromApi(movie.id)
+        setSelectedMovie({...movie, genres, fsk})
+    }
 
     return (
         <BrowserRouter>

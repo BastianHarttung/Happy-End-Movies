@@ -27,6 +27,23 @@
     margin-bottom: 10px;
 }
 
+.infosHead {
+    display: flex;
+    align-items: center;
+}
+
+.fsk {
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    border: 1px solid black;
+    border-radius: 50%;
+    margin-left: 20px;
+}
+
 .filmInfos {
     display: flex;
     justify-content: space-between;
@@ -42,6 +59,11 @@
     align-items: center;
 }
 
+
+.happyEnd {
+    font-weight: 500;
+    margin-top: 15px;
+}
 /*----------------Smileys----------------*/
 .smileys {
     display: flex;
@@ -68,6 +90,16 @@
     filter: saturate(0.5);
 }
 
+.smileyNeutral {
+    color: orange;
+    font-size: 35px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.smileyNeutral:hover {
+    filter: saturate(0.5);
+}
+
 .smileySad {
     color: #d91212;
     font-size: 35px;
@@ -78,7 +110,7 @@
     filter: saturate(0.5);
 }
 
-
+/*---------------save Button-------------------------------*/
 
 .saveButton {
     color: white;
