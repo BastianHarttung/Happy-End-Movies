@@ -9,12 +9,13 @@ import Showroom from "./components/Showroom";
 import {useState} from "react";
 import firestoreDb from "./Firebase";
 
-import {doc, setDoc, updateDoc, collection, getDocs, addDoc} from 'firebase/firestore';
+import {doc, setDoc, updateDoc, collection, getDocs, addDoc,query} from 'firebase/firestore';
 
 
 function App() {
 
     const [selectedMovie, setSelectedMovie] = useState({})
+    const [allMovies, setAllMovies] = useState([{}])
 
     const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de"
     const fskUrl = "https://altersfreigaben.de/api2/s/"
@@ -22,11 +23,24 @@ function App() {
 
     async function saveMovieToDb(movieDb) {
         try {
-            const movie = await addDoc(collection(firestoreDb, 'movies'), movieDb);
-            console.log('ID: ', movie.id);
+            console.log(movieDb.id)
+            const actualMoviesDoc = doc(firestoreDb, 'movies/'+ movieDb.id)
+            await setDoc(actualMoviesDoc, movieDb);
+            console.log('In Firestore Gespeichert');
+            await loadMoviesFromDb()
         } catch (e) {
             console.log('Error', e)
         }
+    }
+
+    async function loadMoviesFromDb() {
+        const movieCollect = await getDocs( collection(firestoreDb,'movies') );
+        const moviesArray = [];
+        movieCollect.forEach((doc) => {
+            moviesArray.push(doc.data())
+        });
+        console.log(moviesArray);
+        setAllMovies(moviesArray)
     }
 
     // Get Genre from TMDB ApI
@@ -50,7 +64,6 @@ function App() {
     //TODO Cors?
     async function getFskFromApi(movieId) {
         const fskUrlMovie = fskUrl + movieId + '/de'
-        console.log(fskUrlMovie)
         const response = await fetch(fskUrlMovie);
         let data = await response.json();
         return data
@@ -81,7 +94,7 @@ function App() {
                         saveMovieToDb(movieForDb)
                     }} movie={selectedMovie}/>} exact={true}/>
 
-                    <Route path='/showroom' element={<Showroom/>}></Route>
+                    <Route path='/showroom' element={<Showroom moviesDB={ allMovies }/>}></Route>
 
                     <Route path='/' exact={true} element={<Hauptmenue/>}/>
 

@@ -2,6 +2,7 @@
     position: relative;
 }
 
+/*--------------------Sidebar*/
 .sidebar {
     background-color: #f7f9ff;
     min-height: 500px;
@@ -18,4 +19,13 @@
     text-align: right;
     margin: 20px;
     cursor: pointer;
+}
+
+/*----------Content -----------------*/
+.filteredMoviesContainer {
+    background-color: #28b028;
+    position: absolute;
+    top: 0;
+    left: 300px;
+
 }
