@@ -1,10 +1,11 @@
 import './App.css';
-import {Route, BrowserRouter, Routes} from "react-router-dom";
+import {Route, BrowserRouter, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Hauptmenue from "./components/Hauptmenue";
 import Bewertung from "./components/Bewertung";
 import DetailAnsicht from "./components/DetailAnsicht";
+import Showroom from "./components/Showroom";
 import {useState} from "react";
 import firestoreDb from "./Firebase";
 
@@ -18,6 +19,7 @@ function App() {
     const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de"
     const fskUrl = "https://altersfreigaben.de/api2/s/"
 
+
     async function saveMovieToDb(movieDb) {
         try{
             const movie= await addDoc(collection(firestoreDb, 'movies'), movieDb);
@@ -27,6 +29,7 @@ function App() {
         }
     }
 
+    // Get Genre from TMDB ApI
     async function getGenreNameFromApi(genreId) {
         const response = await fetch(genreUrl);
         let data = await response.json();
@@ -43,6 +46,7 @@ function App() {
         return genres
     }
 
+    // Get FSK from alterfreigaben.de API
     //TODO Cors?
     async function getFskFromApi(movieId) {
         const fskUrlMovie = fskUrl + movieId +'/de'
@@ -52,11 +56,13 @@ function App() {
         return data
     }
 
+
     async function saveSelectedMovie(movie) {
         const genres = await getGenreNames(movie)
         const fsk = await getFskFromApi(movie.id)
         setSelectedMovie({...movie, genres, fsk})
     }
+
 
     return (
         <BrowserRouter>
@@ -70,6 +76,8 @@ function App() {
                 }}/>} exact={true}/>
 
                 <Route path='/detailansicht' element={<DetailAnsicht parentCallback={(movieForDb) =>{saveMovieToDb(movieForDb)}} movie={selectedMovie}/>} exact={true}/>
+
+                <Route path='/showroom' element={<Showroom/>}></Route>
 
                 <Route path='/' exact={true} element={<Hauptmenue/>}/>
 

@@ -1,10 +1,11 @@
 import classes from "./DetailAnsicht.module.css";
 import emptyImage from "../assets/img/movie-poster.png"
+import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {FaSmileBeam, FaSadTear,FaMeh} from "react-icons/all";
 
 const DetailAnsicht = (props) => {
-
+    const navigate = useNavigate();
     const imageUrl = "https://image.tmdb.org/t/p/w500" + props.movie.poster_path;
 
     const genres = props.movie.genres ? props.movie.genres : []
@@ -73,7 +74,7 @@ const DetailAnsicht = (props) => {
                                            className={!happyMovie ? classes.smileySad : classes.smiley}></FaSadTear>
                             </div>
 
-                            <button onClick={() => { props.parentCallback(movieForDb) }} className={classes.saveButton}>Speichern und zurück</button>
+                            <button onClick={() => { props.parentCallback(movieForDb); navigate('/showroom') }} className={classes.saveButton}>Speichern und zurück</button>
 
                         </div>
 

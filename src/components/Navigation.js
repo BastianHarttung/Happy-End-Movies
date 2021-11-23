@@ -6,6 +6,8 @@ const Navigation = (props) => {
         <nav>
             <Link className={"link"} to = '/'>Hauptmenü</Link>
             <Link to = '/bewertung'>Bewertung</Link>
+            <Link to = '/showroom'>Showroom</Link>
+
         </nav>
     )
 }
