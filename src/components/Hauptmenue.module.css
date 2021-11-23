@@ -1,9 +1,13 @@
 .hauptmenueSection {
+    height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 .startImage {
-    height: 500px;
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
 }

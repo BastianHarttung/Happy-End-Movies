@@ -1,0 +1,21 @@
+.showroomSection {
+    position: relative;
+}
+
+.sidebar {
+    background-color: #f7f9ff;
+    min-height: 500px;
+    position: fixed;
+    left: 0;
+    box-shadow: 3px 0px 5px gray;
+}
+
+.filterContainer {
+    margin: 130px 10px;
+}
+
+.filter {
+    text-align: right;
+    margin: 20px;
+    cursor: pointer;
+}

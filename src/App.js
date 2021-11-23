@@ -1,5 +1,5 @@
 import './App.css';
-import {Route, BrowserRouter, Routes } from "react-router-dom";
+import {Route, BrowserRouter, Routes} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Hauptmenue from "./components/Hauptmenue";
@@ -9,8 +9,8 @@ import Showroom from "./components/Showroom";
 import {useState} from "react";
 import firestoreDb from "./Firebase";
 
-import { doc, setDoc, updateDoc, collection, getDocs, addDoc } from 'firebase/firestore';
-//import firestoreDb from "./Firebase";
+import {doc, setDoc, updateDoc, collection, getDocs, addDoc} from 'firebase/firestore';
+
 
 function App() {
 
@@ -21,11 +21,11 @@ function App() {
 
 
     async function saveMovieToDb(movieDb) {
-        try{
-            const movie= await addDoc(collection(firestoreDb, 'movies'), movieDb);
-            console.log('ID: ' ,movie.id);
-        }catch (e) {
-            console.log('Error',e)
+        try {
+            const movie = await addDoc(collection(firestoreDb, 'movies'), movieDb);
+            console.log('ID: ', movie.id);
+        } catch (e) {
+            console.log('Error', e)
         }
     }
 
@@ -49,7 +49,7 @@ function App() {
     // Get FSK from alterfreigaben.de API
     //TODO Cors?
     async function getFskFromApi(movieId) {
-        const fskUrlMovie = fskUrl + movieId +'/de'
+        const fskUrlMovie = fskUrl + movieId + '/de'
         console.log(fskUrlMovie)
         const response = await fetch(fskUrlMovie);
         let data = await response.json();
@@ -67,21 +67,26 @@ function App() {
     return (
         <BrowserRouter>
 
-            <Header/>
+            <div>
 
-            <Routes>
+                <Header/>
 
-                <Route path='/bewertung' element={<Bewertung callback={(movie) => {
-                    saveSelectedMovie(movie)
-                }}/>} exact={true}/>
+                <Routes>
 
-                <Route path='/detailansicht' element={<DetailAnsicht parentCallback={(movieForDb) =>{saveMovieToDb(movieForDb)}} movie={selectedMovie}/>} exact={true}/>
+                    <Route path='/bewertung' element={<Bewertung callback={(movie) => {
+                        saveSelectedMovie(movie)
+                    }}/>} exact={true}/>
 
-                <Route path='/showroom' element={<Showroom/>}></Route>
+                    <Route path='/detailansicht' element={<DetailAnsicht parentCallback={(movieForDb) => {
+                        saveMovieToDb(movieForDb)
+                    }} movie={selectedMovie}/>} exact={true}/>
 
-                <Route path='/' exact={true} element={<Hauptmenue/>}/>
+                    <Route path='/showroom' element={<Showroom/>}></Route>
 
-            </Routes>
+                    <Route path='/' exact={true} element={<Hauptmenue/>}/>
+
+                </Routes>
+            </div>
 
             <Footer/>
 
