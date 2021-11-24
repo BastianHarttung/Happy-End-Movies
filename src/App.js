@@ -14,26 +14,7 @@ import {doc, setDoc, updateDoc, collection, getDocs, addDoc,query} from 'firebas
 
 function App() {
 
-    const [selectedMovie, setSelectedMovie] = useState({})
-    const [allMovies, setAllMovies] = useState([{}])
-
-    const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de"
-    const fskUrl = "https://altersfreigaben.de/api2/s/"
-
-
-    async function saveMovieToDb(movieDb) {
-        try {
-            console.log(movieDb.id)
-            const actualMoviesDoc = doc(firestoreDb, 'movies/'+ movieDb.id)
-            await setDoc(actualMoviesDoc, movieDb);
-            console.log('In Firestore Gespeichert');
-            await loadMoviesFromDb()
-        } catch (e) {
-            console.log('Error', e)
-        }
-    }
-
-    async function loadMoviesFromDb() {
+    const db = async function loadMoviesFromDb() {
         const movieCollect = await getDocs( collection(firestoreDb,'movies') );
         const moviesArray = [];
         movieCollect.forEach((doc) => {
@@ -41,6 +22,25 @@ function App() {
         });
         console.log(moviesArray);
         setAllMovies(moviesArray)
+    }
+
+    const [selectedMovie, setSelectedMovie] = useState({})
+    const [allMovies, setAllMovies] = useState(db)
+
+    const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de"
+    const fskUrl = "https://altersfreigaben.de/api2/s/"
+    const imageUrl = "https://image.tmdb.org/t/p/w500"
+
+    async function saveMovieToDb(movieDb) {
+        try {
+            console.log(movieDb.id)
+            const actualMoviesDoc = doc(firestoreDb, 'movies/'+ movieDb.id)
+            await setDoc(actualMoviesDoc, movieDb);
+            console.log('In Firestore Gespeichert');
+            await db
+        } catch (e) {
+            console.log('Error', e)
+        }
     }
 
     // Get Genre from TMDB ApI
@@ -86,17 +86,26 @@ function App() {
 
                 <Routes>
 
-                    <Route path='/bewertung' element={<Bewertung callback={(movie) => {
-                        saveSelectedMovie(movie)
-                    }}/>} exact={true}/>
+                    <Route path='/bewertung'
+                           imageUrl={ imageUrl}
+                           element={<Bewertung
+                                        callback={(movie) => {saveSelectedMovie(movie)}}/>}
+                                        exact={true}/>
 
-                    <Route path='/detailansicht' element={<DetailAnsicht parentCallback={(movieForDb) => {
-                        saveMovieToDb(movieForDb)
-                    }} movie={selectedMovie}/>} exact={true}/>
+                    <Route path='/detailansicht' element={
+                        <DetailAnsicht
+                            parentCallback={(movieForDb) => { saveMovieToDb(movieForDb) }}
+                            movie={selectedMovie}/>} exact={true}/>
 
-                    <Route path='/showroom' element={<Showroom moviesDB={ allMovies }/>}></Route>
+                    <Route path='/showroom'
+                           element={
+                               <Showroom
+                                    moviesDB={ allMovies }
+                                    imageUrl={imageUrl}/>}></Route>
 
-                    <Route path='/' exact={true} element={<Hauptmenue/>}/>
+                    <Route path='/'
+                           exact={true}
+                           element={<Hauptmenue/>}/>
 
                 </Routes>
             </div>

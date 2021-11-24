@@ -26,7 +26,10 @@ const Bewertung = (props) => {
             </div>
 
             <div className={classes.resultSection}>
-                {searchedMovies.map(movie => <SearchResultBox key={movie.id} parentCallback={(currentMovie)=>props.callback(currentMovie)} movie={movie}/> )}
+                {searchedMovies.map(movie => <SearchResultBox key={movie.id}
+                                                              imageUrl={props.imageUrl}
+                                                              parentCallback={(currentMovie)=>props.callback(currentMovie)}
+                                                              movie={movie}/> )}
             </div>
 
         </div>

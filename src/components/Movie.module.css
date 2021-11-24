@@ -1,0 +1,12 @@
+.movieContainer {
+    background-color: orange;
+    margin: 20px;
+}
+.image {
+    width: 150px;
+}
+.movieTitle {
+    margin: 10px;
+    text-align: center;
+    word-wrap: break-word;
+}

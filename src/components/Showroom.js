@@ -6,13 +6,17 @@ const Showroom = (props) => {
         <section className={classes.showroomSection}>
             <div className={classes.sidebar}>
                 <div className={classes.filterContainer}>
+                    <div className={classes.filter} >Alle Filme</div>
                     <div className={classes.filter} >Filme mit Happy End</div>
                     <div className={classes.filter} >Filme ohne Happy End</div>
                 </div>
             </div>
 
             <div className={classes.filteredMoviesContainer}>
-                {props.moviesDB.map((movie)=><Movie movie={movie}/>)}
+                {props.moviesDB.map((movie)=>
+                    <Movie
+                        movie={movie}
+                        imageUrl={props.imageUrl}/>)}
             </div>
         </section>
     )
