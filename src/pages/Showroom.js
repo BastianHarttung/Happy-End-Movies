@@ -1,7 +1,14 @@
 import classes from "./Showroom.module.css";
-import Movie from "./Movie";
+import SearchResultBox from "../components/SearchResultBox";
+import {useEffect, useState} from "react";
+import emptyMovieArray from "../constants";
 
 const Showroom = (props) => {
+
+    const [movies, setMovies] = useState(props.moviesDB ? props.moviesDB : emptyMovieArray)
+
+    useEffect(() =>{setMovies(props.moviesDB)})
+
     return (
         <section className={classes.showroomSection}>
             <div className={classes.sidebar}>
@@ -13,10 +20,12 @@ const Showroom = (props) => {
             </div>
 
             <div className={classes.filteredMoviesContainer}>
-                {props.moviesDB.map((movie)=>
-                    <Movie
+                {props.moviesDB ? movies.map((movie)=>
+                    <SearchResultBox
+                        key={movie.id}
                         movie={movie}
-                        imageUrl={props.imageUrl}/>)}
+                        imageUrl={props.imageUrl}/>)
+                    : ''}
             </div>
         </section>
     )

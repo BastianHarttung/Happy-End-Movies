@@ -15,7 +15,7 @@ const SearchResultBox = (props) => {
         : <div className={classes.movieContainer}>{children}</div>
 
    return (
-        <ConditionalLink to ='/detailansicht' condition={props.movie.title !== 'Searching...'}>
+        <ConditionalLink to ={props.to} condition={props.movie.title !== 'Searching...'}>
 
             <img className={classes.movieImage}
                               src={props.movie.poster_path != null ? props.imageUrl + props.movie.poster_path : emptyImage} alt="Poster"/>

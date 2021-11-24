@@ -2,10 +2,10 @@ import './App.css';
 import {Route, BrowserRouter, Routes} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Hauptmenue from "./components/Hauptmenue";
-import Bewertung from "./components/Bewertung";
-import DetailAnsicht from "./components/DetailAnsicht";
-import Showroom from "./components/Showroom";
+import Hauptmenue from "./pages/Hauptmenue";
+import Bewertung from "./pages/Bewertung";
+import DetailAnsicht from "./pages/DetailAnsicht";
+import Showroom from "./pages/Showroom";
 import {useState} from "react";
 import firestoreDb from "./Firebase";
 
@@ -87,25 +87,34 @@ function App() {
                 <Routes>
 
                     <Route path='/bewertung'
-                           imageUrl={ imageUrl}
-                           element={<Bewertung
-                                        callback={(movie) => {saveSelectedMovie(movie)}}/>}
-                                        exact={true}/>
+                           exact={true}
+                           element={
+                               <Bewertung
+                                    callback={(movie) => {saveSelectedMovie(movie)}}
+                                    imageUrl={imageUrl}/>}
 
-                    <Route path='/detailansicht' element={
-                        <DetailAnsicht
-                            parentCallback={(movieForDb) => { saveMovieToDb(movieForDb) }}
-                            movie={selectedMovie}/>} exact={true}/>
+                    />
+
+                    <Route path='/detailansicht'
+                           exact={true}
+                           element={
+                               <DetailAnsicht
+                                   parentCallback={(movieForDb) => { saveMovieToDb(movieForDb) }}
+                                   movie={selectedMovie}/>}
+                    />
 
                     <Route path='/showroom'
+                           exact={true}
                            element={
                                <Showroom
                                     moviesDB={ allMovies }
-                                    imageUrl={imageUrl}/>}></Route>
+                                    imageUrl={imageUrl}/>}
+                    />
 
                     <Route path='/'
                            exact={true}
-                           element={<Hauptmenue/>}/>
+                           element={<Hauptmenue/>}
+                    />
 
                 </Routes>
             </div>

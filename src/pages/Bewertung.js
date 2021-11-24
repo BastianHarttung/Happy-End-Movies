@@ -1,17 +1,11 @@
 import classes from "./Bewertung.module.css";
 import {FaSearch} from "react-icons/all";
 import {useState} from "react";
-import SearchResultBox from "./SearchResultBox";
+import SearchResultBox from "../components/SearchResultBox";
+import emptyMovieArray from "../constants";
 
 const Bewertung = (props) => {
 
-    const emptyMovieArray = [
-        {id: 1,title: 'Searching...', poster_path: null},
-        {id: 2,title: 'Searching...', poster_path: null},
-        {id: 3,title: 'Searching...', poster_path: null},
-        {id: 4,title: 'Searching...', poster_path: null},
-        {id: 5,title: 'Searching...', poster_path: null}
-    ]
     const url = 'https://api.themoviedb.org/3/search/movie?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&query='
 
     const [movieName, setMovieName] = useState('')
@@ -27,6 +21,7 @@ const Bewertung = (props) => {
 
             <div className={classes.resultSection}>
                 {searchedMovies.map(movie => <SearchResultBox key={movie.id}
+                                                              to='/detailansicht'
                                                               imageUrl={props.imageUrl}
                                                               parentCallback={(currentMovie)=>props.callback(currentMovie)}
                                                               movie={movie}/> )}
