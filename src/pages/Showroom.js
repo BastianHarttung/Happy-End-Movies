@@ -1,14 +1,13 @@
 import classes from "./Showroom.module.css";
 import SearchResultBox from "../components/SearchResultBox";
 import {useEffect, useState} from "react";
-import {emptyMovieArray} from "../constants";
+
 
 const Showroom = (props) => {
 
-    const [movies, setMovies] = useState(props.moviesDB ? props.moviesDB : emptyMovieArray)
 
     // Scrolling Sidebar
-    const [scrollPosition, setScrollPosition] = useState(0);
+    const [scrollPosition, setScrollPosition] = useState(80);
     const handleScroll = ( )=> {
         const position = window.pageYOffset;
         setScrollPosition( Math.max(0, 80 - position) )
@@ -32,7 +31,7 @@ const Showroom = (props) => {
             </div>
 
             <div className={classes.filteredMoviesContainer}>
-                { movies.map((movie)=>
+                { props.moviesDB.map((movie)=>
                     <SearchResultBox
                         key={movie.id}
                         movie={movie} />) }

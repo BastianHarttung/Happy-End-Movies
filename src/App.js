@@ -1,6 +1,6 @@
 import './App.css';
 import {Route, BrowserRouter, Routes} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -9,32 +9,46 @@ import Bewertung from "./pages/Bewertung";
 import DetailAnsicht from "./pages/DetailAnsicht";
 import Showroom from "./pages/Showroom";
 
-import {genreUrl, fskUrl} from"./constants"
+import {genreUrl, fskUrl} from "./constants"
 
-import firestoreDb from "./Firebase";
-import {doc, setDoc, updateDoc, collection, getDocs, addDoc,query} from 'firebase/firestore';
+import firestoreDb from "./firebase-config";
+import {doc, setDoc,getDocs,collection} from 'firebase/firestore';
 
 
 function App() {
 
-    const db = async function loadMoviesFromDb() {
-        const movieCollect = await getDocs( collection(firestoreDb,'movies') );
-        const moviesArray = [];
-        movieCollect.forEach((doc) => {
-            moviesArray.push(doc.data())
-        });
-        console.log(moviesArray);
-        setAllMovies(moviesArray)
+    const db = async () => {
+        const moviesArray = async function loadMoviesFromDb() {
+            const movieCollect = await getDocs(collection(firestoreDb, 'movies'));
+            const moviesArray = [];
+            movieCollect.forEach((doc) => {
+                moviesArray.push(doc.data())
+            });
+            return moviesArray
+        }
+        setAllMovies(await moviesArray)
     }
 
+
     const [selectedMovie, setSelectedMovie] = useState({})
-    const [allMovies, setAllMovies] = useState(db)
+    const [allMovies, setAllMovies] = useState([])
+
+
+    useEffect( ()=>{
+        const moviesCollectionRef = collection(firestoreDb,'movies');
+        const getMovies = async () =>{
+            const data = await getDocs(moviesCollectionRef);
+
+            setAllMovies(data.docs.map((doc) => ({...doc.data()})))
+        }
+        getMovies()
+    },[]);
 
 
     async function saveMovieToDb(movieDb) {
         try {
             console.log(movieDb.id)
-            const actualMoviesDoc = doc(firestoreDb, 'movies/'+ movieDb.id)
+            const actualMoviesDoc = doc(firestoreDb, 'movies/' + movieDb.id)
             await setDoc(actualMoviesDoc, movieDb);
             console.log('In Firestore Gespeichert');
             await db
@@ -90,8 +104,10 @@ function App() {
                            exact={true}
                            element={
                                <Bewertung
-                                    callback={(movie) => {saveSelectedMovie(movie)}}
-                                    />}
+                                   callback={(movie) => {
+                                       saveSelectedMovie(movie)
+                                   }}
+                               />}
 
                     />
 
@@ -99,7 +115,9 @@ function App() {
                            exact={true}
                            element={
                                <DetailAnsicht
-                                   parentCallback={(movieForDb) => { saveMovieToDb(movieForDb) }}
+                                   parentCallback={(movieForDb) => {
+                                       saveMovieToDb(movieForDb)
+                                   }}
                                    movie={selectedMovie}/>}
                     />
 
@@ -107,7 +125,7 @@ function App() {
                            exact={true}
                            element={
                                <Showroom
-                                    moviesDB={ allMovies }/>}
+                                   moviesDB={allMovies}/>}
                     />
 
                     <Route path='/'
