@@ -14,6 +14,7 @@
 }
 
 .filter {
+    font-weight: 500;
     text-align: right;
     margin: 20px;
     cursor: pointer;
@@ -27,7 +28,21 @@
     top: 0;
     left: 18%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     flex-wrap: wrap;
     padding: 50px 30px;
+}
+
+.filteredMoviesResult {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.infosContainer {
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }

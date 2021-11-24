@@ -32,13 +32,14 @@ function App() {
 
     const [selectedMovie, setSelectedMovie] = useState({})
     const [allMovies, setAllMovies] = useState([])
+    const [dbLength, setDbLength] = useState(0)
 
 
     useEffect( ()=>{
         const moviesCollectionRef = collection(firestoreDb,'movies');
         const getMovies = async () =>{
             const data = await getDocs(moviesCollectionRef);
-
+            setDbLength(data.docs.length);
             setAllMovies(data.docs.map((doc) => ({...doc.data()})))
         }
         getMovies()
@@ -125,7 +126,8 @@ function App() {
                            exact={true}
                            element={
                                <Showroom
-                                   moviesDB={allMovies}/>}
+                                   moviesDB={allMovies}
+                                    dbLength={dbLength}/>}
                     />
 
                     <Route path='/'

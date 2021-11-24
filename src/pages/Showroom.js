@@ -31,10 +31,18 @@ const Showroom = (props) => {
             </div>
 
             <div className={classes.filteredMoviesContainer}>
-                { props.moviesDB.map((movie)=>
-                    <SearchResultBox
-                        key={movie.id}
-                        movie={movie} />) }
+
+                <div className={classes.filteredMoviesResult}>
+                    { props.moviesDB.map((movie)=>
+                        <SearchResultBox
+                            key={movie.id}
+                            movie={movie} />) }
+                </div>
+
+                <div className={classes.infosContainer}>
+                    <div>{props.dbLength} Filme</div>
+                </div>
+
             </div>
         </section>
     )
