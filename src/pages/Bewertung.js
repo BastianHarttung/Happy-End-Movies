@@ -2,7 +2,7 @@ import classes from "./Bewertung.module.css";
 import {FaSearch} from "react-icons/all";
 import {useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
-import emptyMovieArray from "../constants";
+import {emptyMovieArray} from "../constants";
 
 const Bewertung = (props) => {
 
@@ -22,7 +22,6 @@ const Bewertung = (props) => {
             <div className={classes.resultSection}>
                 {searchedMovies.map(movie => <SearchResultBox key={movie.id}
                                                               to='/detailansicht'
-                                                              imageUrl={props.imageUrl}
                                                               parentCallback={(currentMovie)=>props.callback(currentMovie)}
                                                               movie={movie}/> )}
             </div>

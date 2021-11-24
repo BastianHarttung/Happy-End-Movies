@@ -7,6 +7,8 @@ import Bewertung from "./pages/Bewertung";
 import DetailAnsicht from "./pages/DetailAnsicht";
 import Showroom from "./pages/Showroom";
 import {useState} from "react";
+import {genreUrl, fskUrl, imageUrl} from"./constants"
+
 import firestoreDb from "./Firebase";
 
 import {doc, setDoc, updateDoc, collection, getDocs, addDoc,query} from 'firebase/firestore';
@@ -27,9 +29,6 @@ function App() {
     const [selectedMovie, setSelectedMovie] = useState({})
     const [allMovies, setAllMovies] = useState(db)
 
-    const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de"
-    const fskUrl = "https://altersfreigaben.de/api2/s/"
-    const imageUrl = "https://image.tmdb.org/t/p/w500"
 
     async function saveMovieToDb(movieDb) {
         try {
@@ -91,7 +90,7 @@ function App() {
                            element={
                                <Bewertung
                                     callback={(movie) => {saveSelectedMovie(movie)}}
-                                    imageUrl={imageUrl}/>}
+                                    />}
 
                     />
 
@@ -107,8 +106,7 @@ function App() {
                            exact={true}
                            element={
                                <Showroom
-                                    moviesDB={ allMovies }
-                                    imageUrl={imageUrl}/>}
+                                    moviesDB={ allMovies }/>}
                     />
 
                     <Route path='/'

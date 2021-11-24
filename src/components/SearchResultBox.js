@@ -1,6 +1,7 @@
 import classes from "./SearchResultBox.module.css";
 import emptyImage from "../assets/img/movie-poster.png"
 import {Link} from "react-router-dom";
+import {imageUrl} from "../constants";
 
 
 const SearchResultBox = (props) => {
@@ -18,7 +19,7 @@ const SearchResultBox = (props) => {
         <ConditionalLink to ={props.to} condition={props.movie.title !== 'Searching...'}>
 
             <img className={classes.movieImage}
-                              src={props.movie.poster_path != null ? props.imageUrl + props.movie.poster_path : emptyImage} alt="Poster"/>
+                              src={props.movie.poster_path != null ? imageUrl + props.movie.poster_path : emptyImage} alt="Poster"/>
             <div className={classes.movieTitle}>{props.movie.title}</div>
 
         </ConditionalLink>

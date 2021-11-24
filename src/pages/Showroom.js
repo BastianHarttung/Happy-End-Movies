@@ -1,7 +1,7 @@
 import classes from "./Showroom.module.css";
 import SearchResultBox from "../components/SearchResultBox";
 import {useEffect, useState} from "react";
-import emptyMovieArray from "../constants";
+import {emptyMovieArray} from "../constants";
 
 const Showroom = (props) => {
 
@@ -20,11 +20,10 @@ const Showroom = (props) => {
             </div>
 
             <div className={classes.filteredMoviesContainer}>
-                {props.moviesDB ? movies.map((movie)=>
+                {props.moviesDB ? props.moviesDB.map((movie)=>
                     <SearchResultBox
                         key={movie.id}
-                        movie={movie}
-                        imageUrl={props.imageUrl}/>)
+                        movie={movie} />)
                     : ''}
             </div>
         </section>
