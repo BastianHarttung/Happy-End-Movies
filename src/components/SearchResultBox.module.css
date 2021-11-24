@@ -2,6 +2,7 @@
     background-color: var(--main-color-white);
     color: Black;
     width: 200px;
+    position: relative;
     border: 1px solid gray;
     margin: 10px;
     text-decoration: none;
@@ -18,8 +19,32 @@
     width: 200px;
 }
 
+
+.movieInfosContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
 .movieTitle {
     display: flex;
     justify-content: center;
     margin: 10px;
+}
+
+.smileyLaugh {
+    position: absolute;
+    top: 265px;
+    right: 10px;
+    color: #28b028;
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+.smileySad {
+    position: absolute;
+    top: 265px;
+    right: 10px;
+    color: #d91212;
+    font-size: 25px;
+    margin-bottom: 10px;
 }
