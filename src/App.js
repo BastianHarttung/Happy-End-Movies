@@ -1,16 +1,17 @@
 import './App.css';
 import {Route, BrowserRouter, Routes} from "react-router-dom";
+import {useState} from "react";
+
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Hauptmenue from "./pages/Hauptmenue";
 import Bewertung from "./pages/Bewertung";
 import DetailAnsicht from "./pages/DetailAnsicht";
 import Showroom from "./pages/Showroom";
-import {useState} from "react";
-import {genreUrl, fskUrl, imageUrl} from"./constants"
+
+import {genreUrl, fskUrl} from"./constants"
 
 import firestoreDb from "./Firebase";
-
 import {doc, setDoc, updateDoc, collection, getDocs, addDoc,query} from 'firebase/firestore';
 
 

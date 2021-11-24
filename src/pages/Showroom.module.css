@@ -21,10 +21,13 @@
 
 /*----------Content -----------------*/
 .filteredMoviesContainer {
-    position: absolute;
+    box-sizing: border-box;
+    width: 82%;
+    position: relative;
     top: 0;
-    left: 300px;
+    left: 18%;
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-    margin: 50px 20px;
+    padding: 50px 30px;
 }
