@@ -7,9 +7,23 @@ const Showroom = (props) => {
 
     const [movies, setMovies] = useState(props.moviesDB ? props.moviesDB : emptyMovieArray)
 
+    // Scrolling Sidebar
+    const [scrollPosition, setScrollPosition] = useState(0);
+    const handleScroll = ( )=> {
+        const position = window.pageYOffset;
+        setScrollPosition( Math.max(0, 80 - position) )
+    }
+    useEffect( () => {
+        window.addEventListener('scroll', handleScroll, {passive:true})
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+
+
     return (
         <section className={classes.showroomSection}>
-            <div className={classes.sidebar}>
+            <div className={classes.sidebar} style={{top: scrollPosition +'px'}}>
                 <div className={classes.filterContainer}>
                     <div className={classes.filter} >Alle Filme</div>
                     <div className={classes.filter} >Filme mit Happy End</div>
