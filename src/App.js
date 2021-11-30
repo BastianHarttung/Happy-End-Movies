@@ -21,7 +21,6 @@ function App() {
     const [allMovies, setAllMovies] = useState([])
     const [dbLength, setDbLength] = useState(0)
 
-
     useEffect(() => {
         const moviesCollectionRef = collection(firestoreDb, 'movies');
         const getMovies = async () => {
@@ -31,73 +30,6 @@ function App() {
         }
         getMovies()
     }, []);
-
-    /**
-     * Load Data from Firestore Database
-     * @returns {Promise<void>} set state for allMovies
-     */
-    async function saveMoviesToState() {
-        const moviesArray = async function loadMoviesFromDb() {
-            const movieCollect = await getDocs(collection(firestoreDb, 'movies'));
-            const moviesArray = [];
-            movieCollect.forEach((doc) => {
-                moviesArray.push(doc.data())
-            });
-
-            return moviesArray
-        }
-        setAllMovies(await moviesArray())
-    }
-
-
-    async function saveMovieToDb(movieDb) {
-        try {
-            console.log(movieDb.id)
-            const actualMoviesDoc = doc(firestoreDb, 'movies/' + movieDb.id)
-            await setDoc(actualMoviesDoc, movieDb);
-            console.log('In Firestore Gespeichert');
-            await saveMoviesToState()
-        } catch (e) {
-            console.log('Error', e)
-        }
-    }
-
-    // Get Genre from TMDB ApI
-    async function getGenreNameFromApi(genreId) {
-        const response = await fetch(genreUrl);
-        let data = await response.json();
-        const genre = data.genres.find(genre => genre.id === genreId)
-        return genre.name
-    }
-
-    async function getGenreNames(movie) {
-        let genres = []
-        for (let i = 0; i < movie.genre_ids.length; i++) {
-            const genreName = await getGenreNameFromApi(movie.genre_ids[i])
-            genres.push(genreName)
-        }
-        return genres
-    }
-
-    // Get FSK from alterfreigaben.de API
-    //TODO Cors?
-    async function getFskFromApi(movieId) {
-        const fskUrlMovie = fskUrl + movieId + '/de'
-        const response = await fetch(fskUrlMovie);
-        let data = await response.json();
-        return data
-    }
-
-
-    async function saveSelectedMovie(movie) {
-        console.log('saveselectedMovie ', movie)
-        const genres = await getGenreNames(movie)
-        const fsk = await getFskFromApi(movie.id)
-        const hasHappyEnd = movie.has_happy_end === true ? true
-            : movie.has_happy_end === false ? false
-                : 'neutral'
-        setSelectedMovie({...movie, genres: genres, fsk: fsk, has_happy_end: hasHappyEnd})
-    }
 
 
     return (
@@ -115,7 +47,6 @@ function App() {
                                <Bewertung
                                    callback={(movie) => saveSelectedMovie(movie)}
                                />}
-
                     />
 
                     <Route path='/detailansicht'
@@ -150,6 +81,96 @@ function App() {
 
         </BrowserRouter>
     );
+
+    /**
+     * Load Data from Firestore Database and save to State
+     * @returns {Promise<void>} set state for allMovies
+     */
+    async function saveMoviesToState() {
+        const moviesArray = async function loadMoviesFromDb() {
+            const movieCollect = await getDocs(collection(firestoreDb, 'movies'));
+            const moviesArray = [];
+            movieCollect.forEach((doc) => {
+                moviesArray.push(doc.data())
+            });
+
+            return moviesArray
+        }
+        setAllMovies(await moviesArray())
+    }
+
+    /**
+     * Save Movie to Database by clicking on Detailansicht Speichern
+     * @param {object} movieDb
+     * @return {Promise<void>}
+     */
+    async function saveMovieToDb(movieDb) {
+        try {
+            console.log(movieDb.id)
+            const actualMoviesDoc = doc(firestoreDb, 'movies/' + movieDb.id)
+            await setDoc(actualMoviesDoc, movieDb);
+            console.log('In Firestore Gespeichert');
+            await saveMoviesToState()
+        } catch (e) {
+            console.log('Error', e)
+        }
+    }
+
+    /**
+     * Get genres and fsk and has_happy_end
+     * and save to selectedMovie state
+     * @param movie
+     * @return {Promise<void>}
+     */
+    async function saveSelectedMovie(movie) {
+        console.log('saveselectedMovie ', movie)
+        const genres = await getGenreNames(movie)
+        const fsk = await getFskFromApi(movie.id)
+        const hasHappyEnd = movie.has_happy_end === true ? true
+            : movie.has_happy_end === false ? false
+                : 'neutral'
+        setSelectedMovie({...movie, genres: genres, fsk: fsk, has_happy_end: hasHappyEnd})
+    }
+
+    /**
+     * Get Genre from TMDB API
+     * @param {number} genreId
+     * @return {Promise<*>}
+     */
+    async function getGenreNameFromApi(genreId) {
+        const response = await fetch(genreUrl);
+        let data = await response.json();
+        const genre = data.genres.find(genre => genre.id === genreId)
+        return genre.name
+    }
+
+    /**
+     * Get Genre Names and return in Array
+     * @param {object} movie
+     * @return {Promise<*[]>} Array with Genres example: ['Action', 'Komödie']
+     */
+    async function getGenreNames(movie) {
+        let genres = []
+        for (let i = 0; i < movie.genre_ids.length; i++) {
+            const genreName = await getGenreNameFromApi(movie.genre_ids[i])
+            genres.push(genreName)
+        }
+        return genres
+    }
+
+    /**
+     * Get FSK from alterfreigaben.de API
+     * @param {number} movieId
+     * @return {Promise<any>} {number} The FSK example: 16
+     * TODO CORS?
+     */
+    async function getFskFromApi(movieId) {
+        const fskUrlMovie = fskUrl + movieId + '/de'
+        const response = await fetch(fskUrlMovie);
+        let data = await response.json();
+        return data
+    }
+
 }
 
 export default App;

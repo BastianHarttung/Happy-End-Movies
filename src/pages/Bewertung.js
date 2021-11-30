@@ -10,7 +10,7 @@ const Bewertung = (props) => {
     const [searchedMovies, setSearchedMovies] = useState(emptyMovieArray)
     const [searchFor, setSearchFor] = useState('')
     const [totalResults, setTotalResults] = useState(0)
-    const [totalPages, setTotalPages] = useState([])
+    const [totalPages, setTotalPages] = useState()
     const [activePage, setActivePage] = useState(0)
 
     return (
@@ -46,6 +46,12 @@ const Bewertung = (props) => {
         </div>
     )
 
+    /**
+     * Search Movie by clicking the Search Button
+     * -set page to number 1
+     * -delete die input field
+     * @return {Promise<void>}
+     */
     async function searchMovie() {
         if (movieName !== '') {
             setSearchedMovies(await getJsonFromMovieDB(movieName, 1));
@@ -55,11 +61,25 @@ const Bewertung = (props) => {
         }
     }
 
+    /**
+     * Change Page and load from API by clicking Page Number
+     * And set Active Page Number for colored view
+     * @param {number} page
+     * @return {Promise<void>}
+     */
     async function changePage(page) {
         setSearchedMovies(await getJsonFromMovieDB(searchFor, page))
         setActivePage(page)
     }
 
+    /**
+     * Get Data from Movie DB
+     * - set total results
+     * - make array with pages and set to total pages
+     * @param {string} movieName
+     * @param {number} pageNumber
+     * @return {Promise<*>}
+     */
     async function getJsonFromMovieDB(movieName, pageNumber) {
         const response = await fetch(searchMovieUrl + movieName + '&page=' + pageNumber);
         let data = await response.json();
