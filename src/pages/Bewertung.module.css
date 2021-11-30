@@ -31,7 +31,7 @@
     width: 30px;
     height: 30px;
     margin-left: 10px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 
@@ -46,10 +46,25 @@
     margin-bottom: 15px;
 }
 
+.pageContainer {
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .pageBtn {
     padding: 5px;
-    margin: 10px;
+    margin: 5px;
     cursor: pointer;
+}
+
+.activePageBtn {
+    color: #66caee;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
 }
 
 .totalResults {

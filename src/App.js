@@ -43,9 +43,7 @@ function App() {
             movieCollect.forEach((doc) => {
                 moviesArray.push(doc.data())
             });
-            moviesArray.sort((a, b) => (a.title < b.title) ? -1
-                                                : (a.title > b.title) ? 1
-                                        : 0)
+
             return moviesArray
         }
         setAllMovies(await moviesArray())

@@ -8,6 +8,13 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
     const [filteredMovies, setFilteredMovies] = useState(moviesDB)
     const [filterLength, setFilterLength] = useState(dbLength)
 
+    // Sort Movies by Title
+    useEffect(() => {
+        moviesDB.sort((a, b) => (a.title < b.title) ? -1
+            : (a.title > b.title) ? 1
+                : 0)
+    })
+
     // Scrolling Sidebar
     const [scrollPosition, setScrollPosition] = useState(80);
     const handleScroll = () => {
@@ -43,10 +50,13 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
         <section className={classes.showroomSection}>
             <div className={classes.sidebar} style={{top: scrollPosition + 'px'}}>
                 <div className={classes.filterContainer}>
-                    <div onClick={() => filterMoviesByHappyEnd(moviesDB, 'all')} className={classes.filter}>Alle Filme</div>
-                    <div onClick={() => filterMoviesByHappyEnd(moviesDB, true)} className={classes.filter}>Filme mit Happy End
+                    <div onClick={() => filterMoviesByHappyEnd(moviesDB, 'all')} className={classes.filter}>Alle Filme
                     </div>
-                    <div onClick={() => filterMoviesByHappyEnd(moviesDB, false)} className={classes.filter}>Filme ohne Happy End
+                    <div onClick={() => filterMoviesByHappyEnd(moviesDB, true)} className={classes.filter}>Filme mit
+                        Happy End
+                    </div>
+                    <div onClick={() => filterMoviesByHappyEnd(moviesDB, false)} className={classes.filter}>Filme ohne
+                        Happy End
                     </div>
                 </div>
             </div>

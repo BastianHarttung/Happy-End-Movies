@@ -2,7 +2,7 @@ import classes from "./Bewertung.module.css";
 import {FaSearch} from "react-icons/all";
 import {useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
-import {emptyMovieArray, searchMovieUrl, searchAllUrl} from "../constants";
+import {emptyMovieArray, searchMovieUrl} from "../constants";
 
 const Bewertung = (props) => {
 
@@ -11,6 +11,7 @@ const Bewertung = (props) => {
     const [searchFor, setSearchFor] = useState('')
     const [totalResults, setTotalResults] = useState(0)
     const [totalPages, setTotalPages] = useState([])
+    const [activePage, setActivePage] = useState(0)
 
     return (
         <div className={classes.bewertungSection}>
@@ -31,10 +32,11 @@ const Bewertung = (props) => {
             </div>
 
             {totalPages ?
-                <div>{totalPages.map(page => <span key={page}
-                                                   onClick={() => changePage(page)}
-                                                   className={classes.pageBtn}>
-                                                        {page}</span>)}
+                <div className={classes.pageContainer}>Seite: {totalPages.map(page =>
+                    <span key={page}
+                          onClick={() => changePage(page)}
+                          className={activePage === page ? classes.activePageBtn : classes.pageBtn}>
+                          {page}</span>)}
                 </div>
                 : ''}
 
@@ -47,6 +49,7 @@ const Bewertung = (props) => {
     async function searchMovie() {
         if (movieName !== '') {
             setSearchedMovies(await getJsonFromMovieDB(movieName, 1));
+            setActivePage(1);
             setSearchFor(movieName);
             setMovieName('');
         }
@@ -54,6 +57,7 @@ const Bewertung = (props) => {
 
     async function changePage(page) {
         setSearchedMovies(await getJsonFromMovieDB(searchFor, page))
+        setActivePage(page)
     }
 
     async function getJsonFromMovieDB(movieName, pageNumber) {
@@ -65,6 +69,11 @@ const Bewertung = (props) => {
         return data.results
     }
 
+    /**
+     * Make an Array with Pages
+     * @param numberPages
+     * @return {*[]} Array with Numbers from 1 to numberPages
+     */
     function makePageArray(numberPages) {
         let pageArray = []
         for (let i = 1; i <= numberPages; i++) {
@@ -72,6 +81,7 @@ const Bewertung = (props) => {
         }
         return pageArray
     }
+
 }
 
 export default Bewertung
