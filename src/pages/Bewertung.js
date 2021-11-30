@@ -10,7 +10,7 @@ const Bewertung = (props) => {
     const [searchedMovies, setSearchedMovies] = useState(emptyMovieArray)
     const [searchFor, setSearchFor] = useState('')
     const [totalResults, setTotalResults] = useState(0)
-    const [totalPages, setTotalPages] =useState([])
+    const [totalPages, setTotalPages] = useState([])
 
     return (
         <div className={classes.bewertungSection}>
@@ -21,7 +21,7 @@ const Bewertung = (props) => {
             </div>
 
             {searchFor ? <div>Suchergebnisse für: {searchFor}</div>
-                        : ''}
+                : ''}
 
             <div className={classes.resultSection}>
                 {searchedMovies.map(movie => <SearchResultBox key={movie.id}
@@ -30,11 +30,16 @@ const Bewertung = (props) => {
                                                               movie={movie}/>)}
             </div>
 
-            {totalPages ? <div>{totalPages.map(page => <span className={classes.pageBtn}>{page}</span>)}</div>
-                        : ''}
+            {totalPages ?
+                <div>{totalPages.map(page => <span key={page}
+                                                   onClick={() => changePage(page)}
+                                                   className={classes.pageBtn}>
+                                                        {page}</span>)}
+                </div>
+                : ''}
 
             {totalResults ? <div className={classes.totalResults}>Anzahl Ergebnisse: {totalResults}</div>
-                            : ''}
+                : ''}
 
         </div>
     )
@@ -45,6 +50,10 @@ const Bewertung = (props) => {
             setSearchFor(movieName);
             setMovieName('');
         }
+    }
+
+    async function changePage(page) {
+        setSearchedMovies(await getJsonFromMovieDB(searchFor, page))
     }
 
     async function getJsonFromMovieDB(movieName, pageNumber) {
@@ -58,7 +67,7 @@ const Bewertung = (props) => {
 
     function makePageArray(numberPages) {
         let pageArray = []
-        for(let i = 1; i <= numberPages; i++) {
+        for (let i = 1; i <= numberPages; i++) {
             pageArray.push(i)
         }
         return pageArray
