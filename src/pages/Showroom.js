@@ -3,47 +3,72 @@ import SearchResultBox from "../components/SearchResultBox";
 import {useEffect, useState} from "react";
 
 
-const Showroom = (props) => {
+const Showroom = ({moviesDB, dbLength, callback}) => {
 
+    const [filteredMovies, setFilteredMovies] = useState(moviesDB)
+    const [filterLength, setFilterLength] = useState(dbLength)
 
     // Scrolling Sidebar
     const [scrollPosition, setScrollPosition] = useState(80);
-    const handleScroll = ( )=> {
+    const handleScroll = () => {
         const position = window.pageYOffset;
-        setScrollPosition( Math.max(0, 80 - position) )
+        setScrollPosition(Math.max(0, 80 - position))
     }
-    useEffect( () => {
-        window.addEventListener('scroll', handleScroll, {passive:true})
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll, {passive: true})
         return () => {
             window.removeEventListener('scroll', handleScroll)
         }
     }, [])
 
+    /**
+     * Filter Movies with HappyEnd
+     * @param {array} movies movies Array
+     * @param {boolean} hasHappyEnd true or false
+     * @return {array with objects}
+     */
+    function filterMoviesByHappyEnd(movies, hasHappyEnd) {
+        if (hasHappyEnd === 'all') {
+            setFilteredMovies(movies)
+            setFilterLength(movies.length)
+        } else {
+            const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
+            setFilteredMovies(movieFilter)
+            setFilterLength(movieFilter.length)
+        }
+    }
+
 
     return (
         <section className={classes.showroomSection}>
-            <div className={classes.sidebar} style={{top: scrollPosition +'px'}}>
+            <div className={classes.sidebar} style={{top: scrollPosition + 'px'}}>
                 <div className={classes.filterContainer}>
-                    <div className={classes.filter} >Alle Filme</div>
-                    <div className={classes.filter} >Filme mit Happy End</div>
-                    <div className={classes.filter} >Filme ohne Happy End</div>
+                    <div onClick={() => filterMoviesByHappyEnd(moviesDB, 'all')} className={classes.filter}>Alle Filme</div>
+                    <div onClick={() => filterMoviesByHappyEnd(moviesDB, true)} className={classes.filter}>Filme mit Happy End
+                    </div>
+                    <div onClick={() => filterMoviesByHappyEnd(moviesDB, false)} className={classes.filter}>Filme ohne Happy End
+                    </div>
                 </div>
             </div>
 
             <div className={classes.filteredMoviesContainer}>
 
                 <div className={classes.filteredMoviesResult}>
-                    { props.moviesDB.map((movie)=>
+                    {filteredMovies.map((movie) =>
                         <SearchResultBox
                             key={movie.id}
-                            movie={movie} />) }
+                            movie={movie}
+                            to='/detailansicht'
+                            parentCallback={(currentMovie) => callback(currentMovie)}
+                        />)}
                 </div>
 
                 <div className={classes.infosContainer}>
-                    <div>{props.dbLength} Filme</div>
+                    <div>{filterLength} Filme</div>
                 </div>
 
             </div>
+
         </section>
     )
 }

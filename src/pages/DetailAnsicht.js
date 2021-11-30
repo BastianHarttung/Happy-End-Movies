@@ -1,7 +1,7 @@
 import classes from "./DetailAnsicht.module.css";
 import emptyImage from "../assets/img/movie-poster.png"
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useState,useEffect} from "react";
 import {FaSmileBeam, FaSadTear,FaMeh} from "react-icons/all";
 
 const DetailAnsicht = (props) => {
@@ -11,11 +11,17 @@ const DetailAnsicht = (props) => {
     const genres = props.movie.genres ? props.movie.genres : []
 
     const [movieForDb, setMovieForDb] = useState(props.movie)
-    const [happyMovie, setHappyMovie] = useState('neutral')
+    const [happyMovie, setHappyMovie] = useState(props.movie.has_happy_end === true ? true
+                                                    : props.movie.has_happy_end === false ? false
+                                                    : 'neutral')
 
-    function saveInfosInVariable(movieHasHappyEnd) {
-        setMovieForDb({...props.movie, has_happy_end: movieHasHappyEnd})
-    }
+
+
+    useEffect(() => {
+        props.movie.has_happy_end === true ? setHappyMovie(true)
+            : props.movie.has_happy_end === false ? setHappyMovie(false)
+                : setHappyMovie('neutral')
+    });
 
     function setColorForFsk(fsk) {
         if(fsk === 0) return 'lightgray'
@@ -57,24 +63,30 @@ const DetailAnsicht = (props) => {
                         <div className={classes.smileys}>
                             <div>
                                 <FaSmileBeam onClick={() => {
+                                    props.movie.has_happy_end = true;
                                     setHappyMovie(true)
-                                    saveInfosInVariable(true)
+                                    setMovieForDb({...props.movie, has_happy_end: true})
                                 }}
                                              className={ (happyMovie===true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
                                 <FaMeh onClick={() => {
+                                    props.movie.has_happy_end = 'neutral';
                                     setHappyMovie('neutral');
-                                    saveInfosInVariable('neutral')
+                                    setMovieForDb({...props.movie, has_happy_end: 'neutral'})
                                 }}
                                            className={ (happyMovie ==='neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
 
                                 <FaSadTear onClick={() => {
+                                    props.movie.has_happy_end = false;
                                     setHappyMovie(false);
-                                    saveInfosInVariable(false)
+                                    setMovieForDb({...props.movie, has_happy_end: false})
                                 }}
                                            className={!happyMovie ? classes.smileySad : classes.smiley}></FaSadTear>
                             </div>
 
-                            <button onClick={() => { props.parentCallback(movieForDb); navigate('/showroom') }} className={classes.saveButton}>Speichern und zurück</button>
+                            <button onClick={() => {
+                                props.parentCallback(movieForDb);
+                                setHappyMovie('')
+                                navigate('/showroom') }} className={classes.saveButton}>Speichern und zum Showroom</button>
 
                         </div>
 

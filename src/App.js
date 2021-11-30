@@ -12,38 +12,44 @@ import Showroom from "./pages/Showroom";
 import {genreUrl, fskUrl} from "./constants"
 
 import firestoreDb from "./firebase-config";
-import {doc, setDoc,getDocs,collection} from 'firebase/firestore';
+import {doc, setDoc, getDocs, collection} from 'firebase/firestore';
 
 
 function App() {
-
-    const db = async () => {
-        const moviesArray = async function loadMoviesFromDb() {
-            const movieCollect = await getDocs(collection(firestoreDb, 'movies'));
-            const moviesArray = [];
-            movieCollect.forEach((doc) => {
-                moviesArray.push(doc.data())
-            });
-            return moviesArray
-        }
-        setAllMovies(await moviesArray)
-    }
-
 
     const [selectedMovie, setSelectedMovie] = useState({})
     const [allMovies, setAllMovies] = useState([])
     const [dbLength, setDbLength] = useState(0)
 
 
-    useEffect( ()=>{
-        const moviesCollectionRef = collection(firestoreDb,'movies');
-        const getMovies = async () =>{
+    useEffect(() => {
+        const moviesCollectionRef = collection(firestoreDb, 'movies');
+        const getMovies = async () => {
             const data = await getDocs(moviesCollectionRef);
             setDbLength(data.docs.length);
             setAllMovies(data.docs.map((doc) => ({...doc.data()})))
         }
         getMovies()
-    },[]);
+    }, []);
+
+    /**
+     * Load Data from Firestore Database
+     * @returns {Promise<void>} set state for allMovies
+     */
+    async function saveMoviesToState() {
+        const moviesArray = async function loadMoviesFromDb() {
+            const movieCollect = await getDocs(collection(firestoreDb, 'movies'));
+            const moviesArray = [];
+            movieCollect.forEach((doc) => {
+                moviesArray.push(doc.data())
+            });
+            moviesArray.sort((a, b) => (a.title < b.title) ? -1
+                                                : (a.title > b.title) ? 1
+                                        : 0)
+            return moviesArray
+        }
+        setAllMovies(await moviesArray())
+    }
 
 
     async function saveMovieToDb(movieDb) {
@@ -52,7 +58,7 @@ function App() {
             const actualMoviesDoc = doc(firestoreDb, 'movies/' + movieDb.id)
             await setDoc(actualMoviesDoc, movieDb);
             console.log('In Firestore Gespeichert');
-            await db
+            await saveMoviesToState()
         } catch (e) {
             console.log('Error', e)
         }
@@ -86,9 +92,13 @@ function App() {
 
 
     async function saveSelectedMovie(movie) {
+        console.log('saveselectedMovie ', movie)
         const genres = await getGenreNames(movie)
         const fsk = await getFskFromApi(movie.id)
-        setSelectedMovie({...movie, genres, fsk})
+        const hasHappyEnd = movie.has_happy_end === true ? true
+            : movie.has_happy_end === false ? false
+                : 'neutral'
+        setSelectedMovie({...movie, genres: genres, fsk: fsk, has_happy_end: hasHappyEnd})
     }
 
 
@@ -105,9 +115,7 @@ function App() {
                            exact={true}
                            element={
                                <Bewertung
-                                   callback={(movie) => {
-                                       saveSelectedMovie(movie)
-                                   }}
+                                   callback={(movie) => saveSelectedMovie(movie)}
                                />}
 
                     />
@@ -127,7 +135,9 @@ function App() {
                            element={
                                <Showroom
                                    moviesDB={allMovies}
-                                    dbLength={dbLength}/>}
+                                   dbLength={dbLength}
+                                   callback={(movie) => saveSelectedMovie(movie)}
+                               />}
                     />
 
                     <Route path='/'

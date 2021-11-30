@@ -10,9 +10,8 @@ const SearchResultBox = (props) => {
     // Add a Condition to <Link> tag, else show <div>
     const ConditionalLink = ({children, to, condition}) => (!!condition && to)
         ? <Link to={{
-            pathname: `${to}`,
-            hash: `#${props.movie.title}`
-        }}
+                    pathname: `${to}`,
+                    hash: `#${props.movie.title}` }}
                 onClick={() => {
                     props.parentCallback(props.movie)
                 }}

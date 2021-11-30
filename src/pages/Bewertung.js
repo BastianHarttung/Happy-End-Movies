@@ -2,14 +2,15 @@ import classes from "./Bewertung.module.css";
 import {FaSearch} from "react-icons/all";
 import {useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
-import {emptyMovieArray} from "../constants";
+import {emptyMovieArray, searchMovieUrl, searchAllUrl} from "../constants";
 
 const Bewertung = (props) => {
 
-    const url = 'https://api.themoviedb.org/3/search/movie?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&query='
-
     const [movieName, setMovieName] = useState('')
     const [searchedMovies, setSearchedMovies] = useState(emptyMovieArray)
+    const [searchFor, setSearchFor] = useState('')
+    const [totalResults, setTotalResults] = useState(0)
+    const [totalPages, setTotalPages] =useState([])
 
     return (
         <div className={classes.bewertungSection}>
@@ -19,29 +20,48 @@ const Bewertung = (props) => {
                 <FaSearch onClick={searchMovie} className={classes.searchButton}/>
             </div>
 
+            {searchFor ? <div>Suchergebnisse für: {searchFor}</div>
+                        : ''}
+
             <div className={classes.resultSection}>
                 {searchedMovies.map(movie => <SearchResultBox key={movie.id}
                                                               to='/detailansicht'
-                                                              parentCallback={(currentMovie)=>props.callback(currentMovie)}
-                                                              movie={movie}/> )}
+                                                              parentCallback={(currentMovie) => props.callback(currentMovie)}
+                                                              movie={movie}/>)}
             </div>
+
+            {totalPages ? <div>{totalPages.map(page => <span className={classes.pageBtn}>{page}</span>)}</div>
+                        : ''}
+
+            {totalResults ? <div className={classes.totalResults}>Anzahl Ergebnisse: {totalResults}</div>
+                            : ''}
 
         </div>
     )
 
     async function searchMovie() {
-        const movieTitle = movieName;
-        if(movieTitle !== ''){
-            setSearchedMovies(await getJsonFromMovieDB(movieTitle));
-            setMovieName('')
+        if (movieName !== '') {
+            setSearchedMovies(await getJsonFromMovieDB(movieName, 1));
+            setSearchFor(movieName);
+            setMovieName('');
         }
     }
 
-    async function getJsonFromMovieDB(movieName) {
-        const response = await fetch(url + movieName);
+    async function getJsonFromMovieDB(movieName, pageNumber) {
+        const response = await fetch(searchMovieUrl + movieName + '&page=' + pageNumber);
         let data = await response.json();
-        console.log(data.results)
+        setTotalResults(await data.total_results)
+        setTotalPages(makePageArray(await data.total_pages))
+        console.log('data', data)
         return data.results
+    }
+
+    function makePageArray(numberPages) {
+        let pageArray = []
+        for(let i = 1; i <= numberPages; i++) {
+            pageArray.push(i)
+        }
+        return pageArray
     }
 }
 
