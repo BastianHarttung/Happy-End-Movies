@@ -15,13 +15,11 @@ const DetailAnsicht = (props) => {
                                                     : props.movie.has_happy_end === false ? false
                                                     : 'neutral')
 
-
-
     useEffect(() => {
         props.movie.has_happy_end === true ? setHappyMovie(true)
             : props.movie.has_happy_end === false ? setHappyMovie(false)
                 : setHappyMovie('neutral')
-    });
+    },[props.movie.has_happy_end]);
 
     function setColorForFsk(fsk) {
         if(fsk === 0) return 'lightgray'

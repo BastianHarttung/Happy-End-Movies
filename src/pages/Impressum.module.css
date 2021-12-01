@@ -1,0 +1,10 @@
+.impressumContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.impressum {
+    width: 90%;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}

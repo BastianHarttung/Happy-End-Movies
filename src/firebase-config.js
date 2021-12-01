@@ -16,17 +16,6 @@ const app = initializeApp(firebaseConfig)
 
 const firestoreDb = getFirestore(app)
 
-
 //TODO const auth = getAuth(firebaseApp);
-/*
-export async function loadMoviesFromDb() {
-    const movieCollect = await getDocs( collection(firestoreDb,'movies') );
-    const moviesArray = [];
-    movieCollect.forEach((doc) => {
-        moviesArray.push(doc.data())
-    });
 
-    return moviesArray
-}
-*/
 export default firestoreDb

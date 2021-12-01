@@ -8,12 +8,16 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
     const [filteredMovies, setFilteredMovies] = useState(moviesDB)
     const [filterLength, setFilterLength] = useState(dbLength)
 
-    // Sort Movies by Title
+    // Sort Movies by Title and update movies
     useEffect(() => {
         moviesDB.sort((a, b) => (a.title < b.title) ? -1
             : (a.title > b.title) ? 1
                 : 0)
-    })
+        if (filterLength === dbLength) {
+            setFilteredMovies(moviesDB)
+            setFilterLength(moviesDB.length)
+        }
+    }, [moviesDB, filterLength, dbLength])
 
     // Scrolling Sidebar
     const [scrollPosition, setScrollPosition] = useState(80);
@@ -27,23 +31,6 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
             window.removeEventListener('scroll', handleScroll)
         }
     }, [])
-
-    /**
-     * Filter Movies with HappyEnd
-     * @param {array} movies movies Array
-     * @param {boolean} hasHappyEnd true or false
-     * @return {array with objects}
-     */
-    function filterMoviesByHappyEnd(movies, hasHappyEnd) {
-        if (hasHappyEnd === 'all') {
-            setFilteredMovies(movies)
-            setFilterLength(movies.length)
-        } else {
-            const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
-            setFilteredMovies(movieFilter)
-            setFilterLength(movieFilter.length)
-        }
-    }
 
 
     return (
@@ -81,6 +68,24 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
 
         </section>
     )
+
+    /**
+     * Filter Movies with or without HappyEnd
+     * @param {array} movies movies Array
+     * @param {boolean} hasHappyEnd true or false
+     * @return {array with objects}
+     */
+    function filterMoviesByHappyEnd(movies, hasHappyEnd) {
+        if (hasHappyEnd === 'all') {
+            setFilterLength(movies.length)
+            setFilteredMovies(movies)
+        } else {
+            const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
+            setFilteredMovies(movieFilter)
+            setFilterLength(movieFilter.length)
+        }
+    }
+
 }
 
 export default Showroom

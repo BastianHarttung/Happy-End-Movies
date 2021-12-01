@@ -8,6 +8,7 @@ import Hauptmenue from "./pages/Hauptmenue";
 import Bewertung from "./pages/Bewertung";
 import DetailAnsicht from "./pages/DetailAnsicht";
 import Showroom from "./pages/Showroom";
+import Impressum from "./pages/Impressum";
 
 import {genreUrl, fskUrl} from "./constants"
 
@@ -73,6 +74,10 @@ function App() {
                            exact={true}
                            element={<Hauptmenue/>}
                     />
+
+                    <Route path='/impressum'
+                            exact={true}
+                        element={<Impressum/>}/>
 
                 </Routes>
             </div>
