@@ -1,8 +1,8 @@
 import classes from "./DetailAnsicht.module.css";
 import emptyImage from "../assets/img/movie-poster.png"
 import {useNavigate} from "react-router-dom";
-import {useState,useEffect} from "react";
-import {FaSmileBeam, FaSadTear,FaMeh} from "react-icons/all";
+import {useState, useEffect} from "react";
+import {FaSmileBeam, FaSadTear, FaMeh} from "react-icons/all";
 
 const DetailAnsicht = (props) => {
     const navigate = useNavigate();
@@ -12,21 +12,21 @@ const DetailAnsicht = (props) => {
 
     const [movieForDb, setMovieForDb] = useState(props.movie)
     const [happyMovie, setHappyMovie] = useState(props.movie.has_happy_end === true ? true
-                                                    : props.movie.has_happy_end === false ? false
-                                                    : 'neutral')
+        : props.movie.has_happy_end === false ? false
+            : 'neutral')
 
     useEffect(() => {
         props.movie.has_happy_end === true ? setHappyMovie(true)
             : props.movie.has_happy_end === false ? setHappyMovie(false)
                 : setHappyMovie('neutral')
-    },[props.movie.has_happy_end]);
+    }, [props.movie.has_happy_end]);
 
     function setColorForFsk(fsk) {
-        if(fsk === 0) return 'lightgray'
-        if(fsk === 6) return 'yellow'
-        if(fsk === 12) return 'green'
-        if(fsk === 16) return 'blue'
-        if(fsk === 18) return 'red'
+        if (fsk === 0) return 'lightgray'
+        if (fsk === 6) return 'yellow'
+        if (fsk === 12) return 'green'
+        if (fsk === 16) return 'blue'
+        if (fsk === 18) return 'red'
     }
 
     return (
@@ -40,7 +40,11 @@ const DetailAnsicht = (props) => {
 
                         <div className={classes.infosHead}>
                             <h3>{props.movie.title}</h3>
-                            <div className={classes.fsk} style={{backgroundColor: setColorForFsk(props.movie.fsk)}}>{props.movie.fsk}</div>
+                            {props.movie.fsk ? <div className={classes.fsk}
+                                                    style={{backgroundColor: setColorForFsk(props.movie.fsk)}}>
+                                                {props.movie.fsk}
+                                                </div>
+                                                : ''}
                         </div>
 
                         <div className={classes.filmInfos}>
@@ -52,7 +56,8 @@ const DetailAnsicht = (props) => {
                             <div className={classes.voting}>{props.movie.vote_average}</div>
                         </div>
 
-                        <div>Beschreibung: {props.movie.overview}</div>
+                        {props.movie.overview ? <div>Beschreibung: {props.movie.overview}</div>
+                                            : <div className={classes.loader}>Loading...</div>}
 
                     </div>
 
@@ -65,13 +70,13 @@ const DetailAnsicht = (props) => {
                                     setHappyMovie(true)
                                     setMovieForDb({...props.movie, has_happy_end: true})
                                 }}
-                                             className={ (happyMovie===true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
+                                             className={(happyMovie === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
                                 <FaMeh onClick={() => {
                                     props.movie.has_happy_end = 'neutral';
                                     setHappyMovie('neutral');
                                     setMovieForDb({...props.movie, has_happy_end: 'neutral'})
                                 }}
-                                           className={ (happyMovie ==='neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
+                                       className={(happyMovie === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
 
                                 <FaSadTear onClick={() => {
                                     props.movie.has_happy_end = false;
@@ -84,7 +89,9 @@ const DetailAnsicht = (props) => {
                             <button onClick={() => {
                                 props.parentCallback(movieForDb);
                                 setHappyMovie('')
-                                navigate('/showroom') }} className={classes.saveButton}>Speichern und zum Showroom</button>
+                                navigate('/showroom')
+                            }} className={classes.saveButton}>Speichern und zum Showroom
+                            </button>
 
                         </div>
 

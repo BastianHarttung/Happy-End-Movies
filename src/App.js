@@ -77,7 +77,8 @@ function App() {
 
                     <Route path='/impressum'
                             exact={true}
-                        element={<Impressum/>}/>
+                        element={<Impressum/>}
+                    />
 
                 </Routes>
             </div>
