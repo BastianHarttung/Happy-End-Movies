@@ -2,12 +2,12 @@ import classes from "./Bewertung.module.css";
 import {FaSearch} from "react-icons/all";
 import {useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
-import {emptyMovieArray, searchMovieUrl} from "../constants";
+import {searchMovieUrl} from "../constants";
 
 const Bewertung = (props) => {
 
     const [movieName, setMovieName] = useState('')
-    const [searchedMovies, setSearchedMovies] = useState(emptyMovieArray)
+    const [searchedMovies, setSearchedMovies] = useState([])
     const [searchFor, setSearchFor] = useState('')
     const [totalResults, setTotalResults] = useState(0)
     const [totalPages, setTotalPages] = useState()

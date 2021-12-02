@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 
 const Showroom = ({moviesDB, dbLength, callback}) => {
 
-    const [filteredMovies, setFilteredMovies] = useState(moviesDB)
+    const [filteredMovies, setFilteredMovies] = useState([])
     const [filterLength, setFilterLength] = useState(dbLength)
 
     // Sort Movies by Title and update movies
@@ -14,7 +14,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
             : (a.title > b.title) ? 1
                 : 0)
         if (filterLength === dbLength) {
-            setFilteredMovies(moviesDB)
+            setTimeout(() => setFilteredMovies(moviesDB), 1800)
             setFilterLength(moviesDB.length)
         }
     }, [moviesDB, filterLength, dbLength])
@@ -51,13 +51,15 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
             <div className={classes.filteredMoviesContainer}>
 
                 <div className={classes.filteredMoviesResult}>
-                    {filteredMovies.map((movie) =>
-                        <SearchResultBox
-                            key={movie.id}
-                            movie={movie}
-                            to='/detailansicht'
-                            parentCallback={(currentMovie) => callback(currentMovie)}
-                        />)}
+                    {filteredMovies.length >0 ? filteredMovies.map((movie) =>
+                            <SearchResultBox
+                                key={movie.id}
+                                movie={movie}
+                                to='/detailansicht'
+                                parentCallback={(currentMovie) => callback(currentMovie)}
+                            />)
+                        : filteredMovies.length === 0 ? <div className={classes.loader}>Loading...</div>
+                            : 'Load'}
                 </div>
 
                 <div className={classes.infosContainer}>
