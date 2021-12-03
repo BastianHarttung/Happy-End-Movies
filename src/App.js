@@ -55,8 +55,8 @@ function App() {
                            element={
                                <DetailAnsicht
                                    parentCallback={(movieForDb) => {
-                                       saveMovieToDb(movieForDb)
-                                   }}
+                                       saveMovieToDb(movieForDb) }
+                                   }
                                    movie={selectedMovie}/>}
                     />
 
@@ -76,8 +76,8 @@ function App() {
                     />
 
                     <Route path='/impressum'
-                            exact={true}
-                        element={<Impressum/>}
+                           exact={true}
+                           element={<Impressum/>}
                     />
 
                 </Routes>

@@ -1,12 +1,10 @@
 # Happy End Movies
 
-In this App you can choose if a movie has a Happy End.
+In this App you can choose if a movie has a Happy End. And then you can filter movies by Happy Ending.
 
-It works with an API from The Movie Database.
+It works with an API from The Movie Database and altersfreigaben.de.
 
 This Project was to learn more about API's and storing Data on Firebase.
-
-## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

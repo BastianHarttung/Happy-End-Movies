@@ -7,27 +7,29 @@ import {FaSmileBeam, FaSadTear} from "react-icons/all";
 
 const SearchResultBox = (props) => {
 
-    // Add a Condition to <Link> tag, else show <div>
+    /**
+     * Add a Condition to <Link> tag, else show <div>
+     * @param children Are the text between the html-tag
+     * @param to    Path to the next site
+     * @param condition Condition only with this condition the Link runs
+     * @return {JSX.Element} either a <Link>-tag or a <div>
+     * @constructor
+     */
     const ConditionalLink = ({children, to, condition}) => (!!condition && to)
         ? <Link to={{
                     pathname: `${to}`,
-                    hash: `#${props.movie.title}` }}
+                    hash: `#${props.movie.title}`
+                }}
                 onClick={() => {
                     props.parentCallback(props.movie)
                 }}
                 className={classes.movieContainer}>{children}</Link>
         : <div className={classes.movieContainer}>{children}</div>
 
-    const Smiley = () =>{
-        if (props.movie.has_happy_end === true){
-            return <FaSmileBeam className={classes.smileyLaugh}/>
-        }
-        if (props.movie.has_happy_end === false) {
-            return <FaSadTear className={classes.smileySad}/>
-        }
-        else {
-            return ''
-        }
+    const Smiley = () => {
+        if (props.movie.has_happy_end === true) return <FaSmileBeam className={classes.smileyLaugh}/>
+        if (props.movie.has_happy_end === false) return <FaSadTear className={classes.smileySad}/>
+        else return ''
     }
 
     return (

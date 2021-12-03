@@ -3,10 +3,10 @@ import emptyImage from "../assets/img/movie-poster.png"
 import {useNavigate} from "react-router-dom";
 import {useState, useEffect} from "react";
 import {FaSmileBeam, FaSadTear, FaMeh} from "react-icons/all";
+import {imageUrl} from "../constants";
 
 const DetailAnsicht = (props) => {
     const navigate = useNavigate();
-    const imageUrl = "https://image.tmdb.org/t/p/w500" + props.movie.poster_path;
 
     const genres = props.movie.genres ? props.movie.genres : []
 
@@ -32,7 +32,8 @@ const DetailAnsicht = (props) => {
     return (
         <section className={classes.detailsSection}>
             <div className={classes.movieBox}>
-                <img className={classes.detailsImage} src={props.movie.poster_path ? imageUrl : emptyImage}
+                <img className={classes.detailsImage}
+                     src={props.movie.poster_path ? imageUrl + props.movie.poster_path : emptyImage}
                      alt="Poster"/>
                 <div className={classes.detailsContainer}>
 
@@ -40,11 +41,12 @@ const DetailAnsicht = (props) => {
 
                         <div className={classes.infosHead}>
                             <h3>{props.movie.title}</h3>
-                            {props.movie.fsk ? <div className={classes.fsk}
-                                                    style={{backgroundColor: setColorForFsk(props.movie.fsk)}}>
-                                                {props.movie.fsk}
-                                                </div>
-                                                : ''}
+                            {props.movie.fsk >= 0 ?
+                                <div className={classes.fsk}
+                                     style={{backgroundColor: setColorForFsk(props.movie.fsk)}}>
+                                    {props.movie.fsk}
+                                </div>
+                                : ''}
                         </div>
 
                         <div className={classes.filmInfos}>
@@ -56,8 +58,9 @@ const DetailAnsicht = (props) => {
                             <div className={classes.voting}>{props.movie.vote_average}</div>
                         </div>
 
-                        {props.movie.overview ? <div>Beschreibung: {props.movie.overview}</div>
-                                            : <div className={classes.loader}>Loading...</div>}
+                        {props.movie.title
+                            ? <div>Beschreibung: {props.movie.overview}</div>
+                            : <div className={classes.loader}>Loading...</div>}
 
                     </div>
 

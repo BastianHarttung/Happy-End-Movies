@@ -1,24 +1,31 @@
 import classes from "./Bewertung.module.css";
 import {FaSearch} from "react-icons/all";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
 import {searchMovieUrl} from "../constants";
 
 const Bewertung = (props) => {
 
-    const [movieName, setMovieName] = useState('')
+    const [movieName, setMovieName] = useState(window.location.hash.substring(1).split('%20').join(' '))
     const [searchedMovies, setSearchedMovies] = useState([])
     const [searchFor, setSearchFor] = useState('')
     const [totalResults, setTotalResults] = useState(0)
     const [totalPages, setTotalPages] = useState()
     const [activePage, setActivePage] = useState(0)
 
+    useEffect(() => {
+        if(movieName.length > 3){
+            searchMovie()
+        }
+    }, [movieName])
+
+
     return (
         <div className={classes.bewertungSection}>
             <div className={classes.searchBarContainer}>
                 <input className={classes.searchInput} type="text" value={movieName}
                        onChange={e => setMovieName(e.target.value)}/>
-                <FaSearch onClick={searchMovie} className={classes.searchButton}/>
+                <FaSearch onClick={searchAndClear} className={classes.searchButton}/>
             </div>
 
             {searchFor ? <div>Suchergebnisse für: {searchFor}</div>
@@ -47,17 +54,25 @@ const Bewertung = (props) => {
     )
 
     /**
+     * Clear search Input and search movie
+     */
+    async function searchAndClear() {
+        await searchMovie()
+        setMovieName('');
+    }
+
+    /**
      * Search Movie by clicking the Search Button
      * -set page to number 1
      * -delete die input field
      * @return {Promise<void>}
      */
     async function searchMovie() {
-        if (movieName !== '') {
+        if (movieName.length > 0) {
             setSearchedMovies(await getJsonFromMovieDB(movieName, 1));
             setActivePage(1);
             setSearchFor(movieName);
-            setMovieName('');
+            window.location.hash = movieName;
         }
     }
 
@@ -85,7 +100,7 @@ const Bewertung = (props) => {
         let data = await response.json();
         setTotalResults(await data.total_results)
         setTotalPages(makePageArray(await data.total_pages))
-        console.log('data', data)
+        //console.log('data', data)
         return data.results
     }
 

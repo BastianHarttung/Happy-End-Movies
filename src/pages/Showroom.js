@@ -8,7 +8,9 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
     const [filteredMovies, setFilteredMovies] = useState([])
     const [filterLength, setFilterLength] = useState(dbLength)
 
-    // Sort Movies by Title and update movies
+    /**
+     * Sort Movies by Title and update movies after Timeout
+     */
     useEffect(() => {
         moviesDB.sort((a, b) => (a.title < b.title) ? -1
             : (a.title > b.title) ? 1
@@ -19,7 +21,9 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
         }
     }, [moviesDB, filterLength, dbLength])
 
-    // Scrolling Sidebar
+    /**
+     * Scrolling Sidebar
+     */
     const [scrollPosition, setScrollPosition] = useState(80);
     const handleScroll = () => {
         const position = window.pageYOffset;
@@ -48,25 +52,30 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                 </div>
             </div>
 
-            <div className={classes.filteredMoviesContainer}>
+            {filteredMovies.length > 0 ?
+                <div className={classes.filteredMoviesContainer}>
 
-                <div className={classes.filteredMoviesResult}>
-                    {filteredMovies.length >0 ? filteredMovies.map((movie) =>
+                    <div className={classes.filteredMoviesResult}>
+                        {filteredMovies.map((movie) =>
                             <SearchResultBox
                                 key={movie.id}
                                 movie={movie}
                                 to='/detailansicht'
                                 parentCallback={(currentMovie) => callback(currentMovie)}
-                            />)
-                        : filteredMovies.length === 0 ? <div className={classes.loader}>Loading...</div>
-                            : 'Load'}
-                </div>
+                            />)}
 
-                <div className={classes.infosContainer}>
-                    <div>{filterLength} Filme</div>
-                </div>
+                    </div>
 
-            </div>
+                    <div className={classes.infosContainer}>
+                        <div>{filterLength} Filme</div>
+                    </div>
+
+                </div>
+                : filteredMovies.length === 0 ?
+                    <div className={classes.filteredMoviesContainer}>
+                        <div className={classes.loader}>Loading...</div>
+                    </div>
+                    : 'Load'}
 
         </section>
     )
