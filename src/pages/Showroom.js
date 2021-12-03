@@ -7,6 +7,7 @@ import SearchBar from "../components/SearchBar";
 const Showroom = ({moviesDB, dbLength, callback}) => {
 
     const [filteredMovies, setFilteredMovies] = useState([])
+    const [searchFilteredMovies, setSearchFilteredMovies] = useState([]) //TODO
     const [filterLength, setFilterLength] = useState(dbLength)
 
     /**
@@ -51,12 +52,15 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
         <section className={classes.showroomSection}>
             <div className={classes.sidebar} style={{top: scrollPosition + 'px'}}>
                 <div className={classes.filterContainer}>
-                    <div onClick={() => filterMoviesByHappyEnd(moviesDB, 'all')} className={classes.filter}>Alle Filme
+                    <div onClick={() => filterMoviesByHappyEnd(filteredMovies, 'all')} className={classes.filter}>Alle
+                        Filme
                     </div>
-                    <div onClick={() => filterMoviesByHappyEnd(moviesDB, true)} className={classes.filter}>Filme mit
+                    <div onClick={() => filterMoviesByHappyEnd(filteredMovies, true)} className={classes.filter}>Filme
+                        mit
                         Happy End
                     </div>
-                    <div onClick={() => filterMoviesByHappyEnd(moviesDB, false)} className={classes.filter}>Filme ohne
+                    <div onClick={() => filterMoviesByHappyEnd(filteredMovies, false)} className={classes.filter}>Filme
+                        ohne
                         Happy End
                     </div>
                 </div>
@@ -103,8 +107,8 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
      */
     function filterMoviesByHappyEnd(movies, hasHappyEnd) {
         if (hasHappyEnd === 'all') {
-            setFilterLength(movies.length)
-            setFilteredMovies(movies)
+            setFilterLength(moviesDB.length)
+            setFilteredMovies(moviesDB)
         } else {
             const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
             setFilteredMovies(movieFilter)
@@ -126,8 +130,14 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
      * @return {Promise<void>}
      */
     function searchMovieDb(movieName) {
-        window.location.hash = movieName;
-        filterMovies(movieName)
+        if (movieName.length === 0) {
+            setFilteredMovies(moviesDB)
+            setFilterLength(moviesDB.length)
+            window.location.hash = '';
+        } else {
+            window.location.hash = movieName;
+            filterMovies(movieName)
+        }
     }
 
 }

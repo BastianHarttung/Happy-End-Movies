@@ -14,7 +14,7 @@ const SearchBar = (props) => {
         if (movieName.length >= 3) {
             props.searchMovie(movieName)
         }
-    }, [movieName])
+    },[movieName])
 
     return (
         <div className={classes.searchBarContainer}>
