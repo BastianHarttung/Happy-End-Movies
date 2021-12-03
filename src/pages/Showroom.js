@@ -6,8 +6,6 @@ import SearchBar from "../components/SearchBar";
 
 const Showroom = ({moviesDB, dbLength, callback}) => {
 
-    const [movieName, setMovieName] = useState(window.location.hash.substring(1).split('%20').join(' '))
-    const [searchFor, setSearchFor] = useState('')
     const [filteredMovies, setFilteredMovies] = useState([])
     const [filterLength, setFilterLength] = useState(dbLength)
 
@@ -19,10 +17,19 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
             : (a.title > b.title) ? 1
                 : 0)
         if (filterLength === dbLength) {
-            setTimeout(() => setFilteredMovies(moviesDB), 1800)
+            setTimeout(() => setFilteredMovies(moviesDB), 1500)
             setFilterLength(moviesDB.length)
         }
     }, [moviesDB, filterLength, dbLength])
+
+    /**
+     *
+     */
+    useEffect(() => {
+        filteredMovies.sort((a, b) => (a.title < b.title) ? -1
+            : (a.title > b.title) ? 1
+                : 0)
+    }, [filteredMovies])
 
     /**
      * Scrolling Sidebar
@@ -57,7 +64,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
 
             <div className={classes.filteredMoviesContainer}>
                 <SearchBar
-                    searchMovie={() => searchMovie(movieName)}/>
+                    searchMovie={(movieName) => searchMovieDb(movieName)}/>
             </div>
 
             {filteredMovies.length > 0 ?
@@ -108,22 +115,19 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
     /**
      * Filter Movies
      */
-    function filterMovies() {
-
+    function filterMovies(movieName) {
+        const movieFilter = moviesDB.filter(movie => movie.title.toLowerCase() === movieName.toLowerCase())
+        setFilteredMovies(movieFilter)
+        setFilterLength(movieFilter.length)
     }
 
     /**
-     * Search Movie by clicking the Search Button
-     * -set page to number 1
-     * -delete die input field
+     * Search Movie
      * @return {Promise<void>}
      */
-    function searchMovie(movieName) {
-        if (movieName.length > 0) {
-            setFilteredMovies(filterMovies());
-            setSearchFor(movieName);
-            window.location.hash = movieName;
-        }
+    function searchMovieDb(movieName) {
+        window.location.hash = movieName;
+        filterMovies(movieName)
     }
 
 }

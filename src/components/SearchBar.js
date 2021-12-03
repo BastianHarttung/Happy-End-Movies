@@ -7,6 +7,9 @@ const SearchBar = (props) => {
     const locationHashString = window.location.hash.substring(1).split('%20').join(' ')
     const [movieName, setMovieName] = useState(locationHashString)
 
+    /**
+     * After hit 3 chars on input search start searching movie
+     */
     useEffect(() => {
         if (movieName.length >= 3) {
             props.searchMovie(movieName)
@@ -20,6 +23,7 @@ const SearchBar = (props) => {
             <FaSearch onClick={() => {
                 props.searchMovie(movieName)
                 setMovieName('')
+                window.location.hash = '';
             }} className={classes.searchButton}/>
         </div>
     )

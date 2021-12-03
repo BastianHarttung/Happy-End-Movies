@@ -1,6 +1,5 @@
 import classes from "./Bewertung.module.css";
-import {FaSearch} from "react-icons/all";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
 import {searchMovieUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
