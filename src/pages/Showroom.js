@@ -1,10 +1,13 @@
 import classes from "./Showroom.module.css";
 import SearchResultBox from "../components/SearchResultBox";
 import {useEffect, useState} from "react";
+import SearchBar from "../components/SearchBar";
 
 
 const Showroom = ({moviesDB, dbLength, callback}) => {
 
+    const [movieName, setMovieName] = useState(window.location.hash.substring(1).split('%20').join(' '))
+    const [searchFor, setSearchFor] = useState('')
     const [filteredMovies, setFilteredMovies] = useState([])
     const [filterLength, setFilterLength] = useState(dbLength)
 
@@ -52,6 +55,11 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                 </div>
             </div>
 
+            <div className={classes.filteredMoviesContainer}>
+                <SearchBar
+                    searchMovie={() => searchMovie(movieName)}/>
+            </div>
+
             {filteredMovies.length > 0 ?
                 <div className={classes.filteredMoviesContainer}>
 
@@ -94,6 +102,27 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
             const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
             setFilteredMovies(movieFilter)
             setFilterLength(movieFilter.length)
+        }
+    }
+
+    /**
+     * Filter Movies
+     */
+    function filterMovies() {
+
+    }
+
+    /**
+     * Search Movie by clicking the Search Button
+     * -set page to number 1
+     * -delete die input field
+     * @return {Promise<void>}
+     */
+    function searchMovie(movieName) {
+        if (movieName.length > 0) {
+            setFilteredMovies(filterMovies());
+            setSearchFor(movieName);
+            window.location.hash = movieName;
         }
     }
 

@@ -3,30 +3,22 @@ import {FaSearch} from "react-icons/all";
 import {useEffect, useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
 import {searchMovieUrl} from "../constants";
+import SearchBar from "../components/SearchBar";
 
 const Bewertung = (props) => {
 
-    const [movieName, setMovieName] = useState(window.location.hash.substring(1).split('%20').join(' '))
     const [searchedMovies, setSearchedMovies] = useState([])
     const [searchFor, setSearchFor] = useState('')
     const [totalResults, setTotalResults] = useState(0)
     const [totalPages, setTotalPages] = useState()
     const [activePage, setActivePage] = useState(0)
 
-    useEffect(() => {
-        if(movieName.length > 3){
-            searchMovie()
-        }
-    }, [movieName])
-
 
     return (
         <div className={classes.bewertungSection}>
-            <div className={classes.searchBarContainer}>
-                <input className={classes.searchInput} type="text" value={movieName}
-                       onChange={e => setMovieName(e.target.value)}/>
-                <FaSearch onClick={searchAndClear} className={classes.searchButton}/>
-            </div>
+
+            <SearchBar
+                searchMovie={(movieName => searchMovie(movieName))}/>
 
             {searchFor ? <div>Suchergebnisse für: {searchFor}</div>
                 : ''}
@@ -53,13 +45,6 @@ const Bewertung = (props) => {
         </div>
     )
 
-    /**
-     * Clear search Input and search movie
-     */
-    async function searchAndClear() {
-        await searchMovie()
-        setMovieName('');
-    }
 
     /**
      * Search Movie by clicking the Search Button
@@ -67,7 +52,7 @@ const Bewertung = (props) => {
      * -delete die input field
      * @return {Promise<void>}
      */
-    async function searchMovie() {
+    async function searchMovie(movieName) {
         if (movieName.length > 0) {
             setSearchedMovies(await getJsonFromMovieDB(movieName, 1));
             setActivePage(1);
