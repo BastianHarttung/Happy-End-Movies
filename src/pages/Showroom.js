@@ -17,7 +17,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
 
     const pages = Math.ceil(filterLength / pageLength)
 
-    const filteredMoviesPart = filteredMovies.slice(index, Math.max(pageLength,pageLength * (activePage+1)))
+    const filteredMoviesPart = filteredMovies.slice(index, Math.max(pageLength, pageLength * (activePage + 1)))
 
     /**
      * Sort Movies by Title and update movies after Timeout
@@ -99,7 +99,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
 
                     <div className={classes.infosContainer}>
                         {Array.from(Array(pages).keys()).map((page) =>
-                                <span key={page+1}
+                                <span key={page + 1}
                                       onClick={() => changePage(page)}
                                       className={activePage === page ? classes.activePageBtn : classes.pageBtn}>
                         {page + 1}</span>
@@ -140,9 +140,19 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
 
     /**
      * Filter Movies
+     * @param {string} movieName
      */
     function filterMovies(movieName) {
-        const movieFilter = moviesDB.filter(movie => movie.title.toLowerCase() === movieName.toLowerCase())
+        const movieFilter = moviesDB.filter(movie => {
+                if (movie.title) {
+                    const movieTitleSplit = movie.title.split(' ')
+                    for (let i = 0; i < movieTitleSplit.length; i++) {
+                        if (movieTitleSplit[i].toLowerCase() === movieName.toLowerCase())
+                            return true
+                    }
+                }
+            }
+        )
         setFilteredMovies(movieFilter)
         setSearchFilteredMovies(movieFilter)
         setFilterLength(movieFilter.length)
