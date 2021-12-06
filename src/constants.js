@@ -13,6 +13,7 @@ export const searchMovieUrl = `https://api.themoviedb.org/3/search/movie?api_key
 export const genreUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKeyTmdb}&language=de`
 export const fskUrl = `https://altersfreigaben.de/api2/s/`
 export const imageUrl = `https://image.tmdb.org/t/p/w500`
+export const imageUrlSmall = `https://image.tmdb.org/t/p/w200`
 export const castUrl = (movieId) => `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKeyTmdb}&language=de`
 
 

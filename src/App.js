@@ -185,7 +185,7 @@ function App() {
         const castUrlMovie = castUrl(movieId);
         const response = await fetch(castUrlMovie);
         let data = await response.json();
-        console.log(data)
+        //console.log(data)
         let castArray = []
         for(let i = 0; i < Math.min(10,data.cast.length); i++) {
             castArray.push(data.cast[i])

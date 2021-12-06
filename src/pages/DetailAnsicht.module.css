@@ -1,21 +1,25 @@
 .detailsSection {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .movieBox {
+    width: 80%;
     height: 450px;
     display: flex;
     margin: 30px;
 }
 
 .detailsImage {
+    width: 300px;
     border: 1px solid black;
     margin-right: 30px;
 }
 
 .detailsContainer {
-    max-width: 600px;
+    width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -56,6 +60,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/*-------------------Actor-----------------------*/
+
+.actorContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -20px;
+}
+
+.actorProfile {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+}
+
+.actorImage {
+    height: 100px;
+    object-fit: cover;
+}
+.actorName {
+    margin: 4px;
+    text-align: center;
 }
 
 /*----------------Loader-------------------*/
@@ -125,6 +154,10 @@
     }
 }
 
+
+.descriptionHappyEndContainer {
+    width: 80%;
+}
 
 .happyEnd {
     font-weight: 500;
