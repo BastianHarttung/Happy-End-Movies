@@ -10,7 +10,7 @@ import DetailAnsicht from "./pages/DetailAnsicht";
 import Showroom from "./pages/Showroom";
 import Impressum from "./pages/Impressum";
 
-import {genreUrl, fskUrl} from "./constants"
+import {genreUrl, fskUrl, castUrl} from "./constants"
 
 import firestoreDb from "./firebase-config";
 import {doc, setDoc, getDocs, collection} from 'firebase/firestore';
@@ -54,9 +54,7 @@ function App() {
                            exact={true}
                            element={
                                <DetailAnsicht
-                                   parentCallback={(movieForDb) => {
-                                       saveMovieToDb(movieForDb) }
-                                   }
+                                   parentCallback={(movieForDb) => saveMovieToDb(movieForDb) }
                                    movie={selectedMovie}/>}
                     />
 
@@ -129,13 +127,14 @@ function App() {
      * @return {Promise<void>}
      */
     async function saveSelectedMovie(movie) {
-        console.log('saveselectedMovie ', movie)
-        const genres = await getGenreNames(movie)
-        const fsk = await getFskFromApi(movie.id)
+        //console.log('saveselectedMovie ', movie);
+        const genres = await getGenreNames(movie);
+        const fsk = await getFskFromApi(movie.id);
+        const cast = await getCastForMovie(movie.id);
         const hasHappyEnd = movie.has_happy_end === true ? true
             : movie.has_happy_end === false ? false
                 : 'neutral'
-        setSelectedMovie({...movie, genres: genres, fsk: fsk, has_happy_end: hasHappyEnd})
+        setSelectedMovie({...movie, genres: genres, fsk: fsk, has_happy_end: hasHappyEnd, cast: cast})
     }
 
     /**
@@ -167,7 +166,7 @@ function App() {
     /**
      * Get FSK from alterfreigaben.de API
      * @param {number} movieId
-     * @return {Promise<any>} {number} The FSK example: 16
+     * @return {Promise<number>} The FSK example: 16
      * TODO CORS?
      */
     async function getFskFromApi(movieId) {
@@ -175,6 +174,23 @@ function App() {
         const response = await fetch(fskUrlMovie);
         let data = await response.json();
         return data
+    }
+
+    /**
+     * Get Cast for Movie
+     * @param {number} movieId
+     * @return {Promise<object array>}
+     */
+    async function getCastForMovie(movieId) {
+        const castUrlMovie = castUrl(movieId);
+        const response = await fetch(castUrlMovie);
+        let data = await response.json();
+        console.log(data)
+        let castArray = []
+        for(let i = 0; i < Math.min(10,data.cast.length); i++) {
+            castArray.push(data.cast[i])
+        }
+        return castArray
     }
 
 }

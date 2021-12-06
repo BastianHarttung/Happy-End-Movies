@@ -1,14 +1,18 @@
 export const emptyMovieArray = [
-    {id: 1,title: 'Searching...', poster_path: null},
-    {id: 2,title: 'Searching...', poster_path: null},
-    {id: 3,title: 'Searching...', poster_path: null},
-    {id: 4,title: 'Searching...', poster_path: null},
-    {id: 5,title: 'Searching...', poster_path: null}
+    {id: 1, title: 'Searching...', poster_path: null},
+    {id: 2, title: 'Searching...', poster_path: null},
+    {id: 3, title: 'Searching...', poster_path: null},
+    {id: 4, title: 'Searching...', poster_path: null},
+    {id: 5, title: 'Searching...', poster_path: null}
 ]
 
-export const searchAllUrl = 'https://api.themoviedb.org/3/search/multi?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&include_adult=false&query='
-export const searchMovieUrl = 'https://api.themoviedb.org/3/search/movie?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&query='
-export const genreUrl = "https://api.themoviedb.org/3/genre/movie/list?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de"
-export const fskUrl = "https://altersfreigaben.de/api2/s/"
-export const imageUrl = "https://image.tmdb.org/t/p/w500"
+const apiKeyTmdb = 'd2aa68fbfa10f4f356fe29718bfa3508'
+
+export const searchAllUrl = `https://api.themoviedb.org/3/search/multi?api_key=${apiKeyTmdb}&language=de&include_adult=false&query=`
+export const searchMovieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKeyTmdb}&language=de&query=`
+export const genreUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKeyTmdb}&language=de`
+export const fskUrl = `https://altersfreigaben.de/api2/s/`
+export const imageUrl = `https://image.tmdb.org/t/p/w500`
+export const castUrl = (movieId) => `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKeyTmdb}&language=de`
+
 
