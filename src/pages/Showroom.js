@@ -10,6 +10,15 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
     const [searchFilteredMovies, setSearchFilteredMovies] = useState([]) //TODO
     const [filterLength, setFilterLength] = useState(dbLength)
 
+    const [activePage, setActivePage] = useState(0)
+    const pageLength = 24;
+    const index = activePage * pageLength;
+
+
+    const pages = Math.ceil(filterLength / pageLength)
+
+    const filteredMoviesPart = filteredMovies.slice(index, Math.max(pageLength,pageLength * (activePage+1)))
+
     /**
      * Sort Movies by Title and update movies after Timeout
      */
@@ -52,14 +61,17 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
         <section className={classes.showroomSection}>
             <div className={classes.sidebar} style={{top: scrollPosition + 'px'}}>
                 <div className={classes.filterContainer}>
-                    <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, 'all')} className={classes.filter}>Alle
+                    <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, 'all')}
+                         className={classes.filter}>Alle
                         Filme
                     </div>
-                    <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, true)} className={classes.filter}>Filme
+                    <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, true)}
+                         className={classes.filter}>Filme
                         mit
                         Happy End
                     </div>
-                    <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, false)} className={classes.filter}>Filme
+                    <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, false)}
+                         className={classes.filter}>Filme
                         ohne
                         Happy End
                     </div>
@@ -75,7 +87,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                 <div className={classes.filteredMoviesContainer}>
 
                     <div className={classes.filteredMoviesResult}>
-                        {filteredMovies.map((movie) =>
+                        {filteredMoviesPart.map((movie) =>
                             <SearchResultBox
                                 key={movie.id}
                                 movie={movie}
@@ -86,7 +98,16 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                     </div>
 
                     <div className={classes.infosContainer}>
-                        <div>{filterLength} Filme</div>
+                        {Array.from(Array(pages).keys()).map((page) =>
+                                <span key={page+1}
+                                      onClick={() => changePage(page)}
+                                      className={activePage === page ? classes.activePageBtn : classes.pageBtn}>
+                        {page + 1}</span>
+                        )}
+                    </div>
+
+                    <div className={classes.infosContainer}>
+                        <div>Gesamt {filterLength} Filme</div>
                     </div>
 
                 </div>
@@ -141,6 +162,14 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
             window.location.hash = movieName;
             filterMovies(movieName)
         }
+    }
+
+    /**
+     * Change Page Number
+     * @param page
+     */
+    function changePage(page) {
+        setActivePage(page)
     }
 
 }

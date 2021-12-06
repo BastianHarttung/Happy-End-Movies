@@ -47,6 +47,21 @@
     margin-top: 20px;
 }
 
+/*--------------Page---------------------*/
+
+.pageBtn {
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.activePageBtn {
+    color: #66caee;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
+}
+
 /*-------------Detailbox-------------*/
 
 .detailbox {
@@ -93,6 +108,7 @@
     width: 1em;
     height: 4em;
 }
+
 .loader {
     color: #588afe;
     text-indent: -9999em;
@@ -105,20 +121,24 @@
     -webkit-animation-delay: -0.16s;
     animation-delay: -0.16s;
 }
+
 .loader:before,
 .loader:after {
     position: absolute;
     top: 0;
     content: '';
 }
+
 .loader:before {
     left: -1.5em;
     -webkit-animation-delay: -0.32s;
     animation-delay: -0.32s;
 }
+
 .loader:after {
     left: 1.5em;
 }
+
 @-webkit-keyframes load1 {
     0%,
     80%,
@@ -131,6 +151,7 @@
         height: 5em;
     }
 }
+
 @keyframes load1 {
     0%,
     80%,
