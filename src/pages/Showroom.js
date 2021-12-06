@@ -52,14 +52,14 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
         <section className={classes.showroomSection}>
             <div className={classes.sidebar} style={{top: scrollPosition + 'px'}}>
                 <div className={classes.filterContainer}>
-                    <div onClick={() => filterMoviesByHappyEnd(filteredMovies, 'all')} className={classes.filter}>Alle
+                    <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, 'all')} className={classes.filter}>Alle
                         Filme
                     </div>
-                    <div onClick={() => filterMoviesByHappyEnd(filteredMovies, true)} className={classes.filter}>Filme
+                    <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, true)} className={classes.filter}>Filme
                         mit
                         Happy End
                     </div>
-                    <div onClick={() => filterMoviesByHappyEnd(filteredMovies, false)} className={classes.filter}>Filme
+                    <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, false)} className={classes.filter}>Filme
                         ohne
                         Happy End
                     </div>
@@ -109,6 +109,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
         if (hasHappyEnd === 'all') {
             setFilterLength(moviesDB.length)
             setFilteredMovies(moviesDB)
+            setSearchFilteredMovies(moviesDB)
         } else {
             const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
             setFilteredMovies(movieFilter)
@@ -122,6 +123,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
     function filterMovies(movieName) {
         const movieFilter = moviesDB.filter(movie => movie.title.toLowerCase() === movieName.toLowerCase())
         setFilteredMovies(movieFilter)
+        setSearchFilteredMovies(movieFilter)
         setFilterLength(movieFilter.length)
     }
 
@@ -132,6 +134,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
     function searchMovieDb(movieName) {
         if (movieName.length === 0) {
             setFilteredMovies(moviesDB)
+            setSearchFilteredMovies(moviesDB)
             setFilterLength(moviesDB.length)
             window.location.hash = '';
         } else {
