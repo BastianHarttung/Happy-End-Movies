@@ -92,8 +92,8 @@
 
 .actorContainer {
     display: flex;
-    flex-wrap: wrap;
-    margin-left: -20px;
+    overflow-x: auto;
+    margin-bottom: 10px;
 }
 
 .actorProfile {
@@ -101,24 +101,35 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 5px;
+    margin-right: 20px;
 }
 
 .actorImage {
-    height: 100px;
+    height: 130px;
     object-fit: cover;
 }
 
 .actorName {
-    margin: 4px;
+    margin: 3px;
     text-align: center;
 }
 
+.showMoreContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
 .zeigeMehrBtn {
+    width: 100px;
     background-color: transparent;
     border: 0px;
+    font-weight: 600;
     cursor: pointer;
+    padding: 5px;
+    margin: 5px 5px 15px 5px;
 }
+
 
 /*----------------Loader-------------------*/
 .loaderContainer {

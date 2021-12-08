@@ -42,8 +42,8 @@ const DetailAnsicht = (props) => {
             <div className={classes.movieHeadContainer}>
                 <h2 className={classes.title}>{props.movie.title}</h2>
                 <img src={props.movie.backdrop_path.length > 0 ?
-                        imageUrl + props.movie.backdrop_path
-                        : imageUrl + props.movie.poster_path}
+                    imageUrl + props.movie.backdrop_path
+                    : imageUrl + props.movie.poster_path}
                      className={classes.headImage}
                      alt=""/>
             </div>
@@ -105,9 +105,17 @@ const DetailAnsicht = (props) => {
                         })
                         : ''}
 
-                    <button onClick={() => setShowActors(showActors + 3)}
-                            className={classes.zeigeMehrBtn}>Zeige mehr...
-                    </button>
+                    <div className={classes.showMoreContainer}>
+                        {showActors > 5 ?
+                            <button onClick={() => setShowActors(5)}
+                                    className={classes.zeigeMehrBtn}>reduziere Liste
+                            </button>
+                            : ''}
+                        <button onClick={() => setShowActors(showActors + 3)}
+                                className={classes.zeigeMehrBtn}>Zeige mehr...
+                        </button>
+                    </div>
+
 
                 </div>
 
