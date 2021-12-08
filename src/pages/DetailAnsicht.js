@@ -1,13 +1,18 @@
 import classes from "./DetailAnsicht.module.css";
+
 import emptyImage from "../assets/img/movie-poster.png"
+import imageActorMan from '../assets/img/actor.png'
+import imageActorWoman from '../assets/img/actor_girl.png'
+
 import {useNavigate} from "react-router-dom";
 import {useState, useEffect} from "react";
+
 import {FaSmileBeam, FaSadTear, FaMeh} from "react-icons/all";
 import {imageUrl, imageUrlSmall} from "../constants";
 
+
 const DetailAnsicht = (props) => {
     const navigate = useNavigate();
-    const showActors = 5;
 
     const genres = props.movie.genres ? props.movie.genres : []
 
@@ -15,6 +20,7 @@ const DetailAnsicht = (props) => {
     const [happyMovie, setHappyMovie] = useState(props.movie.has_happy_end === true ? true
         : props.movie.has_happy_end === false ? false
             : 'neutral')
+    const [showActors, setShowActors] = useState(5)
 
     useEffect(() => {
         props.movie.has_happy_end === true ? setHappyMovie(true)
@@ -32,6 +38,16 @@ const DetailAnsicht = (props) => {
 
     return (
         <section className={classes.detailsSection}>
+
+            <div className={classes.movieHeadContainer}>
+                <h2 className={classes.title}>{props.movie.title}</h2>
+                <img src={props.movie.backdrop_path.length > 0 ?
+                        imageUrl + props.movie.backdrop_path
+                        : imageUrl + props.movie.poster_path}
+                     className={classes.headImage}
+                     alt=""/>
+            </div>
+
             <div className={classes.movieBox}>
                 <img className={classes.detailsImage}
                      src={props.movie.poster_path ? imageUrl + props.movie.poster_path : emptyImage}
@@ -41,7 +57,6 @@ const DetailAnsicht = (props) => {
                     <div>
 
                         <div className={classes.infosHead}>
-                            <h3>{props.movie.title}</h3>
                             {props.movie.fsk >= 0 ?
                                 <div className={classes.fsk}
                                      style={{backgroundColor: setColorForFsk(props.movie.fsk)}}>
@@ -50,14 +65,18 @@ const DetailAnsicht = (props) => {
                                 : ''}
                         </div>
 
-                        <div className={classes.filmInfos}>
-                            <div>
-                                {genres.map((genre, index) => {
-                                    return <div key={index}>{genre}</div>
-                                })}
-                            </div>
-                            <div className={classes.voting}>{props.movie.vote_average}</div>
+                        <p className={classes.releaseYear}>{props.movie.release_date ?
+                            props.movie.release_date.slice(0, 4)
+                            : ''}
+                        </p>
+
+                        <div className={classes.genres}>
+                            {genres.map((genre, index) => {
+                                return <div key={index}>{genre}</div>
+                            })}
                         </div>
+
+                        <div className={classes.voting}>{props.movie.vote_average}</div>
 
                     </div>
 
@@ -67,17 +86,33 @@ const DetailAnsicht = (props) => {
             <div className={classes.descriptionHappyEndContainer}>
 
                 <div className={classes.actorContainer}>
-                    {props.movie.cast.slice(0, showActors).map((actor, index) => {
-                        return <div key={index} className={classes.actorProfile}>
-                            <img className={classes.actorImage} src={imageUrlSmall + actor.profile_path}/>
-                            <h5 className={classes.actorName}>{actor.name}</h5>
-                        </div>
-                    })}
+
+                    {props.movie.cast ?
+                        props.movie.cast.slice(0, showActors).map((actor, index) => {
+                            return (
+                                <div key={index} className={classes.actorProfile}>
+                                    <img className={classes.actorImage}
+                                         src={actor.profile_path
+                                             ? imageUrlSmall + actor.profile_path
+                                             : actor.gender === 2
+                                                 ? imageActorMan
+                                                 : imageActorWoman}
+                                         alt={actor.name}
+                                         title={actor.name}/>
+                                    <h5 className={classes.actorName}>{actor.name}</h5>
+                                </div>
+                            )
+                        })
+                        : ''}
+
+                    <button onClick={() => setShowActors(showActors + 3)}
+                            className={classes.zeigeMehrBtn}>Zeige mehr...
+                    </button>
+
                 </div>
 
-                {props.movie.title
-                    ? <div>Beschreibung: {props.movie.overview}</div>
-                    : <div className={classes.loader}>Loading...</div>}
+                <div>Beschreibung: {props.movie.overview}</div>
+
                 <div className={classes.happyEnd}>Happy End ?</div>
 
                 <div className={classes.smileys}>
@@ -104,10 +139,11 @@ const DetailAnsicht = (props) => {
                     </div>
 
                     <button onClick={() => {
-                        props.parentCallback(movieForDb);
+                        props.saveMovieToDb(movieForDb);
                         setHappyMovie('')
                         navigate('/showroom')
-                    }} className={classes.saveButton}>In Datenbank speichern und zum Showroom
+                    }}
+                            className={classes.saveButton}>In Datenbank speichern und zum Showroom
                     </button>
 
                 </div>

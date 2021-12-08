@@ -54,7 +54,7 @@ function App() {
                            exact={true}
                            element={
                                <DetailAnsicht
-                                   parentCallback={(movieForDb) => saveMovieToDb(movieForDb) }
+                                   saveMovieToDb={(movieForDb) => saveMovieToDb(movieForDb)}
                                    movie={selectedMovie}/>}
                     />
 
@@ -127,14 +127,29 @@ function App() {
      * @return {Promise<void>}
      */
     async function saveSelectedMovie(movie) {
-        //console.log('saveselectedMovie ', movie);
         const genres = await getGenreNames(movie);
         const fsk = await getFskFromApi(movie.id);
         const cast = await getCastForMovie(movie.id);
+        const directors = await getDirectorForMovie(movie.id);
         const hasHappyEnd = movie.has_happy_end === true ? true
             : movie.has_happy_end === false ? false
                 : 'neutral'
-        setSelectedMovie({...movie, genres: genres, fsk: fsk, has_happy_end: hasHappyEnd, cast: cast})
+        setSelectedMovie({
+            ...movie,
+            genres: genres,
+            fsk: fsk,
+            has_happy_end: hasHappyEnd,
+            cast: cast,
+            directors: directors
+        })
+        console.log({
+            ...movie,
+            genres: genres,
+            fsk: fsk,
+            has_happy_end: hasHappyEnd,
+            cast: cast,
+            directors: directors
+        })
     }
 
     /**
@@ -179,18 +194,38 @@ function App() {
     /**
      * Get Cast for Movie
      * @param {number} movieId
-     * @return {Promise<object array>}
+     * @return {Promise<object array>} All Actors
      */
     async function getCastForMovie(movieId) {
         const castUrlMovie = castUrl(movieId);
         const response = await fetch(castUrlMovie);
         let data = await response.json();
-        //console.log(data)
         let castArray = []
-        for(let i = 0; i < Math.min(10,data.cast.length); i++) {
-            castArray.push(data.cast[i])
+        for (let i = 0; i < data.cast.length; i++) {
+            if (data.cast[i].known_for_department === 'Acting') {
+                castArray.push(data.cast[i])
+            }
         }
         return castArray
+    }
+
+    /**
+     * Get Cast for Movie
+     * @param {number} movieId
+     * @return {Promise<object array>} Directors
+     */
+    async function getDirectorForMovie(movieId) {
+        const castUrlMovie = castUrl(movieId);
+        const response = await fetch(castUrlMovie);
+        let data = await response.json();
+        let directorArray = []
+        for (let i = 0; i < data.crew.length; i++) {
+            if (data.crew[i].job === 'Director') {
+                directorArray.push(data.crew[i])
+            }
+        }
+        console.log(directorArray)
+        return directorArray
     }
 
 }

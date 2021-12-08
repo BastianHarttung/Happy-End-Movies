@@ -3,17 +3,38 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 30px 10px;
 }
+
+/*-------------------Head ---------------------*/
+.movieHeadContainer {
+    width: 80%;
+    position: relative;
+}
+.title {
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    font-size: 35px;
+}
+.headImage {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    opacity: 0.3;
+}
+
+/*-----------------Movie Infos--------------------*/
 
 .movieBox {
     width: 80%;
-    height: 450px;
+    height: 400px;
     display: flex;
-    margin: 30px;
+    margin: 15px;
 }
 
 .detailsImage {
-    width: 300px;
+    width: 266px;
     border: 1px solid black;
     margin-right: 30px;
 }
@@ -44,22 +65,27 @@
     font-weight: 600;
     border: 1px solid black;
     border-radius: 50%;
-    margin-left: 20px;
+    margin: 5px;
 }
 
-.filmInfos {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+.releaseYear {
+    margin: 10px 0px;
+}
+
+.genres {
+    padding: 10px 0px;
 }
 
 .voting {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     background-color: orange;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 10px 0px;
 }
 
 /*-------------------Actor-----------------------*/
@@ -82,12 +108,23 @@
     height: 100px;
     object-fit: cover;
 }
+
 .actorName {
     margin: 4px;
     text-align: center;
 }
 
+.zeigeMehrBtn {
+    background-color: transparent;
+    border: 0px;
+    cursor: pointer;
+}
+
 /*----------------Loader-------------------*/
+.loaderContainer {
+    height: 100px;
+}
+
 .loader,
 .loader:before,
 .loader:after {
