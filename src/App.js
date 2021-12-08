@@ -224,7 +224,6 @@ function App() {
                 directorArray.push(data.crew[i])
             }
         }
-        console.log(directorArray)
         return directorArray
     }
 

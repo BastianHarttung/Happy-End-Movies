@@ -23,10 +23,11 @@ const DetailAnsicht = (props) => {
     const [showActors, setShowActors] = useState(5)
 
     useEffect(() => {
+        console.log('props.movie',props.movie)
         props.movie.has_happy_end === true ? setHappyMovie(true)
             : props.movie.has_happy_end === false ? setHappyMovie(false)
                 : setHappyMovie('neutral')
-    }, [props.movie.has_happy_end]);
+    }, [props.movie.has_happy_end,props.movie]);
 
     function setColorForFsk(fsk) {
         if (fsk === 0) return 'lightgray'

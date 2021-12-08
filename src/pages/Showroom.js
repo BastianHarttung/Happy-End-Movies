@@ -151,6 +151,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                             return true
                     }
                 }
+
             }
         )
         setFilteredMovies(movieFilter)
