@@ -202,9 +202,7 @@ function App() {
         let data = await response.json();
         let castArray = []
         for (let i = 0; i < data.cast.length; i++) {
-            if (data.cast[i].known_for_department === 'Acting') {
                 castArray.push(data.cast[i])
-            }
         }
         return castArray
     }
