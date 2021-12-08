@@ -11,12 +11,14 @@
     width: 80%;
     position: relative;
 }
+
 .title {
     position: absolute;
     top: 40px;
     left: 50px;
     font-size: 35px;
 }
+
 .headImage {
     width: 100%;
     height: 200px;
@@ -76,6 +78,29 @@
     padding: 10px 0px;
 }
 
+/*-------------------Director-------------------------*/
+.director {
+    margin: 3px 0px;
+}
+.directorContainer {
+    width: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.directorName {
+    font-size: 13px;
+    text-align: center;
+}
+
+.directorImage {
+    height: 90px;
+    width: 70px;
+    object-fit: cover;
+}
+
+
 .voting {
     width: 40px;
     height: 40px;
@@ -89,11 +114,12 @@
 }
 
 /*-------------------Actor-----------------------*/
-
 .actorContainer {
+    background-color: #e6edff;
     display: flex;
     overflow-x: auto;
     margin-bottom: 10px;
+    padding: 10px 0px;
 }
 
 .actorProfile {
@@ -101,17 +127,24 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 20px;
+    margin-right: 10px;
+    margin-left: 5px;
 }
 
 .actorImage {
-    height: 130px;
+    height: 140px;
     object-fit: cover;
 }
 
 .actorName {
     margin: 3px;
     text-align: center;
+}
+
+.character {
+    font-size: 13px;
+    text-align: center;
+    margin: 0;
 }
 
 .showMoreContainer {
@@ -263,7 +296,6 @@
 }
 
 /*---------------save Button-------------------------------*/
-
 .saveButton {
     color: white;
     background-color: var(--main-color);

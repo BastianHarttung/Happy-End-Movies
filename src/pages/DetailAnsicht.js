@@ -71,10 +71,29 @@ const DetailAnsicht = (props) => {
                         </p>
 
                         <div className={classes.genres}>
-                            {genres.map((genre, index) => {
-                                return <div key={index}>{genre}</div>
-                            })}
+                            {genres.map((genre, index) => <span key={index}>{genre}/ </span>)}
                         </div>
+
+                        {props.movie.directors.map((director, index) => {
+                                return (
+                                    <>
+                                        <h5 className={classes.director}>Regie</h5>
+                                        <div className={classes.directorContainer}>
+                                            <div key={index}
+                                                 className={classes.directorName}>{director.name}</div>
+                                            <img src={director.profile_path ?
+                                                imageUrlSmall + director.profile_path
+                                                : director.gender === 2
+                                                    ? imageActorMan
+                                                    : imageActorWoman}
+                                                 className={classes.directorImage}
+                                                 alt={director.name}
+                                                 title={director.name}/>
+                                        </div>
+                                    </>
+                                )
+                            }
+                        )}
 
                         <div className={classes.voting}>{props.movie.vote_average}</div>
 
@@ -100,6 +119,7 @@ const DetailAnsicht = (props) => {
                                          alt={actor.name}
                                          title={actor.name}/>
                                     <h5 className={classes.actorName}>{actor.name}</h5>
+                                    <p className={classes.character}>"{actor.character}"</p>
                                 </div>
                             )
                         })
