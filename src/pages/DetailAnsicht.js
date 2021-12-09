@@ -143,9 +143,11 @@ const DetailAnsicht = (props) => {
                                         className={classes.zeigeMehrBtn}>reduziere Liste
                                 </button>
                                 : ''}
-                            <button onClick={() => setShowActors(showActors + 3)}
-                                    className={classes.zeigeMehrBtn}>Zeige mehr...
-                            </button>
+                            {showActors <= filteredActors.length ?
+                                <button onClick={() => setShowActors(showActors + 3)}
+                                        className={classes.zeigeMehrBtn}>Zeige mehr...
+                                </button>
+                                : ''}
                         </div>
                     </div>
 
@@ -215,7 +217,7 @@ const DetailAnsicht = (props) => {
      * Listen if the Enter-Button is pressed
      */
     function keyPressEvent(event) {
-        if(event.key === 'Enter'){
+        if (event.key === 'Enter') {
             searchForActor(searchActor)
         }
     }
