@@ -100,7 +100,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                     <div className={classes.infosContainer}>
                         {Array.from(Array(pages).keys()).map((page) =>
                                 <span key={page + 1}
-                                      onClick={() => changePage(page)}
+                                      onClick={() => setActivePage(page)}
                                       className={activePage === page ? classes.activePageBtn : classes.pageBtn}>
                         {page + 1}</span>
                         )}
@@ -147,11 +147,11 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                 if (movie.title) {
                     const movieTitleSplit = movie.title.split(' ')
                     for (let i = 0; i < movieTitleSplit.length; i++) {
-                        if (movieTitleSplit[i].toLowerCase() === movieName.toLowerCase())
+                        if (movieTitleSplit[i].toLowerCase() === movieName.toLowerCase()) {
                             return true
+                        }
                     }
-                }
-
+                }else return false
             }
         )
         setFilteredMovies(movieFilter)
@@ -173,14 +173,6 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
             window.location.hash = movieName;
             filterMovies(movieName)
         }
-    }
-
-    /**
-     * Change Page Number
-     * @param page
-     */
-    function changePage(page) {
-        setActivePage(page)
     }
 
 }

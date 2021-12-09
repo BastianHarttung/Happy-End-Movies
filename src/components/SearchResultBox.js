@@ -1,30 +1,12 @@
 import classes from "./SearchResultBox.module.css";
 import emptyImage from "../assets/img/movie-poster.png"
-import {Link} from "react-router-dom";
 import {imageUrl} from "../constants";
 import {FaSmileBeam, FaSadTear} from "react-icons/all";
-
+import {useNavigate} from "react-router-dom";
 
 const SearchResultBox = (props) => {
 
-    /**
-     * Add a Condition to <Link> tag, else show <div>
-     * @param children Are the text between the html-tag
-     * @param to    Path to the next site
-     * @param condition Condition only with this condition the Link runs
-     * @return {JSX.Element} either a <Link>-tag or a <div>
-     * @constructor
-     */
-    const ConditionalLink = ({children, to, condition}) => (!!condition && to)
-        ? <Link to={{
-                    pathname: `${to}`,
-                    hash: `#${props.movie.title}`
-                }}
-                onClick={() => {
-                    props.parentCallback(props.movie)
-                }}
-                className={classes.movieContainer}>{children}</Link>
-        : <div className={classes.movieContainer}>{children}</div>
+    const navigate = useNavigate();
 
     const Smiley = () => {
         if (props.movie.has_happy_end === true) return <FaSmileBeam className={classes.smileyLaugh}/>
@@ -33,18 +15,25 @@ const SearchResultBox = (props) => {
     }
 
     return (
-        <ConditionalLink to={props.to}
-                         condition={props.movie.title !== 'Searching...'}>
+        <div className={classes.movieContainer}
+             onClick={async () => {
+                 await props.parentCallback(props.movie)
+                     .then(() => {
+                         navigate(props.to);
+                         window.location.hash = `${props.movie.title}`;
+                     })
+             }}>
 
             <img className={classes.movieImage}
-                 src={props.movie.poster_path != null ? imageUrl + props.movie.poster_path : emptyImage} alt="Poster"/>
+                 src={props.movie.poster_path != null ? imageUrl + props.movie.poster_path : emptyImage}
+                 alt="Poster"/>
 
             <div className={classes.movieInfosContainer}>
                 <div className={classes.movieTitle}>{props.movie.title}</div>
                 <Smiley/>
             </div>
 
-        </ConditionalLink>
+        </div>
     )
 
 }

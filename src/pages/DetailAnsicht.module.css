@@ -113,9 +113,28 @@
     margin: 10px 0px;
 }
 
-/*-------------------Actor-----------------------*/
-.actorContainer {
+/*-------------------Actor Section-----------------------*/
+.actorSearchContainer {
     background-color: #e6edff;
+    padding: 10px;
+}
+.searchBtn {
+    font-size: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.searchContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.searchInput {
+    height: 17px;
+    width: 300px;
+}
+
+/*---------Actor------------*/
+.actorContainer {
     display: flex;
     overflow-x: auto;
     margin-bottom: 10px;

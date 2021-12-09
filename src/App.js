@@ -123,7 +123,7 @@ function App() {
     /**
      * Get genres and fsk and has_happy_end
      * and save to selectedMovie state
-     * @param movie
+     * @param {object} movie
      * @return {Promise<void>}
      */
     async function saveSelectedMovie(movie) {
@@ -201,11 +201,7 @@ function App() {
         const response = await fetch(castUrlMovie);
         let data = await response.json();
         let castArray = []
-        for (let i = 0; i < data.cast.length; i++) {
-            if (data.cast[i].known_for_department === 'Acting') {
-                castArray.push(data.cast[i])
-            }
-        }
+        data.cast.forEach(actor => castArray.push(actor))
         return castArray
     }
 
