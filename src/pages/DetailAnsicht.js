@@ -15,7 +15,7 @@ const DetailAnsicht = (props) => {
 
     const navigate = useNavigate();
 
-    const genres = props.movie.genres ? props.movie.genres : ['a','b']
+    const genres = props.movie.genres ? props.movie.genres : ['a', 'b']
 
     const [movieForDb, setMovieForDb] = useState(props.movie)
     const [happyMovie, setHappyMovie] = useState(props.movie.has_happy_end === true ? true
@@ -30,7 +30,7 @@ const DetailAnsicht = (props) => {
         props.movie.has_happy_end === true ? setHappyMovie(true)
             : props.movie.has_happy_end === false ? setHappyMovie(false)
                 : setHappyMovie('neutral')
-    }, [props.movie.has_happy_end,props.movie]);
+    }, [props.movie.has_happy_end, props.movie]);
 
     function setColorForFsk(fsk) {
         if (fsk === 0) return 'lightgray'
@@ -61,11 +61,11 @@ const DetailAnsicht = (props) => {
                     <div>
 
                         <div className={classes.infosHead}>
-                            {props.movie.fsk >= 0 ?
-                                <div className={classes.fsk}
-                                     style={{backgroundColor: setColorForFsk(props.movie.fsk)}}>
-                                    {props.movie.fsk}
-                                </div>
+                            {(props.movie.fsk >= 0 && props.movie.fsk <= 21) ?
+                                <img src={`https://altersfreigaben.de/images/rating/de/${props.movie.fsk}_90.png`}
+                                     className={classes.fsk}
+                                     alt={props.movie.fsk}
+                                     title={`FSK ${props.movie.fsk}`}/>
                                 : ''}
                         </div>
 
@@ -78,26 +78,28 @@ const DetailAnsicht = (props) => {
                             {genres.map((genre, index) => <span key={index}>{genre}/ </span>)}
                         </div>
 
-                        {props.movie.directors.map((director, index) => {
-                                return (
-                                    <div key={index}>
-                                        <h5 className={classes.director}>Regie</h5>
-                                        <div className={classes.directorContainer}>
-                                            <div key={index}
-                                                 className={classes.directorName}>{director.name}</div>
-                                            <img src={director.profile_path ?
-                                                imageUrlSmall + director.profile_path
-                                                : director.gender === 2
-                                                    ? imageActorMan
-                                                    : imageActorWoman}
-                                                 className={classes.directorImage}
-                                                 alt={director.name}
-                                                 title={director.name}/>
+                        <h5 className={classes.director}>Regie</h5>
+                        <div className={classes.directorsContainer}>
+                            {props.movie.directors.map((director, index) => {
+                                    return (
+                                        <div key={index}>
+                                            <div className={classes.directorContainer}>
+                                                <div key={index}
+                                                     className={classes.directorName}>{director.name}</div>
+                                                <img src={director.profile_path ?
+                                                    imageUrlSmall + director.profile_path
+                                                    : director.gender === 2
+                                                        ? imageActorMan
+                                                        : imageActorWoman}
+                                                     className={classes.directorImage}
+                                                     alt={director.name}
+                                                     title={director.name}/>
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            }
-                        )}
+                                    )
+                                }
+                            )}
+                        </div>
 
                         <div className={classes.voting}>{props.movie.vote_average}</div>
 
@@ -154,7 +156,7 @@ const DetailAnsicht = (props) => {
 
                 </div>
 
-                <div>Beschreibung: {props.movie.overview}</div>
+                <div className={classes.description}><b>Beschreibung:</b> {props.movie.overview}</div>
 
                 <div className={classes.happyEnd}>Happy End ?</div>
 

@@ -42,7 +42,7 @@
 }
 
 .detailsContainer {
-    width: 300px;
+    min-width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -59,19 +59,11 @@
 }
 
 .fsk {
-    height: 30px;
-    width: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    border: 1px solid black;
-    border-radius: 50%;
-    margin: 5px;
+    height: 60px;
 }
 
 .releaseYear {
-    margin: 10px 0px;
+    margin: 10px 0px 0px 0px;
 }
 
 .genres {
@@ -82,11 +74,17 @@
 .director {
     margin: 3px 0px;
 }
+
+.directorsContainer {
+    display: flex;
+}
+
 .directorContainer {
     width: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-right: 12px;
 }
 
 .directorName {
@@ -110,7 +108,7 @@
     align-items: center;
     font-size: 18px;
     font-weight: 500;
-    margin: 10px 0px;
+    margin: 20px 0px;
 }
 
 /*-------------------Actor Section-----------------------*/
@@ -118,16 +116,19 @@
     background-color: #e6edff;
     padding: 10px;
 }
+
 .searchBtn {
     font-size: 20px;
     margin-right: 10px;
     cursor: pointer;
 }
+
 .searchContainer {
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
+
 .searchInput {
     height: 17px;
     width: 300px;
@@ -259,9 +260,13 @@
     width: 80%;
 }
 
+.description {
+    margin: 15px 0px;
+}
+
 .happyEnd {
     font-weight: 500;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 /*----------------Smileys----------------*/

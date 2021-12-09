@@ -6,7 +6,7 @@ import SearchBar from "../components/SearchBar";
 
 const Showroom = ({moviesDB, dbLength, callback}) => {
 
-    const [filteredMovies, setFilteredMovies] = useState([])
+    const [filteredMovies, setFilteredMovies] = useState(moviesDB ? moviesDB : [] )
     const [searchFilteredMovies, setSearchFilteredMovies] = useState([]) //TODO
     const [filterLength, setFilterLength] = useState(dbLength)
 
@@ -62,8 +62,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
             <div className={classes.sidebar} style={{top: scrollPosition + 'px'}}>
                 <div className={classes.filterContainer}>
                     <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, 'all')}
-                         className={classes.filter}>Alle
-                        Filme
+                         className={classes.filter}>Alle Filme
                     </div>
                     <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, true)}
                          className={classes.filter}>Filme
