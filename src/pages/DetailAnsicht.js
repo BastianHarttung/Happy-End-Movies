@@ -27,7 +27,6 @@ const DetailAnsicht = (props) => {
 
 
     useEffect(() => {
-        console.log('props.movie',props.movie)
         props.movie.has_happy_end === true ? setHappyMovie(true)
             : props.movie.has_happy_end === false ? setHappyMovie(false)
                 : setHappyMovie('neutral')
