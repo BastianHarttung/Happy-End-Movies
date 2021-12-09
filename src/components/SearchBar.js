@@ -14,11 +14,15 @@ const SearchBar = (props) => {
         if (movieName.length >= 3) {
             props.searchMovie(movieName)
         }
-    },[movieName])
+    }, [movieName])
 
     return (
         <div className={classes.searchBarContainer}>
-            <input className={classes.searchInput} type="text" value={movieName}
+            <input className={classes.searchInput}
+                   type="text"
+                   placeholder="Suche einen Film"
+                   value={movieName}
+                   onKeyPress={handleSearchMovie}
                    onChange={e => setMovieName(e.target.value)}/>
             <FaSearch onClick={() => {
                 props.searchMovie(movieName)
@@ -27,6 +31,16 @@ const SearchBar = (props) => {
             }} className={classes.searchButton}/>
         </div>
     )
+
+    /**
+     * Listen if the Enter-Button is pressed
+     */
+    function handleSearchMovie(event) {
+        if(event.key === 'Enter'){
+            console.log('Suche get los')
+            props.searchMovie(movieName)
+        }
+    }
 
 }
 

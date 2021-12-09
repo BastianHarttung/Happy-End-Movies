@@ -6,7 +6,7 @@ import SearchBar from "../components/SearchBar";
 
 const Showroom = ({moviesDB, dbLength, callback}) => {
 
-    const [filteredMovies, setFilteredMovies] = useState(moviesDB ? moviesDB : [] )
+    const [filteredMovies, setFilteredMovies] = useState(moviesDB ? moviesDB : [])
     const [searchFilteredMovies, setSearchFilteredMovies] = useState([]) //TODO
     const [filterLength, setFilterLength] = useState(dbLength)
 
@@ -14,10 +14,11 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
     const pageLength = 24;
     const index = activePage * pageLength;
 
-
     const pages = Math.ceil(filterLength / pageLength)
 
     const filteredMoviesPart = filteredMovies.slice(index, Math.max(pageLength, pageLength * (activePage + 1)))
+
+
 
     /**
      * Sort Movies by Title and update movies after Timeout
@@ -74,10 +75,13 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                         ohne
                         Happy End
                     </div>
+                    <div className={classes.sidebarInfos}>
+                        <div>Gesamt <b>{filterLength}</b> Filme</div>
+                    </div>
                 </div>
             </div>
 
-            <div className={classes.filteredMoviesContainer}>
+            <div className={classes.searchContainer}>
                 <SearchBar
                     searchMovie={(movieName) => searchMovieDb(movieName)}/>
             </div>
@@ -103,10 +107,6 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                                       className={activePage === page ? classes.activePageBtn : classes.pageBtn}>
                         {page + 1}</span>
                         )}
-                    </div>
-
-                    <div className={classes.infosContainer}>
-                        <div>Gesamt {filterLength} Filme</div>
                     </div>
 
                 </div>
@@ -143,8 +143,8 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
      */
     function filterMovies(movieName) {
         const movieFilter = moviesDB.filter(movie => {
-            return movie.title.toLowerCase().includes(movieName.toLowerCase()) ||
-                movie.original_title.toLowerCase().includes(movieName.toLowerCase())
+                return movie.title.toLowerCase().includes(movieName.toLowerCase()) ||
+                    movie.original_title.toLowerCase().includes(movieName.toLowerCase())
             }
         )
         setFilteredMovies(movieFilter)
