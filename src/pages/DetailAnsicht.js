@@ -125,7 +125,7 @@ const DetailAnsicht = (props) => {
 
                     <div className={classes.actorContainer}>
                         {props.movie.cast ?
-                            props.movie.cast.slice(0, showActors).map((actor, index) => {
+                            filteredActors.slice(0, showActors).map((actor, index) => {
                                 return (
                                     <div key={index} className={classes.actorProfile}>
                                         <img className={classes.actorImage}
@@ -205,12 +205,13 @@ const DetailAnsicht = (props) => {
      */
     function searchForActor(actorSearch) {
         if (actorSearch == '') {
-            console.log('suche nach actor leeren')
+            console.log('alle actors anzeigen')
             setFilteredActors(props.movie.cast)
         } else {
             console.log('suche nach ' + actorSearch)
             setFilteredActors(props.movie.cast.filter(actor => {
-                return actor.name.toLowerCase().includes(actorSearch.toLowerCase())
+                    return actor.name.toLowerCase().includes(actorSearch.toLowerCase()) ||
+                        actor.character.toLowerCase().includes(actorSearch.toLowerCase())
                 })
             )
         }
