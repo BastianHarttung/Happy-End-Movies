@@ -8,10 +8,38 @@ This Project was to learn more about API's and storing Data on Firebase.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+###Bewertung
+Search Movies in Database TMDB
+
+![img.png](src/assets/img/readme/bewertung.png)
+
+###Details
+Look for Details like genres, directors,voting on TMDB, description and more.
+Also get Information about FSK from altersfreigaben.de.
+And searching for actors and role names.\
+You can rate movie by Happy End and save your whole movie data to Firebase Firestore.
+
+![img.png](src/assets/img/readme/details.png)
+
+###Showroom
+Here you can see all Movies in Firebase Database and filter if the Movie
+has a Happy End or not.  
+You can also filter Movies at the search-bar.\
+By clicking on a Movie you come to the Details Section.
+
+![img.png](src/assets/img/readme/showroom.png)
+
+
+## First start
+
+You first have to install all dependencies by running
+`npm install`
+
 ## Available Scripts
 
 In the project directory, you can run:
 
+### `npm start` or
 ### `yarn start`
 
 Runs the app in the development mode.\
@@ -44,33 +72,3 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
