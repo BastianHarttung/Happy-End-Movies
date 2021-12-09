@@ -12,17 +12,17 @@ import {imageUrl, imageUrlSmall} from "../constants";
 
 
 const DetailAnsicht = (props) => {
-    console.log(props.movie)
+
     const navigate = useNavigate();
 
-    const genres = props.movie.genres ? props.movie.genres : []
+    const genres = props.movie.genres ? props.movie.genres : ['a','b']
 
     const [movieForDb, setMovieForDb] = useState(props.movie)
     const [happyMovie, setHappyMovie] = useState(props.movie.has_happy_end === true ? true
         : props.movie.has_happy_end === false ? false
             : 'neutral')
-    const [showActors, setShowActors] = useState(5)
 
+    const [showActors, setShowActors] = useState(5)
     const [searchActor, setSearchActor] = useState('')
 
 
@@ -80,7 +80,7 @@ const DetailAnsicht = (props) => {
 
                         {props.movie.directors.map((director, index) => {
                                 return (
-                                    <>
+                                    <div key={index}>
                                         <h5 className={classes.director}>Regie</h5>
                                         <div className={classes.directorContainer}>
                                             <div key={index}
@@ -94,7 +94,7 @@ const DetailAnsicht = (props) => {
                                                  alt={director.name}
                                                  title={director.name}/>
                                         </div>
-                                    </>
+                                    </div>
                                 )
                             }
                         )}
@@ -114,7 +114,7 @@ const DetailAnsicht = (props) => {
                         <FaSearch className={classes.searchBtn}>
                         </FaSearch>
                         <input type="text"
-
+                               placeholder='Suche Schauspieler oder Rolle'
                                className={classes.searchInput}
                                value={searchActor}
                                onChange={e => setSearchActor(e.target.value)}/>

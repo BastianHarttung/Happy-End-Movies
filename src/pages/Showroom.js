@@ -147,10 +147,11 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                 if (movie.title) {
                     const movieTitleSplit = movie.title.split(' ')
                     for (let i = 0; i < movieTitleSplit.length; i++) {
-                        if (movieTitleSplit[i].toLowerCase() === movieName.toLowerCase())
+                        if (movieTitleSplit[i].toLowerCase() === movieName.toLowerCase()) {
                             return true
+                        }
                     }
-                }
+                }else return false
             }
         )
         setFilteredMovies(movieFilter)
