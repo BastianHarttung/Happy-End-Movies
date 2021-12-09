@@ -15,10 +15,35 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.movieContainerClicked {
+    background-color: var(--main-color-white);
+    color: Black;
+    width: 200px;
+    position: relative;
+    border: 1px solid gray;
+    margin: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 150ms ease-in-out;
+    animation: big 1500ms infinite;
+    z-index: 100;
+}
+@keyframes big {
+    0% {
+        transform: scale(1.1);
+    }
+    50% {
+        transform: scale(3);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+
+}
+
 .movieImage {
     width: 200px;
 }
-
 
 .movieInfosContainer {
     display: flex;
@@ -26,6 +51,7 @@
     justify-content: space-between;
     align-items: center;
 }
+
 .movieTitle {
     display: flex;
     justify-content: center;
@@ -40,6 +66,7 @@
     font-size: 25px;
     margin-bottom: 10px;
 }
+
 .smileySad {
     position: absolute;
     top: 265px;

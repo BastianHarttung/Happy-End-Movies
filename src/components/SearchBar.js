@@ -11,7 +11,7 @@ const SearchBar = (props) => {
      * After hit 3 chars on input search start searching movie
      */
     useEffect(() => {
-        if (movieName.length >= 3) {
+        if (movieName.length >= 4) {
             props.searchMovie(movieName)
         }
     }, [movieName])
@@ -22,7 +22,7 @@ const SearchBar = (props) => {
                    type="text"
                    placeholder="Suche einen Film"
                    value={movieName}
-                   onKeyPress={handleSearchMovie}
+                   onKeyPress={keyPressEvent}
                    onChange={e => setMovieName(e.target.value)}/>
             <FaSearch onClick={() => {
                 props.searchMovie(movieName)
@@ -35,9 +35,8 @@ const SearchBar = (props) => {
     /**
      * Listen if the Enter-Button is pressed
      */
-    function handleSearchMovie(event) {
+    function keyPressEvent(event) {
         if(event.key === 'Enter'){
-            console.log('Suche get los')
             props.searchMovie(movieName)
         }
     }

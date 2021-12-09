@@ -113,7 +113,8 @@ const DetailAnsicht = (props) => {
                                placeholder='Suche Schauspieler oder Rolle'
                                className={classes.searchInput}
                                value={searchActor}
-                               onChange={e => setSearchActor(e.target.value)}/>
+                               onChange={e => setSearchActor(e.target.value)}
+                               onKeyPress={keyPressEvent}/>
                     </div>
 
                     <div className={classes.actorContainer}>
@@ -207,6 +208,15 @@ const DetailAnsicht = (props) => {
                         actor.character.toLowerCase().includes(actorSearch.toLowerCase())
                 })
             )
+        }
+    }
+
+    /**
+     * Listen if the Enter-Button is pressed
+     */
+    function keyPressEvent(event) {
+        if(event.key === 'Enter'){
+            searchForActor(searchActor)
         }
     }
 

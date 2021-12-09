@@ -3,10 +3,12 @@ import emptyImage from "../assets/img/movie-poster.png"
 import {imageUrl} from "../constants";
 import {FaSmileBeam, FaSadTear} from "react-icons/all";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 const SearchResultBox = (props) => {
 
     const navigate = useNavigate();
+    const [movieClicked, setMovieClicked] = useState(false)
 
     const Smiley = () => {
         if (props.movie.has_happy_end === true) return <FaSmileBeam className={classes.smileyLaugh}/>
@@ -15,12 +17,14 @@ const SearchResultBox = (props) => {
     }
 
     return (
-        <div className={classes.movieContainer}
+        <div className={movieClicked? classes.movieContainerClicked :classes.movieContainer}
              onClick={async () => {
+                 setMovieClicked(true);
                  await props.parentCallback(props.movie)
                      .then(() => {
                          navigate(props.to);
                          window.location.hash = `${props.movie.title}`;
+                         setMovieClicked(false)
                      })
              }}>
 
