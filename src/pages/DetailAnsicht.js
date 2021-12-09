@@ -33,13 +33,6 @@ const DetailAnsicht = (props) => {
                 : setHappyMovie('neutral')
     }, [props.movie.has_happy_end, props.movie]);
 
-    function setColorForFsk(fsk) {
-        if (fsk === 0) return 'lightgray'
-        if (fsk === 6) return 'yellow'
-        if (fsk === 12) return 'green'
-        if (fsk === 16) return 'blue'
-        if (fsk === 18) return 'red'
-    }
 
     return (
         <section className={classes.detailsSection}>
@@ -204,7 +197,7 @@ const DetailAnsicht = (props) => {
      * @param {string} actorSearch
      */
     function searchForActor(actorSearch) {
-        if (actorSearch == '') {
+        if (actorSearch === '') {
             console.log('alle actors anzeigen')
             setFilteredActors(props.movie.cast)
         } else {

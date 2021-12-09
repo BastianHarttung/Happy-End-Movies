@@ -143,14 +143,8 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
      */
     function filterMovies(movieName) {
         const movieFilter = moviesDB.filter(movie => {
-                if (movie.title) {
-                    const movieTitleSplit = movie.title.split(' ')
-                    for (let i = 0; i < movieTitleSplit.length; i++) {
-                        if (movieTitleSplit[i].toLowerCase() === movieName.toLowerCase()) {
-                            return true
-                        }
-                    }
-                }else return false
+            return movie.title.toLowerCase().includes(movieName.toLowerCase()) ||
+                movie.original_title.toLowerCase().includes(movieName.toLowerCase())
             }
         )
         setFilteredMovies(movieFilter)
