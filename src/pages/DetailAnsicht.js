@@ -24,6 +24,7 @@ const DetailAnsicht = (props) => {
 
     const [showActors, setShowActors] = useState(5)
     const [searchActor, setSearchActor] = useState('')
+    const [filteredActors, setFilteredActors] = useState(props.movie.cast)
 
 
     useEffect(() => {
@@ -113,8 +114,8 @@ const DetailAnsicht = (props) => {
                 <div className={classes.actorSearchContainer}>
 
                     <div className={classes.searchContainer}>
-                        <FaSearch className={classes.searchBtn}>
-                        </FaSearch>
+                        <FaSearch className={classes.searchBtn}
+                                  onClick={() => searchForActor(searchActor)}/>
                         <input type="text"
                                placeholder='Suche Schauspieler oder Rolle'
                                className={classes.searchInput}
@@ -200,17 +201,21 @@ const DetailAnsicht = (props) => {
 
     /**
      * Searching and Filtering For Actor
-     * @param actor
+     * @param {string} actorSearch
      */
-    /*function searchForActor(searchActor) {
-        if(searchActor == ' ') {
+    function searchForActor(actorSearch) {
+        if (actorSearch == '') {
+            console.log('suche nach actor leeren')
             setFilteredActors(props.movie.cast)
+        } else {
+            console.log('suche nach ' + actorSearch)
+            setFilteredActors(props.movie.cast.filter(actor => {
+                return actor.name.toLowerCase().includes(actorSearch.toLowerCase())
+                })
+            )
         }
-        setFilteredActors(props.movie.cast.filter(actor => {
-            return actor.name.toLowerCase() === searchActor.toLowerCase()
-            })
-        )
-    }*/
+    }
+
 
 }
 
