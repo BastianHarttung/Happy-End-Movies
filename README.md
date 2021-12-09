@@ -8,12 +8,12 @@ This Project was to learn more about API's and storing Data on Firebase.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-###Bewertung
+### Bewertung
 Search Movies in Database TMDB
 
 ![img.png](src/assets/img/readme/bewertung.png)
 
-###Details
+### Details
 Look for Details like genres, directors,voting on TMDB, description and more.
 Also get Information about FSK from altersfreigaben.de.
 And searching for actors and role names.\
@@ -21,7 +21,7 @@ You can rate movie by Happy End and save your whole movie data to Firebase Fires
 
 ![img.png](src/assets/img/readme/details.png)
 
-###Showroom
+### Showroom
 Here you can see all Movies in Firebase Database and filter if the Movie
 has a Happy End or not.  
 You can also filter Movies at the search-bar.\
