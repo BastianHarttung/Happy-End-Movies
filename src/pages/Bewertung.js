@@ -1,7 +1,7 @@
 import classes from "./Bewertung.module.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
-import {searchMovieUrl} from "../constants";
+import {popularMoviesUrl, searchMovieUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
 
 const Bewertung = (props) => {
@@ -12,6 +12,13 @@ const Bewertung = (props) => {
     const [totalPages, setTotalPages] = useState()
     const [activePage, setActivePage] = useState(0)
 
+    const [popularMovies, setPopularMovies] = useState([])
+
+    useEffect(() => {
+        getPopularMoviesFromApi().then((response) => {
+            setPopularMovies(response)
+        })
+    }, [popularMovies])
 
     return (
         <div className={classes.bewertungSection}>
@@ -19,15 +26,25 @@ const Bewertung = (props) => {
             <SearchBar
                 searchMovie={(movieName => searchMovie(movieName))}/>
 
-            {searchFor ? <div>Suchergebnisse für: {searchFor}</div>
-                : ''}
+            {searchFor ?
+                <div className={classes.headOverResults}>Suchergebnisse für: {searchFor}</div>
+                : <div className={classes.headOverResults}>Beliebte Filme</div>}
 
-            <div className={classes.resultSection}>
-                {searchedMovies.map(movie => <SearchResultBox key={movie.id}
-                                                              to='/detailansicht'
-                                                              parentCallback={(currentMovie) => props.callback(currentMovie)}
-                                                              movie={movie}/>)}
-            </div>
+            {searchFor ?
+                <div className={classes.resultSection}>
+                    {searchedMovies.map(movie =>
+                        <SearchResultBox key={movie.id}
+                                         to='/detailansicht'
+                                         parentCallback={(currentMovie) => props.callback(currentMovie)}
+                                         movie={movie}/>)}</div>
+                :
+                <div className={classes.resultSection}>
+
+                    {popularMovies.slice(0, 5).map(movie =>
+                        <SearchResultBox key={movie.id}
+                                         to='/detailansicht'
+                                         parentCallback={(currentMovie) => props.callback(currentMovie)}
+                                         movie={movie}/>)}</div>}
 
             {totalPages ?
                 <div className={classes.pageContainer}>Seite: {totalPages.map(page =>
@@ -44,6 +61,15 @@ const Bewertung = (props) => {
         </div>
     )
 
+    /**
+     * Get Popular Movies from TMDB API
+     * @return {Promise<*>}
+     */
+    async function getPopularMoviesFromApi() {
+        const response = await fetch(popularMoviesUrl);
+        let data = await response.json();
+        return data.results
+    }
 
     /**
      * Search Movie by clicking the Search Button
