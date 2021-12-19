@@ -15,7 +15,7 @@ const Bewertung = (props) => {
     const [popularMovies, setPopularMovies] = useState([])
 
     useEffect(() => {
-        getPopularMoviesFromApi().then((response) => {
+        getPopularMoviesFromTmdb().then((response) => {
             setPopularMovies(response)
         })
     }, [popularMovies])
@@ -65,7 +65,7 @@ const Bewertung = (props) => {
      * Get Popular Movies from TMDB API
      * @return {Promise<*>}
      */
-    async function getPopularMoviesFromApi() {
+    async function getPopularMoviesFromTmdb() {
         const response = await fetch(popularMoviesUrl);
         let data = await response.json();
         return data.results
@@ -79,7 +79,7 @@ const Bewertung = (props) => {
      */
     async function searchMovie(movieName) {
         if (movieName.length > 0) {
-            setSearchedMovies(await getJsonFromMovieDB(movieName, 1));
+            setSearchedMovies(await getJsonFromTmdb(movieName, 1));
             setActivePage(1);
             setSearchFor(movieName);
             window.location.hash = movieName;
@@ -93,7 +93,7 @@ const Bewertung = (props) => {
      * @return {Promise<void>}
      */
     async function changePage(page) {
-        setSearchedMovies(await getJsonFromMovieDB(searchFor, page))
+        setSearchedMovies(await getJsonFromTmdb(searchFor, page))
         setActivePage(page)
     }
 
@@ -105,7 +105,7 @@ const Bewertung = (props) => {
      * @param {number} pageNumber
      * @return {Promise<*>}
      */
-    async function getJsonFromMovieDB(movieName, pageNumber) {
+    async function getJsonFromTmdb(movieName, pageNumber) {
         const response = await fetch(searchMovieUrl + movieName + '&page=' + pageNumber);
         let data = await response.json();
         setTotalResults(await data.total_results)

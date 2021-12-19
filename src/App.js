@@ -22,6 +22,8 @@ function App() {
     const [allMovies, setAllMovies] = useState([])
     const [dbLength, setDbLength] = useState(0)
 
+    const [userId, setUserId] = useState(23)
+
     useEffect(() => {
         const moviesCollectionRef = collection(firestoreDb, 'movies');
         const getMovies = async () => {
@@ -55,7 +57,8 @@ function App() {
                            element={
                                <DetailAnsicht
                                    saveMovieToDb={(movieForDb) => saveMovieToDb(movieForDb)}
-                                   movie={selectedMovie}/>}
+                                   movie={selectedMovie}
+                                   user={userId}/>}
                     />
 
                     <Route path='/showroom'
@@ -91,6 +94,7 @@ function App() {
      * @returns {Promise<void>} set state for allMovies
      */
     async function saveMoviesToState() {
+        //TODO loadMovies to extra function
         const moviesArray = async function loadMoviesFromDb() {
             const movieCollect = await getDocs(collection(firestoreDb, 'movies'));
             const moviesArray = [];
@@ -131,9 +135,21 @@ function App() {
         const fsk = await getFskFromApi(movie.id);
         const cast = await getCastForMovie(movie.id);
         const directors = await getDirectorForMovie(movie.id);
-        const hasHappyEnd = movie.has_happy_end === true ? true
-            : movie.has_happy_end === false ? false
-                : 'neutral'
+        const hasHappyEnd = function () {
+            if (movie.happyEnd_Voting) {
+                const happyEndArray = Object.values(movie.happyEnd_Voting)
+                const trueCount = happyEndArray.reduce((acc, current) => {
+                    if (current) acc++
+                    else if (!current) acc--
+                    return acc
+                }, 0)
+                if (trueCount > 0) return true
+                else if (trueCount === 0) return 'neutral'
+                else return false
+            }
+            else return 'neutral'
+        }
+
         setSelectedMovie({
             ...movie,
             genres: genres,

@@ -162,20 +162,20 @@ const DetailAnsicht = (props) => {
                         <FaSmileBeam onClick={() => {
                             props.movie.has_happy_end = true;
                             setHappyMovie(true)
-                            setMovieForDb({...props.movie, has_happy_end: true})
+                            setMovieForDb({ ...props.movie, happyEnd_Voting: {[props.user]: true} })
                         }}
                                      className={(happyMovie === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
                         <FaMeh onClick={() => {
                             props.movie.has_happy_end = 'neutral';
                             setHappyMovie('neutral');
-                            setMovieForDb({...props.movie, has_happy_end: 'neutral'})
+                            setMovieForDb({ ...props.movie, happyEnd_Voting: {[props.user]: 'neutral'} })
                         }}
                                className={(happyMovie === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
 
                         <FaSadTear onClick={() => {
                             props.movie.has_happy_end = false;
                             setHappyMovie(false);
-                            setMovieForDb({...props.movie, has_happy_end: false})
+                            setMovieForDb({ ...props.movie, happyEnd_Voting: {[props.user]: false} })
                         }}
                                    className={!happyMovie ? classes.smileySad : classes.smiley}></FaSadTear>
                     </div>
@@ -212,6 +212,7 @@ const DetailAnsicht = (props) => {
             )
         }
     }
+
 
     /**
      * Listen if the Enter-Button is pressed
