@@ -19,7 +19,6 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
     const filteredMoviesPart = filteredMovies.slice(index, Math.max(pageLength, pageLength * (activePage + 1)))
 
 
-
     /**
      * Sort Movies by Title and update movies after Timeout
      */

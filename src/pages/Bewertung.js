@@ -1,7 +1,7 @@
 import classes from "./Bewertung.module.css";
 import {useEffect, useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
-import {popularMoviesUrl, searchMovieUrl} from "../constants";
+import {popularMoviesUrl, searchUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
 
 const Bewertung = (props) => {
@@ -106,7 +106,7 @@ const Bewertung = (props) => {
      * @return {Promise<*>}
      */
     async function getJsonFromTmdb(movieName, pageNumber) {
-        const response = await fetch(searchMovieUrl + movieName + '&page=' + pageNumber);
+        const response = await fetch(searchUrl('movie') + movieName + '&page=' + pageNumber);
         let data = await response.json();
         setTotalResults(await data.total_results)
         setTotalPages(makePageArray(await data.total_pages))

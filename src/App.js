@@ -131,24 +131,12 @@ function App() {
      * @return {Promise<void>}
      */
     async function saveSelectedMovie(movie) {
+        console.log('App',movie)
         const genres = await getGenreNames(movie);
         const fsk = await getFskFromApi(movie.id);
+        const hasHappyEnd = await calculateHappyEnd(movie);
         const cast = await getCastForMovie(movie.id);
         const directors = await getDirectorForMovie(movie.id);
-        const hasHappyEnd = function () {
-            if (movie.happyEnd_Voting) {
-                const happyEndArray = Object.values(movie.happyEnd_Voting)
-                const trueCount = happyEndArray.reduce((acc, current) => {
-                    if (current) acc++
-                    else if (!current) acc--
-                    return acc
-                }, 0)
-                if (trueCount > 0) return true
-                else if (trueCount === 0) return 'neutral'
-                else return false
-            }
-            else return 'neutral'
-        }
 
         setSelectedMovie({
             ...movie,
@@ -158,14 +146,34 @@ function App() {
             cast: cast,
             directors: directors
         })
-        console.log({
+        /*console.log({
             ...movie,
             genres: genres,
             fsk: fsk,
             has_happy_end: hasHappyEnd,
             cast: cast,
             directors: directors
-        })
+        })*/
+    }
+
+    /**
+     * Calculate has_happy_end by counting happyEnd_Voting
+     * @param {object} movie
+     * @return {string|boolean} true|false|'neutral'
+     */
+    async function calculateHappyEnd(movie) {
+        if(typeof movie.happyEnd_Voting === 'object') {
+            console.log('calculate happyend')
+            const happyEndArray = Object.values(movie.happyEnd_Voting)
+            const trueCount = happyEndArray.reduce((acc, current) => {
+                if (current) acc++
+                else if (!current) acc--
+                return acc
+            }, 0)
+            if (trueCount > 0) return true
+            else if (trueCount === 0 || movie.happyEnd_Voting == false) return 'neutral'
+            else return false
+        } else return 'neutral'
     }
 
     /**
@@ -174,7 +182,7 @@ function App() {
      * @return {Promise<*>}
      */
     async function getGenreNameFromApi(genreId) {
-        const response = await fetch(genreUrl);
+        const response = await fetch(genreUrl('movie'));
         let data = await response.json();
         const genre = data.genres.find(genre => genre.id === genreId)
         return genre.name
@@ -213,7 +221,7 @@ function App() {
      * @return {Promise<object array>} All Actors
      */
     async function getCastForMovie(movieId) {
-        const castUrlMovie = castUrl(movieId);
+        const castUrlMovie = castUrl('movie', movieId);
         const response = await fetch(castUrlMovie);
         let data = await response.json();
         let castArray = []
@@ -227,7 +235,7 @@ function App() {
      * @return {Promise<object array>} Directors
      */
     async function getDirectorForMovie(movieId) {
-        const castUrlMovie = castUrl(movieId);
+        const castUrlMovie = castUrl('movie', movieId);
         const response = await fetch(castUrlMovie);
         let data = await response.json();
         let directorArray = []

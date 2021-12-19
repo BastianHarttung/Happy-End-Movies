@@ -8,16 +8,21 @@ export const emptyMovieArray = [
 
 const apiKeyTmdb = 'd2aa68fbfa10f4f356fe29718bfa3508'
 
-export const searchAllUrl = `https://api.themoviedb.org/3/search/multi?api_key=${apiKeyTmdb}&language=de&include_adult=false&query=`
-export const searchMovieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKeyTmdb}&language=de&query=`
+/**
+ *What are you searching for? Movie, TV-Show, Person, all Things (Multi)
+ * @param {string} whatSearch eg movie,tv,multi, person, company, keyword
+ * @return {string} `https://api.themoviedb.org/...`
+ */
+export const searchUrl =  (whatSearch) => `https://api.themoviedb.org/3/search/${whatSearch}?api_key=${apiKeyTmdb}&language=de&include_adult=false&query=`
 export const popularMoviesUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKeyTmdb}&language=de&page=1`
 
-export const genreUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKeyTmdb}&language=de`
+//whatSearch = {string} 'movie' || 'tv'
+export const genreUrl = (whatSearch) => `https://api.themoviedb.org/3/genre/${whatSearch}/list?api_key=${apiKeyTmdb}&language=de`
 export const fskUrl = `https://altersfreigaben.de/api2/s/`
 
 export const imageUrl = `https://image.tmdb.org/t/p/w500`
 export const imageUrlSmall = `https://image.tmdb.org/t/p/w200`
 
-export const castUrl = (movieId) => `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKeyTmdb}&language=de`
+export const castUrl = (movieOrTv, id) => `https://api.themoviedb.org/3/${movieOrTv}/${id}/credits?api_key=${apiKeyTmdb}&language=de`
 
 
