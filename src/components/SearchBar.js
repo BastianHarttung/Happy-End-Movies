@@ -18,17 +18,39 @@ const SearchBar = (props) => {
 
     return (
         <div className={classes.searchBarContainer}>
+
+            <div className={classes.choiceContainer}>
+                <div>
+                    <input type="radio"
+                           id="choiceMovie"
+                           name="choice"
+                           value="movie"/>
+                    <label htmlFor="choiceMovie">Filme</label>
+                </div>
+
+                <div>
+                    <input type="radio"
+                           id="choiceTv"
+                           name="choice"
+                           value="tv"/>
+                    <label htmlFor="choiceTv">Serien</label>
+                </div>
+            </div>
+
             <input className={classes.searchInput}
-                   type="text"
-                   placeholder="Suche einen Film"
+                   type="search"
+                   placeholder="Suche"
+                   autoFocus
                    value={movieName}
                    onKeyPress={keyPressEvent}
                    onChange={e => setMovieName(e.target.value)}/>
+
             <FaSearch onClick={() => {
                 props.searchMovie(movieName)
                 setMovieName('')
                 window.location.hash = '';
             }} className={classes.searchButton}/>
+
         </div>
     )
 
@@ -36,7 +58,7 @@ const SearchBar = (props) => {
      * Listen if the Enter-Button is pressed
      */
     function keyPressEvent(event) {
-        if(event.key === 'Enter'){
+        if (event.key === 'Enter') {
             props.searchMovie(movieName)
         }
     }

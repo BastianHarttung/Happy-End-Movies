@@ -1,11 +1,39 @@
 
 .searchBarContainer {
+    background-color: #bcd6ff;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/*---------Choice Button----------*/
+.choiceContainer {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+}
+
+input[type = radio] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #999;
+    transition: all 0.2s linear;
+    margin-right: 5px;
+    position: relative;
+    top: 3px;
+    cursor: pointer;
+}
+
+input[type=radio]:checked {
+    border: 6px solid black;
+}
+
+/*-------------Search----------------*/
 .searchInput {
     width: 300px;
     font-size: 18px;
@@ -22,3 +50,4 @@
     margin-left: 10px;
     cursor: pointer;
 }
+

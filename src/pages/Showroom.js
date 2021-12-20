@@ -18,6 +18,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
 
     const filteredMoviesPart = filteredMovies.slice(index, Math.max(pageLength, pageLength * (activePage + 1)))
 
+    const widthShowroom = window.innerWidth - 260
 
     /**
      * Sort Movies by Title and update movies after Timeout
@@ -80,40 +81,42 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                 </div>
             </div>
 
-            <div className={classes.searchContainer}>
-                <SearchBar
-                    searchMovie={(movieName) => searchMovieDb(movieName)}/>
-            </div>
-
-            {filteredMovies.length > 0 ?
-                <div className={classes.filteredMoviesContainer}>
-
-                    <div className={classes.filteredMoviesResult}>
-                        {filteredMoviesPart.map((movie) =>
-                            <SearchResultBox
-                                key={movie.id}
-                                movie={movie}
-                                to='/detailansicht'
-                                parentCallback={(currentMovie) => callback(currentMovie)}
-                            />)}
-
-                    </div>
-
-                    <div className={classes.infosContainer}>
-                        {Array.from(Array(pages).keys()).map((page) =>
-                                <span key={page + 1}
-                                      onClick={() => setActivePage(page)}
-                                      className={activePage === page ? classes.activePageBtn : classes.pageBtn}>
-                        {page + 1}</span>
-                        )}
-                    </div>
-
+            <div className={classes.showroomContainer} style={{width: widthShowroom+'px'}}>
+                <div className={classes.searchContainer}>
+                    <SearchBar
+                        searchMovie={(movieName) => searchMovieDb(movieName)}/>
                 </div>
-                : filteredMovies.length === 0 ?
+
+                {filteredMovies.length > 0 ?
                     <div className={classes.filteredMoviesContainer}>
-                        <div className={classes.loader}>Loading...</div>
+
+                        <div className={classes.filteredMoviesResult}>
+                            {filteredMoviesPart.map((movie) =>
+                                <SearchResultBox
+                                    key={movie.id}
+                                    movie={movie}
+                                    to='/detailansicht'
+                                    parentCallback={(currentMovie) => callback(currentMovie)}
+                                />)}
+
+                        </div>
+
+                        <div className={classes.infosContainer}>
+                            {Array.from(Array(pages).keys()).map((page) =>
+                                    <span key={page + 1}
+                                          onClick={() => setActivePage(page)}
+                                          className={activePage === page ? classes.activePageBtn : classes.pageBtn}>
+                        {page + 1}</span>
+                            )}
+                        </div>
+
                     </div>
-                    : 'Load'}
+                    : filteredMovies.length === 0 ?
+                        <div className={classes.filteredMoviesContainer}>
+                            <div className={classes.loader}>Loading...</div>
+                        </div>
+                        : 'Load'}
+            </div>
 
         </section>
     )
