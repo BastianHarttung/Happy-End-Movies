@@ -14,7 +14,7 @@ const Bewertung = (props) => {
 
     const [popularMovies, setPopularMovies] = useState([])
 
-    const [searchingCategorie, setSearchingCategorie] = useState('movies')
+    const [searchingCategory, setSearchingCategory] = useState('movies')
 
     useEffect(() => {
         getPopularMoviesFromTmdb().then((response) => {
@@ -27,7 +27,8 @@ const Bewertung = (props) => {
 
             <div className={classes.bewertungContainer}>
                 <SearchBar
-                    searchMovie={(movieName => searchMovie(movieName))}/>
+                    searchMovie={ (movieName, searchCategory) => searchMovie(movieName, searchCategory) }
+                    categorySet={(searchCategory) =>  setSearchingCategory(searchCategory) }/>
 
                 {searchFor ?
                     <div className={classes.headOverResults}>Suchergebnisse für: {searchFor}</div>
@@ -38,7 +39,8 @@ const Bewertung = (props) => {
                         {searchedMovies.map(movie =>
                             <SearchResultBox key={movie.id}
                                              to='/detailansicht'
-                                             parentCallback={(currentMovie) => props.callback(currentMovie)}
+                                             parentCallback={(currentMovie,category) => props.callback(currentMovie,category)}
+                                             category = {searchingCategory}
                                              movie={movie}/>)}</div>
                     :
                     <div className={classes.resultSection}>
@@ -46,7 +48,8 @@ const Bewertung = (props) => {
                         {popularMovies.slice(0, 5).map(movie =>
                             <SearchResultBox key={movie.id}
                                              to='/detailansicht'
-                                             parentCallback={(currentMovie) => props.callback(currentMovie)}
+                                             parentCallback={(currentMovie,category) => props.callback(currentMovie,category)}
+                                             category = {searchingCategory}
                                              movie={movie}/>)}</div>}
 
                 {totalPages ?
@@ -82,9 +85,9 @@ const Bewertung = (props) => {
      * -delete die input field
      * @return {Promise<void>}
      */
-    async function searchMovie(movieName) {
+    async function searchMovie(movieName, searchCategory) {
         if (movieName.length > 0) {
-            setSearchedMovies(await getJsonFromTmdb(movieName, 1));
+            setSearchedMovies(await getJsonFromTmdb(movieName, 1, searchCategory));
             setActivePage(1);
             setSearchFor(movieName);
             window.location.hash = movieName;
@@ -108,10 +111,11 @@ const Bewertung = (props) => {
      * - make array with pages and set to total pages
      * @param {string} movieName
      * @param {number} pageNumber
+     * @param {string} searchCategory Category you are searching for eg 'movie' || 'tv'
      * @return {Promise<*>}
      */
-    async function getJsonFromTmdb(movieName, pageNumber) {
-        const response = await fetch(searchUrl('movie') + movieName + '&page=' + pageNumber);
+    async function getJsonFromTmdb(movieName, pageNumber, searchCategory) {
+        const response = await fetch(searchUrl(searchCategory) + movieName + '&page=' + pageNumber);
         let data = await response.json();
         setTotalResults(await data.total_results)
         setTotalPages(makePageArray(await data.total_pages))

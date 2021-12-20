@@ -1,10 +1,11 @@
 
 .searchBarContainer {
-    background-color: #bcd6ff;
+    background-color: var(--main-color-white);
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
 }
 
 /*---------Choice Button----------*/
@@ -21,7 +22,7 @@ input[type = radio] {
     border-radius: 50%;
     width: 18px;
     height: 18px;
-    border: 2px solid #999;
+    border: 2px solid rgba(128, 128, 128, 0.88);
     transition: all 0.2s linear;
     margin-right: 5px;
     position: relative;
@@ -38,7 +39,7 @@ input[type=radio]:checked {
     width: 300px;
     font-size: 18px;
     border: 1px solid gray;
-    border-radius: 7px;
+    border-radius: 10px;
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 7px;

@@ -84,7 +84,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
             <div className={classes.showroomContainer} style={{width: widthShowroom+'px'}}>
                 <div className={classes.searchContainer}>
                     <SearchBar
-                        searchMovie={(movieName) => searchMovieDb(movieName)}/>
+                        searchMovie={(movieName,searchCategory) => searchMovieDb(movieName,searchCategory)}/>
                 </div>
 
                 {filteredMovies.length > 0 ?
@@ -142,8 +142,10 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
     /**
      * Filter Movies
      * @param {string} movieName
+     * @param {string} searchCategory eg 'movie' || 'tv'
      */
-    function filterMovies(movieName) {
+    function filterMovies(movieName,searchCategory) {
+        console.log('filterMovies', searchCategory)
         const movieFilter = moviesDB.filter(movie => {
                 return movie.title.toLowerCase().includes(movieName.toLowerCase()) ||
                     movie.original_title.toLowerCase().includes(movieName.toLowerCase())
@@ -158,7 +160,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
      * Search Movie
      * @return {Promise<void>}
      */
-    function searchMovieDb(movieName) {
+    function searchMovieDb(movieName,searchCategory) {
         if (movieName.length === 0) {
             setFilteredMovies(moviesDB)
             setSearchFilteredMovies(moviesDB)
@@ -166,7 +168,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
             window.location.hash = '';
         } else {
             window.location.hash = movieName;
-            filterMovies(movieName)
+            filterMovies(movieName,searchCategory)
         }
     }
 

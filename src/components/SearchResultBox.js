@@ -20,7 +20,7 @@ const SearchResultBox = (props) => {
         <div className={movieClicked? classes.movieContainerClicked :classes.movieContainer}
              onClick={async () => {
                  setMovieClicked(true);
-                 await props.parentCallback(props.movie)
+                 await props.parentCallback(props.movie, props.category)
                      .then(() => {
                          navigate(props.to);
                          window.location.hash = `${props.movie.title}`;

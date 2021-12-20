@@ -48,7 +48,7 @@ function App() {
                            exact={true}
                            element={
                                <Bewertung
-                                   callback={(movie) => saveSelectedMovie(movie)}
+                                   callback={(movie,category) => saveSelectedMovie(movie,category)}
                                />}
                     />
 
@@ -128,9 +128,10 @@ function App() {
      * Get genres and fsk and has_happy_end
      * and save to selectedMovie state
      * @param {object} movie
+     * @param {string} searchCategory eg 'movie' || 'tv'
      * @return {Promise<void>}
      */
-    async function saveSelectedMovie(movie) {
+    async function saveSelectedMovie(movie, searchCategory) {
         console.log('App',movie)
         const genres = await getGenreNames(movie);
         const fsk = await getFskFromApi(movie.id);
@@ -140,6 +141,7 @@ function App() {
 
         setSelectedMovie({
             ...movie,
+            category: searchCategory,
             genres: genres,
             fsk: fsk,
             has_happy_end: hasHappyEnd,
@@ -171,7 +173,7 @@ function App() {
                 return acc
             }, 0)
             if (trueCount > 0) return true
-            else if (trueCount === 0 || movie.happyEnd_Voting == false) return 'neutral'
+            else if (trueCount === 0 || movie.happyEnd_Voting === false) return 'neutral'
             else return false
         } else return 'neutral'
     }
