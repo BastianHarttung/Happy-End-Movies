@@ -134,7 +134,17 @@ const DetailAnsicht = (props) => {
                                              alt={actor.name}
                                              title={actor.name}/>
                                         <h5 className={classes.actorName}>{actor.name}</h5>
-                                        <p className={classes.character}>"{actor.character}"</p>
+
+                                        {actor.character ?
+                                            <p className={classes.character}>"{actor.character}"</p>
+                                            : ''}
+                                        {/*TODO*/}
+                                        {actor.roles ?
+                                            actor.roles.map(role => {
+                                                <p className={classes.character}>"{role.character}"</p>
+                                            })
+                                            : ''}
+
                                     </div>
                                 )
                             })
@@ -203,14 +213,20 @@ const DetailAnsicht = (props) => {
      * @param {string} actorSearch
      */
     function searchForActor(actorSearch) {
+        const actorSearchLow = actorSearch.toLowerCase();
         if (actorSearch === '') {
             console.log('alle actors anzeigen')
             setFilteredActors(props.movie.cast)
         } else {
             console.log('suche nach ' + actorSearch)
             setFilteredActors(props.movie.cast.filter(actor => {
-                    return actor.name.toLowerCase().includes(actorSearch.toLowerCase()) ||
-                        actor.character.toLowerCase().includes(actorSearch.toLowerCase())
+                    if (actor.character) {
+                        return actor.name.toLowerCase().includes(actorSearchLow) ||
+                            actor.character.toLowerCase().includes(actorSearchLow)
+                    } else {
+                        return actor.name.toLowerCase().includes(actorSearchLow) ||
+                            actor.roles[0].character.toLowerCase().includes(actorSearchLow)
+                    }
                 })
             )
         }
@@ -230,3 +246,18 @@ const DetailAnsicht = (props) => {
 }
 
 export default DetailAnsicht;
+
+/*
+const actor = {adult: false,
+    gender: 1,
+    id: 10742,
+    known_for_department: "Acting",
+    name: "Teri Hatcher",
+    order: 0,
+    original_name: "Teri Hatcher",
+    popularity: 5.775,
+    profile_path: "/rgdIWxYCCe1wK1ycdKiPhMBI9Fs.jpg",
+    roles: [
+        {credit_id: '52538f8719c295794027f7d8', character: 'Susan Mayer', episode_count: 179}
+    ]
+}*/

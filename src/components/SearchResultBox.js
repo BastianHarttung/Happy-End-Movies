@@ -17,7 +17,7 @@ const SearchResultBox = (props) => {
     }
 
     return (
-        <div className={movieClicked? classes.movieContainerClicked :classes.movieContainer}
+        <div className={movieClicked ? classes.movieContainerClicked : classes.movieContainer}
              onClick={async () => {
                  setMovieClicked(true);
                  await props.parentCallback(props.movie, props.category)
@@ -33,7 +33,9 @@ const SearchResultBox = (props) => {
                  alt="Poster"/>
 
             <div className={classes.movieInfosContainer}>
-                <div className={classes.movieTitle}>{props.movie.title}</div>
+                {props.movie.title ?
+                    <div className={classes.movieTitle}>{props.movie.title}</div>
+                    : <div className={classes.movieTitle}>{props.movie.original_name}</div>}
                 <Smiley/>
             </div>
 

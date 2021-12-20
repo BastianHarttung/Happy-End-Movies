@@ -67,7 +67,7 @@ function App() {
                                <Showroom
                                    moviesDB={allMovies}
                                    dbLength={dbLength}
-                                   callback={(movie) => saveSelectedMovie(movie)}
+                                   callback={(movie,category) => saveSelectedMovie(movie,category)}
                                />}
                     />
 
@@ -133,11 +133,11 @@ function App() {
      */
     async function saveSelectedMovie(movie, searchCategory) {
         console.log('App',movie)
-        const genres = await getGenreNames(movie);
+        const genres = await getGenreNames(movie,searchCategory);
         const fsk = await getFskFromApi(movie.id);
         const hasHappyEnd = await calculateHappyEnd(movie);
-        const cast = await getCastForMovie(movie.id);
-        const directors = await getDirectorForMovie(movie.id);
+        const cast = await getCastForMovie(movie.id,searchCategory);
+        const directors = await getDirectorForMovie(movie.id,searchCategory);
 
         setSelectedMovie({
             ...movie,
@@ -183,8 +183,8 @@ function App() {
      * @param {number} genreId
      * @return {Promise<*>}
      */
-    async function getGenreNameFromApi(genreId) {
-        const response = await fetch(genreUrl('movie'));
+    async function getGenreNameFromApi(genreId,searchCategory) {
+        const response = await fetch(genreUrl(searchCategory));
         let data = await response.json();
         const genre = data.genres.find(genre => genre.id === genreId)
         return genre.name
@@ -193,12 +193,13 @@ function App() {
     /**
      * Get Genre Names and return in Array
      * @param {object} movie
+     * @param {string} searchCategory 'movie' || 'title'
      * @return {Promise<*[]>} Array with Genres example: ['Action', 'Komödie']
      */
-    async function getGenreNames(movie) {
+    async function getGenreNames(movie,searchCategory) {
         let genres = []
         for (let i = 0; i < movie.genre_ids.length; i++) {
-            const genreName = await getGenreNameFromApi(movie.genre_ids[i])
+            const genreName = await getGenreNameFromApi(movie.genre_ids[i], searchCategory)
             genres.push(genreName)
         }
         return genres
@@ -220,10 +221,11 @@ function App() {
     /**
      * Get Cast for Movie
      * @param {number} movieId
+     * @param {string} searchCategory 'movie' || 'title'
      * @return {Promise<object array>} All Actors
      */
-    async function getCastForMovie(movieId) {
-        const castUrlMovie = castUrl('movie', movieId);
+    async function getCastForMovie(movieId,searchCategory) {
+        const castUrlMovie = castUrl(searchCategory, movieId);
         const response = await fetch(castUrlMovie);
         let data = await response.json();
         let castArray = []
@@ -234,10 +236,11 @@ function App() {
     /**
      * Get Cast for Movie
      * @param {number} movieId
+     * @param {string} searchCategory 'movie' || 'title'
      * @return {Promise<object array>} Directors
      */
-    async function getDirectorForMovie(movieId) {
-        const castUrlMovie = castUrl('movie', movieId);
+    async function getDirectorForMovie(movieId, searchCategory) {
+        const castUrlMovie = castUrl(searchCategory, movieId);
         const response = await fetch(castUrlMovie);
         let data = await response.json();
         let directorArray = []

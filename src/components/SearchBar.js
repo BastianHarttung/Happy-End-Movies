@@ -7,13 +7,15 @@ const SearchBar = (props) => {
 
     const locationHashString = window.location.hash.substring(1).split('%20').join(' ')
     const [movieName, setMovieName] = useState(locationHashString)
-    const [searchingCategory, setSearchingCategory] = useState('movies')
+    const [searchingCategory, setSearchingCategory] = useState('movie')
+    const [categoryClicked, setCategoryClicked] = useState(false)
 
     /**
      * After hit 3 chars on input search start searching movie
      */
     useEffect(() => {
-        if (movieName.length >= 4) {
+        if (movieName.length >= 4 && categoryClicked) {
+            console.log(searchingCategory)
             props.searchMovie(movieName,searchingCategory)
         }
     }, [movieName])
@@ -28,8 +30,8 @@ const SearchBar = (props) => {
                            name="choice"
                            value="movie"
                            onChange={(e) => {
-                               props.categorySet(e.target.value)
                                setSearchingCategory(e.target.value)
+                               setCategoryClicked(true)
                            }}/>
                     <label htmlFor="choiceMovie">Filme</label>
                 </div>
@@ -39,7 +41,10 @@ const SearchBar = (props) => {
                            id="choiceTv"
                            name="choice"
                            value="tv"
-                           onChange={(e) => setSearchingCategory(e.target.value)}/>
+                           onChange={(e) => {
+                               setSearchingCategory(e.target.value)
+                               setCategoryClicked(true)
+                           }}/>
                     <label htmlFor="choiceTv">Serien</label>
                 </div>
             </div>
@@ -53,9 +58,11 @@ const SearchBar = (props) => {
                    onChange={e => setMovieName(e.target.value)}/>
 
             <FaSearch onClick={() => {
-                props.searchMovie(movieName,searchingCategory)
-                setMovieName('')
-                window.location.hash = '';
+                if(categoryClicked) {
+                    props.searchMovie(movieName,searchingCategory);
+                    setMovieName('')
+                    window.location.hash = ''
+                }
             }} className={classes.searchButton}/>
 
         </div>
@@ -65,7 +72,7 @@ const SearchBar = (props) => {
      * Listen if the Enter-Button is pressed
      */
     function keyPressEvent(event) {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && categoryClicked) {
             props.searchMovie(movieName,searchingCategory)
         }
     }

@@ -96,7 +96,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                                     key={movie.id}
                                     movie={movie}
                                     to='/detailansicht'
-                                    parentCallback={(currentMovie) => callback(currentMovie)}
+                                    parentCallback={(currentMovie,category) => callback(currentMovie,category)}
                                 />)}
 
                         </div>

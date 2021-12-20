@@ -14,7 +14,7 @@ const Bewertung = (props) => {
 
     const [popularMovies, setPopularMovies] = useState([])
 
-    const [searchingCategory, setSearchingCategory] = useState('movies')
+    const [searchingCategory, setSearchingCategory] = useState('movie')
 
     useEffect(() => {
         getPopularMoviesFromTmdb().then((response) => {
@@ -28,7 +28,7 @@ const Bewertung = (props) => {
             <div className={classes.bewertungContainer}>
                 <SearchBar
                     searchMovie={ (movieName, searchCategory) => searchMovie(movieName, searchCategory) }
-                    categorySet={(searchCategory) =>  setSearchingCategory(searchCategory) }/>
+                    />
 
                 {searchFor ?
                     <div className={classes.headOverResults}>Suchergebnisse für: {searchFor}</div>
@@ -83,11 +83,14 @@ const Bewertung = (props) => {
      * Search Movie by clicking the Search Button
      * -set page to number 1
      * -delete die input field
+     * @param {string} movieName
+     * @param {string} searchCategory 'movie' || 'tv'
      * @return {Promise<void>}
      */
-    async function searchMovie(movieName, searchCategory) {
+    async function searchMovie(movieName,searchCategory) {
         if (movieName.length > 0) {
-            setSearchedMovies(await getJsonFromTmdb(movieName, 1, searchCategory));
+            setSearchingCategory(searchCategory)
+            setSearchedMovies(await getJsonFromTmdb(movieName, 1));
             setActivePage(1);
             setSearchFor(movieName);
             window.location.hash = movieName;
@@ -114,11 +117,12 @@ const Bewertung = (props) => {
      * @param {string} searchCategory Category you are searching for eg 'movie' || 'tv'
      * @return {Promise<*>}
      */
-    async function getJsonFromTmdb(movieName, pageNumber, searchCategory) {
-        const response = await fetch(searchUrl(searchCategory) + movieName + '&page=' + pageNumber);
+    async function getJsonFromTmdb(movieName, pageNumber) {
+        const response = await fetch(searchUrl(searchingCategory) + movieName + '&page=' + pageNumber);
         let data = await response.json();
         setTotalResults(await data.total_results)
         setTotalPages(makePageArray(await data.total_pages))
+        console.log('data.results',data.results)
         //console.log('data', data)
         return data.results
     }
