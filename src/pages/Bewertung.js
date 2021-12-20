@@ -14,6 +14,8 @@ const Bewertung = (props) => {
 
     const [popularMovies, setPopularMovies] = useState([])
 
+    const [searchingCategorie, setSearchingCategorie] = useState('movies')
+
     useEffect(() => {
         getPopularMoviesFromTmdb().then((response) => {
             setPopularMovies(response)
@@ -23,40 +25,43 @@ const Bewertung = (props) => {
     return (
         <div className={classes.bewertungSection}>
 
-            <SearchBar
-                searchMovie={(movieName => searchMovie(movieName))}/>
+            <div className={classes.bewertungContainer}>
+                <SearchBar
+                    searchMovie={(movieName => searchMovie(movieName))}/>
 
-            {searchFor ?
-                <div className={classes.headOverResults}>Suchergebnisse für: {searchFor}</div>
-                : <div className={classes.headOverResults}>Beliebte Filme</div>}
+                {searchFor ?
+                    <div className={classes.headOverResults}>Suchergebnisse für: {searchFor}</div>
+                    : <div className={classes.headOverResults}>Beliebte Filme</div>}
 
-            {searchFor ?
-                <div className={classes.resultSection}>
-                    {searchedMovies.map(movie =>
-                        <SearchResultBox key={movie.id}
-                                         to='/detailansicht'
-                                         parentCallback={(currentMovie) => props.callback(currentMovie)}
-                                         movie={movie}/>)}</div>
-                :
-                <div className={classes.resultSection}>
+                {searchFor ?
+                    <div className={classes.resultSection}>
+                        {searchedMovies.map(movie =>
+                            <SearchResultBox key={movie.id}
+                                             to='/detailansicht'
+                                             parentCallback={(currentMovie) => props.callback(currentMovie)}
+                                             movie={movie}/>)}</div>
+                    :
+                    <div className={classes.resultSection}>
 
-                    {popularMovies.slice(0, 5).map(movie =>
-                        <SearchResultBox key={movie.id}
-                                         to='/detailansicht'
-                                         parentCallback={(currentMovie) => props.callback(currentMovie)}
-                                         movie={movie}/>)}</div>}
+                        {popularMovies.slice(0, 5).map(movie =>
+                            <SearchResultBox key={movie.id}
+                                             to='/detailansicht'
+                                             parentCallback={(currentMovie) => props.callback(currentMovie)}
+                                             movie={movie}/>)}</div>}
 
-            {totalPages ?
-                <div className={classes.pageContainer}>Seite: {totalPages.map(page =>
-                    <span key={page}
-                          onClick={() => changePage(page)}
-                          className={activePage === page ? classes.activePageBtn : classes.pageBtn}>
+                {totalPages ?
+                    <div className={classes.pageContainer}>Seite: {totalPages.map(page =>
+                        <span key={page}
+                              onClick={() => changePage(page)}
+                              className={activePage === page ? classes.activePageBtn : classes.pageBtn}>
                           {page}</span>)}
-                </div>
-                : ''}
+                    </div>
+                    : ''}
 
-            {totalResults ? <div className={classes.totalResults}>Anzahl Ergebnisse: {totalResults}</div>
-                : ''}
+                {totalResults ? <div className={classes.totalResults}>Anzahl Ergebnisse: {totalResults}</div>
+                    : ''}
+            </div>
+
 
         </div>
     )

@@ -10,14 +10,14 @@ const apiKeyTmdb = 'd2aa68fbfa10f4f356fe29718bfa3508'
 
 /**
  *What are you searching for? Movie, TV-Show, Person, all Things (Multi)
- * @param {string} whatSearch eg movie,tv,multi, person, company, keyword
+ * @param {string} searchFor eg 'movie' || 'tv' || 'multi' || 'person' || 'company' || 'keyword'
  * @return {string} `https://api.themoviedb.org/...`
  */
-export const searchUrl =  (whatSearch) => `https://api.themoviedb.org/3/search/${whatSearch}?api_key=${apiKeyTmdb}&language=de&include_adult=false&query=`
+export const searchUrl =  (searchFor) => `https://api.themoviedb.org/3/search/${searchFor}?api_key=${apiKeyTmdb}&language=de&include_adult=false&query=`
 export const popularMoviesUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKeyTmdb}&language=de&page=1`
 
-//whatSearch = {string} 'movie' || 'tv'
-export const genreUrl = (whatSearch) => `https://api.themoviedb.org/3/genre/${whatSearch}/list?api_key=${apiKeyTmdb}&language=de`
+//searchFor = {string} 'movie' || 'tv'
+export const genreUrl = (searchFor) => `https://api.themoviedb.org/3/genre/${searchFor}/list?api_key=${apiKeyTmdb}&language=de`
 export const fskUrl = `https://altersfreigaben.de/api2/s/`
 
 export const imageUrl = `https://image.tmdb.org/t/p/w500`
