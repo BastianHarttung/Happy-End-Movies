@@ -123,6 +123,7 @@ const DetailAnsicht = (props) => {
                     <div className={classes.actorContainer}>
                         {props.movie.cast ?
                             filteredActors.slice(0, showActors).map((actor, index) => {
+                                console.log('actor', actor)
                                 return (
                                     <div key={index} className={classes.actorProfile}>
                                         <img className={classes.actorImage}
@@ -135,13 +136,14 @@ const DetailAnsicht = (props) => {
                                              title={actor.name}/>
                                         <h5 className={classes.actorName}>{actor.name}</h5>
 
-                                        {actor.character ?
+                                        {actor.character  ?
                                             <p className={classes.character}>"{actor.character}"</p>
                                             : ''}
-                                        {/*TODO*/}
                                         {actor.roles ?
                                             actor.roles.map(role => {
-                                                <p className={classes.character}>"{role.character}"</p>
+                                                if (role.character !== '') {
+                                                    return <p className={classes.character}>"{role.character}"</p>
+                                                }
                                             })
                                             : ''}
 
@@ -247,17 +249,4 @@ const DetailAnsicht = (props) => {
 
 export default DetailAnsicht;
 
-/*
-const actor = {adult: false,
-    gender: 1,
-    id: 10742,
-    known_for_department: "Acting",
-    name: "Teri Hatcher",
-    order: 0,
-    original_name: "Teri Hatcher",
-    popularity: 5.775,
-    profile_path: "/rgdIWxYCCe1wK1ycdKiPhMBI9Fs.jpg",
-    roles: [
-        {credit_id: '52538f8719c295794027f7d8', character: 'Susan Mayer', episode_count: 179}
-    ]
-}*/
+
