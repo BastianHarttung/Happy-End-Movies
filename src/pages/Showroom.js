@@ -18,6 +18,8 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
 
     const filteredMoviesPart = filteredMovies.slice(index, Math.max(pageLength, pageLength * (activePage + 1)))
 
+    const [searchingCategory, setSearchingCategory] = useState('movie')
+
     const widthShowroom = window.innerWidth - 260
 
     /**
@@ -81,10 +83,10 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                 </div>
             </div>
 
-            <div className={classes.showroomContainer} style={{width: widthShowroom+'px'}}>
+            <div className={classes.showroomContainer} style={{width: widthShowroom + 'px'}}>
                 <div className={classes.searchContainer}>
                     <SearchBar
-                        searchMovie={(movieName,searchCategory) => searchMovieDb(movieName,searchCategory)}/>
+                        searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}/>
                 </div>
 
                 {filteredMovies.length > 0 ?
@@ -96,7 +98,8 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                                     key={movie.id}
                                     movie={movie}
                                     to='/detailansicht'
-                                    parentCallback={(currentMovie,category) => callback(currentMovie,category)}
+                                    parentCallback={(currentMovie, category) => callback(currentMovie, category)}
+                                    category={searchingCategory}
                                 />)}
 
                         </div>
@@ -144,11 +147,12 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
      * @param {string} movieName
      * @param {string} searchCategory eg 'movie' || 'tv'
      */
-    function filterMovies(movieName,searchCategory) {
-        console.log('filterMovies', searchCategory)
+    function filterMovies(movieName, searchCategory) {
         const movieFilter = moviesDB.filter(movie => {
-                return movie.title.toLowerCase().includes(movieName.toLowerCase()) ||
-                    movie.original_title.toLowerCase().includes(movieName.toLowerCase())
+                if (movie.title) {
+                    return movie.title.toLowerCase().includes(movieName.toLowerCase()) ||
+                        movie.original_title.toLowerCase().includes(movieName.toLowerCase())
+                } else return movie.original_name.toLowerCase().includes(movieName.toLowerCase())
             }
         )
         setFilteredMovies(movieFilter)
@@ -160,15 +164,16 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
      * Search Movie
      * @return {Promise<void>}
      */
-    function searchMovieDb(movieName,searchCategory) {
+    function searchMovieDb(movieName, searchCategory) {
         if (movieName.length === 0) {
-            setFilteredMovies(moviesDB)
-            setSearchFilteredMovies(moviesDB)
-            setFilterLength(moviesDB.length)
+            setFilteredMovies(moviesDB);
+            setSearchFilteredMovies(moviesDB);
+            setFilterLength(moviesDB.length);
             window.location.hash = '';
         } else {
             window.location.hash = movieName;
-            filterMovies(movieName,searchCategory)
+            setSearchingCategory(searchCategory);
+            filterMovies(movieName, searchCategory)
         }
     }
 

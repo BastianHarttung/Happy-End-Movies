@@ -165,7 +165,7 @@ function App() {
      */
     async function calculateHappyEnd(movie) {
         if(typeof movie.happyEnd_Voting === 'object') {
-            console.log('calculate happyend')
+            //console.log('calculate happyend')
             const happyEndArray = Object.values(movie.happyEnd_Voting)
             const trueCount = happyEndArray.reduce((acc, current) => {
                 if (current) acc++

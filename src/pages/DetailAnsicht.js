@@ -26,8 +26,8 @@ const DetailAnsicht = (props) => {
     const [searchActor, setSearchActor] = useState('')
     const [filteredActors, setFilteredActors] = useState(props.movie.cast)
 
-    console.log('details movie', props.movie)
-    console.log('details happy end', props.movie.has_happy_end)
+    //console.log('details movie', props.movie)
+    //console.log('details happy end', props.movie.has_happy_end)
 
 
     useEffect(() => {
@@ -41,7 +41,7 @@ const DetailAnsicht = (props) => {
         <section className={classes.detailsSection}>
 
             <div className={classes.movieHeadContainer}>
-                <h2 className={classes.title}>{props.movie.title}</h2>
+                <h2 className={classes.title}>{props.movie.title ? props.movie.title : props.movie.original_name}</h2>
                 <img src={props.movie.backdrop_path ?
                     imageUrl + props.movie.backdrop_path
                     : imageUrl + props.movie.poster_path}
@@ -68,14 +68,14 @@ const DetailAnsicht = (props) => {
 
                         <p className={classes.releaseYear}>{props.movie.release_date ?
                             props.movie.release_date.slice(0, 4)
-                            : ''}
+                            : props.movie.first_air_date.slice(0,4)}
                         </p>
 
                         <div className={classes.genres}>
                             {genres.map((genre, index) => <span key={index}>{genre}/ </span>)}
                         </div>
 
-                        <h5 className={classes.director}>Regie</h5>
+                        <h5 className={classes.director}>{props.movie.directors.length > 0 ? 'Regie' : ''}</h5>
                         <div className={classes.directorsContainer}>
                             {props.movie.directors.map((director, index) => {
                                     return (
@@ -123,7 +123,7 @@ const DetailAnsicht = (props) => {
                     <div className={classes.actorContainer}>
                         {props.movie.cast ?
                             filteredActors.slice(0, showActors).map((actor, index) => {
-                                console.log('actor', actor)
+                                //console.log('actor', actor)
                                 return (
                                     <div key={index} className={classes.actorProfile}>
                                         <img className={classes.actorImage}
@@ -136,7 +136,7 @@ const DetailAnsicht = (props) => {
                                              title={actor.name}/>
                                         <h5 className={classes.actorName}>{actor.name}</h5>
 
-                                        {actor.character  ?
+                                        {actor.character ?
                                             <p className={classes.character}>"{actor.character}"</p>
                                             : ''}
                                         {actor.roles ?
@@ -226,8 +226,14 @@ const DetailAnsicht = (props) => {
                         return actor.name.toLowerCase().includes(actorSearchLow) ||
                             actor.character.toLowerCase().includes(actorSearchLow)
                     } else {
+                        let actorCharacter = false;
+                        for (let role of actor.roles) {
+                            if (role.character.toLowerCase().includes(actorSearchLow)) {
+                                actorCharacter = true;
+                            }
+                        }
                         return actor.name.toLowerCase().includes(actorSearchLow) ||
-                            actor.roles[0].character.toLowerCase().includes(actorSearchLow)
+                            actorCharacter
                     }
                 })
             )
