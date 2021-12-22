@@ -27,7 +27,7 @@ const Bewertung = (props) => {
 
             <div className={classes.bewertungContainer}>
                 <SearchBar
-                    searchMovie={ (movieName, searchCategory) => searchMovie(movieName, searchCategory) }
+                    searchMovie={ (movieName) => searchMovie(movieName) }
                     />
 
                 {searchFor ?
@@ -87,7 +87,7 @@ const Bewertung = (props) => {
      * @param {string} searchCategory 'movie' || 'tv'
      * @return {Promise<void>}
      */
-    async function searchMovie(movieName,searchCategory) {
+    async function searchMovie(movieName,searchCategory = 'multi') {
         if (movieName.length > 0) {
             setSearchingCategory(searchCategory)
             setSearchedMovies(await getJsonFromTmdb(movieName, 1));

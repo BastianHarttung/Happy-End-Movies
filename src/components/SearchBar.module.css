@@ -1,37 +1,16 @@
 
 .searchBarContainer {
-    background-color: var(--main-color-white);
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-/*---------Choice Button----------*/
-.choiceContainer {
-    display: flex;
-    flex-direction: column;
-    margin-right: 15px;
-}
-
-input[type = radio] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(128, 128, 128, 0.88);
-    transition: all 0.2s linear;
-    margin-right: 5px;
+.searchContainer {
     position: relative;
-    top: 3px;
-    cursor: pointer;
-}
-
-input[type=radio]:checked {
-    border: 6px solid black;
 }
 
 /*-------------Search----------------*/
@@ -39,16 +18,16 @@ input[type=radio]:checked {
     width: 300px;
     font-size: 18px;
     border: 1px solid gray;
-    border-radius: 10px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 7px;
+    border-radius: 20px;
+    padding: 7px 10px 7px 40px;
 }
 
 .searchButton {
-    width: 30px;
-    height: 30px;
-    margin-left: 10px;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 0;
+    margin: 7px 9px;
     cursor: pointer;
 }
 
