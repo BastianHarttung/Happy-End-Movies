@@ -37,7 +37,31 @@
     flex-direction: column;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 20px 0px;
+    padding: 20px 0px 0px 0px;
+}
+
+.categoryBtns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+}
+
+.categoryBtns button {
+    background-color: var(--main-color-white);
+    width: 150px;
+    font-size: 15px;
+    text-transform: uppercase;
+    border: 0px;
+    border-radius: 7px;
+    padding: 10px;
+    margin: 0px 10px;
+    cursor: pointer;
+    transition: all 150ms ease-in-out;
+}
+
+.categoryBtns button:hover {
+    background-color: var(--main-color);
 }
 
 .filteredMoviesContainer {

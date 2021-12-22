@@ -4,10 +4,8 @@ import "./Navigation.module.css"
 const Navigation = (props) => {
     return (
         <nav>
-            <Link className={"link"} to = '/'>Hauptmenü</Link>
-            <Link to = '/bewertung'>Bewertung</Link>
+            <Link to = '/bewertung'>Filmsuche</Link>
             <Link to = '/showroom'>Showroom</Link>
-
         </nav>
     )
 }

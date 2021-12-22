@@ -10,7 +10,7 @@ const apiKeyTmdb = 'd2aa68fbfa10f4f356fe29718bfa3508'
 
 /**
  *What are you searching for? Movie, TV-Show, Person, all Things (Multi)
- * @param {string} searchFor eg 'movie' || 'tv' || 'multi' || 'person' || 'company' || 'keyword'
+ * @param {string} searchFor eg 'multi' || 'movie' || 'tv' ||  'person' || 'company' || 'keyword'
  * @return {string} `https://api.themoviedb.org/...`
  */
 export const searchUrl = (searchFor) => `https://api.themoviedb.org/3/search/${searchFor}?api_key=${apiKeyTmdb}&language=de&include_adult=false&query=`

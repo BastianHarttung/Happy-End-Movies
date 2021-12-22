@@ -65,17 +65,13 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
             <div className={classes.sidebar} style={{top: scrollPosition + 'px'}}>
                 <div className={classes.filterContainer}>
                     <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, 'all')}
-                         className={classes.filter}>Alle Filme
+                         className={classes.filter}>Alles
                     </div>
                     <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, true)}
-                         className={classes.filter}>Filme
-                        mit
-                        Happy End
+                         className={classes.filter}>Filme mit Happy End
                     </div>
                     <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, false)}
-                         className={classes.filter}>Filme
-                        ohne
-                        Happy End
+                         className={classes.filter}>Filme ohne Happy End
                     </div>
                     <div className={classes.sidebarInfos}>
                         <div>Gesamt <b>{filterLength}</b> Filme</div>
@@ -88,6 +84,12 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                     <SearchBar
                         searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}/>
                 </div>
+
+                <div className={classes.categoryBtns}>
+                    <button onClick={() => filterMoviesByCategory( 'movie')}>Filme</button>
+                    <button onClick={() => filterMoviesByCategory( 'tv')}>Serien</button>
+                </div>
+
 
                 {filteredMovies.length > 0 ?
                     <div className={classes.filteredMoviesContainer}>
@@ -147,7 +149,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
      * @param {string} movieName
      * @param {string} searchCategory eg 'movie' || 'tv'
      */
-    function filterMovies(movieName, searchCategory) {
+    function filterMoviesByName(movieName, searchCategory) {
         const movieFilter = moviesDB.filter(movie => {
                 if (movie.title) {
                     return movie.title.toLowerCase().includes(movieName.toLowerCase()) ||
@@ -158,6 +160,17 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
         setFilteredMovies(movieFilter)
         setSearchFilteredMovies(movieFilter)
         setFilterLength(movieFilter.length)
+    }
+
+    /**
+     * Filter Movies by Category
+     * @param {string} category 'movie' || 'tv'
+     */
+    function filterMoviesByCategory(category){
+        const movieFilter = moviesDB.filter(movie => movie.category === category  )
+        setFilteredMovies(movieFilter);
+        setFilterLength(movieFilter.length);
+        setActivePage(0)
     }
 
     /**
@@ -173,7 +186,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
         } else {
             window.location.hash = movieName;
             setSearchingCategory(searchCategory);
-            filterMovies(movieName, searchCategory)
+            filterMoviesByName(movieName, searchCategory)
         }
     }
 

@@ -1,3 +1,222 @@
+//-----------------------Multi---------------------------------------
+// results.media_type = 'tv' || 'movie' || 'person'
+
+//Suche nach bad; https://api.themoviedb.org/3/search/multi?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&query=bad&page=1&include_adult=false
+export const apiMultiSearchFilm = {
+    "page": 1,
+    "results": [
+        {
+            "backdrop_path": "/84XPpjGvxNyExjSuLQe0SzioErt.jpg",
+            "first_air_date": "2008-01-20",
+            "genre_ids": [
+                18
+            ],
+            "id": 1396,
+            "media_type": "tv",
+            "name": "Breaking Bad",
+            "origin_country": [
+                "US"
+            ],
+            "original_language": "en",
+            "original_name": "Breaking Bad",
+            "overview": "Walter White ist ein schlafwandelnd durchs Leben gehender Highschool Chemielehrer. An seinem 50. Geburtstag wird bei ihm Krebs im Endstadium diagnostiziert. Um die finanzielle Zukunft für seine schwangere Frau und seinen behinderten Sohn zu sichern und weil er an der Schwelle des Todes nichts mehr zu verlieren hat, beschließt er seine Fähigkeiten als Chemiker gewinnbringend einzusetzen. Gemeinsam mit seinem ehemaligen Schüler Jesse Pinkman beginnt er Methamphetamin zu kochen.",
+            "popularity": 282.789,
+            "poster_path": "/u1N5AQ0T6Xr28bZGP84AcSJ5M6b.jpg",
+            "vote_average": 8.7,
+            "vote_count": 8006
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/a9zFUuxzChmAlIybVge9IZt1hH0.jpg",
+            "genre_ids": [
+                35
+            ],
+            "id": 578908,
+            "media_type": "movie",
+            "original_language": "en",
+            "original_title": "Bad Trip",
+            "overview": "In dieser Prank-Komödie mit versteckter Kamera verwickeln zwei beste Freunde auf einer ausgelassenen Autoreise nach New York arglose Mitmenschen in unerhörte Streiche.",
+            "popularity": 108.419,
+            "poster_path": "/A1Gy5HX3DKGaNW1Ay30NTIVJqJ6.jpg",
+            "release_date": "2020-03-26",
+            "title": "Bad Trip",
+            "video": false,
+            "vote_average": 6.1,
+            "vote_count": 345
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/3N316jUSdhvPyYTW29G4v9ebbcS.jpg",
+            "genre_ids": [
+                53,
+                28,
+                80
+            ],
+            "id": 38700,
+            "media_type": "movie",
+            "original_language": "en",
+            "original_title": "Bad Boys for Life",
+            "overview": "Draufgänger Mike Lowrey und sein Partner Marcus Burnett stehen immer noch im Dienst der Polizei und treiben Captain Howard nach wie vor mit Missionen zur Weißglut, die in Destruktionsorgien enden. Während Einzelgänger Mike immer noch mit seinem Job verheiratet ist, wird Familienmensch Marcus zunehmend klar, dass er seine zweite Lebenshälfte lieber im Kreis seiner Liebsten verbringen will - anstatt sich Hals über Kopf von einer waghalsigen Mission in die nächste zu stürzen. Nachdem Mike eines Tages allerdings Ziel eines Attentats wird, überschlagen sich die Ereignisse, sodass den beiden nichts anderes übrig bleibt, als Jagd auf dessen Angreifer zu machen, der ein dunkles Geheimnis birgt und alles in seiner Macht stehende tut, um die Befehle seiner Mutter erfolgreich auszuführen. Und die will vor allem eines: den Tod von Mike Lowrey.",
+            "popularity": 91.163,
+            "poster_path": "/ksJghzOjweRfpAOVbpRVmGPuV4k.jpg",
+            "release_date": "2020-01-15",
+            "title": "Bad Boys for Life",
+            "video": false,
+            "vote_average": 7.2,
+            "vote_count": 6719
+        }],
+    "total_pages": 172,
+    "total_results": 3425
+}
+
+//Suche nach brad pitt; https://api.themoviedb.org/3/search/multi?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&query=brad%20pitt&page=1&include_adult=false
+export const apiMultiSearchPerson = {
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "gender": 2,
+            "id": 287,
+            "known_for": [
+                {
+                    "adult": false,
+                    "backdrop_path": "/yguBaPk5V0nZCcSBthre4YFMAgk.jpg",
+                    "genre_ids": [
+                        18
+                    ],
+                    "id": 550,
+                    "media_type": "movie",
+                    "original_language": "en",
+                    "original_title": "Fight Club",
+                    "overview": "Ein Yuppie findet beim charismatischen Tyler Durden Unterschlupf, nachdem seine Wohnung in die Luft gejagt wird. Ein Gerangel zwischen den beiden entwickelt sich zu einer Schlägerei, die mit der Erkenntnis endet, dass man sich nach einer ordentlichen Portion Prügel einfach besser fühlt. Der \"Fight Club\" ist geboren. Immer mehr Männer versammeln sich, um sich zu schlagen - und gestärkt in den Alltag zu gehen. Wie ein Virus greift das Konzept um sich, doch für Tyler ist der Kampfverein nur die erste Stufe, um die USA in die Knie zu zwingen.",
+                    "poster_path": "/rUPKPWBpr2ZbDXXZpT0qgYqTlG9.jpg",
+                    "release_date": "1999-10-15",
+                    "title": "Fight Club",
+                    "video": false,
+                    "vote_average": 8.4,
+                    "vote_count": 23021
+                },
+                {
+                    "adult": false,
+                    "backdrop_path": "/50VD6QU0NX0aRB6ftKCVWun80bm.jpg",
+                    "genre_ids": [
+                        18,
+                        28,
+                        53,
+                        10752
+                    ],
+                    "id": 16869,
+                    "media_type": "movie",
+                    "original_language": "en",
+                    "original_title": "Inglourious Basterds",
+                    "overview": "Im von Deutschland besetzten Frankreich muss Shosanna ansehen wie ihre Familie durch Oberst Hans Landa brutal ermordet wird. Sie kann entkommen und flieht nach Paris. Gemeinsam mit seinen 8 Männern, einer Elitetruppe aus jüdisch-amerikanischen Soldaten, will Offizier Aldo Raine systematische Vergeltungsschläge gegen Nazis durchführen. Sie werden in Frankreich abgesetzt, um dort unterzutauchen. Von den Deutschen als ‚Die Bastarde' gefürchtet versuchen sie den Führer des III. Reichs zu töten.",
+                    "poster_path": "/wRxvEhv5UvJz0h4TgXpbQ3pd1hc.jpg",
+                    "release_date": "2009-08-19",
+                    "title": "Inglourious Basterds",
+                    "video": false,
+                    "vote_average": 8.2,
+                    "vote_count": 17873
+                },
+                {
+                    "adult": false,
+                    "backdrop_path": "/i5H7zusQGsysGQ8i6P361Vnr0n2.jpg",
+                    "genre_ids": [
+                        80,
+                        9648,
+                        53
+                    ],
+                    "id": 807,
+                    "media_type": "movie",
+                    "original_language": "en",
+                    "original_title": "Se7en",
+                    "overview": "Der besonnene Detective Somerset ist ein Kriminologe der „alten Schule“. Zusammen mit seinem neuen Kollegen, dem Heißsporn Mills, wird er auf den ungewöhnlichsten und erschreckendsten Fall seiner Laufbahn angesetzt. Ein unbekannter Serienkiller versucht scheinbar, die Stadt von allen Sünden zu befreien. Er tut dies, indem er auf bestialische Weise für jede der sieben Todsünden einen symbolischen Ritualmord begeht.",
+                    "poster_path": "/79tFIrbMweqs52PxForIRJRFCIW.jpg",
+                    "release_date": "1995-09-22",
+                    "title": "Sieben",
+                    "video": false,
+                    "vote_average": 8.3,
+                    "vote_count": 16197
+                }
+            ],
+            "known_for_department": "Acting",
+            "media_type": "person",
+            "name": "Brad Pitt",
+            "popularity": 11.761,
+            "profile_path": "/hfkzP7YstXRsj2IM1a8lLz8bvst.jpg"
+        },
+        {
+            "adult": false,
+            "backdrop_path": null,
+            "genre_ids": [],
+            "id": 796833,
+            "media_type": "movie",
+            "original_language": "en",
+            "original_title": "Brad Pitt In America's National Parks",
+            "overview": "",
+            "popularity": 1.816,
+            "poster_path": "/jIKc588syx2DAma55R8z1hRFVCK.jpg",
+            "release_date": "2017-05-03",
+            "title": "Brad Pitt In America's National Parks",
+            "video": false,
+            "vote_average": 0,
+            "vote_count": 0
+        },
+        {
+            "adult": false,
+            "backdrop_path": null,
+            "genre_ids": [
+                53
+            ],
+            "id": 877817,
+            "media_type": "movie",
+            "original_language": "en",
+            "original_title": "Untitled George Clooney/Brad Pitt/Jon Watts Project",
+            "overview": "",
+            "popularity": 1.4,
+            "poster_path": null,
+            "release_date": "",
+            "title": "Untitled George Clooney/Brad Pitt/Jon Watts Project",
+            "video": false,
+            "vote_average": 0,
+            "vote_count": 0
+        },
+        {
+            "adult": false,
+            "gender": 2,
+            "id": 2765075,
+            "known_for": [
+                {
+                    "adult": false,
+                    "backdrop_path": "/40Y3VwGGNJ43PkDenjHEo7pbDo4.jpg",
+                    "genre_ids": [
+                        27
+                    ],
+                    "id": 739345,
+                    "media_type": "movie",
+                    "original_language": "en",
+                    "original_title": "Halloween Homecoming",
+                    "overview": "",
+                    "poster_path": "/tSzw1SAb6rg9FhZtleVeuZiKLS4.jpg",
+                    "release_date": "2019-10-05",
+                    "title": "Halloween Homecoming",
+                    "video": false,
+                    "vote_average": 0,
+                    "vote_count": 0
+                }
+            ],
+            "known_for_department": "Acting",
+            "media_type": "person",
+            "name": "James McGarvey",
+            "popularity": 0.6,
+            "profile_path": null
+        }
+    ],
+    "total_pages": 1,
+    "total_results": 4
+}
+
+//--------------------Movie--------------------------------------
+
 //https://api.themoviedb.org/3/search/movie?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&include_adult=false&query=fight
 export const apiMovieSearch =
     {
