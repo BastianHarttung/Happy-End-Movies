@@ -8,13 +8,17 @@ const Bewertung = (props) => {
 
     const [searchedMovies, setSearchedMovies] = useState([])
     const [searchFor, setSearchFor] = useState('')
+    const [searchResult, setSearchResult] = useState('')
+    const [searchStarted, setSearchStarted] = useState(false)
+    const [searchingCategory, setSearchingCategory] = useState('multi')
+
     const [totalResults, setTotalResults] = useState(0)
     const [totalPages, setTotalPages] = useState()
     const [activePage, setActivePage] = useState(0)
 
-    const [popularMovies, setPopularMovies] = useState([])
+    //const [activeCategory, setActiveCategory] = useState('multi')
 
-    const [searchingCategory, setSearchingCategory] = useState('movie')
+    const [popularMovies, setPopularMovies] = useState([])
 
     useEffect(() => {
         getPopularMoviesFromTmdb().then((response) => {
@@ -27,28 +31,28 @@ const Bewertung = (props) => {
 
             <div className={classes.bewertungContainer}>
                 <SearchBar
-                    searchMovie={ (movieName) => searchMovie(movieName)}
-                    saveSearchFor ={(movieName) => saveSearchFor(movieName)}
-                    />
+                    searchMovie={(movieName) => searchMovie(movieName)}
+                    saveSearchFor={(movieName) => setSearchFor(movieName)}
+                />
 
                 <div className={classes.categoryBtnContainer}>
-                    <button id='multi' onClick={()=>searchMovie(searchFor, 'multi')}>Alles</button>
-                    <button id='movie' onClick={()=>searchMovie(searchFor, 'movie')}>Filme</button>
-                    <button id='tv' onClick={()=>searchMovie(searchFor, 'tv')}>Serien</button>
-                    <button id='person' onClick={()=>searchMovie(searchFor, 'person')}>Schauspieler</button>
+                    <button className={searchingCategory === 'multi' ? classes.active :''} onClick={() => searchMovie(searchFor, 'multi')}>Alles</button>
+                    <button className={searchingCategory === 'movie' ? classes.active :''} onClick={() => searchMovie(searchFor, 'movie')}>Filme</button>
+                    <button className={searchingCategory === 'tv' ? classes.active :''} onClick={() => searchMovie(searchFor, 'tv')}>Serien</button>
+                    <button className={searchingCategory === 'person' ? classes.active :''} onClick={() => searchMovie(searchFor, 'person')}>Schauspieler</button>
                 </div>
 
-                {searchFor ?
-                    <div className={classes.headOverResults}>Suchergebnisse für: {searchFor}</div>
+                {searchStarted ?
+                    <div className={classes.headOverResults}>Suchergebnisse für: {searchResult}</div>
                     : <div className={classes.headOverResults}>Beliebte Filme</div>}
 
-                {searchFor ?
+                {searchStarted ?
                     <div className={classes.resultSection}>
                         {searchedMovies.map(movie =>
                             <SearchResultBox key={movie.id}
                                              to='/detailansicht'
-                                             parentCallback={(currentMovie,category) => props.callback(currentMovie,category)}
-                                             category = {searchingCategory}
+                                             parentCallback={(currentMovie, category) => props.callback(currentMovie, category)}
+                                             category={searchingCategory}
                                              movie={movie}/>)}</div>
                     :
                     <div className={classes.resultSection}>
@@ -56,11 +60,11 @@ const Bewertung = (props) => {
                         {popularMovies.slice(0, 5).map(movie =>
                             <SearchResultBox key={movie.id}
                                              to='/detailansicht'
-                                             parentCallback={(currentMovie,category) => props.callback(currentMovie,category)}
-                                             category = {searchingCategory}
+                                             parentCallback={(currentMovie, category) => props.callback(currentMovie, category)}
+                                             category={searchingCategory}
                                              movie={movie}/>)}</div>}
 
-                {totalPages ?
+                {searchStarted ?
                     <div className={classes.pageContainer}>Seite: {totalPages.map(page =>
                         <span key={page}
                               onClick={() => changePage(page)}
@@ -95,23 +99,20 @@ const Bewertung = (props) => {
      * @param {string} searchCategory 'movie' || 'tv'
      * @return {Promise<void>}
      */
-    async function searchMovie(movieName,searchCategory = 'multi') {
+    async function searchMovie(movieName, searchCategory = 'multi') {
         if (movieName.length > 0) {
-            setSearchingCategory(searchCategory)
-            const tmdbMovie = await getJsonFromTmdb(movieName, 1,searchCategory)
+            setSearchResult(movieName);
+            setSearchingCategory(searchCategory);
+            const tmdbMovie = await getJsonFromTmdb(movieName, 1, searchCategory);
             setSearchedMovies(tmdbMovie);
             setActivePage(1);
             setSearchFor(movieName);
+            setSearchStarted(true);
             window.location.hash = movieName;
+        } else {
+            setSearchingCategory('multi')
+            setSearchStarted(false)
         }
-    }
-
-    /**
-     * Is Executed by typing letters in search input field and save searchFor
-     * @param movieName
-     */
-    function saveSearchFor(movieName) {
-        setSearchFor(movieName)
     }
 
     /**
@@ -134,12 +135,12 @@ const Bewertung = (props) => {
      * @param {string} searchCategory Category you are searching for eg 'multi' || 'movie' || 'tv'
      * @return {Promise<*>}
      */
-    async function getJsonFromTmdb(movieName, pageNumber,searchCategory) {
+    async function getJsonFromTmdb(movieName, pageNumber, searchCategory) {
         const response = await fetch(searchUrl(searchCategory) + movieName + '&page=' + pageNumber);
         let data = await response.json();
         setTotalResults(await data.total_results)
         setTotalPages(makePageArray(await data.total_pages))
-        console.log('data.results',data.results)
+        console.log('data.results', data.results)
         //console.log('data', data)
         return data.results
     }

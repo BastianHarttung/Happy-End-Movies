@@ -12,7 +12,7 @@ const SearchBar = (props) => {
      * After hit 3 chars on input search start searching movie
      */
     useEffect(() => {
-        if (movieName.length >= 1) {
+        if (movieName.length >= 4) {
             props.searchMovie(movieName)
         }
     }, [movieName])
