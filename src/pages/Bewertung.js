@@ -30,6 +30,13 @@ const Bewertung = (props) => {
                     searchMovie={ (movieName) => searchMovie(movieName) }
                     />
 
+                <div className={classes.categoryBtnContainer}>
+                    <button id='multi' onClick={()=>searchMovie('bad', 'multi')}>Alles</button>
+                    <button id='movie' onClick={()=>searchMovie('bad', 'movie')}>Filme</button>
+                    <button id='tv' onClick={()=>searchMovie('bad', 'tv')}>Serien</button>
+                    <button id='person' onClick={()=>searchMovie('bad', 'person')}>Schauspieler</button>
+                </div>
+
                 {searchFor ?
                     <div className={classes.headOverResults}>Suchergebnisse für: {searchFor}</div>
                     : <div className={classes.headOverResults}>Beliebte Filme</div>}
@@ -90,7 +97,8 @@ const Bewertung = (props) => {
     async function searchMovie(movieName,searchCategory = 'multi') {
         if (movieName.length > 0) {
             setSearchingCategory(searchCategory)
-            setSearchedMovies(await getJsonFromTmdb(movieName, 1));
+            const tmdbMovie = await getJsonFromTmdb(movieName, 1,searchCategory)
+            setSearchedMovies(tmdbMovie);
             setActivePage(1);
             setSearchFor(movieName);
             window.location.hash = movieName;
@@ -104,7 +112,7 @@ const Bewertung = (props) => {
      * @return {Promise<void>}
      */
     async function changePage(page) {
-        setSearchedMovies(await getJsonFromTmdb(searchFor, page))
+        setSearchedMovies(await getJsonFromTmdb(searchFor, page, searchingCategory))
         setActivePage(page)
     }
 
@@ -114,11 +122,11 @@ const Bewertung = (props) => {
      * - make array with pages and set to total pages
      * @param {string} movieName
      * @param {number} pageNumber
-     * @param {string} searchCategory Category you are searching for eg 'movie' || 'tv'
+     * @param {string} searchCategory Category you are searching for eg 'multi' || 'movie' || 'tv'
      * @return {Promise<*>}
      */
-    async function getJsonFromTmdb(movieName, pageNumber) {
-        const response = await fetch(searchUrl(searchingCategory) + movieName + '&page=' + pageNumber);
+    async function getJsonFromTmdb(movieName, pageNumber,searchCategory) {
+        const response = await fetch(searchUrl(searchCategory) + movieName + '&page=' + pageNumber);
         let data = await response.json();
         setTotalResults(await data.total_results)
         setTotalPages(makePageArray(await data.total_pages))
