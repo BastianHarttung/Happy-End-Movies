@@ -27,14 +27,15 @@ const Bewertung = (props) => {
 
             <div className={classes.bewertungContainer}>
                 <SearchBar
-                    searchMovie={ (movieName) => searchMovie(movieName) }
+                    searchMovie={ (movieName) => searchMovie(movieName)}
+                    saveSearchFor ={(movieName) => saveSearchFor(movieName)}
                     />
 
                 <div className={classes.categoryBtnContainer}>
-                    <button id='multi' onClick={()=>searchMovie('bad', 'multi')}>Alles</button>
-                    <button id='movie' onClick={()=>searchMovie('bad', 'movie')}>Filme</button>
-                    <button id='tv' onClick={()=>searchMovie('bad', 'tv')}>Serien</button>
-                    <button id='person' onClick={()=>searchMovie('bad', 'person')}>Schauspieler</button>
+                    <button id='multi' onClick={()=>searchMovie(searchFor, 'multi')}>Alles</button>
+                    <button id='movie' onClick={()=>searchMovie(searchFor, 'movie')}>Filme</button>
+                    <button id='tv' onClick={()=>searchMovie(searchFor, 'tv')}>Serien</button>
+                    <button id='person' onClick={()=>searchMovie(searchFor, 'person')}>Schauspieler</button>
                 </div>
 
                 {searchFor ?
@@ -103,6 +104,14 @@ const Bewertung = (props) => {
             setSearchFor(movieName);
             window.location.hash = movieName;
         }
+    }
+
+    /**
+     * Is Executed by typing letters in search input field and save searchFor
+     * @param movieName
+     */
+    function saveSearchFor(movieName) {
+        setSearchFor(movieName)
     }
 
     /**
