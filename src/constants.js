@@ -15,6 +15,7 @@ const apiKeyTmdb = 'd2aa68fbfa10f4f356fe29718bfa3508'
  */
 export const searchUrl = (searchFor) => `https://api.themoviedb.org/3/search/${searchFor}?api_key=${apiKeyTmdb}&language=de&include_adult=false&query=`
 export const popularMoviesUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKeyTmdb}&language=de&page=1`
+export const trendingMoviesUrl = `https://api.themoviedb.org/3/trending/all/day?api_key=${apiKeyTmdb}`
 
 //searchFor = {string} 'movie' || 'tv'
 export const genreUrl = (searchFor) => `https://api.themoviedb.org/3/genre/${searchFor}/list?api_key=${apiKeyTmdb}&language=de`

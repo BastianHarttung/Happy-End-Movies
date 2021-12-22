@@ -17,6 +17,12 @@
 
 /*---------------Category buttons-----------------*/
 
+.categoryBtnContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .categoryBtnContainer button {
     background-color: var(--main-color-white);
     width: 150px;

@@ -1,7 +1,7 @@
 import classes from "./Bewertung.module.css";
 import {useEffect, useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
-import {popularMoviesUrl, searchUrl} from "../constants";
+import {popularMoviesUrl, searchUrl, trendingMoviesUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
 
 const Bewertung = (props) => {
@@ -15,8 +15,6 @@ const Bewertung = (props) => {
     const [totalResults, setTotalResults] = useState(0)
     const [totalPages, setTotalPages] = useState()
     const [activePage, setActivePage] = useState(0)
-
-    //const [activeCategory, setActiveCategory] = useState('multi')
 
     const [popularMovies, setPopularMovies] = useState([])
 
@@ -44,7 +42,7 @@ const Bewertung = (props) => {
 
                 {searchStarted ?
                     <div className={classes.headOverResults}>Suchergebnisse für: {searchResult}</div>
-                    : <div className={classes.headOverResults}>Beliebte Filme</div>}
+                    : <div className={classes.headOverResults}>Täglicher Trend</div>}
 
                 {searchStarted ?
                     <div className={classes.resultSection}>
@@ -73,7 +71,7 @@ const Bewertung = (props) => {
                     </div>
                     : ''}
 
-                {totalResults ? <div className={classes.totalResults}>Anzahl Ergebnisse: {totalResults}</div>
+                {searchStarted ? <div className={classes.totalResults}>Anzahl Ergebnisse: {totalResults}</div>
                     : ''}
             </div>
 
@@ -86,7 +84,7 @@ const Bewertung = (props) => {
      * @return {Promise<*>}
      */
     async function getPopularMoviesFromTmdb() {
-        const response = await fetch(popularMoviesUrl);
+        const response = await fetch(trendingMoviesUrl);
         let data = await response.json();
         return data.results
     }
