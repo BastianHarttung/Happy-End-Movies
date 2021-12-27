@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import SearchBar from "../components/SearchBar";
 
 
-const Showroom = ({moviesDB, dbLength, callback}) => {
+const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
 
     const [filteredMovies, setFilteredMovies] = useState(moviesDB ? moviesDB : [])
     const [searchFilteredMovies, setSearchFilteredMovies] = useState([]) //TODO
@@ -100,7 +100,7 @@ const Showroom = ({moviesDB, dbLength, callback}) => {
                                     key={movie.id}
                                     movie={movie}
                                     to='/detailansicht'
-                                    parentCallback={(currentMovie, category) => callback(currentMovie, category)}
+                                    saveSelectedMovie={(currentMovie, category) => saveSelectedMovie(currentMovie, category)}
                                     category={searchingCategory}
                                 />)}
 

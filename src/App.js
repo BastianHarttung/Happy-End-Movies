@@ -48,7 +48,7 @@ function App() {
                            exact={true}
                            element={
                                <Bewertung
-                                   callback={(movie,category) => saveSelectedMovie(movie,category)}
+                                   saveSelectedMovie={(movie,category) => saveSelectedMovie(movie,category)}
                                />}
                     />
 
@@ -67,7 +67,7 @@ function App() {
                                <Showroom
                                    moviesDB={allMovies}
                                    dbLength={dbLength}
-                                   callback={(movie,category) => saveSelectedMovie(movie,category)}
+                                   saveSelectedMovie={(movie,category) => saveSelectedMovie(movie,category)}
                                />}
                     />
 

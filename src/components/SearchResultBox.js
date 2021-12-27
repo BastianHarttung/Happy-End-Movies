@@ -1,6 +1,6 @@
 import classes from "./SearchResultBox.module.css";
 import emptyImage from "../assets/img/movie-poster.png"
-import {imageUrl} from "../constants";
+import {imageUrl, imageUrlSmall} from "../constants";
 import {FaSmileBeam, FaSadTear} from "react-icons/all";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
@@ -19,23 +19,31 @@ const SearchResultBox = (props) => {
     return (
         <div className={movieClicked ? classes.movieContainerClicked : classes.movieContainer}
              onClick={async () => {
-                 setMovieClicked(true);
-                 await props.parentCallback(props.movie, props.category)
-                     .then(() => {
-                         navigate(props.to);
-                         window.location.hash = `${props.movie.title}`;
-                         setMovieClicked(false)
-                     })
+                 if (!props.movie.name) {
+                     setMovieClicked(true);
+                     await props.saveSelectedMovie(props.movie, props.category)
+                         .then(() => {
+                             navigate(props.to);
+                             window.location.hash = `${props.movie.title}`;
+                             setMovieClicked(false)
+                         })
+                 }
              }}>
 
             <img className={classes.movieImage}
-                 src={props.movie.poster_path != null ? imageUrl + props.movie.poster_path : emptyImage}
+                 src={props.movie.poster_path ?
+                     imageUrl + props.movie.poster_path
+                     : props.movie.profile_path ?
+                         imageUrl + props.movie.profile_path
+                         : emptyImage}
                  alt="Poster"/>
 
             <div className={classes.movieInfosContainer}>
                 {props.movie.title ?
                     <div className={classes.movieTitle}>{props.movie.title}</div>
-                    : <div className={classes.movieTitle}>{props.movie.original_name}</div>}
+                    : props.movie.original_name ?
+                        <div className={classes.movieTitle}>{props.movie.original_name}</div>
+                        : <div className={classes.movieTitle}>{props.movie.name}</div>}
                 <Smiley/>
             </div>
 
