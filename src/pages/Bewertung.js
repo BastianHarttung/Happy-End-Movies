@@ -1,7 +1,7 @@
 import classes from "./Bewertung.module.css";
 import {useEffect, useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
-import {popularMoviesUrl, searchUrl, trendingMoviesUrl} from "../constants";
+import {searchUrl, trendingMoviesUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
 
 const Bewertung = (props) => {
@@ -34,10 +34,14 @@ const Bewertung = (props) => {
                 />
 
                 <div className={classes.categoryBtnContainer}>
-                    <button className={searchingCategory === 'multi' ? classes.active :''} onClick={() => searchMovie(searchFor, 'multi')}>Alles</button>
-                    <button className={searchingCategory === 'movie' ? classes.active :''} onClick={() => searchMovie(searchFor, 'movie')}>Filme</button>
-                    <button className={searchingCategory === 'tv' ? classes.active :''} onClick={() => searchMovie(searchFor, 'tv')}>Serien</button>
-                    <button className={searchingCategory === 'person' ? classes.active :''} onClick={() => searchMovie(searchFor, 'person')}>Schauspieler</button>
+                    <button className={searchingCategory === 'multi' ? classes.active :''}
+                            onClick={() => searchMovie(searchFor, 'multi')}>Alles</button>
+                    <button className={searchingCategory === 'movie' ? classes.active :''}
+                            onClick={() => searchMovie(searchFor, 'movie')}>Filme</button>
+                    <button className={searchingCategory === 'tv' ? classes.active :''}
+                            onClick={() => searchMovie(searchFor, 'tv')}>Serien</button>
+                    <button className={searchingCategory === 'person' ? classes.active :''}
+                            onClick={() => searchMovie(searchFor, 'person')}>Schauspieler</button>
                 </div>
 
                 {searchStarted ?

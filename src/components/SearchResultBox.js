@@ -1,6 +1,6 @@
 import classes from "./SearchResultBox.module.css";
 import emptyImage from "../assets/img/movie-poster.png"
-import {imageUrl, imageUrlSmall} from "../constants";
+import {imageUrl} from "../constants";
 import {FaSmileBeam, FaSadTear} from "react-icons/all";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
@@ -19,16 +19,16 @@ const SearchResultBox = (props) => {
     return (
         <div className={movieClicked ? classes.movieContainerClicked : classes.movieContainer}
              onClick={async () => {
-                 if (!props.movie.name) {
+                 if (props.movie.media_type !== 'person' && props.category !== 'person') {
                      setMovieClicked(true);
                      const category = () => {
                          if (props.category === 'movie' || props.category === 'tv') {
                              return props.category
-                         } else if (props.category === 'multi' && props.movie.media_type === 'movie' || props.movie.media_type === 'tv') {
+                         } else if (props.category === 'multi' && (props.movie.media_type === 'movie' || props.movie.media_type === 'tv')) {
                              return props.movie.media_type
-                         } else return ''
+                         }
                      }
-                     await props.saveSelectedMovie(props.movie, category)
+                     await props.saveSelectedMovie(props.movie, category())
                          .then(() => {
                              navigate(props.to);
                              window.location.hash = `${props.movie.title}`;

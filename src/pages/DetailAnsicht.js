@@ -143,7 +143,7 @@ const DetailAnsicht = (props) => {
                                             actor.roles.map(role => {
                                                 if (role.character !== '') {
                                                     return <p className={classes.character}>"{role.character}"</p>
-                                                }
+                                                } else return ''
                                             })
                                             : ''}
 
