@@ -21,7 +21,14 @@ const SearchResultBox = (props) => {
              onClick={async () => {
                  if (!props.movie.name) {
                      setMovieClicked(true);
-                     await props.saveSelectedMovie(props.movie, props.category)
+                     const category = () => {
+                         if (props.category === ('movie' || 'tv')) {
+                             return props.category
+                         } else if (props.category === 'multi' && props.movie.media_type === ('movie' || 'tv')) {
+                             return props.movie.media_type
+                         } else return ''
+                     }
+                     await props.saveSelectedMovie(props.movie, category)
                          .then(() => {
                              navigate(props.to);
                              window.location.hash = `${props.movie.title}`;
