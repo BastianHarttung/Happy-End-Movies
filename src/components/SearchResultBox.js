@@ -22,9 +22,9 @@ const SearchResultBox = (props) => {
                  if (!props.movie.name) {
                      setMovieClicked(true);
                      const category = () => {
-                         if (props.category === ('movie' || 'tv')) {
+                         if (props.category === 'movie' || props.category === 'tv') {
                              return props.category
-                         } else if (props.category === 'multi' && props.movie.media_type === ('movie' || 'tv')) {
+                         } else if (props.category === 'multi' && props.movie.media_type === 'movie' || props.movie.media_type === 'tv') {
                              return props.movie.media_type
                          } else return ''
                      }
