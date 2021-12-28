@@ -30,7 +30,7 @@ const SearchResultBox = (props) => {
                      }
                      await props.saveSelectedMovie(props.movie, category())
                          .then(() => {
-                             navigate(props.to);
+                             navigate('/detailansicht');
                              window.location.hash = `${props.movie.title}`;
                              setMovieClicked(false)
                          })

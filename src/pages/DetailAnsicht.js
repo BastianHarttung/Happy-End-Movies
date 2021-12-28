@@ -140,9 +140,10 @@ const DetailAnsicht = (props) => {
                                             <p className={classes.character}>"{actor.character}"</p>
                                             : ''}
                                         {actor.roles ?
-                                            actor.roles.map(role => {
+                                            actor.roles.map((role,index) => {
                                                 if (role.character !== '') {
-                                                    return <p className={classes.character}>"{role.character}"</p>
+                                                    return <p key={index}
+                                                              className={classes.character}>"{role.character}"</p>
                                                 } else return ''
                                             })
                                             : ''}

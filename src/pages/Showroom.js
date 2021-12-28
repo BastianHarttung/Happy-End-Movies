@@ -22,6 +22,8 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
 
     const widthShowroom = window.innerWidth - 260
 
+    const [searchFor, setSearchFor] = useState()
+
     /**
      * Sort Movies by Title and update movies after Timeout
      */
@@ -82,14 +84,14 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
             <div className={classes.showroomContainer} style={{width: widthShowroom + 'px'}}>
                 <div className={classes.searchContainer}>
                     <SearchBar
-                        searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}/>
+                        searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}
+                        saveSearchFor={(movieName) => setSearchFor(movieName)}/>
                 </div>
 
                 <div className={classes.categoryBtns}>
-                    <button onClick={() => filterMoviesByCategory( 'movie')}>Filme</button>
-                    <button onClick={() => filterMoviesByCategory( 'tv')}>Serien</button>
+                    <button onClick={() => filterMoviesByCategory('movie')}>Filme</button>
+                    <button onClick={() => filterMoviesByCategory('tv')}>Serien</button>
                 </div>
-
 
                 {filteredMovies.length > 0 ?
                     <div className={classes.filteredMoviesContainer}>
@@ -103,7 +105,6 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
                                     saveSelectedMovie={(currentMovie, category) => saveSelectedMovie(currentMovie, category)}
                                     category={searchingCategory}
                                 />)}
-
                         </div>
 
                         <div className={classes.infosContainer}>
@@ -166,8 +167,8 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
      * Filter Movies by Category
      * @param {string} category 'movie' || 'tv'
      */
-    function filterMoviesByCategory(category){
-        const movieFilter = moviesDB.filter(movie => movie.category === category  )
+    function filterMoviesByCategory(category) {
+        const movieFilter = moviesDB.filter(movie => movie.category === category)
         setFilteredMovies(movieFilter);
         setFilterLength(movieFilter.length);
         setActivePage(0)
@@ -186,6 +187,7 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
         } else {
             window.location.hash = movieName;
             setSearchingCategory(searchCategory);
+            setSearchFor(movieName);
             filterMoviesByName(movieName, searchCategory)
         }
     }

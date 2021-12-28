@@ -22,7 +22,7 @@ const Bewertung = (props) => {
         getPopularMoviesFromTmdb().then((response) => {
             setPopularMovies(response)
         })
-    }, [popularMovies])
+    }, [])
 
     return (
         <div className={classes.bewertungSection}>
@@ -52,7 +52,6 @@ const Bewertung = (props) => {
                     <div className={classes.resultSection}>
                         {searchedMovies.map(movie =>
                             <SearchResultBox key={movie.id}
-                                             to='/detailansicht'
                                              saveSelectedMovie={(currentMovie, category) => props.saveSelectedMovie(currentMovie, category)}
                                              category={searchingCategory}
                                              movie={movie}/>)}</div>
@@ -61,7 +60,6 @@ const Bewertung = (props) => {
 
                         {popularMovies.slice(0, 5).map(movie =>
                             <SearchResultBox key={movie.id}
-                                             to='/detailansicht'
                                              saveSelectedMovie={(currentMovie, category) => props.saveSelectedMovie(currentMovie, category)}
                                              category={searchingCategory}
                                              movie={movie}/>)}</div>}
