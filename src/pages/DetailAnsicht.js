@@ -13,6 +13,7 @@ import {imageUrl, imageUrlSmall} from "../constants";
 
 const DetailAnsicht = (props) => {
 
+    console.log('Detailansicht props',props)
     const navigate = useNavigate();
 
     const genres = props.movie.genres ? props.movie.genres : ['a', 'b']

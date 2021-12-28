@@ -19,22 +19,26 @@ const SearchResultBox = (props) => {
     return (
         <div className={movieClicked ? classes.movieContainerClicked : classes.movieContainer}
              onClick={async () => {
-                 if (props.movie.media_type !== 'person' && props.category !== 'person') {
-                     setMovieClicked(true);
-                     const category = () => {
-                         if (props.category === 'movie' || props.category === 'tv') {
-                             return props.category
-                         } else if (props.category === 'multi' && (props.movie.media_type === 'movie' || props.movie.media_type === 'tv')) {
-                             return props.movie.media_type
-                         }
+
+                 setMovieClicked(true);
+                 const category = () => {
+                     if (props.category === 'movie' || props.category === 'tv') {
+                         return props.category
+                     } else if (props.category === 'multi') {
+                         return props.movie.media_type
                      }
-                     await props.saveSelectedMovie(props.movie, category())
-                         .then(() => {
+                 }
+                 await props.saveSelectedMovie(props.movie, category())
+                     .then(() => {
+                         if (category() === 'person') {
+                             navigate('/detailansicht/person');
+                             window.location.hash = `${props.movie.name}`;
+                         } else {
                              navigate('/detailansicht');
                              window.location.hash = `${props.movie.title}`;
-                             setMovieClicked(false)
-                         })
-                 }
+                         }
+                         setMovieClicked(false)
+                     })
              }}>
 
             <img className={classes.movieImage}

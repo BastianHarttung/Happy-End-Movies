@@ -5,8 +5,9 @@ import {useEffect, useState} from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Hauptmenue from "./pages/Hauptmenue";
-import Bewertung from "./pages/Bewertung";
+import Filmsuche from "./pages/Filmsuche";
 import DetailAnsicht from "./pages/DetailAnsicht";
+import DetailsPerson from "./pages/DetailsPerson";
 import Showroom from "./pages/Showroom";
 import Impressum from "./pages/Impressum";
 
@@ -44,11 +45,21 @@ function App() {
 
                 <Routes>
 
-                    <Route path='/bewertung'
+                    <Route path='/filmsuche'
                            exact={true}
                            element={
-                               <Bewertung
-                                   saveSelectedMovie={(movie,category) => saveSelectedMovie(movie,category)}
+                               <Filmsuche
+                                   saveSelectedMovie={(movie, category) => saveSelectedMovie(movie, category)}
+                               />}
+                    />
+
+                    <Route path='/showroom'
+                           exact={true}
+                           element={
+                               <Showroom
+                                   moviesDB={allMovies}
+                                   dbLength={dbLength}
+                                   saveSelectedMovie={(movie, category) => saveSelectedMovie(movie, category)}
                                />}
                     />
 
@@ -61,14 +72,11 @@ function App() {
                                    user={userId}/>}
                     />
 
-                    <Route path='/showroom'
+                    <Route path='/detailansicht/person'
                            exact={true}
                            element={
-                               <Showroom
-                                   moviesDB={allMovies}
-                                   dbLength={dbLength}
-                                   saveSelectedMovie={(movie,category) => saveSelectedMovie(movie,category)}
-                               />}
+                               <DetailsPerson
+                                   person={selectedMovie}/>}
                     />
 
                     <Route path='/'
@@ -132,30 +140,26 @@ function App() {
      * @return {Promise<void>}
      */
     async function saveSelectedMovie(movie, searchCategory) {
-        console.log('App',movie)
-        const genres = await getGenreNames(movie,searchCategory);
-        const fsk = await getFskFromApi(movie.id);
-        const hasHappyEnd = await calculateHappyEnd(movie);
-        const cast = await getCastForMovie(movie.id,searchCategory);
-        const directors = await getDirectorForMovie(movie.id,searchCategory);
-
-        setSelectedMovie({
-            ...movie,
-            category: searchCategory,
-            genres: genres,
-            fsk: fsk,
-            has_happy_end: hasHappyEnd,
-            cast: cast,
-            directors: directors
-        })
-        /*console.log({
-            ...movie,
-            genres: genres,
-            fsk: fsk,
-            has_happy_end: hasHappyEnd,
-            cast: cast,
-            directors: directors
-        })*/
+        console.log('App movie', movie)
+        console.log('app category', searchCategory)
+        if (searchCategory !== 'person') {
+            const genres = await getGenreNames(movie, searchCategory);
+            const fsk = await getFskFromApi(movie.id);
+            const hasHappyEnd = await calculateHappyEnd(movie);
+            const cast = await getCastForMovie(movie.id, searchCategory);
+            const directors = await getDirectorForMovie(movie.id, searchCategory);
+            setSelectedMovie({
+                ...movie,
+                category: searchCategory,
+                genres: genres,
+                fsk: fsk,
+                has_happy_end: hasHappyEnd,
+                cast: cast,
+                directors: directors
+            })
+        } else {
+            setSelectedMovie({...movie})
+        }
     }
 
     /**
@@ -164,7 +168,7 @@ function App() {
      * @return {string|boolean} true|false|'neutral'
      */
     async function calculateHappyEnd(movie) {
-        if(typeof movie.happyEnd_Voting === 'object') {
+        if (typeof movie.happyEnd_Voting === 'object') {
             //console.log('calculate happyend')
             const happyEndArray = Object.values(movie.happyEnd_Voting)
             const trueCount = happyEndArray.reduce((acc, current) => {
@@ -183,7 +187,7 @@ function App() {
      * @param {number} genreId
      * @return {Promise<*>}
      */
-    async function getGenreNameFromApi(genreId,searchCategory) {
+    async function getGenreNameFromApi(genreId, searchCategory) {
         const response = await fetch(genreUrl(searchCategory));
         let data = await response.json();
         const genre = data.genres.find(genre => genre.id === genreId)
@@ -196,7 +200,7 @@ function App() {
      * @param {string} searchCategory 'movie' || 'title'
      * @return {Promise<*[]>} Array with Genres example: ['Action', 'Komödie']
      */
-    async function getGenreNames(movie,searchCategory) {
+    async function getGenreNames(movie, searchCategory) {
         let genres = []
         for (let i = 0; i < movie.genre_ids.length; i++) {
             const genreName = await getGenreNameFromApi(movie.genre_ids[i], searchCategory)
@@ -224,7 +228,7 @@ function App() {
      * @param {string} searchCategory 'movie' || 'title'
      * @return {Promise<object array>} All Actors
      */
-    async function getCastForMovie(movieId,searchCategory) {
+    async function getCastForMovie(movieId, searchCategory) {
         const castUrlMovie = castUrl(searchCategory, movieId);
         const response = await fetch(castUrlMovie);
         let data = await response.json();

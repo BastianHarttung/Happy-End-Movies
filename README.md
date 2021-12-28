@@ -8,7 +8,7 @@ This Project was to learn more about API's and storing Data on Firebase.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### Bewertung
+### Filmsuche
 Search Movies in Database TMDB
 
 ![img.png](src/assets/img/readme/bewertung.png)

@@ -1,10 +1,10 @@
-import classes from "./Bewertung.module.css";
+import classes from "./Filmsuche.module.css";
 import {useEffect, useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
 import {searchUrl, trendingMoviesUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
 
-const Bewertung = (props) => {
+const Filmsuche = (props) => {
 
     const [searchedMovies, setSearchedMovies] = useState([])
     const [searchFor, setSearchFor] = useState('')
@@ -25,9 +25,9 @@ const Bewertung = (props) => {
     }, [])
 
     return (
-        <div className={classes.bewertungSection}>
+        <div className={classes.filmsucheSection}>
 
-            <div className={classes.bewertungContainer}>
+            <div className={classes.filmsucheContainer}>
                 <SearchBar
                     searchMovie={(movieName) => searchMovie(movieName)}
                     saveSearchFor={(movieName) => setSearchFor(movieName)}
@@ -160,4 +160,4 @@ const Bewertung = (props) => {
 
 }
 
-export default Bewertung
+export default Filmsuche

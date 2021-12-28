@@ -4,7 +4,7 @@ import "./Navigation.module.css"
 const Navigation = (props) => {
     return (
         <nav>
-            <Link to = '/bewertung'>Filmsuche</Link>
+            <Link to = '/filmsuche'>Filmsuche</Link>
             <Link to = '/showroom'>Showroom</Link>
         </nav>
     )
