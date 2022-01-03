@@ -15,18 +15,19 @@
 
 /*-------------Search----------------*/
 .searchInput {
-    width: 300px;
+
     font-size: 18px;
     border: 1px solid gray;
     border-radius: 20px;
     padding: 7px 10px 7px 40px;
+    margin: 0px 10px;
 }
 
 .searchButton {
     width: 24px;
     height: 24px;
     position: absolute;
-    left: 0;
+    left: 10px;
     margin: 7px 9px;
     cursor: pointer;
 }

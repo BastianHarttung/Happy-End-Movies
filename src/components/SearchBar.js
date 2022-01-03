@@ -22,6 +22,7 @@ const SearchBar = (props) => {
             <div className={classes.searchContainer}>
                 <input className={classes.searchInput}
                        type="search"
+                       size={props.size}
                        placeholder="Suche"
                        autoFocus
                        value={movieName}

@@ -29,6 +29,7 @@ const Filmsuche = (props) => {
 
             <div className={classes.filmsucheContainer}>
                 <SearchBar
+                    size='30'
                     searchMovie={(movieName) => searchMovie(movieName)}
                     saveSearchFor={(movieName) => setSearchFor(movieName)}
                 />

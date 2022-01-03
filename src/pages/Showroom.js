@@ -65,9 +65,22 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
     return (
         <section className={classes.showroomSection}>
             <div className={classes.sidebar} style={{top: scrollPosition + 'px'}}>
+                <div className={classes.searchContainer}>
+                    <SearchBar
+                        size = '10'
+                        searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}
+                        saveSearchFor={(movieName) => setSearchFor(movieName)}/>
+                </div>
                 <div className={classes.filterContainer}>
+
                     <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, 'all')}
-                         className={classes.filter}>Alles
+                         className={classes.filter}>Alles anzeigen
+                    </div>
+                    <div onClick={() => filterMoviesByCategory('movie')}
+                         className={classes.filter}>Alle Filme
+                    </div>
+                    <div onClick={() => filterMoviesByCategory('tv')}
+                         className={classes.filter}>Alle Serien
                     </div>
                     <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, true)}
                          className={classes.filter}>Filme mit Happy End
@@ -82,16 +95,16 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
             </div>
 
             <div className={classes.showroomContainer} style={{width: widthShowroom + 'px'}}>
-                <div className={classes.searchContainer}>
+                {/*<div className={classes.searchContainer}>
                     <SearchBar
                         searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}
                         saveSearchFor={(movieName) => setSearchFor(movieName)}/>
-                </div>
+                </div>*/}
 
-                <div className={classes.categoryBtns}>
+                {/*<div className={classes.categoryBtns}>
                     <button onClick={() => filterMoviesByCategory('movie')}>Filme</button>
                     <button onClick={() => filterMoviesByCategory('tv')}>Serien</button>
-                </div>
+                </div>*/}
 
                 {filteredMovies.length > 0 ?
                     <div className={classes.filteredMoviesContainer}>

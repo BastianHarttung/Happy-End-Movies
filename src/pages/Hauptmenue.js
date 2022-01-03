@@ -11,7 +11,7 @@ const Hauptmenue = (props) => {
             <img className={classes.startImage} src={image} alt="Movie Night with Happy End"/>
             <div className={classes.buttonContainer}>
                 <button className={classes.button}
-                        onClick={() => navigate('/bewertung')}>Gebe einem Film ein Happy End
+                        onClick={() => navigate('/filmsuche')}>Gebe einem Film ein Happy End
                     <MdArrowForwardIos/>
                 </button>
                 <button className={classes.button}
