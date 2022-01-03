@@ -28,19 +28,6 @@ const PersonBox = (props) => {
                 })
                 : ''}
         </div>
-        /*<div>
-            <div className={classes.directorContainer}>
-                <div className={classes.directorName}>{props.director.name}</div>
-                <img src={props.director.profile_path ?
-                    imageUrlSmall + props.director.profile_path
-                    : props.director.gender === 2
-                        ? imageActorMan
-                        : imageActorWoman}
-                     className={classes.directorImage}
-                     alt={props.director.name}
-                     title={props.director.name}/>
-            </div>
-        </div>*/
     )
 }
 
