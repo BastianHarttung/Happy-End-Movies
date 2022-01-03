@@ -21,6 +21,7 @@ const SearchBar = (props) => {
         <div className={classes.searchBarContainer}>
             <div className={classes.searchContainer}>
                 <input className={classes.searchInput}
+                       style={{fontSize: props.fontPx +'px'}}
                        type="search"
                        size={props.size}
                        placeholder="Suche"
@@ -36,7 +37,9 @@ const SearchBar = (props) => {
                     props.searchMovie(movieName);
                     setMovieName('')
                     window.location.hash = ''
-                }} className={classes.searchButton}/>
+                }}
+                          style={{width: props.buttonSize, height: props.buttonSize}}
+                          className={classes.searchButton}/>
             </div>
 
         </div>

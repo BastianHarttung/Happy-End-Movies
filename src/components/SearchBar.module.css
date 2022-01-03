@@ -15,8 +15,7 @@
 
 /*-------------Search----------------*/
 .searchInput {
-
-    font-size: 18px;
+    /*font-size: 15px;*/
     border: 1px solid gray;
     border-radius: 20px;
     padding: 7px 10px 7px 40px;
