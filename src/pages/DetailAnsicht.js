@@ -1,19 +1,18 @@
 import classes from "./DetailAnsicht.module.css";
 
 import emptyImage from "../assets/img/movie-poster.png"
-import imageActorMan from '../assets/img/actor.png'
-import imageActorWoman from '../assets/img/actor_girl.png'
 
 import {useNavigate} from "react-router-dom";
 import {useState, useEffect} from "react";
 
 import {FaSmileBeam, FaSadTear, FaMeh, FaSearch} from "react-icons/all";
 import {imageUrl, imageUrlSmall} from "../constants";
+import PersonBox from "../components/PersonBox";
 
 
 const DetailAnsicht = (props) => {
 
-    console.log('Detailansicht props',props)
+    console.log('Detailansicht props', props)
     const navigate = useNavigate();
 
     const genres = props.movie.genres ? props.movie.genres : ['a', 'b']
@@ -29,7 +28,6 @@ const DetailAnsicht = (props) => {
 
     //console.log('details movie', props.movie)
     //console.log('details happy end', props.movie.has_happy_end)
-
 
     useEffect(() => {
         props.movie.has_happy_end === true ? setHappyMovie(true)
@@ -69,7 +67,7 @@ const DetailAnsicht = (props) => {
 
                         <p className={classes.releaseYear}>{props.movie.release_date ?
                             props.movie.release_date.slice(0, 4)
-                            : props.movie.first_air_date.slice(0,4)}
+                            : props.movie.first_air_date.slice(0, 4)}
                         </p>
 
                         <div className={classes.genres}>
@@ -78,25 +76,9 @@ const DetailAnsicht = (props) => {
 
                         <h5 className={classes.director}>{props.movie.directors.length > 0 ? 'Regie' : ''}</h5>
                         <div className={classes.directorsContainer}>
-                            {props.movie.directors.map((director, index) => {
-                                    return (
-                                        <div key={index}>
-                                            <div className={classes.directorContainer}>
-                                                <div key={index}
-                                                     className={classes.directorName}>{director.name}</div>
-                                                <img src={director.profile_path ?
-                                                    imageUrlSmall + director.profile_path
-                                                    : director.gender === 2
-                                                        ? imageActorMan
-                                                        : imageActorWoman}
-                                                     className={classes.directorImage}
-                                                     alt={director.name}
-                                                     title={director.name}/>
-                                            </div>
-                                        </div>
-                                    )
-                                }
-                            )}
+                            {props.movie.directors.map((director, index) =>
+                                <PersonBox person={director}
+                                           key={index}/>)}
                         </div>
 
                         <div className={classes.voting}>{props.movie.vote_average}</div>
@@ -123,35 +105,11 @@ const DetailAnsicht = (props) => {
 
                     <div className={classes.actorContainer}>
                         {props.movie.cast ?
-                            filteredActors.slice(0, showActors).map((actor, index) => {
-                                //console.log('actor', actor)
-                                return (
-                                    <div key={index} className={classes.actorProfile}>
-                                        <img className={classes.actorImage}
-                                             src={actor.profile_path
-                                                 ? imageUrlSmall + actor.profile_path
-                                                 : actor.gender === 2
-                                                     ? imageActorMan
-                                                     : imageActorWoman}
-                                             alt={actor.name}
-                                             title={actor.name}/>
-                                        <h5 className={classes.actorName}>{actor.name}</h5>
-
-                                        {actor.character ?
-                                            <p className={classes.character}>"{actor.character}"</p>
-                                            : ''}
-                                        {actor.roles ?
-                                            actor.roles.map((role,index) => {
-                                                if (role.character !== '') {
-                                                    return <p key={index}
-                                                              className={classes.character}>"{role.character}"</p>
-                                                } else return ''
-                                            })
-                                            : ''}
-
-                                    </div>
-                                )
-                            })
+                            filteredActors.slice(0, showActors).map((actor, index) =>
+                                <PersonBox
+                                    key={index}
+                                    person={actor}/>
+                            )
                             : ''}
 
                         <div className={classes.showMoreContainer}>

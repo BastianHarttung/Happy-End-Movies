@@ -67,7 +67,7 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
             <div className={classes.sidebar} style={{top: scrollPosition + 'px'}}>
                 <div className={classes.searchContainer}>
                     <SearchBar
-                        size='14'
+                        size='13'
                         fontPx= '15'
                         buttonSize='20'
                         searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}

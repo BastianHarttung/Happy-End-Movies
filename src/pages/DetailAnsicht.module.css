@@ -14,14 +14,14 @@
 
 .title {
     position: absolute;
-    top: 40px;
+    top: 20px;
     left: 50px;
     font-size: 35px;
 }
 
 .headImage {
     width: 100%;
-    height: 200px;
+    height: 150px;
     object-fit: cover;
     opacity: 0.3;
 }
@@ -70,32 +70,13 @@
     padding: 10px 0px;
 }
 
-/*-------------------Director-------------------------*/
+
 .director {
     margin: 3px 0px;
 }
 
 .directorsContainer {
     display: flex;
-}
-
-.directorContainer {
-    width: 70px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 12px;
-}
-
-.directorName {
-    font-size: 13px;
-    text-align: center;
-}
-
-.directorImage {
-    height: 90px;
-    width: 70px;
-    object-fit: cover;
 }
 
 
@@ -119,7 +100,7 @@
 
 .searchBtn {
     font-size: 20px;
-    margin-right: 10px;
+    margin-right: 5px;
     cursor: pointer;
 }
 
@@ -131,40 +112,17 @@
 
 .searchInput {
     height: 17px;
-    width: 300px;
+    width: 260px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 2px 8px;
 }
 
-/*---------Actor------------*/
 .actorContainer {
     display: flex;
     overflow-x: auto;
     margin-bottom: 10px;
     padding: 10px 0px;
-}
-
-.actorProfile {
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 10px;
-    margin-left: 5px;
-}
-
-.actorImage {
-    height: 140px;
-    object-fit: cover;
-}
-
-.actorName {
-    margin: 3px;
-    text-align: center;
-}
-
-.character {
-    font-size: 13px;
-    text-align: center;
-    margin: 0;
 }
 
 .showMoreContainer {

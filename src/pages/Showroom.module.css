@@ -7,10 +7,11 @@
     position: fixed;
     left: 0;
     border-right: 1px solid gray;
+    z-index: 2;
 }
 
 .filterContainer {
-    margin: 50px 20px 100px 20px;
+    margin: 30px 20px 100px 20px;
 }
 
 .filter {
@@ -28,7 +29,7 @@
 /*----------Content -----------------*/
 .showroomContainer {
     position: relative;
-    right: -225px;
+    right: -230px;
 }
 
 .searchContainer {
@@ -37,7 +38,7 @@
     flex-direction: column;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 20px 0px 0px 0px;
+    padding: 50px 0px 0px 0px;
 }
 
 .categoryBtns {
@@ -70,7 +71,7 @@
     flex-direction: column;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 30px 0px 30px 0px;
+    padding: 50px 0px 50px 0px;
 }
 
 .filteredMoviesResult {
