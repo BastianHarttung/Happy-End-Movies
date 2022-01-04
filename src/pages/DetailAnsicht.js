@@ -5,7 +5,7 @@ import emptyImage from "../assets/img/movie-poster.png"
 import {useNavigate} from "react-router-dom";
 import {useState, useEffect} from "react";
 
-import {FaSmileBeam, FaSadTear, FaMeh, FaSearch} from "react-icons/all";
+import {FaSmileBeam, FaSadTear, FaMeh, FaSearch, FaChevronRight, FaChevronLeft} from "react-icons/all";
 import {imageUrl} from "../constants";
 import PersonBox from "../components/PersonBox";
 
@@ -21,7 +21,7 @@ const DetailAnsicht = (props) => {
         : props.movie.has_happy_end === false ? false
             : 'neutral')
 
-    const [showActors, setShowActors] = useState(5)
+    const [scrollActors, setScrollActors] = useState(0)
     const [searchActor, setSearchActor] = useState('')
     const [filteredActors, setFilteredActors] = useState(props.movie.cast)
 
@@ -93,6 +93,14 @@ const DetailAnsicht = (props) => {
 
                 <div className={classes.actorSearchContainer}>
 
+                    <FaChevronLeft onClick={() => scrollLeft()}
+                                   className={classes.arrowBtnLeft}>
+                    </FaChevronLeft>
+
+                    <FaChevronRight onClick={() => scrollRight()}
+                                    className={classes.arrowBtnRight}>
+                    </FaChevronRight>
+
                     <div className={classes.searchContainer}>
                         <FaSearch className={classes.searchBtn}
                                   onClick={() => searchForActor(searchActor)}/>
@@ -104,9 +112,9 @@ const DetailAnsicht = (props) => {
                                onKeyPress={keyPressEvent}/>
                     </div>
 
-                    <div className={classes.actorContainer}>
+                    <div id='actorContainer' className={classes.actorContainer}>
                         {props.movie.cast ?
-                            filteredActors.slice(0, showActors).map((actor, index) =>
+                            filteredActors.map((actor, index) =>
                                 <PersonBox
                                     saveSelectedPerson={(person) => props.saveSelectedPerson(person)}
                                     key={index}
@@ -114,18 +122,6 @@ const DetailAnsicht = (props) => {
                             )
                             : ''}
 
-                        <div className={classes.showMoreContainer}>
-                            {showActors > 5 ?
-                                <button onClick={() => setShowActors(5)}
-                                        className={classes.zeigeMehrBtn}>reduziere Liste
-                                </button>
-                                : ''}
-                            {showActors <= filteredActors.length ?
-                                <button onClick={() => setShowActors(showActors + 3)}
-                                        className={classes.zeigeMehrBtn}>Zeige mehr...
-                                </button>
-                                : ''}
-                        </div>
                     </div>
 
                 </div>
@@ -202,6 +198,27 @@ const DetailAnsicht = (props) => {
         }
     }
 
+    /**
+     * Scroll Actors Right
+     */
+    function scrollRight() {
+        const actorContainer = document.getElementById('actorContainer');
+        if(scrollActors < actorContainer.scrollWidth){
+            actorContainer.scroll(scrollActors + 200, 0)
+            setScrollActors(scrollActors + 200)
+        }
+    }
+
+    /**
+     * Scroll Actors Left
+     */
+    function scrollLeft() {
+        const actorContainer = document.getElementById('actorContainer');
+        if(scrollActors > 0) {
+            actorContainer.scroll(scrollActors - 200, 0)
+            setScrollActors(scrollActors - 200)
+        }
+    }
 
     /**
      * Listen if the Enter-Button is pressed

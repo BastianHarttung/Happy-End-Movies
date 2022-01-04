@@ -97,6 +97,7 @@
 .actorSearchContainer {
     background-color: #e6edff;
     padding: 10px;
+    position: relative;
 }
 
 .searchBtn {
@@ -121,10 +122,30 @@
 
 .actorContainer {
     display: flex;
-    overflow-x: auto;
     margin-bottom: 10px;
     padding: 10px 0px;
-    overflow: auto;
+    overflow: hidden;
+}
+
+.arrowBtnLeft,
+.arrowBtnRight{
+    background-color: white;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 130px;
+
+    border-radius: 50%;
+    z-index: 2;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.arrowBtnLeft {
+    left: 0;
+}
+.arrowBtnRight {
+    right: 0;
 }
 
 .showMoreContainer {
