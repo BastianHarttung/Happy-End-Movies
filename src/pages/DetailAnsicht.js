@@ -38,7 +38,7 @@ const DetailAnsicht = (props) => {
 
     useEffect(() => {
         setScrollWidth(getScrollWidth())
-    },[])
+    }, [])
 
     return (
         <section className={classes.detailsSection}>
@@ -218,9 +218,10 @@ const DetailAnsicht = (props) => {
      */
     function scrollRight() {
         const actorContainer = document.getElementById('actorContainer');
+        const scrollWidth = scrollActors + actorContainer.offsetWidth -100
         if (scrollActors < actorContainer.scrollWidth) {
-            actorContainer.scroll(scrollActors + 200, 0)
-            setScrollActors(scrollActors + 200)
+            actorContainer.scroll(scrollWidth, 0)
+            setScrollActors(scrollWidth)
         }
     }
 
@@ -229,9 +230,10 @@ const DetailAnsicht = (props) => {
      */
     function scrollLeft() {
         const actorContainer = document.getElementById('actorContainer');
+        const scrollWidth = scrollActors - actorContainer.offsetWidth + 100
         if (scrollActors > 0) {
-            actorContainer.scroll(scrollActors - 200, 0)
-            setScrollActors(scrollActors - 200)
+            actorContainer.scroll(scrollWidth, 0)
+            setScrollActors(scrollWidth)
         }
     }
 

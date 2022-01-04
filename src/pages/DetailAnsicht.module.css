@@ -124,7 +124,7 @@
     display: flex;
     padding: 10px 5px;
     overflow: hidden;
-    overflow-scrolling: auto;
+    scroll-behavior: smooth;
 }
 
 .arrowBtnLeft,
