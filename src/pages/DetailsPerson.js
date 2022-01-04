@@ -2,14 +2,18 @@ import classes from "./DetailsPerson.module.css";
 import {imageUrl, imageUrlSmall} from "../constants";
 import {useEffect, useState} from "react";
 import {FaBirthdayCake, FaCross} from "react-icons/all";
+import imageActorMan from "../assets/img/actor.png";
+import imageActorWoman from "../assets/img/actor_girl.png";
 import SearchResultBox from "../components/SearchResultBox";
 
 const DetailsPerson = (props) => {
     console.log(props)
     const [age, setAge] = useState();
+    const [deathAge, setDeathAge] = useState();
 
     useEffect(() => {
-        setAge(calculateAge())
+        setAge(calculateAge(new Date()))
+        setDeathAge(calculateAge(props.person.deathday))
     }, [])
 
     return (
@@ -18,12 +22,18 @@ const DetailsPerson = (props) => {
             <div className={classes.personContainer}>
 
                 <div>
-                    <img src={imageUrl + props.person.profile_path}
+
+                    <img src={props.person.profile_path ?
+                        imageUrl + props.person.profile_path
+                        : props.person.gender === 2 ?
+                            imageActorMan
+                            : imageActorWoman}
                          className={classes.bigPic}
                          alt='Schauspieler Foto'
                          title={props.person.name}/>
+
                     <div className={classes.imagesContainer}>
-                        {props.person.images.profiles.slice(1).map( image =>
+                        {props.person.images.profiles.slice(1).map(image =>
                             <img src={imageUrlSmall + image.file_path}
                                  alt="Foto"/>)}
                     </div>
@@ -40,7 +50,7 @@ const DetailsPerson = (props) => {
 
                     {props.person.deathday ?
                         <div className={classes.deathday}>
-                            <FaCross></FaCross><span>{props.person.deathday}</span>
+                            <FaCross></FaCross><span>{props.person.deathday} ({deathAge} Jahre)</span>
                         </div> : ''}
 
                     <div>
@@ -75,11 +85,12 @@ const DetailsPerson = (props) => {
 
     /**
      * Calculate Age of Person Today
+     * @param {} calculateDay Day of Birth or Death
      * @return {number} age
      */
-    function calculateAge() {
+    function calculateAge(calculateDay) {
         const birthday = new Date(props.person.birthday);
-        const monthDiff = Date.now() - birthday.getTime();
+        const monthDiff = new Date(calculateDay) - birthday.getTime();
         const ageDate = new Date(monthDiff);
         const year = ageDate.getUTCFullYear();
         const age = Math.abs(year - 1970);
