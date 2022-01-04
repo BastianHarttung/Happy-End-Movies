@@ -19,14 +19,13 @@ const SearchResultBox = (props) => {
     return (
         <div className={movieClicked ? classes.movieContainerClicked : classes.movieContainer}
              onClick={async () => {
-
                  setMovieClicked(true);
                  const category = () => {
                      if (props.category === 'movie' || props.category === 'tv') {
                          return props.category
                      } else if (props.category === 'multi') {
                          return props.movie.media_type
-                     }
+                     } else return props.movie.category
                  }
                  await props.saveSelectedMovie(props.movie, category())
                      .then(() => {

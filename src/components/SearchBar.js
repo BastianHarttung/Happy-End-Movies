@@ -21,9 +21,9 @@ const SearchBar = (props) => {
         <div className={classes.searchBarContainer}>
             <div className={classes.searchContainer}>
                 <input className={classes.searchInput}
-                       style={{fontSize: props.fontPx +'px'}}
+                       style={{fontSize: props.size + 'px'}}
                        type="search"
-                       size={props.size}
+                       size={props.length}
                        placeholder="Suche"
                        autoFocus
                        value={movieName}
@@ -38,7 +38,7 @@ const SearchBar = (props) => {
                     setMovieName('')
                     window.location.hash = ''
                 }}
-                          style={{width: props.buttonSize, height: props.buttonSize}}
+                          style={{width: props.size + 5, height: props.size + 5}}
                           className={classes.searchButton}/>
             </div>
 

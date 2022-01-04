@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {useState, useEffect} from "react";
 
 import {FaSmileBeam, FaSadTear, FaMeh, FaSearch} from "react-icons/all";
-import {imageUrl, imageUrlSmall} from "../constants";
+import {imageUrl} from "../constants";
 import PersonBox from "../components/PersonBox";
 
 

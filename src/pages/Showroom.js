@@ -18,8 +18,6 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
 
     const filteredMoviesPart = filteredMovies.slice(index, Math.max(pageLength, pageLength * (activePage + 1)))
 
-    const [searchingCategory, setSearchingCategory] = useState('movie')
-
     const widthShowroom = window.innerWidth - 260
 
     const [searchFor, setSearchFor] = useState()
@@ -28,14 +26,14 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
      * Sort Movies by Title and update movies after Timeout
      */
     useEffect(() => {
-        moviesDB.sort((a, b) => (a.title < b.title) ? -1
-            : (a.title > b.title) ? 1
+        moviesDB.sort((a, b) => (a.original_title < b.original_title) ? -1
+            : (a.original_title > b.original_title) ? 1
                 : 0)
         if (filterLength === dbLength) {
             setTimeout(() => setFilteredMovies(moviesDB), 1500)
             setFilterLength(moviesDB.length)
         }
-    }, [moviesDB, filterLength, dbLength])
+    }, [])
 
     /**
      *
@@ -67,9 +65,8 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
             <div className={classes.sidebar} style={{top: scrollPosition + 'px'}}>
                 <div className={classes.searchContainer}>
                     <SearchBar
-                        size='13'
-                        fontPx= '15'
-                        buttonSize='20'
+                        length='13'
+                        size= {15}
                         searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}
                         saveSearchFor={(movieName) => setSearchFor(movieName)}/>
                 </div>
@@ -97,16 +94,6 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
             </div>
 
             <div className={classes.showroomContainer} style={{width: widthShowroom + 'px'}}>
-                {/*<div className={classes.searchContainer}>
-                    <SearchBar
-                        searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}
-                        saveSearchFor={(movieName) => setSearchFor(movieName)}/>
-                </div>*/}
-
-                {/*<div className={classes.categoryBtns}>
-                    <button onClick={() => filterMoviesByCategory('movie')}>Filme</button>
-                    <button onClick={() => filterMoviesByCategory('tv')}>Serien</button>
-                </div>*/}
 
                 {filteredMovies.length > 0 ?
                     <div className={classes.filteredMoviesContainer}>
@@ -118,7 +105,7 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
                                     movie={movie}
                                     to='/detailansicht'
                                     saveSelectedMovie={(currentMovie, category) => saveSelectedMovie(currentMovie, category)}
-                                    category={searchingCategory}
+                                    category={undefined}
                                 />)}
                         </div>
 
@@ -201,7 +188,6 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
             window.location.hash = '';
         } else {
             window.location.hash = movieName;
-            setSearchingCategory(searchCategory);
             setSearchFor(movieName);
             filterMoviesByName(movieName, searchCategory)
         }
