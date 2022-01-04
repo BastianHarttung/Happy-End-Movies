@@ -22,6 +22,8 @@ const DetailAnsicht = (props) => {
             : 'neutral')
 
     const [scrollActors, setScrollActors] = useState(0)
+    const [scrollWidth, setScrollWidth] = useState(100)
+
     const [searchActor, setSearchActor] = useState('')
     const [filteredActors, setFilteredActors] = useState(props.movie.cast)
 
@@ -34,6 +36,9 @@ const DetailAnsicht = (props) => {
                 : setHappyMovie('neutral')
     }, [props.movie.has_happy_end, props.movie]);
 
+    useEffect(() => {
+        setScrollWidth(getScrollWidth())
+    },[])
 
     return (
         <section className={classes.detailsSection}>
@@ -93,13 +98,15 @@ const DetailAnsicht = (props) => {
 
                 <div className={classes.actorSearchContainer}>
 
-                    <FaChevronLeft onClick={() => scrollLeft()}
-                                   className={classes.arrowBtnLeft}>
-                    </FaChevronLeft>
+                    {scrollActors > 0 ?
+                        <FaChevronLeft onClick={() => scrollLeft()}
+                                       className={classes.arrowBtnLeft}>
+                        </FaChevronLeft> : ''}
 
-                    <FaChevronRight onClick={() => scrollRight()}
-                                    className={classes.arrowBtnRight}>
-                    </FaChevronRight>
+                    {scrollActors < scrollWidth ?
+                        <FaChevronRight onClick={() => scrollRight()}
+                                        className={classes.arrowBtnRight}>
+                        </FaChevronRight> : ''}
 
                     <div className={classes.searchContainer}>
                         <FaSearch className={classes.searchBtn}
@@ -199,11 +206,19 @@ const DetailAnsicht = (props) => {
     }
 
     /**
+     * Set Scroll Width
+     */
+    function getScrollWidth() {
+        const actorContainer = document.getElementById('actorContainer');
+        return actorContainer.scrollWidth - actorContainer.offsetWidth
+    }
+
+    /**
      * Scroll Actors Right
      */
     function scrollRight() {
         const actorContainer = document.getElementById('actorContainer');
-        if(scrollActors < actorContainer.scrollWidth){
+        if (scrollActors < actorContainer.scrollWidth) {
             actorContainer.scroll(scrollActors + 200, 0)
             setScrollActors(scrollActors + 200)
         }
@@ -214,7 +229,7 @@ const DetailAnsicht = (props) => {
      */
     function scrollLeft() {
         const actorContainer = document.getElementById('actorContainer');
-        if(scrollActors > 0) {
+        if (scrollActors > 0) {
             actorContainer.scroll(scrollActors - 200, 0)
             setScrollActors(scrollActors - 200)
         }
