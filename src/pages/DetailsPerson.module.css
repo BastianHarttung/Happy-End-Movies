@@ -19,18 +19,24 @@
     height: 500px;
     margin: 20px;
 }
+
 .personInfosContainer {
-    margin: 5px 20px;
+    margin: 5px 30px 20px 10px;
 }
+
 .personContainer h2 {
     text-align: center;
 }
 
-.datesContainer {
-    display: flex;
-    justify-content: center;
+.birthday {
+    margin-bottom: 10px;
 }
 
-.biography{
+.deathday {
+    margin-bottom: 10px;
+}
+
+.biography {
     text-align: justify;
+    margin: 10px 0px;
 }

@@ -1,6 +1,7 @@
 import classes from "./DetailsPerson.module.css";
 import {imageUrl} from "../constants";
 import {useEffect, useState} from "react";
+import {FaBirthdayCake, FaCross} from "react-icons/all";
 
 const DetailsPerson = (props) => {
     console.log(props)
@@ -19,17 +20,27 @@ const DetailsPerson = (props) => {
                      alt='Schauspieler Foto'
                      title={props.person.name}/>
                 <div className={classes.personInfosContainer}>
+
                     <h2>{props.person.name}</h2>
-                    <div className={classes.datesContainer}>
-                        <span> {props.person.birthday} ({age} Jahre)</span>
-                        {props.person.deathday ? <span>{props.person.deathday}</span> :''}
+
+                    <div className={classes.birthday}>
+                        <FaBirthdayCake></FaBirthdayCake><span> {props.person.birthday} ({age} Jahre)</span>
                     </div>
+
+                    {props.person.deathday ?
+                        <div className={classes.deathday}>
+                            <FaCross></FaCross><span>{props.person.deathday}</span>
+                        </div> : ''}
+
                     <div>
                         <b>Geburtsort:</b> {props.person.place_of_birth}
                     </div>
                     <div className={classes.biography}>
                         <b>Biografie:</b> {props.person.biography}
                     </div>
+                    {props.person.homepage ?
+                        <a href={props.person.homepage} target='_blank'>{props.person.homepage}</a> : ''}
+
                 </div>
 
             </div>
