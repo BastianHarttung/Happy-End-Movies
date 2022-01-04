@@ -21,7 +21,7 @@ const SearchResultBox = (props) => {
              onClick={async () => {
                  setMovieClicked(true);
                  const category = () => {
-                     if (props.category === 'movie' || props.category === 'tv') {
+                     if (props.category === 'movie' || props.category === 'tv'|| props.category === 'person') {
                          return props.category
                      } else if (props.category === 'multi') {
                          return props.movie.media_type

@@ -12,7 +12,6 @@ import PersonBox from "../components/PersonBox";
 
 const DetailAnsicht = (props) => {
 
-    console.log('Detailansicht props', props)
     const navigate = useNavigate();
 
     const genres = props.movie.genres ? props.movie.genres : ['a', 'b']
@@ -107,6 +106,7 @@ const DetailAnsicht = (props) => {
                         {props.movie.cast ?
                             filteredActors.slice(0, showActors).map((actor, index) =>
                                 <PersonBox
+                                    saveSelectedPerson = {(person) => props.saveSelectedPerson(person)}
                                     key={index}
                                     person={actor}/>
                             )

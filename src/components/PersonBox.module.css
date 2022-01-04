@@ -31,7 +31,12 @@
     border-radius: 10px;
     margin-right: 10px;
     margin-left: 5px;
-    overflow: hidden;
+    cursor: pointer;
+    transition: all var(--hover-time-short) ease-in-out;
+}
+.actorProfile:hover {
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.19);
+    transform: scale(1.05);
 }
 
 .actorImage {

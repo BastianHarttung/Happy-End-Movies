@@ -11,7 +11,7 @@ import DetailsPerson from "./pages/DetailsPerson";
 import Showroom from "./pages/Showroom";
 import Impressum from "./pages/Impressum";
 
-import {genreUrl, fskUrl, castUrl, personDetailUrl} from "./constants"
+import {genreUrl, fskUrl, castUrl, personDetailUrl, searchUrl} from "./constants"
 
 import firestoreDb from "./firebase-config";
 import {doc, setDoc, getDocs, collection} from 'firebase/firestore';
@@ -50,7 +50,7 @@ function App() {
                            exact={true}
                            element={
                                <Filmsuche
-                                   saveSelectedMovie={(movie, category) => saveSelectedMovie(movie, category)}
+                                   saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
                                />}
                     />
 
@@ -60,7 +60,7 @@ function App() {
                                <Showroom
                                    moviesDB={allMovies}
                                    dbLength={dbLength}
-                                   saveSelectedMovie={(movie, category) => saveSelectedMovie(movie, category)}
+                                   saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
                                />}
                     />
 
@@ -69,6 +69,7 @@ function App() {
                            element={
                                <DetailAnsicht
                                    saveMovieToDb={(movieForDb) => saveMovieToDb(movieForDb)}
+                                   saveSelectedPerson={(person) => saveSelectedMovieOrPerson(person, 'person')}
                                    movie={selectedMovie}
                                    user={userId}/>}
                     />
@@ -77,7 +78,7 @@ function App() {
                            exact={true}
                            element={
                                <DetailsPerson
-                                   saveSelectedMovie={(movie, category) => saveSelectedMovie(movie, category)}
+                                   saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
                                    person={selectedPerson}/>}
                     />
 
@@ -137,21 +138,21 @@ function App() {
     /**
      * Get genres and fsk and has_happy_end
      * and save to selectedMovie state
-     * @param {object} movie
+     * @param {object} object
      * @param {string} searchCategory eg 'movie' || 'tv'
      * @return {Promise<void>}
      */
-    async function saveSelectedMovie(movie, searchCategory) {
-        console.log('App movie', movie)
+    async function saveSelectedMovieOrPerson(object, searchCategory) {
+        console.log('App movie', object)
         console.log('app category', searchCategory)
         if (searchCategory !== 'person') {
-            const genres = await getGenreNames(movie, searchCategory);
-            const fsk = await getFskFromApi(movie.id);
-            const hasHappyEnd = await calculateHappyEnd(movie);
-            const cast = await getCastForMovie(movie.id, searchCategory);
-            const directors = await getDirectorForMovie(movie.id, searchCategory);
+            const genres = await getGenreNames(object, searchCategory);
+            const fsk = await getFskFromApi(object.id);
+            const hasHappyEnd = await calculateHappyEnd(object);
+            const cast = await getCastForMovie(object.id, searchCategory);
+            const directors = await getDirectorForMovie(object.id, searchCategory);
             setSelectedMovie({
-                ...movie,
+                ...object,
                 category: searchCategory,
                 genres: genres,
                 fsk: fsk,
@@ -160,19 +161,33 @@ function App() {
                 directors: directors
             })
         } else {
-            const personDetails = await getDetailPersonInfosFromApi(movie.id)
-            setSelectedPerson({...movie, ...personDetails})
+            const personKnownFor = await getInfosFromApi(object.name)
+            const personDetails = await getDetailPersonInfosFromApi(object.id)
+            setSelectedPerson({...object, ...personKnownFor, ...personDetails})
         }
     }
 
     /**
      *Get Biography, Birthday and other detailed infos from person
+     * @param {number} personId
      * @return {Promise<void>} object{}
      */
     async function getDetailPersonInfosFromApi(personId) {
         const response = await fetch(personDetailUrl(personId));
         let data = await response.json();
         return data
+    }
+
+    /**
+     *Get known_for movies and other infos from person
+     * @param {string} name
+     * @return {Promise<void>} object{}
+     */
+    async function getInfosFromApi(name) {
+        const response = await fetch(searchUrl('person') + name);
+        const data = await response.json()
+        const result = await data.results[0]
+        return result
     }
 
     /**

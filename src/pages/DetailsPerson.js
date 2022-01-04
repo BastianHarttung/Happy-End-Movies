@@ -40,7 +40,7 @@ const DetailsPerson = (props) => {
                         <b>Biografie:</b> {props.person.biography}
                     </div>
                     {props.person.homepage ?
-                        <a href={props.person.homepage} target='_blank'>{props.person.homepage}</a> : ''}
+                        <a href={props.person.homepage} target='_blank' rel="noreferrer">{props.person.homepage}</a> : ''}
 
                 </div>
 

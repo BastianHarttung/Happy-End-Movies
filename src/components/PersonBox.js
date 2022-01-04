@@ -2,10 +2,18 @@ import classes from "../components/PersonBox.module.css";
 import {imageUrlSmall} from "../constants";
 import imageActorMan from "../assets/img/actor.png";
 import imageActorWoman from "../assets/img/actor_girl.png";
+import {useNavigate} from "react-router-dom";
 
 const PersonBox = (props) => {
-    return(
-        <div className={classes.actorProfile}>
+
+    const navigate = useNavigate();
+
+    return (
+        <div className={classes.actorProfile}
+             onClick={async () => {
+                 await props.saveSelectedPerson(props.person)
+                     .then(() => navigate('/detailansicht/person'))
+             }}>
             <img className={classes.actorImage}
                  src={props.person.profile_path
                      ? imageUrlSmall + props.person.profile_path

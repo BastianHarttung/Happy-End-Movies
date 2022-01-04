@@ -9,7 +9,7 @@ const SearchBar = (props) => {
     const [movieName, setMovieName] = useState(locationHashString)
 
     /**
-     * After hit 3 chars on input search start searching movie
+     * After hit 4 chars on input search start searching movie
      */
     useEffect(() => {
         if (movieName.length >= 4) {
