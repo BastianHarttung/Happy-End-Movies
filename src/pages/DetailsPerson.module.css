@@ -15,9 +15,22 @@
     margin-bottom: 30px;
 }
 
-.personContainer img {
+.bigPic {
     height: 500px;
+    width: 333px;
+    object-fit: cover;
     margin: 20px;
+}
+
+.imagesContainer {
+    width: 333px;
+    display: flex;
+    margin: 0px 20px 20px 20px;
+    overflow-x: auto;
+}
+
+.imagesContainer img {
+    width: 83px;
 }
 
 .personInfosContainer {

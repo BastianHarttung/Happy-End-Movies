@@ -21,6 +21,7 @@ export const trendingMoviesUrl = `https://api.themoviedb.org/3/trending/all/day?
 export const genreUrl = (searchFor) => `https://api.themoviedb.org/3/genre/${searchFor}/list?api_key=${apiKeyTmdb}&language=de`
 export const fskUrl = `https://altersfreigaben.de/api2/s/`
 
+
 export const imageUrl = `https://image.tmdb.org/t/p/w500`
 export const imageUrlSmall = `https://image.tmdb.org/t/p/w200`
 
@@ -30,4 +31,4 @@ export const castUrl = (movieOrTv, id) => {
     } else return `https://api.themoviedb.org/3/${movieOrTv}/${id}/credits?api_key=${apiKeyTmdb}&language=de`
 }
 
-export const personDetailUrl = (personId) => `https://api.themoviedb.org/3/person/${personId}?api_key=${apiKeyTmdb}&language=de`
+export const personDetailUrl = (personId) => `https://api.themoviedb.org/3/person/${personId}?api_key=${apiKeyTmdb}&language=de&append_to_response=images`

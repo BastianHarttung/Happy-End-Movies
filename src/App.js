@@ -168,7 +168,7 @@ function App() {
     }
 
     /**
-     *Get Biography, Birthday and other detailed infos from person
+     *Get Biography, Birthday and other detailed infos and Images from person
      * @param {number} personId
      * @return {Promise<void>} object{}
      */

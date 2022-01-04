@@ -1,5 +1,5 @@
 import classes from "./DetailsPerson.module.css";
-import {imageUrl} from "../constants";
+import {imageUrl, imageUrlSmall} from "../constants";
 import {useEffect, useState} from "react";
 import {FaBirthdayCake, FaCross} from "react-icons/all";
 import SearchResultBox from "../components/SearchResultBox";
@@ -17,9 +17,19 @@ const DetailsPerson = (props) => {
 
             <div className={classes.personContainer}>
 
-                <img src={imageUrl + props.person.profile_path}
-                     alt='Schauspieler Foto'
-                     title={props.person.name}/>
+                <div>
+                    <img src={imageUrl + props.person.profile_path}
+                         className={classes.bigPic}
+                         alt='Schauspieler Foto'
+                         title={props.person.name}/>
+                    <div className={classes.imagesContainer}>
+                        {props.person.images.profiles.slice(1).map( image =>
+                            <img src={imageUrlSmall + image.file_path}
+                                 alt="Foto"/>)}
+                    </div>
+
+                </div>
+
                 <div className={classes.personInfosContainer}>
 
                     <h2>{props.person.name}</h2>
@@ -40,7 +50,8 @@ const DetailsPerson = (props) => {
                         <b>Biografie:</b> {props.person.biography}
                     </div>
                     {props.person.homepage ?
-                        <a href={props.person.homepage} target='_blank' rel="noreferrer">{props.person.homepage}</a> : ''}
+                        <a href={props.person.homepage} target='_blank'
+                           rel="noreferrer">{props.person.homepage}</a> : ''}
 
                 </div>
 
@@ -50,11 +61,11 @@ const DetailsPerson = (props) => {
 
             <div className={classes.knownForContainer}>
                 {props.person.known_for.map(movie => {
-                    console.log(movie)
-                    return <SearchResultBox key={movie.id}
-                                         saveSelectedMovie={(currentMovie, category) => props.saveSelectedMovie(currentMovie, category)}
-                                         category={movie.media_type}
-                                         movie={movie}/>
+                        console.log(movie)
+                        return <SearchResultBox key={movie.id}
+                                                saveSelectedMovie={(currentMovie, category) => props.saveSelectedMovie(currentMovie, category)}
+                                                category={movie.media_type}
+                                                movie={movie}/>
                     }
                 )}
             </div>

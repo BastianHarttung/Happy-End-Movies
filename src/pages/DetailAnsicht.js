@@ -76,8 +76,10 @@ const DetailAnsicht = (props) => {
                         <h5 className={classes.director}>{props.movie.directors.length > 0 ? 'Regie' : ''}</h5>
                         <div className={classes.directorsContainer}>
                             {props.movie.directors.map((director, index) =>
-                                <PersonBox person={director}
-                                           key={index}/>)}
+                                <PersonBox
+                                    saveSelectedPerson={(person) => props.saveSelectedPerson(person)}
+                                    person={director}
+                                    key={index}/>)}
                         </div>
 
                         <div className={classes.voting}>{props.movie.vote_average}</div>
@@ -106,7 +108,7 @@ const DetailAnsicht = (props) => {
                         {props.movie.cast ?
                             filteredActors.slice(0, showActors).map((actor, index) =>
                                 <PersonBox
-                                    saveSelectedPerson = {(person) => props.saveSelectedPerson(person)}
+                                    saveSelectedPerson={(person) => props.saveSelectedPerson(person)}
                                     key={index}
                                     person={actor}/>
                             )
