@@ -2,6 +2,7 @@ import classes from "./DetailsPerson.module.css";
 import {imageUrl} from "../constants";
 import {useEffect, useState} from "react";
 import {FaBirthdayCake, FaCross} from "react-icons/all";
+import SearchResultBox from "../components/SearchResultBox";
 
 const DetailsPerson = (props) => {
     console.log(props)
@@ -45,10 +46,17 @@ const DetailsPerson = (props) => {
 
             </div>
 
-            <div>
-                {props.person.known_for.map((movie, index) => {
-                    return <div key={index}>{movie.title}</div>
-                })}
+            <div className={classes.knownForHeading}>Bekannt für</div>
+
+            <div className={classes.knownForContainer}>
+                {props.person.known_for.map(movie => {
+                    console.log(movie)
+                    return <SearchResultBox key={movie.id}
+                                         saveSelectedMovie={(currentMovie, category) => props.saveSelectedMovie(currentMovie, category)}
+                                         category={movie.media_type}
+                                         movie={movie}/>
+                    }
+                )}
             </div>
 
         </section>

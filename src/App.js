@@ -20,6 +20,7 @@ import {doc, setDoc, getDocs, collection} from 'firebase/firestore';
 function App() {
 
     const [selectedMovie, setSelectedMovie] = useState({})
+    const [selectedPerson, setSelectedPerson] = useState({})
     const [allMovies, setAllMovies] = useState([])
     const [dbLength, setDbLength] = useState(0)
 
@@ -76,7 +77,8 @@ function App() {
                            exact={true}
                            element={
                                <DetailsPerson
-                                   person={selectedMovie}/>}
+                                   saveSelectedMovie={(movie, category) => saveSelectedMovie(movie, category)}
+                                   person={selectedPerson}/>}
                     />
 
                     <Route path='/'
@@ -159,7 +161,7 @@ function App() {
             })
         } else {
             const personDetails = await getDetailPersonInfosFromApi(movie.id)
-            setSelectedMovie({...movie, ...personDetails})
+            setSelectedPerson({...movie, ...personDetails})
         }
     }
 

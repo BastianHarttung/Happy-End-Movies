@@ -40,3 +40,13 @@
     text-align: justify;
     margin: 10px 0px;
 }
+
+/*----------------Bekannt für------------------------------*/
+.knownForHeading {
+    color: #494949;
+    font-size: 24px;
+}
+
+.knownForContainer {
+    display: flex;
+}

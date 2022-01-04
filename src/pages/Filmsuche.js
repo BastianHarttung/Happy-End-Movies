@@ -13,7 +13,7 @@ const Filmsuche = (props) => {
     const [searchingCategory, setSearchingCategory] = useState('multi')
 
     const [totalResults, setTotalResults] = useState(0)
-    const [totalPages, setTotalPages] = useState()
+    const [totalPages, setTotalPages] = useState([])
     const [activePage, setActivePage] = useState(0)
 
     const [popularMovies, setPopularMovies] = useState([])
@@ -77,8 +77,8 @@ const Filmsuche = (props) => {
 
                 {searchStarted ? <div className={classes.totalResults}>Anzahl Ergebnisse: {totalResults}</div>
                     : ''}
-            </div>
 
+            </div>
 
         </div>
     )
