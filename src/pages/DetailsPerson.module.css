@@ -1,5 +1,36 @@
 .detailsPersonSection {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 50px;
+}
+
+.personContainer {
+    background-color: var(--main-color-white);
+    max-width: 900px;
+    display: flex;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.25);
+    margin-bottom: 30px;
+}
+
+.personContainer img {
+    height: 500px;
+    margin: 20px;
+}
+.personInfosContainer {
+    margin: 5px 20px;
+}
+.personContainer h2 {
+    text-align: center;
+}
+
+.datesContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.biography{
+    text-align: justify;
 }

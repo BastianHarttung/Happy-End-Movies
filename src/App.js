@@ -11,7 +11,7 @@ import DetailsPerson from "./pages/DetailsPerson";
 import Showroom from "./pages/Showroom";
 import Impressum from "./pages/Impressum";
 
-import {genreUrl, fskUrl, castUrl} from "./constants"
+import {genreUrl, fskUrl, castUrl, personDetailUrl} from "./constants"
 
 import firestoreDb from "./firebase-config";
 import {doc, setDoc, getDocs, collection} from 'firebase/firestore';
@@ -158,8 +158,19 @@ function App() {
                 directors: directors
             })
         } else {
-            setSelectedMovie({...movie})
+            const personDetails = await getDetailPersonInfosFromApi(movie.id)
+            setSelectedMovie({...movie, ...personDetails})
         }
+    }
+
+    /**
+     *Get Biography, Birthday and other detailed infos from person
+     * @return {Promise<void>} object{}
+     */
+    async function getDetailPersonInfosFromApi(personId) {
+        const response = await fetch(personDetailUrl(personId));
+        let data = await response.json();
+        return data
     }
 
     /**

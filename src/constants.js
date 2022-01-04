@@ -24,9 +24,10 @@ export const fskUrl = `https://altersfreigaben.de/api2/s/`
 export const imageUrl = `https://image.tmdb.org/t/p/w500`
 export const imageUrlSmall = `https://image.tmdb.org/t/p/w200`
 
-
 export const castUrl = (movieOrTv, id) => {
     if (movieOrTv === 'tv') {
         return `https://api.themoviedb.org/3/${movieOrTv}/${id}/aggregate_credits?api_key=${apiKeyTmdb}&language=de`
     } else return `https://api.themoviedb.org/3/${movieOrTv}/${id}/credits?api_key=${apiKeyTmdb}&language=de`
 }
+
+export const personDetailUrl = (personId) => `https://api.themoviedb.org/3/person/${personId}?api_key=${apiKeyTmdb}&language=de`
