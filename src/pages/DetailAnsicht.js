@@ -61,7 +61,10 @@ const DetailAnsicht = (props) => {
                         : happyMovie === false ?
                             <FaSadTear className={classes.happyEndSmileyOverall}
                                        style={{color: 'var(--red)'}}/>
-                            : ''}
+                            : happyMovie === 'neutral' ?
+                                <FaMeh className={classes.happyEndSmileyOverall}
+                                       style={{color: 'var(--orange)'}}/>
+                                : ''}
                     <img className={classes.posterImage}
                          src={props.movie.poster_path ? imageUrl + props.movie.poster_path : emptyImage}
                          alt="Poster"/>
@@ -128,7 +131,7 @@ const DetailAnsicht = (props) => {
                                value={searchActor}
                                onChange={e => setSearchActor(e.target.value)}
                                onKeyPress={keyPressEvent}/>
-                        <div className={classes.lengthActors}>Gesamt: {props.movie.cast.length} Schauspieler</div>
+                        <div className={classes.lengthActors}>(Gesamt: {props.movie.cast.length} Schauspieler)</div>
                     </div>
 
                     <div id='actorContainer' className={classes.actorContainer}>
@@ -152,24 +155,21 @@ const DetailAnsicht = (props) => {
                 <div className={classes.smileys}>
                     <div>
                         <FaSmileBeam onClick={() => {
-                            props.movie.has_happy_end = true;
-                            setHappyMovie(true)
-                            setMovieForDb({...props.movie, happyEnd_Voting: {[props.user]: true}})
+                            props.movie.happyEnd_Voting[props.user] = true;
+                            setMovieForDb({...props.movie})
                         }}
-                                     className={(happyMovie === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
+                                     className={(props.movie.happyEnd_Voting[props.user] === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
                         <FaMeh onClick={() => {
-                            props.movie.has_happy_end = 'neutral';
-                            setHappyMovie('neutral');
-                            setMovieForDb({...props.movie, happyEnd_Voting: {[props.user]: 'neutral'}})
+                            props.movie.happyEnd_Voting[props.user] = 'neutral';
+                            setMovieForDb({...props.movie})
                         }}
-                               className={(happyMovie === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
+                               className={(props.movie.happyEnd_Voting[props.user] === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
 
                         <FaSadTear onClick={() => {
-                            props.movie.has_happy_end = false;
-                            setHappyMovie(false);
-                            setMovieForDb({...props.movie, happyEnd_Voting: {[props.user]: false}})
+                            props.movie.happyEnd_Voting[props.user] = false;
+                            setMovieForDb({...props.movie})
                         }}
-                                   className={!happyMovie ? classes.smileySad : classes.smiley}></FaSadTear>
+                                   className={props.movie.happyEnd_Voting[props.user] === false ? classes.smileySad : classes.smiley}></FaSadTear>
                     </div>
 
                     <button onClick={() => {
