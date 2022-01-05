@@ -123,7 +123,7 @@ const Showroom = ({saveSelectedMovie}) => {
                                     movie={movie}
                                     to='/detailansicht'
                                     saveSelectedMovie={(currentMovie, category) => saveSelectedMovie(currentMovie, category)}
-                                    category={undefined}
+                                    category={undefined} //TODO
                                 />)}
                         </div>
 

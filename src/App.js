@@ -1,6 +1,6 @@
 import './App.css';
 import {Route, BrowserRouter, Routes} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -14,7 +14,7 @@ import Impressum from "./pages/Impressum";
 import {genreUrl, fskUrl, castUrl, personDetailUrl, searchUrl} from "./constants"
 
 import firestoreDb from "./firebase-config";
-import {doc, setDoc, getDocs, collection} from 'firebase/firestore';
+import {doc, setDoc} from 'firebase/firestore';
 
 
 function App() {
@@ -86,28 +86,6 @@ function App() {
     );
 
     /**
-     * Load Data from Firestore Database and save to State
-     * @returns {Promise<void>} set state for allMovies
-     */
-    /*async function saveMoviesToState() {
-        setAllMovies(await loadMoviesFromDb())
-    }*/
-
-    /**
-     * Load Movies from Database Firebase
-     * @return {Promise<*[]>}
-     */
-    async function loadMoviesFromDb() {
-        const movieCollect = await getDocs(collection(firestoreDb, 'movies'));
-        const moviesArray = [];
-        movieCollect.forEach((doc) => {
-            moviesArray.push(doc.data())
-        });
-
-        return moviesArray
-    }
-
-    /**
      * Save Movie to Database Firebase by clicking on Detailansicht Speichern
      * @param {object} movieDb
      * @return {Promise<void>}
@@ -118,7 +96,6 @@ function App() {
             const actualMoviesDoc = doc(firestoreDb, 'movies/' + movieDb.id)
             await setDoc(actualMoviesDoc, movieDb);
             console.log('In Firestore Gespeichert');
-            //await saveMoviesToState()
         } catch (e) {
             console.log('Error', e)
         }
