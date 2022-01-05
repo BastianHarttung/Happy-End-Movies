@@ -1,6 +1,6 @@
 .showroomSection {
     position: relative;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 /*--------------------Sidebar----------*/
@@ -12,14 +12,33 @@
 }
 
 .filterContainer {
-    margin: 30px 20px 100px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 20px 20px 100px 20px;
+}
+
+.filterContainer button {
+    background-color: var(--main-color-white);
+    font-size: 15px;
+    border: 0px;
+    border-radius: 10px;
+    padding: 7px;
+    cursor: pointer;
+    transition: background-color var(--hover-time-short);
+}
+
+.filterContainer button:hover {
+    background-color: var(--main-color);
+}
+
+.filterContainer button {
+    margin: 10px 0px;
 }
 
 .filter {
     font-weight: 500;
     text-align: right;
-    margin: 20px 0px;
-    cursor: pointer;
 }
 
 .sidebarInfos {

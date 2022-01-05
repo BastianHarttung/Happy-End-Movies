@@ -158,18 +158,18 @@ const DetailAnsicht = (props) => {
                             props.movie.happyEnd_Voting[props.user] = true;
                             setMovieForDb({...props.movie})
                         }}
-                                     className={(props.movie.happyEnd_Voting[props.user] === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
+                                     className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
                         <FaMeh onClick={() => {
                             props.movie.happyEnd_Voting[props.user] = 'neutral';
                             setMovieForDb({...props.movie})
                         }}
-                               className={(props.movie.happyEnd_Voting[props.user] === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
+                               className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
 
                         <FaSadTear onClick={() => {
                             props.movie.happyEnd_Voting[props.user] = false;
                             setMovieForDb({...props.movie})
                         }}
-                                   className={props.movie.happyEnd_Voting[props.user] === false ? classes.smileySad : classes.smiley}></FaSadTear>
+                                   className={props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === false ? classes.smileySad : classes.smiley}></FaSadTear>
                     </div>
 
                     <button onClick={() => {

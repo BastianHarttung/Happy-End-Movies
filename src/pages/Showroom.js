@@ -2,11 +2,16 @@ import classes from "./Showroom.module.css";
 import SearchResultBox from "../components/SearchResultBox";
 import {useEffect, useState} from "react";
 import SearchBar from "../components/SearchBar";
+import {collection, getDocs} from "firebase/firestore";
+import firestoreDb from "../firebase-config";
 
 
-const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
+const Showroom = ({saveSelectedMovie}) => {
 
-    const [filteredMovies, setFilteredMovies] = useState(moviesDB ? moviesDB : [])
+    const [moviesDb, setMoviesDb] = useState([])
+    const [dbLength, setDbLength] = useState(0)
+
+    const [filteredMovies, setFilteredMovies] = useState([])
     const [searchFilteredMovies, setSearchFilteredMovies] = useState([]) //TODO
     const [filterLength, setFilterLength] = useState(dbLength)
 
@@ -22,17 +27,19 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
 
     const [searchFor, setSearchFor] = useState()
 
-    /**
-     * Sort Movies by Title and update movies after Timeout
-     */
+
     useEffect(() => {
-        moviesDB.sort((a, b) => (a.original_title < b.original_title) ? -1
-            : (a.original_title > b.original_title) ? 1
-                : 0)
-        if (filterLength === dbLength) {
-            setTimeout(() => setFilteredMovies(moviesDB), 1500)
-            setFilterLength(moviesDB.length)
+        const moviesCollectionRef = collection(firestoreDb, 'movies');
+        const getMovies = async () => {
+            const data = await getDocs(moviesCollectionRef);
+            const movieDataArray = data.docs.map((doc) => ({...doc.data()}))
+            const movieArraySort = sortMovies(movieDataArray);
+            setDbLength(movieDataArray.length);
+            setFilterLength(movieDataArray.length)
+            setMoviesDb(movieArraySort)
+            setFilteredMovies(movieArraySort)
         }
+        getMovies()
     }, [])
 
     /**
@@ -66,30 +73,44 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
                 <div className={classes.searchContainer}>
                     <SearchBar
                         length='13'
-                        size= {15}
+                        size={15}
                         searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}
                         saveSearchFor={(movieName) => setSearchFor(movieName)}/>
                 </div>
+
                 <div className={classes.filterContainer}>
 
-                    <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, 'all')}
-                         className={classes.filter}>Alles anzeigen
+                    <button onClick={() => setFilteredMovies(loadMoviesFromDb())}>Filter deaktivieren
+                    </button>
+
+                    <div>
+                        <div className={classes.filter}>
+                            <label htmlFor="movies">Filme</label>
+                            <input type="radio" id="movies" name="category" value='movies'/>
+                        </div>
+                        <div className={classes.filter}>
+                            <label htmlFor="tv">Serien</label>
+                            <input type="radio" id="tv" name="category" value='tv'/>
+                        </div>
                     </div>
-                    <div onClick={() => filterMoviesByCategory('movie')}
-                         className={classes.filter}>Alle Filme
+                    <hr/>
+                    <div>
+                        <div className={classes.filter}>
+                            <label htmlFor="happyEndTrue">mit Happy End</label>
+                            <input type="radio" id="happyEndTrue" name="happyEnd" value={true}/>
+                        </div>
+                        <div className={classes.filter}>
+                            <label htmlFor="happyEndFalse">ohne Happy End</label>
+                            <input type="radio" id="happyEndFalse" name="happyEnd" value={false}/>
+                        </div>
                     </div>
-                    <div onClick={() => filterMoviesByCategory('tv')}
-                         className={classes.filter}>Alle Serien
-                    </div>
-                    <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, true)}
-                         className={classes.filter}>Filme mit Happy End
-                    </div>
-                    <div onClick={() => filterMoviesByHappyEnd(searchFilteredMovies, false)}
-                         className={classes.filter}>Filme ohne Happy End
-                    </div>
+
+                    <button>Filtern</button>
+
                     <div className={classes.sidebarInfos}>
                         <div>Gesamt <b>{filterLength}</b> Filme</div>
                     </div>
+
                 </div>
             </div>
 
@@ -130,30 +151,46 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
     )
 
     /**
-     * Filter Movies with or without HappyEnd
-     * @param {array} movies movies Array
-     * @param {boolean} hasHappyEnd true or false
-     * @return {array with objects}
+     * Load all Movies from Database Firebase
+     * @return
+        {
+        Promise < * [] >
+    }
      */
-    function filterMoviesByHappyEnd(movies, hasHappyEnd) {
-        if (hasHappyEnd === 'all') {
-            setFilterLength(moviesDB.length)
-            setFilteredMovies(moviesDB)
-            setSearchFilteredMovies(moviesDB)
-        } else {
-            const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
-            setFilteredMovies(movieFilter)
-            setFilterLength(movieFilter.length)
-        }
+    async function loadMoviesFromDb() {
+        const movieCollect = await getDocs(collection(firestoreDb, 'movies'))
+        const moviesArray = [];
+        movieCollect.forEach((doc) => {
+            moviesArray.push(doc.data())
+        });
+        return moviesArray
     }
 
     /**
-     * Filter Movies
-     * @param {string} movieName
-     * @param {string} searchCategory eg 'movie' || 'tv'
+     * Sort Movies from Database by Title
+     */
+    function sortMovies(moviesArray) {
+        moviesArray.sort((a, b) => (a.title < b.title) ? -1
+            : (a.title > b.title) ? 1
+                : 0)
+        return moviesArray
+    }
+
+    /**
+     * Filter Movies with search
+     * @param
+        {
+        string
+    }
+        movieName
+     * @param
+        {
+        string
+    }
+        searchCategory eg 'movie' || 'tv'
      */
     function filterMoviesByName(movieName, searchCategory) {
-        const movieFilter = moviesDB.filter(movie => {
+        const movieFilter = moviesDb.filter(movie => {
                 if (movie.title) {
                     return movie.title.toLowerCase().includes(movieName.toLowerCase()) ||
                         movie.original_title.toLowerCase().includes(movieName.toLowerCase())
@@ -166,25 +203,94 @@ const Showroom = ({moviesDB, dbLength, saveSelectedMovie}) => {
     }
 
     /**
-     * Filter Movies by Category
-     * @param {string} category 'movie' || 'tv'
+     * Filter Database by Arguments
+     * @param
+        {
+    }
+        movies
+     * @param
+        {
+        string
+    }
+        category
+     * @param
+        {
+        boolean
+    }
+        happyEnd
+     * @param
+        {
+        boolean
+    }
+        watched
      */
-    function filterMoviesByCategory(category) {
-        const movieFilter = moviesDB.filter(movie => movie.category === category)
+    function filterDatabase(movies, category, happyEnd, watched) {
+        const movieFilter = moviesDb.filter(movie => movie.category === category)
         setFilteredMovies(movieFilter);
         setFilterLength(movieFilter.length);
         setActivePage(0)
     }
 
     /**
+     * Filter Movies with or without HappyEnd
+     * @param
+        {
+        array
+    }
+        movies movies Array
+     * @param
+        {
+        boolean
+    }
+        hasHappyEnd true or false
+     * @return
+        {
+        array
+        with objects}
+     */
+    function filterMoviesByHappyEnd(movies, hasHappyEnd) {
+        if (hasHappyEnd === 'all') {
+            setFilterLength(moviesDb.length)
+            setFilteredMovies(moviesDb)
+            setSearchFilteredMovies(moviesDb)
+        } else {
+            const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
+            setFilteredMovies(movieFilter)
+            setFilterLength(movieFilter.length)
+        }
+    }
+
+
+    /**
+     * Filter Movies by Category
+     * @param
+        {
+        string
+    }
+        category 'movie' || 'tv'
+     */
+
+    /*function filterMoviesByCategory(category)
+        {
+            const movieFilter = moviesDb.filter(movie => movie.category === category)
+            setFilteredMovies(movieFilter);
+            setFilterLength(movieFilter.length);
+            setActivePage(0)
+        }
+    */
+
+    /**
      * Search Movie
-     * @return {Promise<void>}
+     * @return
+        {
+        Promise < void >
+    }
      */
     function searchMovieDb(movieName, searchCategory) {
         if (movieName.length === 0) {
-            setFilteredMovies(moviesDB);
-            setSearchFilteredMovies(moviesDB);
-            setFilterLength(moviesDB.length);
+            setFilteredMovies(moviesDb);
+            setSearchFilteredMovies(moviesDb);
+            setFilterLength(moviesDb.length);
             window.location.hash = '';
         } else {
             window.location.hash = movieName;

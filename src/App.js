@@ -21,21 +21,8 @@ function App() {
 
     const [selectedMovie, setSelectedMovie] = useState({})
     const [selectedPerson, setSelectedPerson] = useState({})
-    const [allMovies, setAllMovies] = useState([])
-    const [dbLength, setDbLength] = useState(0)
 
     const [userId, setUserId] = useState(23)
-
-    useEffect(() => {
-        const moviesCollectionRef = collection(firestoreDb, 'movies');
-        const getMovies = async () => {
-            const data = await getDocs(moviesCollectionRef);
-            setDbLength(data.docs.length);
-            setAllMovies(data.docs.map((doc) => ({...doc.data()})))
-        }
-        getMovies()
-    }, []);
-
 
     return (
         <BrowserRouter>
@@ -58,8 +45,6 @@ function App() {
                            exact={true}
                            element={
                                <Showroom
-                                   moviesDB={allMovies}
-                                   dbLength={dbLength}
                                    saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
                                />}
                     />
@@ -104,22 +89,26 @@ function App() {
      * Load Data from Firestore Database and save to State
      * @returns {Promise<void>} set state for allMovies
      */
-    async function saveMoviesToState() {
-        //TODO loadMovies to extra function
-        const moviesArray = async function loadMoviesFromDb() {
-            const movieCollect = await getDocs(collection(firestoreDb, 'movies'));
-            const moviesArray = [];
-            movieCollect.forEach((doc) => {
-                moviesArray.push(doc.data())
-            });
+    /*async function saveMoviesToState() {
+        setAllMovies(await loadMoviesFromDb())
+    }*/
 
-            return moviesArray
-        }
-        setAllMovies(await moviesArray())
+    /**
+     * Load Movies from Database Firebase
+     * @return {Promise<*[]>}
+     */
+    async function loadMoviesFromDb() {
+        const movieCollect = await getDocs(collection(firestoreDb, 'movies'));
+        const moviesArray = [];
+        movieCollect.forEach((doc) => {
+            moviesArray.push(doc.data())
+        });
+
+        return moviesArray
     }
 
     /**
-     * Save Movie to Database by clicking on Detailansicht Speichern
+     * Save Movie to Database Firebase by clicking on Detailansicht Speichern
      * @param {object} movieDb
      * @return {Promise<void>}
      */
@@ -129,7 +118,7 @@ function App() {
             const actualMoviesDoc = doc(firestoreDb, 'movies/' + movieDb.id)
             await setDoc(actualMoviesDoc, movieDb);
             console.log('In Firestore Gespeichert');
-            await saveMoviesToState()
+            //await saveMoviesToState()
         } catch (e) {
             console.log('Error', e)
         }
