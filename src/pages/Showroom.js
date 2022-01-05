@@ -13,6 +13,7 @@ const Showroom = ({saveSelectedMovie}) => {
 
     const [filteredMovies, setFilteredMovies] = useState([])
     const [searchFilteredMovies, setSearchFilteredMovies] = useState([]) //TODO
+    const [filterActive, setFilterActive] = useState(false)
     const [filterLength, setFilterLength] = useState(dbLength)
 
     const [activePage, setActivePage] = useState(0)
@@ -29,17 +30,7 @@ const Showroom = ({saveSelectedMovie}) => {
 
 
     useEffect(() => {
-        const moviesCollectionRef = collection(firestoreDb, 'movies');
-        const getMovies = async () => {
-            const data = await getDocs(moviesCollectionRef);
-            const movieDataArray = data.docs.map((doc) => ({...doc.data()}))
-            const movieArraySort = sortMovies(movieDataArray);
-            setDbLength(movieDataArray.length);
-            setFilterLength(movieDataArray.length)
-            setMoviesDb(movieArraySort)
-            setFilteredMovies(movieArraySort)
-        }
-        getMovies()
+        loadMoviesFromDbAndSetStates()
     }, [])
 
     /**
@@ -80,7 +71,11 @@ const Showroom = ({saveSelectedMovie}) => {
 
                 <div className={classes.filterContainer}>
 
-                    <button onClick={() => setFilteredMovies(loadMoviesFromDb())}>Filter deaktivieren
+                    <button onClick={() => {
+                        loadMoviesFromDbAndSetStates();
+                        setFilterActive(false)
+                    }}
+                            className={!filterActive ? classes.btnActive : ''}>{filterActive ? 'Filter deaktivieren' : 'Filter sind deaktiviert'}
                     </button>
 
                     <div>
@@ -105,7 +100,9 @@ const Showroom = ({saveSelectedMovie}) => {
                         </div>
                     </div>
 
-                    <button>Filtern</button>
+                    <button onClick={() => setFilterActive(true)}
+                            className={filterActive ? classes.btnActive : ''}>{filterActive ? 'Gefiltert' : 'Filtern'}
+                    </button>
 
                     <div className={classes.sidebarInfos}>
                         <div>Gesamt <b>{filterLength}</b> Filme</div>
@@ -151,43 +148,34 @@ const Showroom = ({saveSelectedMovie}) => {
     )
 
     /**
-     * Load all Movies from Database Firebase
-     * @return
-        {
-        Promise < * [] >
-    }
+     * Load Movies from Database sort and set all States to this
+     * @return {Promise<void>}
      */
-    async function loadMoviesFromDb() {
-        const movieCollect = await getDocs(collection(firestoreDb, 'movies'))
-        const moviesArray = [];
-        movieCollect.forEach((doc) => {
-            moviesArray.push(doc.data())
-        });
-        return moviesArray
+    async function loadMoviesFromDbAndSetStates() {
+        const moviesCollectionRef = collection(firestoreDb, 'movies');
+        const data = await getDocs(moviesCollectionRef);
+        const movieDataArray = data.docs.map((doc) => ({...doc.data()}))
+        const movieArraySort = sortMovies(movieDataArray);
+        setDbLength(movieDataArray.length);
+        setFilterLength(movieDataArray.length)
+        setMoviesDb(movieArraySort)
+        setFilteredMovies(movieArraySort)
     }
 
     /**
      * Sort Movies from Database by Title
      */
     function sortMovies(moviesArray) {
-        moviesArray.sort((a, b) => (a.title < b.title) ? -1
-            : (a.title > b.title) ? 1
+        moviesArray.sort((a, b) => (a.title < b.title || a.name < b.name || a.title < b.name || a.name < b.title) ? -1
+            : (a.title > b.title || a.name > b.name || a.title > b.name || a.name > b.title) ? 1
                 : 0)
         return moviesArray
     }
 
     /**
      * Filter Movies with search
-     * @param
-        {
-        string
-    }
-        movieName
-     * @param
-        {
-        string
-    }
-        searchCategory eg 'movie' || 'tv'
+     * @param {string} movieName
+     * @param {string} searchCategory eg 'movie' || 'tv'
      */
     function filterMoviesByName(movieName, searchCategory) {
         const movieFilter = moviesDb.filter(movie => {
@@ -198,31 +186,16 @@ const Showroom = ({saveSelectedMovie}) => {
             }
         )
         setFilteredMovies(movieFilter)
-        setSearchFilteredMovies(movieFilter)
+        //setSearchFilteredMovies(movieFilter)
         setFilterLength(movieFilter.length)
     }
 
     /**
      * Filter Database by Arguments
-     * @param
-        {
-    }
-        movies
-     * @param
-        {
-        string
-    }
-        category
-     * @param
-        {
-        boolean
-    }
-        happyEnd
-     * @param
-        {
-        boolean
-    }
-        watched
+     * @param {    } movies
+     * @param {string} category
+     * @param {boolean} happyEnd
+     * @param { boolean }watched
      */
     function filterDatabase(movies, category, happyEnd, watched) {
         const movieFilter = moviesDb.filter(movie => movie.category === category)
@@ -233,26 +206,15 @@ const Showroom = ({saveSelectedMovie}) => {
 
     /**
      * Filter Movies with or without HappyEnd
-     * @param
-        {
-        array
-    }
-        movies movies Array
-     * @param
-        {
-        boolean
-    }
-        hasHappyEnd true or false
-     * @return
-        {
-        array
-        with objects}
+     * @param        {        array    }        movies movies Array
+     * @param        {        boolean    }        hasHappyEnd true or false
+     * @return        {        array        with objects}
      */
     function filterMoviesByHappyEnd(movies, hasHappyEnd) {
         if (hasHappyEnd === 'all') {
             setFilterLength(moviesDb.length)
             setFilteredMovies(moviesDb)
-            setSearchFilteredMovies(moviesDb)
+            //setSearchFilteredMovies(moviesDb)
         } else {
             const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
             setFilteredMovies(movieFilter)
@@ -263,11 +225,7 @@ const Showroom = ({saveSelectedMovie}) => {
 
     /**
      * Filter Movies by Category
-     * @param
-        {
-        string
-    }
-        category 'movie' || 'tv'
+     * @param        {        string    }        category 'movie' || 'tv'
      */
 
     /*function filterMoviesByCategory(category)
@@ -281,15 +239,12 @@ const Showroom = ({saveSelectedMovie}) => {
 
     /**
      * Search Movie
-     * @return
-        {
-        Promise < void >
-    }
+     * @return        {        Promise < void >    }
      */
     function searchMovieDb(movieName, searchCategory) {
         if (movieName.length === 0) {
             setFilteredMovies(moviesDb);
-            setSearchFilteredMovies(moviesDb);
+            //setSearchFilteredMovies(moviesDb);
             setFilterLength(moviesDb.length);
             window.location.hash = '';
         } else {

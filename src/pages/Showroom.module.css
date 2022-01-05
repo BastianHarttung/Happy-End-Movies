@@ -35,6 +35,9 @@
 .filterContainer button {
     margin: 10px 0px;
 }
+.btnActive {
+    background-color: var(--main-color) !important;
+}
 
 .filter {
     font-weight: 500;
