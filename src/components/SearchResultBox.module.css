@@ -25,24 +25,23 @@
     text-decoration: none;
     cursor: pointer;
     transition: var(--hover-time-short) ease-in-out;
-    animation: big 1500ms infinite;
+    animation: big 2000ms infinite;
     z-index: 100;
 }
 @keyframes big {
     0% {
         transform: scale(1.1);
     }
-    50% {
-        transform: scale(3);
-    }
     100% {
-        transform: scale(1.1);
+        transform: scale(4);
     }
 
 }
 
 .movieImage {
+    height: 300px;
     width: 200px;
+    object-fit: cover;
 }
 
 .movieInfosContainer {

@@ -1,5 +1,6 @@
 .showroomSection {
     position: relative;
+    overflow:hidden;
 }
 
 /*--------------------Sidebar----------*/

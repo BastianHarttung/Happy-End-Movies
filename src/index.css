@@ -21,5 +21,8 @@ code {
 :root {
   --main-color: #5e81f8;
   --main-color-white: #bcd6ff;
+  --green: #28b028;
+  --orange: orange;
+  --red: #d91212;
   --hover-time-short: 130ms;
 }

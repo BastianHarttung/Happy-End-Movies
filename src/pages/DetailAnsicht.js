@@ -53,9 +53,20 @@ const DetailAnsicht = (props) => {
             </div>
 
             <div className={classes.movieBox}>
-                <img className={classes.detailsImage}
-                     src={props.movie.poster_path ? imageUrl + props.movie.poster_path : emptyImage}
-                     alt="Poster"/>
+
+                <div className={classes.posterContainer}>
+                    {happyMovie === true ?
+                        <FaSmileBeam className={classes.happyEndSmileyOverall}
+                                     style={{color: 'var(--green)'}}/>
+                        : happyMovie === false ?
+                            <FaSadTear className={classes.happyEndSmileyOverall}
+                                       style={{color: 'var(--red)'}}/>
+                            : ''}
+                    <img className={classes.posterImage}
+                         src={props.movie.poster_path ? imageUrl + props.movie.poster_path : emptyImage}
+                         alt="Poster"/>
+                </div>
+
                 <div className={classes.detailsContainer}>
 
                     <div>
@@ -117,6 +128,7 @@ const DetailAnsicht = (props) => {
                                value={searchActor}
                                onChange={e => setSearchActor(e.target.value)}
                                onKeyPress={keyPressEvent}/>
+                        <div className={classes.lengthActors}>Gesamt: {props.movie.cast.length} Schauspieler</div>
                     </div>
 
                     <div id='actorContainer' className={classes.actorContainer}>
@@ -135,7 +147,7 @@ const DetailAnsicht = (props) => {
 
                 <div className={classes.description}><b>Beschreibung:</b> {props.movie.overview}</div>
 
-                <div className={classes.happyEnd}>Happy End ?</div>
+                <div className={classes.happyEnd}>Dein Happy End ?</div>
 
                 <div className={classes.smileys}>
                     <div>
@@ -218,7 +230,7 @@ const DetailAnsicht = (props) => {
      */
     function scrollRight() {
         const actorContainer = document.getElementById('actorContainer');
-        const scrollWidth = scrollActors + actorContainer.offsetWidth -100
+        const scrollWidth = scrollActors + actorContainer.offsetWidth - 100
         if (scrollActors < actorContainer.scrollWidth) {
             actorContainer.scroll(scrollWidth, 0)
             setScrollActors(scrollWidth)
