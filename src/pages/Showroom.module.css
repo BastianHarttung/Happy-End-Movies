@@ -35,14 +35,74 @@
 .filterContainer button {
     margin: 10px 0px;
 }
+
 .btnActive {
     background-color: var(--main-color) !important;
 }
 
+.filterSegmentContainer {
+    margin: 10px 0px;
+}
+
+.filterSegment {
+    width: 165px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 10px 0px;
+}
+
+.filterSegment::before {
+    color: black;
+    font-family: FontAwesomeSolid;
+    content: "\f078";
+    font-size: 20px;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    pointer-events: none;
+}
+
+/*.filterSegment label {
+    margin-bottom: 5px;
+}*/
+
+.filterSegment select {
+    /* Reset */
+    width: 100%;
+    appearance: none;
+    border: 0;
+    border-radius: 10px;
+    outline: none;
+    font: inherit;
+    /* Personalize */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* <option> colors */
+.filterSegment option {
+    color: inherit;
+}
+
+/* Remove focus outline */
+.filterSegment select:focus {
+    outline: none;
+}
+
+/* Remove IE arrow */
+.filterSegment select::-ms-expand {
+    display: none;
+}
+
+/*
 .filter {
     font-weight: 500;
     text-align: right;
-}
+}*/
 
 .sidebarInfos {
     display: flex;

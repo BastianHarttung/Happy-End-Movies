@@ -78,8 +78,27 @@ const Showroom = ({saveSelectedMovie}) => {
                             className={!filterActive ? classes.btnActive : ''}>{filterActive ? 'Filter deaktivieren' : 'Filter sind deaktiviert'}
                     </button>
 
-                    <div>
-                        <div className={classes.filter}>
+                    <div className={classes.filterSegmentContainer}>
+
+                        <div className={classes.filterSegment}>
+                            {/*<label htmlFor="category">Kategorie:</label>*/}
+                            <select name="category" id="category">
+                                <option value="allCategories">Filme + Serien</option>
+                                <option value="movie">Filme</option>
+                                <option value="tv">Serien</option>
+                            </select>
+                        </div>
+
+                        <div className={classes.filterSegment}>
+                            {/*<label htmlFor="happyEnd">Happy End?</label>*/}
+                            <select name="happyEnd" id="happyEnd">
+                                <option value="allEnds">Alle Enden</option>
+                                <option value={true}>Happy End</option>
+                                <option value={false}>kein Happy End</option>
+                            </select>
+                        </div>
+
+                        {/*<div className={classes.filter}>
                             <label htmlFor="movies">Filme</label>
                             <input type="radio" id="movies" name="category" value='movies'/>
                         </div>
@@ -97,7 +116,7 @@ const Showroom = ({saveSelectedMovie}) => {
                         <div className={classes.filter}>
                             <label htmlFor="happyEndFalse">ohne Happy End</label>
                             <input type="radio" id="happyEndFalse" name="happyEnd" value={false}/>
-                        </div>
+                        </div>*/}
                     </div>
 
                     <button onClick={() => setFilterActive(true)}
@@ -105,7 +124,7 @@ const Showroom = ({saveSelectedMovie}) => {
                     </button>
 
                     <div className={classes.sidebarInfos}>
-                        <div>Gesamt <b>{filterLength}</b> Filme</div>
+                        <div><b>{filterLength}</b> Filme</div>
                     </div>
 
                 </div>
