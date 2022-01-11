@@ -81,8 +81,9 @@ const Showroom = ({saveSelectedMovie}) => {
                     <div className={classes.filterSegmentContainer}>
 
                         <div className={classes.filterSegment}>
-                            {/*<label htmlFor="category">Kategorie:</label>*/}
-                            <select name="category" id="category">
+                            <select name="category"
+                                    id="category"
+                                    onChange={() => setFilterActive(false)}>
                                 <option value="allCategories">Filme + Serien</option>
                                 <option value="movie">Filme</option>
                                 <option value="tv">Serien</option>
@@ -90,36 +91,21 @@ const Showroom = ({saveSelectedMovie}) => {
                         </div>
 
                         <div className={classes.filterSegment}>
-                            {/*<label htmlFor="happyEnd">Happy End?</label>*/}
-                            <select name="happyEnd" id="happyEnd">
+                            <select name="happyEnd"
+                                    id="happyEnd"
+                                    onChange={() => setFilterActive(false)}>
                                 <option value="allEnds">Alle Enden</option>
                                 <option value={true}>Happy End</option>
                                 <option value={false}>kein Happy End</option>
                             </select>
                         </div>
 
-                        {/*<div className={classes.filter}>
-                            <label htmlFor="movies">Filme</label>
-                            <input type="radio" id="movies" name="category" value='movies'/>
-                        </div>
-                        <div className={classes.filter}>
-                            <label htmlFor="tv">Serien</label>
-                            <input type="radio" id="tv" name="category" value='tv'/>
-                        </div>
-                    </div>
-                    <hr/>
-                    <div>
-                        <div className={classes.filter}>
-                            <label htmlFor="happyEndTrue">mit Happy End</label>
-                            <input type="radio" id="happyEndTrue" name="happyEnd" value={true}/>
-                        </div>
-                        <div className={classes.filter}>
-                            <label htmlFor="happyEndFalse">ohne Happy End</label>
-                            <input type="radio" id="happyEndFalse" name="happyEnd" value={false}/>
-                        </div>*/}
                     </div>
 
-                    <button onClick={() => setFilterActive(true)}
+                    <button onClick={() => {
+                        setFilterActive(true)
+                        filterDatabase(moviesDb, document.getElementById('category').value, document.getElementById('happyEnd').value)
+                    }}
                             className={filterActive ? classes.btnActive : ''}>{filterActive ? 'Gefiltert' : 'Filtern'}
                     </button>
 
@@ -214,13 +200,20 @@ const Showroom = ({saveSelectedMovie}) => {
      * @param {    } movies
      * @param {string} category
      * @param {boolean} happyEnd
-     * @param { boolean }watched
      */
-    function filterDatabase(movies, category, happyEnd, watched) {
-        const movieFilter = moviesDb.filter(movie => movie.category === category)
-        setFilteredMovies(movieFilter);
-        setFilterLength(movieFilter.length);
-        setActivePage(0)
+    function filterDatabase(movies, category, happyEnd) {
+        console.log(movies, category, happyEnd)
+        if (category !== 'allCategories' || happyEnd !== 'allEnds') {
+            if (category !== 'allCategories') {
+                const movieFilter = movies.filter(movie => movie.category === category)
+                setFilteredMovies(movieFilter);
+                setFilterLength(movieFilter.length);
+                setActivePage(0)
+            }
+        } else {
+            console.log('ungefiltert');
+            setFilterActive(false);
+        }
     }
 
     /**
