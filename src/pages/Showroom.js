@@ -139,7 +139,11 @@ const Showroom = ({saveSelectedMovie}) => {
 
                     <button onClick={() => {
                         setFilterActive(true)
-                        filterDatabase(moviesDb, document.getElementById('category').value, document.getElementById('happyEnd').value)
+                        filterDatabase(moviesDb,
+                            document.getElementById('category').value,
+                            document.getElementById('happyEnd').value,
+                            fskPos)
+
                     }}
                             className={filterActive ? classes.btnActive : ''}>{filterActive ? 'Gefiltert' : 'Filtern'}
                     </button>
@@ -163,7 +167,7 @@ const Showroom = ({saveSelectedMovie}) => {
                                     movie={movie}
                                     to='/detailansicht'
                                     saveSelectedMovie={(currentMovie, category) => saveSelectedMovie(currentMovie, category)}
-                                    category={undefined} //TODO
+                                    category={'movie'} //TODO
                                 />)}
                         </div>
 
@@ -234,22 +238,25 @@ const Showroom = ({saveSelectedMovie}) => {
      * Filter Database by Arguments
      * @param {array } movies
      * @param {string} category
-     * @param {any} happyEnd
+     * @param {string} happyEnd
+     * @param {number} fskPos
      */
-    function filterDatabase(movies, category, happyEnd) {
+    function filterDatabase(movies, category, happyEnd, fskPos) {
         console.log(movies, category, happyEnd)
         const happy = (happy) => {
             if (happy === 'allEnds') return 'allEnds'
             if (happy === 'true') return true
             if (happy === 'false') return false
         }
-        if (category !== 'allCategories' || happyEnd !== 'allEnds') {
+        if (category !== 'allCategories' || happyEnd !== 'allEnds' || fskPos < 4) {
             const filteredByCategory = filterMoviesByCategory(movies, category)
-            console.log(filteredByCategory)
+            //console.log(filteredByCategory)
             const filteredByCategoryAndHappyEnd = filterMoviesByHappyEnd(filteredByCategory, happy(happyEnd))
-            console.log(filteredByCategoryAndHappyEnd)
-            setFilteredMovies(filteredByCategoryAndHappyEnd);
-            setFilterLength(filteredByCategoryAndHappyEnd.length);
+            //console.log(filteredByCategoryAndHappyEnd)
+            const filtered = filterMoviesByFsk(filteredByCategoryAndHappyEnd, fskPos)
+            console.log(filtered)
+            setFilteredMovies(filtered);
+            setFilterLength(filtered.length);
             setActivePage(0)
         } else {
             console.log('ungefiltert');
@@ -281,6 +288,18 @@ const Showroom = ({saveSelectedMovie}) => {
     function filterMoviesByHappyEnd(movies, hasHappyEnd) {
         if (hasHappyEnd === true || hasHappyEnd === false) {
             const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
+            return movieFilter
+        } else return movies
+    }
+
+    /**
+     * Filter Movies by Fsk rating
+     * @param {array} movies
+     * @param {number} fskPos 0-4
+     */
+    function filterMoviesByFsk(movies, fskPos) {
+        if (fskPos < 4) {
+            const movieFilter = movies.filter(movie => movie.fsk <= fskColors[fskPos].fsk)
             return movieFilter
         } else return movies
     }

@@ -122,10 +122,21 @@ function App() {
                 category: searchCategory,
                 genres: genres,
                 fsk: fsk,
+                happyEnd_Voting: object.happyEnd_Voting?object.happyEnd_Voting:[],
                 has_happy_end: hasHappyEnd,
                 cast: cast,
                 directors: directors
             })
+           /* console.log({
+                ...object,
+                category: searchCategory,
+                genres: genres,
+                fsk: fsk,
+                happyEnd_Voting: object.happyEnd_Voting?object.happyEnd_Voting:[],
+                has_happy_end: hasHappyEnd,
+                cast: cast,
+                directors: directors
+            })*/
         } else {
             const personKnownFor = await getInfosFromApi(object.name)
             const personDetails = await getDetailPersonInfosFromApi(object.id)
