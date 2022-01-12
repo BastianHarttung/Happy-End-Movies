@@ -28,10 +28,10 @@
 .slider {
     position: relative;
     top: -33px;
-    left: 1px;
+    left: 0px;
     -webkit-appearance: none; /* Override default CSS styles */
     appearance: none;
-    width: 98%;
+    width: 99%;
     height: 30px; /* Specified height */
     background: none ; /* Grey background */
     outline: none; /* Remove outline */

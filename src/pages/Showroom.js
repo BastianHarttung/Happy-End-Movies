@@ -232,57 +232,58 @@ const Showroom = ({saveSelectedMovie}) => {
 
     /**
      * Filter Database by Arguments
-     * @param {    } movies
+     * @param {array } movies
      * @param {string} category
-     * @param {boolean} happyEnd
+     * @param {any} happyEnd
      */
     function filterDatabase(movies, category, happyEnd) {
         console.log(movies, category, happyEnd)
+        const happy = (happy) => {
+            if (happy === 'allEnds') return 'allEnds'
+            if (happy === 'true') return true
+            if (happy === 'false') return false
+        }
         if (category !== 'allCategories' || happyEnd !== 'allEnds') {
-            if (category !== 'allCategories') {
-                const movieFilter = movies.filter(movie => movie.category === category)
-                setFilteredMovies(movieFilter);
-                setFilterLength(movieFilter.length);
-                setActivePage(0)
-            }
+            const filteredByCategory = filterMoviesByCategory(movies, category)
+            console.log(filteredByCategory)
+            const filteredByCategoryAndHappyEnd = filterMoviesByHappyEnd(filteredByCategory, happy(happyEnd))
+            console.log(filteredByCategoryAndHappyEnd)
+            setFilteredMovies(filteredByCategoryAndHappyEnd);
+            setFilterLength(filteredByCategoryAndHappyEnd.length);
+            setActivePage(0)
         } else {
             console.log('ungefiltert');
+            setFilteredMovies(movies);
+            setFilterLength(movies.length);
             setFilterActive(false);
         }
     }
 
     /**
-     * Filter Movies with or without HappyEnd
-     * @param        {        array    }        movies movies Array
-     * @param        {        boolean    }        hasHappyEnd true or false
-     * @return        {        array        with objects}
+     * Filter Movies by Category
+     * @param {array} movies movies
+     * @param { string } category 'movie' || 'tv'
+     * @return {array} filtered movies
      */
-    function filterMoviesByHappyEnd(movies, hasHappyEnd) {
-        if (hasHappyEnd === 'all') {
-            setFilterLength(moviesDb.length)
-            setFilteredMovies(moviesDb)
-            //setSearchFilteredMovies(moviesDb)
-        } else {
-            const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
-            setFilteredMovies(movieFilter)
-            setFilterLength(movieFilter.length)
-        }
+    function filterMoviesByCategory(movies, category) {
+        if (category !== 'allCategories') {
+            const movieFilter = movies.filter(movie => movie.category === category)
+            return movieFilter
+        } else return movies
     }
 
-
     /**
-     * Filter Movies by Category
-     * @param        {        string    }        category 'movie' || 'tv'
+     * Filter Movies with or without HappyEnd
+     * @param {array} movies movies
+     * @param {any} hasHappyEnd 'allEnds' or true or false
+     * @return {array} filtered movies
      */
-
-    /*function filterMoviesByCategory(category)
-        {
-            const movieFilter = moviesDb.filter(movie => movie.category === category)
-            setFilteredMovies(movieFilter);
-            setFilterLength(movieFilter.length);
-            setActivePage(0)
-        }
-    */
+    function filterMoviesByHappyEnd(movies, hasHappyEnd) {
+        if (hasHappyEnd === true || hasHappyEnd === false) {
+            const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
+            return movieFilter
+        } else return movies
+    }
 
     /**
      * Search Movie
