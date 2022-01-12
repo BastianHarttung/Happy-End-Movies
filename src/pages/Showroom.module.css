@@ -98,11 +98,10 @@
     display: none;
 }
 
-/*
-.filter {
-    font-weight: 500;
-    text-align: right;
-}*/
+.fskIndicatorContainer {
+    margin-top: 20px;
+    margin-bottom: -30px;
+}
 
 .sidebarInfos {
     display: flex;

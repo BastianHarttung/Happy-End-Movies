@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import SearchBar from "../components/SearchBar";
 import {collection, getDocs} from "firebase/firestore";
 import firestoreDb from "../firebase-config";
+import FskIndicator from "../components/FskIndicator";
 
 
 const Showroom = ({saveSelectedMovie}) => {
@@ -27,6 +28,34 @@ const Showroom = ({saveSelectedMovie}) => {
     const widthShowroom = window.innerWidth - 260
 
     const [searchFor, setSearchFor] = useState()
+
+    const fskColors = [
+        {
+            fsk: 0,
+            color: 'white',
+            factor: 1
+        },
+        {
+            fsk: 6,
+            color: '#F7E140',
+            factor: 1
+        },
+        {
+            fsk: 12,
+            color: '#32AF3D',
+            factor: 1
+        },
+        {
+            fsk: 16,
+            color: '#5588fc',
+            factor: 1
+        },
+        {
+            fsk: 18,
+            color: '#E61B23',
+            factor: 1
+        },]
+    const [fskPos, setFskPos] = useState(4)
 
 
     useEffect(() => {
@@ -98,6 +127,12 @@ const Showroom = ({saveSelectedMovie}) => {
                                 <option value={true}>Happy End</option>
                                 <option value={false}>kein Happy End</option>
                             </select>
+                        </div>
+
+                        <div className={classes.fskIndicatorContainer}>
+                            <FskIndicator colors={fskColors}
+                                          arrowPos={fskPos}
+                                          setArrow={(pos) => setFskPos(pos)}/>
                         </div>
 
                     </div>
