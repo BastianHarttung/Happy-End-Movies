@@ -29,33 +29,7 @@ const Showroom = ({saveSelectedMovie}) => {
 
     const [searchFor, setSearchFor] = useState()
 
-    const fskColors = [
-        {
-            fsk: 0,
-            color: 'white',
-            factor: 1
-        },
-        {
-            fsk: 6,
-            color: '#F7E140',
-            factor: 1
-        },
-        {
-            fsk: 12,
-            color: '#32AF3D',
-            factor: 1
-        },
-        {
-            fsk: 16,
-            color: '#5588fc',
-            factor: 1
-        },
-        {
-            fsk: 18,
-            color: '#E61B23',
-            factor: 1
-        },]
-    const [fskPos, setFskPos] = useState(4)
+    const [fskPosAge, setFskPosAge] = useState(18)
 
 
     useEffect(() => {
@@ -130,9 +104,8 @@ const Showroom = ({saveSelectedMovie}) => {
                         </div>
 
                         <div className={classes.fskIndicatorContainer}>
-                            <FskIndicator colors={fskColors}
-                                          arrowPos={fskPos}
-                                          setArrow={(pos) => setFskPos(pos)}/>
+                            <FskIndicator arrowPos={fskPosAge}
+                                          setFskPos={(fskPosAge) => setFskPosAge(fskPosAge)}/>
                         </div>
 
                     </div>
@@ -142,7 +115,7 @@ const Showroom = ({saveSelectedMovie}) => {
                         filterDatabase(moviesDb,
                             document.getElementById('category').value,
                             document.getElementById('happyEnd').value,
-                            fskPos)
+                            fskPosAge)
 
                     }}
                             className={filterActive ? classes.btnActive : ''}>{filterActive ? 'Gefiltert' : 'Filtern'}
@@ -239,21 +212,21 @@ const Showroom = ({saveSelectedMovie}) => {
      * @param {array } movies
      * @param {string} category
      * @param {string} happyEnd
-     * @param {number} fskPos
+     * @param {number} fskPosAge fsk Age
      */
-    function filterDatabase(movies, category, happyEnd, fskPos) {
-        console.log(movies, category, happyEnd)
+    function filterDatabase(movies, category, happyEnd, fskPosAge) {
+        console.log('filterDatabase', movies, category, happyEnd, fskPosAge)
         const happy = (happy) => {
             if (happy === 'allEnds') return 'allEnds'
             if (happy === 'true') return true
             if (happy === 'false') return false
         }
-        if (category !== 'allCategories' || happyEnd !== 'allEnds' || fskPos < 4) {
+        if (category !== 'allCategories' || happyEnd !== 'allEnds' || fskPosAge < 18) {
             const filteredByCategory = filterMoviesByCategory(movies, category)
             //console.log(filteredByCategory)
             const filteredByCategoryAndHappyEnd = filterMoviesByHappyEnd(filteredByCategory, happy(happyEnd))
             //console.log(filteredByCategoryAndHappyEnd)
-            const filtered = filterMoviesByFsk(filteredByCategoryAndHappyEnd, fskPos)
+            const filtered = filterMoviesByFsk(filteredByCategoryAndHappyEnd, fskPosAge)
             console.log(filtered)
             setFilteredMovies(filtered);
             setFilterLength(filtered.length);
@@ -274,6 +247,7 @@ const Showroom = ({saveSelectedMovie}) => {
      */
     function filterMoviesByCategory(movies, category) {
         if (category !== 'allCategories') {
+            console.log('filterCategory', category)
             const movieFilter = movies.filter(movie => movie.category === category)
             return movieFilter
         } else return movies
@@ -287,6 +261,7 @@ const Showroom = ({saveSelectedMovie}) => {
      */
     function filterMoviesByHappyEnd(movies, hasHappyEnd) {
         if (hasHappyEnd === true || hasHappyEnd === false) {
+            console.log('filterHappyEnd', hasHappyEnd)
             const movieFilter = movies.filter(movie => movie.has_happy_end === hasHappyEnd)
             return movieFilter
         } else return movies
@@ -297,9 +272,10 @@ const Showroom = ({saveSelectedMovie}) => {
      * @param {array} movies
      * @param {number} fskPos 0-4
      */
-    function filterMoviesByFsk(movies, fskPos) {
-        if (fskPos < 4) {
-            const movieFilter = movies.filter(movie => movie.fsk <= fskColors[fskPos].fsk)
+    function filterMoviesByFsk(movies, fskPosAge) {
+        if (fskPosAge < 18) {
+            console.log('filterFsk', fskPosAge)
+            const movieFilter = movies.filter(movie => movie.fsk <= fskPosAge)
             return movieFilter
         } else return movies
     }
