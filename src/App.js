@@ -15,6 +15,7 @@ import {genreUrl, fskUrl, castUrl, personDetailUrl, searchUrl} from "./constants
 
 import firestoreDb from "./firebase-config";
 import {doc, setDoc} from 'firebase/firestore';
+import Hilfe from "./pages/Hilfe";
 
 
 function App() {
@@ -25,14 +26,10 @@ function App() {
     const [userId, setUserId] = useState(23)
 
     return (
-        <BrowserRouter>
-
+        <BrowserRouter basename="/happy-end-movies">
             <div>
-
                 <Header/>
-
                 <Routes>
-
                     <Route path='/filmsuche'
                            exact={true}
                            element={
@@ -40,7 +37,6 @@ function App() {
                                    saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
                                />}
                     />
-
                     <Route path='/showroom'
                            exact={true}
                            element={
@@ -48,7 +44,6 @@ function App() {
                                    saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
                                />}
                     />
-
                     <Route path='/detailansicht'
                            exact={true}
                            element={
@@ -58,7 +53,6 @@ function App() {
                                    movie={selectedMovie}
                                    user={userId}/>}
                     />
-
                     <Route path='/detailansicht/person'
                            exact={true}
                            element={
@@ -66,22 +60,22 @@ function App() {
                                    saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
                                    person={selectedPerson}/>}
                     />
-
                     <Route path='/'
                            exact={true}
                            element={<Hauptmenue/>}
                     />
-
                     <Route path='/impressum'
                            exact={true}
                            element={<Impressum/>}
                     />
-
+                    <Route path='/hilfe'
+                           exact={true}
+                           element={<Hilfe/>}
+                    />
                 </Routes>
             </div>
 
             <Footer/>
-
         </BrowserRouter>
     );
 

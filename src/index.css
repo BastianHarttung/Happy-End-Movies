@@ -35,10 +35,15 @@ code {
 }
 
 :root {
+    /*Colors*/
     --main-color: #5e81f8;
     --main-color-white: #bcd6ff;
     --green: #28b028;
     --orange: orange;
     --red: #d91212;
+    /*Time*/
     --hover-time-short: 130ms;
+    /*Radius*/
+    --border-radius-small: 10px;
+    --border-radius-medium: 20px;
 }

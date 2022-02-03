@@ -130,7 +130,7 @@
     height: 17px;
     width: 260px;
     border: 1px solid black;
-    border-radius: 10px;
+    border-radius: var(--border-radius-small);
     padding: 2px 8px;
 }
 

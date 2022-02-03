@@ -4,6 +4,7 @@
     width: 200px;
     position: relative;
     border: 1px solid gray;
+    border-radius: 0px 0px var(--border-radius-medium) var(--border-radius-medium);
     margin: 10px;
     text-decoration: none;
     cursor: pointer;
