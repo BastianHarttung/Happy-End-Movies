@@ -14,7 +14,7 @@ const DetailAnsicht = (props) => {
 
     const navigate = useNavigate();
 
-    const genres = props.movie.genres ? props.movie.genres : ['a', 'b']
+    const genres = props.movie.genres ? props.movie.genres : [{name: 'a'}, {name: 'b'}]
 
     const [movieForDb, setMovieForDb] = useState(props.movie)
     const [happyMovie, setHappyMovie] = useState(props.movie.has_happy_end === true ? true
@@ -89,7 +89,7 @@ const DetailAnsicht = (props) => {
                         </p>
 
                         <div className={classes.genres}>
-                            {genres.map((genre, index) => <span key={index}>{genre}/ </span>)}
+                            {genres.map((genre, index) => <span key={index}>{genre.name}/ </span>)}
                         </div>
 
                         <h5 className={classes.director}>{props.movie.directors.length > 0 ? 'Regie' : ''}</h5>

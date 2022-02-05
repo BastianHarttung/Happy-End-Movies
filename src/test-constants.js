@@ -8806,4 +8806,561 @@ export const apiTvCastCrew =
         "id": 1396
     }
 
-
+// https://api.themoviedb.org/3/movie/299534?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&append_to_response=releases
+export const movieDetails = {
+    "adult": false,
+    "backdrop_path": "/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+    "belongs_to_collection": {
+        "id": 86311,
+        "name": "Marvel's The Avengers Filmreihe",
+        "poster_path": "/yFSIUVTCvgYrpalUktulvk3Gi5Y.jpg",
+        "backdrop_path": "/zuW6fOiusv4X9nnW3paHGfXcSll.jpg"
+    },
+    "budget": 356000000,
+    "genres": [
+        {
+            "id": 12,
+            "name": "Abenteuer"
+        },
+        {
+            "id": 878,
+            "name": "Science Fiction"
+        },
+        {
+            "id": 28,
+            "name": "Action"
+        }
+    ],
+    "homepage": "https://www.marvel.com/movies/avengers-endgame",
+    "id": 299534,
+    "imdb_id": "tt4154796",
+    "original_language": "en",
+    "original_title": "Avengers: Endgame",
+    "overview": "Thanos hat also tatsächlich Wort gehalten, seinen Plan in die Tat umgesetzt und die Hälfte allen Lebens im Universum ausgelöscht. Die Avengers? Machtlos. Iron Man und Nebula sitzen auf dem Planeten Titan fest, während auf der Erde absolutes Chaos herrscht. Doch dann finden Captain America und die anderen überlebenden Helden auf der Erde heraus, dass Nick Fury vor den verheerenden Ereignissen gerade noch ein Notsignal absetzen konnte, um Verstärkung auf den Plan zu rufen. Die Superhelden-Gemeinschaft bekommt mit Captain Marvel kurzerhand tatkräftige Unterstützung im Kampf gegen ihren vermeintlich übermächtigen Widersacher. Und dann ist da auch noch Ant-Man, der wie aus dem Nichts auftaucht und sich der Truppe erneut anschließt, um die ganze Sache womöglich doch noch zu einem guten Ende zu bringen …",
+    "popularity": 284.509,
+    "poster_path": "/mrh5A3uIE9wDDzPSiBe70YSHvrK.jpg",
+    "production_companies": [
+        {
+            "id": 420,
+            "logo_path": "/hUzeosd33nzE5MCNsZxCGEKTXaQ.png",
+            "name": "Marvel Studios",
+            "origin_country": "US"
+        }
+    ],
+    "production_countries": [
+        {
+            "iso_3166_1": "US",
+            "name": "United States of America"
+        }
+    ],
+    "release_date": "2019-04-24",
+    "revenue": 2797800564,
+    "runtime": 181,
+    "spoken_languages": [
+        {
+            "english_name": "English",
+            "iso_639_1": "en",
+            "name": "English"
+        },
+        {
+            "english_name": "Japanese",
+            "iso_639_1": "ja",
+            "name": "日本語"
+        },
+        {
+            "english_name": "Xhosa",
+            "iso_639_1": "xh",
+            "name": ""
+        }
+    ],
+    "status": "Released",
+    "tagline": "Die Zeit für das letzte Spiel ist gekommen und es müssen Opfer gebracht werden...",
+    "title": "Avengers: Endgame",
+    "video": false,
+    "vote_average": 8.3,
+    "vote_count": 20268,
+    "releases": {
+        "countries": [
+            {
+                "certification": "16+",
+                "iso_3166_1": "RU",
+                "primary": false,
+                "release_date": "2019-04-23"
+            },
+            {
+                "certification": "PG-13",
+                "iso_3166_1": "US",
+                "primary": false,
+                "release_date": "2019-04-22"
+            },
+            {
+                "certification": "PG-13",
+                "iso_3166_1": "US",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "DE",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "7",
+                "iso_3166_1": "ES",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "U",
+                "iso_3166_1": "FR",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "16+",
+                "iso_3166_1": "RU",
+                "primary": false,
+                "release_date": "2019-04-29"
+            },
+            {
+                "certification": "12A",
+                "iso_3166_1": "GB",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "13",
+                "iso_3166_1": "AR",
+                "primary": false,
+                "release_date": "2019-05-02"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "BR",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "UA",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "K-12",
+                "iso_3166_1": "GR",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "HU",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "K-12",
+                "iso_3166_1": "FI",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "SK",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "13+",
+                "iso_3166_1": "ID",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "15A",
+                "iso_3166_1": "TR",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "C",
+                "iso_3166_1": "BG",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "EE",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "11",
+                "iso_3166_1": "SE",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "NO",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "UA",
+                "iso_3166_1": "IN",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "12A",
+                "iso_3166_1": "IE",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "T",
+                "iso_3166_1": "IT",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "保護級",
+                "iso_3166_1": "TW",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "R-13",
+                "iso_3166_1": "PH",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "KR",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "RO",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "P13",
+                "iso_3166_1": "MY",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "LK",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "ME",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "PL",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "M/12",
+                "iso_3166_1": "PT",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "PG",
+                "iso_3166_1": "CA",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "LB",
+                "primary": false,
+                "release_date": "2019-05-03"
+            },
+            {
+                "certification": "M",
+                "iso_3166_1": "AU",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "NL",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "PG13",
+                "iso_3166_1": "SG",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "IIA",
+                "iso_3166_1": "HK",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "N-13",
+                "iso_3166_1": "LT",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "7",
+                "iso_3166_1": "CO",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "G",
+                "iso_3166_1": "JP",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "CN",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "EG",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "AE",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "BD",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "M",
+                "iso_3166_1": "NZ",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "KH",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "AT",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "11",
+                "iso_3166_1": "DK",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "C13",
+                "iso_3166_1": "VN",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "IL",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "RS",
+                "primary": false,
+                "release_date": "2019-04-24"
+            },
+            {
+                "certification": "PG-13",
+                "iso_3166_1": "US",
+                "primary": false,
+                "release_date": "2019-06-28"
+            },
+            {
+                "certification": "P13",
+                "iso_3166_1": "MY",
+                "primary": false,
+                "release_date": "2019-06-29"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "CZ",
+                "primary": false,
+                "release_date": "2019-04-25"
+            },
+            {
+                "certification": "B",
+                "iso_3166_1": "MX",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "12A",
+                "iso_3166_1": "GB",
+                "primary": false,
+                "release_date": "2019-06-28"
+            },
+            {
+                "certification": "IIA",
+                "iso_3166_1": "HK",
+                "primary": false,
+                "release_date": "2019-07-04"
+            },
+            {
+                "certification": "7",
+                "iso_3166_1": "ES",
+                "primary": false,
+                "release_date": "2019-06-28"
+            },
+            {
+                "certification": "T",
+                "iso_3166_1": "IT",
+                "primary": false,
+                "release_date": "2019-07-04"
+            },
+            {
+                "certification": "13+",
+                "iso_3166_1": "ID",
+                "primary": false,
+                "release_date": "2019-07-12"
+            },
+            {
+                "certification": "R-13",
+                "iso_3166_1": "PH",
+                "primary": false,
+                "release_date": "2019-07-12"
+            },
+            {
+                "certification": "N-13",
+                "iso_3166_1": "LT",
+                "primary": false,
+                "release_date": "2019-07-26"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "SY",
+                "primary": false,
+                "release_date": "2019-04-26"
+            },
+            {
+                "certification": "PG-13",
+                "iso_3166_1": "US",
+                "primary": false,
+                "release_date": "2019-07-30"
+            },
+            {
+                "certification": "7",
+                "iso_3166_1": "ES",
+                "primary": false,
+                "release_date": "2019-08-16"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "DE",
+                "primary": false,
+                "release_date": "2019-08-23"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "GB",
+                "primary": false,
+                "release_date": "2019-09-02"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "BR",
+                "primary": false,
+                "release_date": "2019-07-30"
+            },
+            {
+                "certification": "16+",
+                "iso_3166_1": "RU",
+                "primary": false,
+                "release_date": "2019-08-02"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "FR",
+                "primary": false,
+                "release_date": "2019-08-31"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "FR",
+                "primary": false,
+                "release_date": "2019-12-25"
+            },
+            {
+                "certification": "PG-13",
+                "iso_3166_1": "US",
+                "primary": false,
+                "release_date": "2019-08-13"
+            },
+            {
+                "certification": "7",
+                "iso_3166_1": "ES",
+                "primary": false,
+                "release_date": "2019-08-28"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "DE",
+                "primary": false,
+                "release_date": "2019-09-05"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "GB",
+                "primary": false,
+                "release_date": "2019-09-02"
+            },
+            {
+                "certification": "12",
+                "iso_3166_1": "NL",
+                "primary": false,
+                "release_date": "2019-08-30"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "FR",
+                "primary": false,
+                "release_date": "2019-08-30"
+            },
+            {
+                "certification": "",
+                "iso_3166_1": "FR",
+                "primary": false,
+                "release_date": "2019-12-25"
+            }
+        ]
+    }
+}

@@ -11,7 +11,7 @@ import DetailsPerson from "./pages/DetailsPerson";
 import Showroom from "./pages/Showroom";
 import Impressum from "./pages/Impressum";
 
-import {genreUrl, fskUrl, castUrl, personDetailUrl, searchUrl} from "./constants"
+import {genreUrl, fskUrl, castUrl, personDetailUrl, searchUrl, movieDetailsUrl} from "./constants"
 
 import firestoreDb from "./firebase-config";
 import {doc, setDoc} from 'firebase/firestore';
@@ -106,31 +106,34 @@ function App() {
         console.log('App movie', object)
         console.log('app category', searchCategory)
         if (searchCategory !== 'person') {
+            const details = await getDetailMovieInfos(object.id, searchCategory)
             const genres = await getGenreNames(object, searchCategory);
-            const fsk = await getFskFromApi(object.id);
+            //const fsk = await getFskFromApi(object.id);
             const hasHappyEnd = await calculateHappyEnd(object);
             const cast = await getCastForMovie(object.id, searchCategory);
             const directors = await getDirectorForMovie(object.id, searchCategory);
             setSelectedMovie({
                 ...object,
+                ...details,
                 category: searchCategory,
-                genres: genres,
-                fsk: fsk,
+                genresD: genres,
+                //fsk: fsk,
                 happyEnd_Voting: object.happyEnd_Voting ? object.happyEnd_Voting : {},
                 has_happy_end: hasHappyEnd,
                 cast: cast,
                 directors: directors
             })
-            /* console.log({
-                 ...object,
-                 category: searchCategory,
-                 genres: genres,
-                 fsk: fsk,
-                 happyEnd_Voting: object.happyEnd_Voting?object.happyEnd_Voting:{},
-                 has_happy_end: hasHappyEnd,
-                 cast: cast,
-                 directors: directors
-             })*/
+            console.log({
+                ...object,
+                ...details,
+                category: searchCategory,
+                genresD: genres,
+                //fsk: fsk,
+                happyEnd_Voting: object.happyEnd_Voting ? object.happyEnd_Voting : {},
+                has_happy_end: hasHappyEnd,
+                cast: cast,
+                directors: directors
+            })
         } else {
             const personKnownFor = await getInfosFromApi(object.name)
             const personDetails = await getDetailPersonInfosFromApi(object.id)
@@ -179,6 +182,18 @@ function App() {
             else if (trueCount === 0 || movie.happyEnd_Voting === false) return 'neutral'
             else return false
         } else return 'neutral'
+    }
+
+    /**
+     * Get Details infos from Movie
+     * @param id
+     * @param category
+     * @return {Promise<void>}
+     */
+    async function getDetailMovieInfos(id, category) {
+        const response = await fetch(movieDetailsUrl(category, id));
+        let data = await response.json();
+        return data
     }
 
     /**
