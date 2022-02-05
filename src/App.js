@@ -108,32 +108,23 @@ function App() {
         if (searchCategory !== 'person') {
             const details = await getDetailMovieInfos(object.id, searchCategory)
             const genres = await getGenreNames(object, searchCategory);
-            //const fsk = await getFskFromApi(object.id);
+            const fsk = await getGermanFSKFromDetails(details);
             const hasHappyEnd = await calculateHappyEnd(object);
             const cast = await getCastForMovie(object.id, searchCategory);
             const directors = await getDirectorForMovie(object.id, searchCategory);
-            setSelectedMovie({
+            const completeMovieInfo = {
                 ...object,
                 ...details,
                 category: searchCategory,
                 genresD: genres,
-                //fsk: fsk,
+                fsk: fsk,
                 happyEnd_Voting: object.happyEnd_Voting ? object.happyEnd_Voting : {},
                 has_happy_end: hasHappyEnd,
                 cast: cast,
                 directors: directors
-            })
-            console.log({
-                ...object,
-                ...details,
-                category: searchCategory,
-                genresD: genres,
-                //fsk: fsk,
-                happyEnd_Voting: object.happyEnd_Voting ? object.happyEnd_Voting : {},
-                has_happy_end: hasHappyEnd,
-                cast: cast,
-                directors: directors
-            })
+            }
+            setSelectedMovie(completeMovieInfo)
+            console.log(completeMovieInfo)
         } else {
             const personKnownFor = await getInfosFromApi(object.name)
             const personDetails = await getDetailPersonInfosFromApi(object.id)
@@ -224,16 +215,13 @@ function App() {
     }
 
     /**
-     * Get FSK from alterfreigaben.de API
-     * @param {number} movieId
+     * Get German FSK from Detail Infos
+     * @param {object} detailsObject
      * @return {Promise<number>} The FSK example: 16
-     * TODO CORS?
      */
-    async function getFskFromApi(movieId) {
-        const fskUrlMovie = fskUrl + movieId + '/de'
-        const response = await fetch(fskUrlMovie);
-        let data = await response.json();
-        return data
+    async function getGermanFSKFromDetails(detailsObject) {
+        const releaseGerman = detailsObject.releases.countries.find((country) => country.iso_3166_1 === 'DE');
+        return +releaseGerman.certification
     }
 
     /**

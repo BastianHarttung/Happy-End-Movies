@@ -75,7 +75,7 @@ const DetailAnsicht = (props) => {
                     <div>
 
                         <div className={classes.infosHead}>
-                            {(props.movie.fsk >= 0 && props.movie.fsk <= 21) ?
+                            {props.movie.fsk ?
                                 <img src={`https://altersfreigaben.de/images/rating/de/${props.movie.fsk}_90.png`}
                                      className={classes.fsk}
                                      alt={props.movie.fsk}
