@@ -45,12 +45,32 @@ const DetailAnsicht = (props) => {
 
             <div className={classes.movieHeadContainer}>
                 <h2 className={classes.title}>{props.movie.title ? props.movie.title : props.movie.original_name}</h2>
-                <h4 className={classes.subtitle}>{props.movie.tagline}</h4>
+                {props.movie.tagline ? <h4 className={classes.subtitle}>{props.movie.tagline}</h4> : ''}
                 <img src={props.movie.backdrop_path ?
                     imageUrl + props.movie.backdrop_path
                     : imageUrl + props.movie.poster_path}
                      className={classes.headImage}
                      alt=""/>
+            </div>
+
+            <div className={classes.movieInfosContainer}>
+                <div className={classes.fskInfo}>
+                    {props.movie.fsk ?
+                        <img src={`https://altersfreigaben.de/images/rating/de/${props.movie.fsk}_90.png`}
+                             className={classes.fsk}
+                             alt={props.movie.fsk}
+                             title={`FSK ${props.movie.fsk}`}/>
+                        : ''}
+                </div>
+
+                <p className={classes.releaseYear}>{props.movie.release_date ?
+                    props.movie.release_date.slice(0, 4)
+                    : props.movie.first_air_date.slice(0, 4)}
+                </p>
+
+                <p>{props.movie.runtime} min
+                    ({laufzeitInStunden(props.movie.runtime).stunden} Std. {laufzeitInStunden(props.movie.runtime).minuten} min.)
+                </p>
             </div>
 
             <div className={classes.movieBox}>
@@ -72,25 +92,11 @@ const DetailAnsicht = (props) => {
                 </div>
 
                 <div className={classes.detailsContainer}>
-
                     <div>
 
-                        <div className={classes.infosHead}>
-                            {props.movie.fsk ?
-                                <img src={`https://altersfreigaben.de/images/rating/de/${props.movie.fsk}_90.png`}
-                                     className={classes.fsk}
-                                     alt={props.movie.fsk}
-                                     title={`FSK ${props.movie.fsk}`}/>
-                                : ''}
-                        </div>
-
-                        <p className={classes.releaseYear}>{props.movie.release_date ?
-                            props.movie.release_date.slice(0, 4)
-                            : props.movie.first_air_date.slice(0, 4)}
-                        </p>
-
                         <div className={classes.genres}>
-                            {genres.map((genre, index) => <span key={index}>{genre.name}/ </span>)}
+                            {genres.map((genre, index) => <div key={index}
+                                                               className={classes.genre}>{genre.name} </div>)}
                         </div>
 
                         <h5 className={classes.director}>{props.movie.directors.length > 0 ? 'Regie' : ''}</h5>
@@ -263,6 +269,16 @@ const DetailAnsicht = (props) => {
         }
     }
 
+    /**
+     * Berechnet die Laufzeit in Stunden und Minuten
+     * @param {number} laufzeit
+     * @return {{stunden: number, minuten: number}} Objekt mit den Stunden und Minuten
+     */
+    function laufzeitInStunden(laufzeit) {
+        const laufzeitStunden = Math.floor(laufzeit / 60);
+        const restminuten = laufzeit - (laufzeitStunden * 60);
+        return {stunden: laufzeitStunden, minuten: restminuten}
+    }
 
 }
 

@@ -41,12 +41,32 @@
 
 
 /*-----------------Movie Infos--------------------*/
+.movieInfosContainer {
+  width: 80%;
+  display: flex;
+  font-size: 19px;
+  margin: 10px 0px;
+
+  .fskInfo {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+
+  .fsk {
+    height: 60px;
+  }
+  .releaseYear{
+    font-weight: bold;
+    margin-right: 20px;
+  }
+}
 
 .movieBox {
   width: 80%;
   height: 400px;
   display: flex;
-  margin: 15px;
+  margin: 10px 10px 30px 10px;
 }
 
 /*-------Poster---------*/
@@ -82,21 +102,19 @@
   margin-bottom: 10px;
 }
 
-.infosHead {
-  display: flex;
-  align-items: center;
-}
-
-.fsk {
-  height: 60px;
-}
-
-.releaseYear {
-  margin: 10px 0px 0px 0px;
-}
 
 .genres {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   padding: 10px 0px;
+
+  .genre {
+    border: 1px solid var(--gray);
+    border-radius: var(--border-radius-small);
+    padding: 4px 7px;
+    margin-right: 5px;
+  }
 }
 
 
