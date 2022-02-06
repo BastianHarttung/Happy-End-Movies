@@ -56,7 +56,8 @@
   .fsk {
     height: 60px;
   }
-  .releaseYear{
+
+  .releaseYear {
     font-weight: bold;
     margin-right: 20px;
   }
@@ -140,10 +141,15 @@
 }
 
 /*-------------------Actor Section-----------------------*/
-.actorSearchSection {
+.actorSection {
   background-color: #e6edff;
+  width: 100%;
+  min-height: 400px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .actorSearchContainer {
@@ -180,8 +186,11 @@
 .actorContainer {
   display: flex;
   padding: 10px 5px;
+  margin-top: 10px;
   overflow: hidden;
   scroll-behavior: smooth;
+  border: 1px solid var(--gray);
+  border-radius: var(--border-radius-medium);
 }
 
 .arrowBtnLeft,

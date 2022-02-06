@@ -99,6 +99,7 @@ const DetailAnsicht = (props) => {
                                                                className={classes.genre}>{genre.name} </div>)}
                         </div>
 
+
                         <h5 className={classes.director}>{props.movie.directors.length > 0 ? 'Regie' : ''}</h5>
                         <div className={classes.directorsContainer}>
                             {props.movie.directors.map((director, index) =>
@@ -111,50 +112,59 @@ const DetailAnsicht = (props) => {
                         <div className={classes.voting}>{props.movie.vote_average}</div>
 
                     </div>
-
                 </div>
             </div>
 
-            <div className={classes.descriptionHappyEndContainer}>
+            <section className={classes.actorSection}>
 
-                <div className={classes.actorSearchSection}>
-                    <div className={classes.actorSearchContainer}>
+                <div className={classes.actorSearchContainer}>
+                    {scrollActors > 0 ?
+                        <FaChevronLeft onClick={() => scrollLeft()}
+                                       className={classes.arrowBtnLeft}>
+                        </FaChevronLeft> : ''}
 
-                        {scrollActors > 0 ?
-                            <FaChevronLeft onClick={() => scrollLeft()}
-                                           className={classes.arrowBtnLeft}>
-                            </FaChevronLeft> : ''}
+                    {scrollActors < scrollWidth ?
+                        <FaChevronRight onClick={() => scrollRight()}
+                                        className={classes.arrowBtnRight}>
+                        </FaChevronRight> : ''}
 
-                        {scrollActors < scrollWidth ?
-                            <FaChevronRight onClick={() => scrollRight()}
-                                            className={classes.arrowBtnRight}>
-                            </FaChevronRight> : ''}
+                    <div className={classes.searchContainer}>
+                        <FaSearch className={classes.searchBtn}
+                                  onClick={() => searchForActor(searchActor)}/>
+                        <input type="text"
+                               placeholder='Suche Schauspieler oder Rolle'
+                               className={classes.searchInput}
+                               value={searchActor}
+                               onChange={e => setSearchActor(e.target.value)}
+                               onKeyPress={keyPressEvent}/>
+                        <div className={classes.lengthActors}>(Gesamt: {props.movie.cast.length} Schauspieler)</div>
+                    </div>
 
-                        <div className={classes.searchContainer}>
-                            <FaSearch className={classes.searchBtn}
-                                      onClick={() => searchForActor(searchActor)}/>
-                            <input type="text"
-                                   placeholder='Suche Schauspieler oder Rolle'
-                                   className={classes.searchInput}
-                                   value={searchActor}
-                                   onChange={e => setSearchActor(e.target.value)}
-                                   onKeyPress={keyPressEvent}/>
-                            <div className={classes.lengthActors}>(Gesamt: {props.movie.cast.length} Schauspieler)</div>
-                        </div>
-
-                        <div id='actorContainer' className={classes.actorContainer}>
-                            {props.movie.cast ?
-                                filteredActors.map((actor, index) =>
-                                    <PersonBox
-                                        saveSelectedPerson={(person) => props.saveSelectedPerson(person)}
-                                        key={index}
-                                        person={actor}/>
-                                )
-                                : ''}
-
-                        </div>
+                    <div id='actorContainer' className={classes.actorContainer}>
+                        {props.movie.cast ?
+                            filteredActors.map((actor, index) =>
+                                <PersonBox
+                                    saveSelectedPerson={(person) => props.saveSelectedPerson(person)}
+                                    key={index}
+                                    person={actor}/>
+                            )
+                            : ''}
 
                     </div>
+                </div>
+
+            </section>
+
+            <div className={classes.descriptionHappyEndContainer}>
+
+                <div>
+                    {props.movie.videos.results.map((video, index) => {
+                        return (
+                            <iframe key={index} height="200"
+                                    src={'https://www.youtube.com/embed/' + video.key}>
+                            </iframe>
+                        )
+                    })}
                 </div>
 
                 <div className={classes.descriptionHappyEndSection}>
