@@ -45,6 +45,7 @@ const DetailAnsicht = (props) => {
 
             <div className={classes.movieHeadContainer}>
                 <h2 className={classes.title}>{props.movie.title ? props.movie.title : props.movie.original_name}</h2>
+                <h4 className={classes.subtitle}>{props.movie.tagline}</h4>
                 <img src={props.movie.backdrop_path ?
                     imageUrl + props.movie.backdrop_path
                     : imageUrl + props.movie.poster_path}
