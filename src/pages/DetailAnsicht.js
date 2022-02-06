@@ -155,21 +155,61 @@ const DetailAnsicht = (props) => {
 
             </section>
 
-            <div className={classes.descriptionHappyEndContainer}>
+            <section className={classes.extraInfosSection}>
 
-                <div>
-                    {props.movie.videos.results.map((video, index) => {
-                        return (
-                            <iframe key={index} height="200"
-                                    src={'https://www.youtube.com/embed/' + video.key}>
-                            </iframe>
-                        )
-                    })}
+                <div className={classes.videosImagesContainer}>
+                    <div>
+                        {props.movie.images.posters.map((poster, index) => {
+                            return (
+                                <a href={imageUrl + poster.file_path} target="_blank" rel="noreferrer">
+                                    <img key={index}
+                                         src={imageUrl + poster.file_path}
+                                         alt="Poster"
+                                         className={classes.images}/>
+                                </a>
+                            )
+                        })}
+                        {props.movie.images.backdrops.map((backdrop, index) => {
+                            return (
+                                <a href={imageUrl + backdrop.file_path} target="_blank" rel="noreferrer">
+                                    <img key={index}
+                                         src={imageUrl + backdrop.file_path}
+                                         alt="Backdrop"
+                                         className={classes.images}/>
+                                </a>
+                            )
+                        })}
+                        {props.movie.images.logos.map((logo, index) => {
+                            return (
+                                <a href={imageUrl + logo.file_path} target="_blank" rel="noreferrer">
+                                    <img key={index}
+                                         src={imageUrl + logo.file_path}
+                                         alt="Logo"
+                                         className={classes.images}/>
+                                </a>
+                            )
+                        })}
+                    </div>
+                    <div>
+                        {props.movie.videos.results.map((video, index) => {
+                            return (
+                                <iframe key={index}
+                                        height="200"
+                                        title={video.name}
+                                        src={'https://www.youtube.com/embed/' + video.key}>
+                                </iframe>
+                            )
+                        })}
+                    </div>
                 </div>
 
-                <div className={classes.descriptionHappyEndSection}>
-                    <div className={classes.description}><b>Beschreibung:</b> {props.movie.overview}</div>
+                <div className={classes.description}><b>Beschreibung:</b> {props.movie.overview}</div>
 
+            </section>
+
+            <section className={classes.userSelectionContainer}>
+
+                <div>
                     <div className={classes.happyEnd}>Dein Happy End ?</div>
 
                     <div className={classes.smileys}>
@@ -191,19 +231,18 @@ const DetailAnsicht = (props) => {
                             }}
                                        className={props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === false ? classes.smileySad : classes.smiley}></FaSadTear>
                         </div>
-
-                        <button onClick={() => {
-                            props.saveMovieToDb(movieForDb);
-                            setHappyMovie('')
-                            navigate('/showroom')
-                        }}
-                                className={classes.saveButton}>In Datenbank speichern und zum Showroom
-                        </button>
-
                     </div>
                 </div>
 
-            </div>
+                <button onClick={() => {
+                    props.saveMovieToDb(movieForDb);
+                    setHappyMovie('')
+                    navigate('/showroom')
+                }}
+                        className={classes.saveButton}>In Datenbank speichern und zum Showroom
+                </button>
+
+            </section>
 
         </section>
     )

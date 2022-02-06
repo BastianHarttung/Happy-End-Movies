@@ -11,7 +11,7 @@ import DetailsPerson from "./pages/DetailsPerson";
 import Showroom from "./pages/Showroom";
 import Impressum from "./pages/Impressum";
 
-import {genreUrl, fskUrl, castUrl, personDetailUrl, searchUrl, movieDetailsUrl} from "./constants"
+import {genreUrl, castUrl, personDetailUrl, searchUrl, movieDetailsUrl} from "./constants"
 
 import firestoreDb from "./firebase-config";
 import {doc, setDoc} from 'firebase/firestore';

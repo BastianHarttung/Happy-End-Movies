@@ -67,7 +67,7 @@
   width: 80%;
   height: 400px;
   display: flex;
-  margin: 10px 10px 30px 10px;
+  margin: 0px 10px 30px 10px;
 }
 
 /*-------Poster---------*/
@@ -108,7 +108,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  padding: 10px 0px;
+  margin-bottom: 20px;
 
   .genre {
     border: 1px solid var(--gray);
@@ -118,7 +118,6 @@
   }
 }
 
-
 .director {
   margin: 3px 0px;
 }
@@ -126,7 +125,6 @@
 .directorsContainer {
   display: flex;
 }
-
 
 .voting {
   width: 40px;
@@ -144,7 +142,6 @@
 .actorSection {
   background-color: #e6edff;
   width: 100%;
-  min-height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -154,7 +151,7 @@
 
 .actorSearchContainer {
   width: 80%;
-  padding: 10px;
+  padding: 30px 10px;
   position: relative;
 }
 
@@ -238,6 +235,99 @@
 }
 
 
+/*------------------------Extra Infos---------------------------*/
+.extraInfosSection {
+  width: 80%;
+  margin: 30px 10px;
+}
+
+.images {
+  height: 150px;
+}
+
+.description {
+  margin: 20px 0px 10px 0px;
+}
+
+/*----------------------User Selection--------------------------*/
+.userSelectionContainer {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.happyEnd {
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+/*-------Smileys----*/
+.smileys {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.smiley {
+  font-size: 35px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.smiley:hover {
+  color: gray;
+}
+
+.smileyLaugh {
+  color: var(--green);
+  font-size: 35px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.smileyLaugh:hover {
+  filter: saturate(0.5);
+}
+
+.smileyNeutral {
+  color: var(--orange);
+  font-size: 35px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.smileyNeutral:hover {
+  filter: saturate(0.5);
+}
+
+.smileySad {
+  color: var(--red);
+  font-size: 35px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.smileySad:hover {
+  filter: saturate(0.5);
+}
+
+/*---------------save Button-------------------------------*/
+.saveButton {
+  color: white;
+  background-color: var(--main-color);
+  height: 45px;
+  border: none;
+  border-radius: var(--border-radius-small);
+  cursor: pointer;
+  padding: 10px;
+}
+
+.saveButton:hover {
+  filter: saturate(2) brightness(1.2);
+}
+
+
 /*----------------Loader-------------------*/
 .loaderContainer {
   height: 100px;
@@ -307,85 +397,4 @@
     box-shadow: 0 -2em;
     height: 5em;
   }
-}
-
-.descriptionHappyEndContainer {
-  width: 100%;
-}
-
-.descriptionHappyEndSection {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
-
-.description {
-  margin: 15px 0px;
-}
-
-.happyEnd {
-  font-weight: 500;
-  margin-top: 5px;
-}
-
-/*----------------Smileys----------------*/
-.smileys {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.smiley {
-  font-size: 35px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.smiley:hover {
-  color: gray;
-}
-
-.smileyLaugh {
-  color: var(--green);
-  font-size: 35px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.smileyLaugh:hover {
-  filter: saturate(0.5);
-}
-
-.smileyNeutral {
-  color: var(--orange);
-  font-size: 35px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.smileyNeutral:hover {
-  filter: saturate(0.5);
-}
-
-.smileySad {
-  color: var(--red);
-  font-size: 35px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.smileySad:hover {
-  filter: saturate(0.5);
-}
-
-/*---------------save Button-------------------------------*/
-.saveButton {
-  color: white;
-  background-color: var(--main-color);
-  border: none;
-  cursor: pointer;
-}
-
-.saveButton:hover {
-  filter: saturate(2) brightness(1.2);
 }
