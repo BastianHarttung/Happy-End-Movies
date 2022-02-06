@@ -3,12 +3,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 30px 10px;
+    margin-bottom: 50px;
 }
 
 /*-------------------Head ---------------------*/
 .movieHeadContainer {
-    width: 80%;
+    width: 100%;
     position: relative;
 }
 
@@ -47,7 +47,7 @@
     position: absolute;
     right: 10px;
     bottom: 10px;
-    filter: drop-shadow( 1px 1px 2px rgba(0, 0, 0, .7))
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, .7))
 }
 
 .posterImage {
@@ -108,8 +108,14 @@
 }
 
 /*-------------------Actor Section-----------------------*/
-.actorSearchContainer {
+.actorSearchSection {
     background-color: #e6edff;
+    display: flex;
+    justify-content: center;
+}
+
+.actorSearchContainer {
+    width: 80%;
     padding: 10px;
     position: relative;
 }
@@ -262,9 +268,14 @@
     }
 }
 
-
 .descriptionHappyEndContainer {
+    width: 100%;
+}
+
+.descriptionHappyEndSection {
     width: 80%;
+    display: flex;
+    flex-direction: column;
 }
 
 .description {

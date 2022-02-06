@@ -1,4 +1,4 @@
-import classes from "./DetailAnsicht.module.css";
+import classes from "./DetailAnsicht.module.scss";
 
 import emptyImage from "../assets/img/movie-poster.png"
 
@@ -110,76 +110,80 @@ const DetailAnsicht = (props) => {
 
             <div className={classes.descriptionHappyEndContainer}>
 
-                <div className={classes.actorSearchContainer}>
+                <div className={classes.actorSearchSection}>
+                    <div className={classes.actorSearchContainer}>
 
-                    {scrollActors > 0 ?
-                        <FaChevronLeft onClick={() => scrollLeft()}
-                                       className={classes.arrowBtnLeft}>
-                        </FaChevronLeft> : ''}
+                        {scrollActors > 0 ?
+                            <FaChevronLeft onClick={() => scrollLeft()}
+                                           className={classes.arrowBtnLeft}>
+                            </FaChevronLeft> : ''}
 
-                    {scrollActors < scrollWidth ?
-                        <FaChevronRight onClick={() => scrollRight()}
-                                        className={classes.arrowBtnRight}>
-                        </FaChevronRight> : ''}
+                        {scrollActors < scrollWidth ?
+                            <FaChevronRight onClick={() => scrollRight()}
+                                            className={classes.arrowBtnRight}>
+                            </FaChevronRight> : ''}
 
-                    <div className={classes.searchContainer}>
-                        <FaSearch className={classes.searchBtn}
-                                  onClick={() => searchForActor(searchActor)}/>
-                        <input type="text"
-                               placeholder='Suche Schauspieler oder Rolle'
-                               className={classes.searchInput}
-                               value={searchActor}
-                               onChange={e => setSearchActor(e.target.value)}
-                               onKeyPress={keyPressEvent}/>
-                        <div className={classes.lengthActors}>(Gesamt: {props.movie.cast.length} Schauspieler)</div>
+                        <div className={classes.searchContainer}>
+                            <FaSearch className={classes.searchBtn}
+                                      onClick={() => searchForActor(searchActor)}/>
+                            <input type="text"
+                                   placeholder='Suche Schauspieler oder Rolle'
+                                   className={classes.searchInput}
+                                   value={searchActor}
+                                   onChange={e => setSearchActor(e.target.value)}
+                                   onKeyPress={keyPressEvent}/>
+                            <div className={classes.lengthActors}>(Gesamt: {props.movie.cast.length} Schauspieler)</div>
+                        </div>
+
+                        <div id='actorContainer' className={classes.actorContainer}>
+                            {props.movie.cast ?
+                                filteredActors.map((actor, index) =>
+                                    <PersonBox
+                                        saveSelectedPerson={(person) => props.saveSelectedPerson(person)}
+                                        key={index}
+                                        person={actor}/>
+                                )
+                                : ''}
+
+                        </div>
+
                     </div>
-
-                    <div id='actorContainer' className={classes.actorContainer}>
-                        {props.movie.cast ?
-                            filteredActors.map((actor, index) =>
-                                <PersonBox
-                                    saveSelectedPerson={(person) => props.saveSelectedPerson(person)}
-                                    key={index}
-                                    person={actor}/>
-                            )
-                            : ''}
-
-                    </div>
-
                 </div>
 
-                <div className={classes.description}><b>Beschreibung:</b> {props.movie.overview}</div>
+                <div className={classes.descriptionHappyEndSection}>
+                    <div className={classes.description}><b>Beschreibung:</b> {props.movie.overview}</div>
 
-                <div className={classes.happyEnd}>Dein Happy End ?</div>
+                    <div className={classes.happyEnd}>Dein Happy End ?</div>
 
-                <div className={classes.smileys}>
-                    <div>
-                        <FaSmileBeam onClick={() => {
-                            props.movie.happyEnd_Voting[props.user] = true;
-                            setMovieForDb({...props.movie})
-                        }}
-                                     className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
-                        <FaMeh onClick={() => {
-                            props.movie.happyEnd_Voting[props.user] = 'neutral';
-                            setMovieForDb({...props.movie})
-                        }}
-                               className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
+                    <div className={classes.smileys}>
+                        <div>
+                            <FaSmileBeam onClick={() => {
+                                props.movie.happyEnd_Voting[props.user] = true;
+                                setMovieForDb({...props.movie})
+                            }}
+                                         className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
+                            <FaMeh onClick={() => {
+                                props.movie.happyEnd_Voting[props.user] = 'neutral';
+                                setMovieForDb({...props.movie})
+                            }}
+                                   className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
 
-                        <FaSadTear onClick={() => {
-                            props.movie.happyEnd_Voting[props.user] = false;
-                            setMovieForDb({...props.movie})
+                            <FaSadTear onClick={() => {
+                                props.movie.happyEnd_Voting[props.user] = false;
+                                setMovieForDb({...props.movie})
+                            }}
+                                       className={props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === false ? classes.smileySad : classes.smiley}></FaSadTear>
+                        </div>
+
+                        <button onClick={() => {
+                            props.saveMovieToDb(movieForDb);
+                            setHappyMovie('')
+                            navigate('/showroom')
                         }}
-                                   className={props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === false ? classes.smileySad : classes.smiley}></FaSadTear>
+                                className={classes.saveButton}>In Datenbank speichern und zum Showroom
+                        </button>
+
                     </div>
-
-                    <button onClick={() => {
-                        props.saveMovieToDb(movieForDb);
-                        setHappyMovie('')
-                        navigate('/showroom')
-                    }}
-                            className={classes.saveButton}>In Datenbank speichern und zum Showroom
-                    </button>
-
                 </div>
 
             </div>
