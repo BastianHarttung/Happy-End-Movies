@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Hauptmenue from "./pages/Hauptmenue";
 import Filmsuche from "./pages/Filmsuche";
-import DetailAnsicht from "./pages/DetailAnsicht";
+import DetailsMovie from "./pages/DetailsMovie";
 import DetailsPerson from "./pages/DetailsPerson";
 import Showroom from "./pages/Showroom";
 import Impressum from "./pages/Impressum";
@@ -17,6 +17,10 @@ import firestoreDb from "./firebase-config";
 import {doc, setDoc} from 'firebase/firestore';
 import Hilfe from "./pages/Hilfe";
 
+
+function DetailsTv(props) {
+    return null;
+}
 
 function App() {
 
@@ -44,25 +48,30 @@ function App() {
                                    saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
                                />}
                     />
-                    <Route path='/detailansicht'
+                    <Route path='/detailansicht/movie/:id'
                            exact={true}
                            element={
-                               <DetailAnsicht
+                               <DetailsMovie
                                    saveMovieToDb={(movieForDb) => saveMovieToDb(movieForDb)}
                                    saveSelectedPerson={(person) => saveSelectedMovieOrPerson(person, 'person')}
                                    movie={selectedMovie}
                                    user={userId}/>}
                     />
-                    <Route path='/detailansicht/person'
+                    <Route path='/detailansicht/tv/:id'
+                           exact={true}
+                           element={
+                               <DetailsTv
+                                   saveMovieToDb={(movieForDb) => saveMovieToDb(movieForDb)}
+                                   saveSelectedPerson={(person) => saveSelectedMovieOrPerson(person, 'person')}
+                                   movie={selectedMovie}
+                                   user={userId}/>}
+                    />
+                    <Route path='/detailansicht/person/:id'
                            exact={true}
                            element={
                                <DetailsPerson
                                    saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
                                    person={selectedPerson}/>}
-                    />
-                    <Route path='/'
-                           exact={true}
-                           element={<Hauptmenue/>}
                     />
                     <Route path='/impressum'
                            exact={true}
@@ -71,6 +80,10 @@ function App() {
                     <Route path='/hilfe'
                            exact={true}
                            element={<Hilfe/>}
+                    />
+                    <Route path='/'
+                           exact={true}
+                           element={<Hauptmenue/>}
                     />
                 </Routes>
             </div>

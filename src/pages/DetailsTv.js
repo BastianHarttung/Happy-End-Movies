@@ -1,8 +1,8 @@
-import classes from "./DetailAnsicht.module.scss";
+import classes from "./DetailsMovie.module.scss";
 
 import emptyImage from "../assets/img/movie-poster.png"
 
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useState, useEffect} from "react";
 
 import {FaSmileBeam, FaSadTear, FaMeh, FaSearch, FaChevronRight, FaChevronLeft} from "react-icons/all";
@@ -10,9 +10,10 @@ import {imageUrl} from "../constants";
 import PersonBox from "../components/PersonBox";
 
 
-const DetailAnsicht = (props) => {
+const DetailsTv = (props) => {
 
     const navigate = useNavigate();
+    const urlParams = useParams()
 
     const genres = props.movie.genres ? props.movie.genres : [{name: 'a'}, {name: 'b'}]
 
@@ -331,6 +332,4 @@ const DetailAnsicht = (props) => {
 
 }
 
-export default DetailAnsicht;
-
-
+export default DetailsTv;

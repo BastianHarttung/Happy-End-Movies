@@ -21,7 +21,7 @@ const SearchResultBox = (props) => {
              onClick={async () => {
                  setMovieClicked(true);
                  const category = () => {
-                     if (props.category === 'movie' || props.category === 'tv'|| props.category === 'person') {
+                     if (props.category === 'movie' || props.category === 'tv' || props.category === 'person') {
                          return props.category
                      } else if (props.category === 'multi') {
                          return props.movie.media_type
@@ -29,13 +29,7 @@ const SearchResultBox = (props) => {
                  }
                  await props.saveSelectedMovie(props.movie, category())
                      .then(() => {
-                         if (category() === 'person') {
-                             navigate('/detailansicht/person');
-                             window.location.hash = `${props.movie.name}`;
-                         } else {
-                             navigate('/detailansicht');
-                             window.location.hash = `${props.movie.title}`;
-                         }
+                         navigate(`/detailansicht/${category()}/${props.movie.id}`);
                          setMovieClicked(false)
                      })
              }}>

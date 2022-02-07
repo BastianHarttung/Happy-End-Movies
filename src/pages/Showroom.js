@@ -138,9 +138,8 @@ const Showroom = ({saveSelectedMovie}) => {
                                 <SearchResultBox
                                     key={movie.id}
                                     movie={movie}
-                                    to='/detailansicht'
                                     saveSelectedMovie={(currentMovie, category) => saveSelectedMovie(currentMovie, category)}
-                                    category={'movie'} //TODO
+                                    category={undefined} //TODO
                                 />)}
                         </div>
 
