@@ -4,6 +4,9 @@ import {imageUrl} from "../constants";
 import {FaSmileBeam, FaSadTear} from "react-icons/all";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
+import iconPopcorn from "../assets/icons/popcorn_solid.svg"
+import iconTv from "../assets/icons/tv-retro_solid.svg"
+import iconUser from "../assets/icons/user-tie_solid.svg"
 
 const SearchResultBox = (props) => {
 
@@ -14,6 +17,25 @@ const SearchResultBox = (props) => {
         if (props.movie.has_happy_end === true) return <FaSmileBeam className={classes.smileyLaugh}/>
         if (props.movie.has_happy_end === false) return <FaSadTear className={classes.smileySad}/>
         else return ''
+    }
+
+    const CategoryIcon = () => {
+        if (props.category === 'movie' || props.movie.category === 'movie' || props.movie.media_type === 'movie') {
+            return <img src={iconPopcorn}
+                        alt="Film"
+                        title="Film"
+                        className={classes.categoryIcon}/>
+        } else if (props.category === 'tv' || props.movie.category === 'tv' || props.movie.media_type === 'tv') {
+            return <img src={iconTv}
+                        alt="Serie"
+                        title="Serie"
+                        className={classes.categoryIcon}/>
+        } else if (props.category === 'person' || props.movie.media_type === 'person') {
+            return <img src={iconUser}
+                        alt="Schauspieler"
+                        title="Schauspieler"
+                        className={classes.categoryIcon}/>
+        } else return ''
     }
 
     return (
@@ -49,6 +71,7 @@ const SearchResultBox = (props) => {
                         <div className={classes.movieTitle}>{props.movie.original_name}</div>
                         : <div className={classes.movieTitle}>{props.movie.name}</div>}
                 <Smiley/>
+                <CategoryIcon/>
             </div>
 
         </div>

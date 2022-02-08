@@ -29,6 +29,7 @@
     animation: big 2000ms infinite;
     z-index: 100;
 }
+
 @keyframes big {
     0% {
         transform: scale(1.1);
@@ -58,20 +59,28 @@
     margin: 10px;
 }
 
-.smileyLaugh {
-    position: absolute;
-    top: 265px;
-    right: 10px;
-    color: #28b028;
-    font-size: 25px;
-    margin-bottom: 10px;
-}
-
+.smileyLaugh,
 .smileySad {
     position: absolute;
     top: 265px;
     right: 10px;
-    color: #d91212;
     font-size: 25px;
     margin-bottom: 10px;
+    filter: drop-shadow(0px 0px 7px rgba(0, 0, 0, 0.5));
+}
+
+.smileyLaugh {
+    color: #28b028;
+}
+
+.smileySad {
+    color: #d91212;
+}
+
+.categoryIcon {
+    height: 25px;
+    position: absolute;
+    top: 265px;
+    left: 10px;
+    filter: drop-shadow(0px 0px 6px white);
 }
