@@ -12,7 +12,7 @@ const PersonBox = (props) => {
         <div className={classes.actorProfile}
              onClick={async () => {
                  await props.saveSelectedPerson(props.person)
-                     .then(() => navigate('/detailansicht/person'))
+                     .then(() => navigate(`/detailansicht/person/${props.person.id}`))
              }}>
             <img className={classes.actorImage}
                  src={props.person.profile_path

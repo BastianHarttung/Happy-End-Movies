@@ -32,17 +32,15 @@ const DetailsPerson = (props) => {
                          alt='Schauspieler Foto'
                          title={props.person.name}/>
 
-                    <div className={classes.imagesContainer}>
-                        {props.person.images.profiles.slice(1).map(image =>
-                            <img src={imageUrlSmall + image.file_path}
-                                 alt="Foto"/>)}
-                    </div>
-
                 </div>
 
                 <div className={classes.personInfosContainer}>
 
                     <h2>{props.person.name}</h2>
+
+                    {props.person.homepage ?
+                        <a href={props.person.homepage} target='_blank'
+                           rel="noreferrer">{props.person.homepage}</a> : ''}
 
                     <div className={classes.birthday}>
                         <FaBirthdayCake></FaBirthdayCake><span> {props.person.birthday} ({age} Jahre)</span>
@@ -56,16 +54,25 @@ const DetailsPerson = (props) => {
                     <div>
                         <b>Geburtsort:</b> {props.person.place_of_birth}
                     </div>
-                    <div className={classes.biography}>
-                        <b>Biografie:</b> {props.person.biography}
+
+                    <div className={classes.imagesContainer}>
+                        {props.person.images.profiles.slice(1).map(image =>
+                            <a href={imageUrlSmall + image.file_path}
+                               target="_blank">
+                                <img src={imageUrlSmall + image.file_path}
+                                     alt="Foto"/>
+                            </a>)}
                     </div>
-                    {props.person.homepage ?
-                        <a href={props.person.homepage} target='_blank'
-                           rel="noreferrer">{props.person.homepage}</a> : ''}
 
                 </div>
 
             </div>
+
+            <section className={classes.biographySection}>
+                <div className={classes.biography}>
+                    <b>Biografie:</b> {props.person.biography}
+                </div>
+            </section>
 
             <div className={classes.knownForHeading}>Bekannt für</div>
 

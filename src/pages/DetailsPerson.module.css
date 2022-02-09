@@ -3,29 +3,25 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 50px;
+    margin: 50px 0px;
 }
 
 .personContainer {
-    background-color: var(--main-color-white);
     max-width: 900px;
     display: flex;
-    border-radius: 10px;
-    box-shadow: 3px 3px 10px 2px rgba(0, 0, 0, 0.25);
     margin-bottom: 30px;
 }
 
 .bigPic {
-    height: 500px;
-    width: 333px;
+    height: 400px;
+    width: 270px;
     object-fit: cover;
-    margin: 20px;
+    margin: 0px 20px;
 }
 
 .imagesContainer {
-    width: 333px;
+    width: 415px;
     display: flex;
-    margin: 0px 20px 20px 20px;
     overflow-x: auto;
 }
 
@@ -34,7 +30,9 @@
 }
 
 .personInfosContainer {
-    margin: 5px 30px 20px 10px;
+display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .personContainer h2 {
@@ -49,9 +47,16 @@
     margin-bottom: 10px;
 }
 
+.biographySection {
+    background-color: var(--main-color-white);
+    display: flex;
+    justify-content: center;
+}
+
 .biography {
+    width: 80%;
     text-align: justify;
-    margin: 10px 0px;
+    padding: 30px 0px;
 }
 
 /*----------------Bekannt für------------------------------*/
