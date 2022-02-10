@@ -14,7 +14,7 @@ const DetailsMovie = (props) => {
 
     const navigate = useNavigate();
     const urlParams = useParams()
-    
+
     const genres = props.movie.genres ? props.movie.genres : [{name: 'a'}, {name: 'b'}]
 
     const [movieForDb, setMovieForDb] = useState(props.movie)
@@ -45,13 +45,13 @@ const DetailsMovie = (props) => {
         <section className={classes.detailsSection}>
 
             <div className={classes.movieHeadContainer}>
-                <h2 className={classes.title}>{props.movie.title ? props.movie.title : props.movie.original_name}</h2>
+                <h2 className={classes.title}>{props.movie.title}</h2>
                 {props.movie.tagline ? <h4 className={classes.subtitle}>{props.movie.tagline}</h4> : ''}
                 <img src={props.movie.backdrop_path ?
                     imageUrl + props.movie.backdrop_path
                     : imageUrl + props.movie.poster_path}
                      className={classes.headImage}
-                     alt=""/>
+                     alt="Backdrop"/>
             </div>
 
             <div className={classes.movieInfosContainer}>
@@ -64,9 +64,7 @@ const DetailsMovie = (props) => {
                         : ''}
                 </div>
 
-                <p className={classes.releaseYear}>{props.movie.release_date ?
-                    props.movie.release_date.slice(0, 4)
-                    : props.movie.first_air_date.slice(0, 4)}
+                <p className={classes.releaseYear}>{props.movie.release_date.slice(0, 4)}
                 </p>
 
                 <p>{props.movie.runtime} min
@@ -109,10 +107,10 @@ const DetailsMovie = (props) => {
                                     person={director}
                                     key={index}/>)}
                         </div>
-
-                        <div className={classes.voting}>{props.movie.vote_average}</div>
-
                     </div>
+
+                    <div className={classes.voting}>{props.movie.vote_average}</div>
+
                 </div>
             </div>
 
