@@ -25,7 +25,6 @@ const SearchBar = (props) => {
                        type="search"
                        size={props.length}
                        placeholder="Suche"
-                       autoFocus
                        value={movieName}
                        onKeyPress={keyPressEvent}
                        onChange={e => {

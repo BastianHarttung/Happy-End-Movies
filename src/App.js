@@ -8,6 +8,7 @@ import Hauptmenue from "./pages/Hauptmenue";
 import Filmsuche from "./pages/Filmsuche";
 import DetailsMovie from "./pages/DetailsMovie";
 import DetailsPerson from "./pages/DetailsPerson";
+import DetailsTv from "./pages/DetailsTv";
 import Showroom from "./pages/Showroom";
 import Impressum from "./pages/Impressum";
 
@@ -17,10 +18,6 @@ import firestoreDb from "./firebase-config";
 import {doc, setDoc} from 'firebase/firestore';
 import Hilfe from "./pages/Hilfe";
 
-
-function DetailsTv(props) {
-    return null;
-}
 
 function App() {
 
@@ -120,8 +117,9 @@ function App() {
         console.log('app category', searchCategory)
         if (searchCategory !== 'person') {
             const details = await getDetailMovieInfos(object.id, searchCategory)
+            console.log(details)
             const genres = await getGenreNames(object, searchCategory);
-            const fsk = await getGermanFSKFromDetails(details);
+            const fsk = await getGermanFSKFromDetails(details, searchCategory);
             const hasHappyEnd = await calculateHappyEnd(object);
             const cast = await getCastForMovie(object.id, searchCategory);
             const directors = await getDirectorForMovie(object.id, searchCategory);
@@ -232,9 +230,14 @@ function App() {
      * @param {object} detailsObject
      * @return {Promise<number>} The FSK example: 16
      */
-    async function getGermanFSKFromDetails(detailsObject) {
-        const releaseGerman = detailsObject.releases.countries.find((country) => country.iso_3166_1 === 'DE');
-        return +releaseGerman.certification
+    async function getGermanFSKFromDetails(detailsObject, category) {
+        if (category === 'movie') {
+            const releaseGerman = detailsObject.releases.countries.find((country) => country.iso_3166_1 === 'DE');
+            return +releaseGerman.certification
+        } else if (category === 'tv') {
+            const ratingsGerman = detailsObject.content_ratings.results.find((country) => country.iso_3166_1 === 'DE');
+            return +ratingsGerman.rating
+        }
     }
 
     /**

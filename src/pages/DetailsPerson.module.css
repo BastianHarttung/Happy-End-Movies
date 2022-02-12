@@ -31,7 +31,8 @@
 
 /*Scrollbar*/
 .imagesContainer::-webkit-scrollbar {
-    width: 20px;
+    height: 10px;
+    width: 5px;
 }
 
 .imagesContainer::-webkit-scrollbar-track {
