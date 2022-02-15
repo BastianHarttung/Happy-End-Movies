@@ -17,6 +17,8 @@ import {genreUrl, castUrl, personDetailUrl, searchUrl, movieDetailsUrl} from "./
 import firestoreDb from "./firebase-config";
 import {doc, setDoc} from 'firebase/firestore';
 import Hilfe from "./pages/Hilfe";
+import Login from "./pages/Login";
+import Sammlung from "./pages/Sammlung";
 
 
 function App() {
@@ -70,6 +72,10 @@ function App() {
                                    saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
                                    person={selectedPerson}/>}
                     />
+                    <Route path='/sammlung'
+                           exact={true}
+                           element={<Sammlung/>}
+                    />
                     <Route path='/impressum'
                            exact={true}
                            element={<Impressum/>}
@@ -78,9 +84,13 @@ function App() {
                            exact={true}
                            element={<Hilfe/>}
                     />
-                    <Route path='/'
+                    <Route path='/menu'
                            exact={true}
                            element={<Hauptmenue/>}
+                    />
+                    <Route path='/'
+                           exact={true}
+                           element={<Login/>}
                     />
                 </Routes>
             </div>

@@ -8,7 +8,7 @@ import {ReactComponent as HappyLogo} from '../assets/logos/Happy-End_logo-mit-Te
 const Header = (props) => {
     return (
         <header className={classes.header}>
-            <Link to='/'
+            <Link to='/menu'
                   className={classes.headerLogoLink}>
                 <HappyLogo className={classes.happyLogo}/>
             </Link>
@@ -17,7 +17,7 @@ const Header = (props) => {
 
             <div className={classes.userContainer}>
                 <div className={classes.username}>BASTIAN</div>
-                <Link to="/login"
+                <Link to="/"
                       className={classes.logoutLink}>
                     <div className={classes.linkContainer}>
                         <div>Logout</div>
