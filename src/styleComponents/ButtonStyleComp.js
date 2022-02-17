@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export const Button = ({name, activated}) => {
+export const Button = ({name, activated, onClick}) => {
 
     const [hovered, setHovered] = useState(false)
 
@@ -31,7 +31,8 @@ export const Button = ({name, activated}) => {
     return (
         <button style={btnStyle}
                 onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}>
+                onMouseLeave={() => setHovered(false)}
+                onClick={onClick}>
             {name}
         </button>
     )
