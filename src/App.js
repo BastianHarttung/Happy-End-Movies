@@ -72,10 +72,6 @@ function App() {
                                    saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
                                    person={selectedPerson}/>}
                     />
-                    <Route path='/sammlung'
-                           exact={true}
-                           element={<Sammlung/>}
-                    />
                     <Route path='/impressum'
                            exact={true}
                            element={<Impressum/>}

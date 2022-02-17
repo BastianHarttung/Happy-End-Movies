@@ -18,14 +18,16 @@ body {
 }
 
 //Scrollbar
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
   width: 20px;
 }
-body::-webkit-scrollbar-track{
+
+body::-webkit-scrollbar-track {
   border: 1px solid var(--gray);
   border-radius: 5px;
 }
-body::-webkit-scrollbar-thumb{
+
+body::-webkit-scrollbar-thumb {
   background: linear-gradient(270deg, var(--main-color) 0%, var(--main-color-white) 100%);;
   border: 1px solid var(--gray);
   border-radius: 5px;
@@ -57,9 +59,13 @@ code {
   --green: #28b028;
   --orange: orange;
   --red: #d91212;
+  /*Shadow color*/
+  --shadow-black-30: rgba(0, 0, 0, 0.3);
+  --shadow-gray-30: rgba(178, 178, 178, 0.3);
   /*Time*/
   --hover-time-short: 130ms;
   /*Radius*/
   --border-radius-small: 10px;
   --border-radius-medium: 20px;
+
 }

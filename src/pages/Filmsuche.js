@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
 import {searchUrl, trendingMoviesUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
+import {Button} from "../styleComponents/ButtonStyleComp";
 
 const Filmsuche = (props) => {
 
@@ -30,20 +31,24 @@ const Filmsuche = (props) => {
             <div className={classes.filmsucheContainer}>
                 <SearchBar
                     length='30'
-                    size= {20}
+                    size={20}
                     searchMovie={(movieName) => searchMovie(movieName)}
                     saveSearchFor={(movieName) => setSearchFor(movieName)}
                 />
 
                 <div className={classes.categoryBtnContainer}>
-                    <button className={searchingCategory === 'multi' ? classes.active :''}
-                            onClick={() => searchMovie(searchFor, 'multi')}>Alles</button>
-                    <button className={searchingCategory === 'movie' ? classes.active :''}
-                            onClick={() => searchMovie(searchFor, 'movie')}>Filme</button>
-                    <button className={searchingCategory === 'tv' ? classes.active :''}
-                            onClick={() => searchMovie(searchFor, 'tv')}>Serien</button>
-                    <button className={searchingCategory === 'person' ? classes.active :''}
-                            onClick={() => searchMovie(searchFor, 'person')}>Schauspieler</button>
+                    <Button name="Alles"
+                            activated={searchingCategory === 'multi' ? true : false}
+                            onClick={() => searchMovie(searchFor, 'multi')}/>
+                    <Button name="Filme"
+                            activated={searchingCategory === 'movie' ? true : false}
+                            onClick={() => searchMovie(searchFor, 'movie')}/>
+                    <Button name="Serien"
+                            activated={searchingCategory === 'tv' ? true : false}
+                            onClick={() => searchMovie(searchFor, 'tv')}/>
+                    <Button name="Schauspieler"
+                            activated={searchingCategory === 'person' ? true : false}
+                            onClick={() => searchMovie(searchFor, 'person')}/>
                 </div>
 
                 {searchStarted ?
