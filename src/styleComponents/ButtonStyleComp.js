@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export const Button = ({name, activated, onClick}) => {
+export const Button = ({name, fontSize, activated, onClick}) => {
 
     const [hovered, setHovered] = useState(false)
 
@@ -19,7 +19,7 @@ export const Button = ({name, activated, onClick}) => {
         color: `${hoveredFontColor()}`,
         backgroundColor: `${hoveredBackground()}`,
         minWidth: "150px",
-        fontSize: "18px",
+        fontSize: `${fontSize}rem`,
         border: "0px",
         borderRadius: "10px",
         transition: "all var(--hover-time-short) ease-in-out",

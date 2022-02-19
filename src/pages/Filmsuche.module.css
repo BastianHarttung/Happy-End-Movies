@@ -23,33 +23,6 @@
     justify-content: center;
 }
 
-.categoryBtnContainer button {
-    background-color: var(--main-color-white);
-    width: 150px;
-    font-size: 18px;
-    border: 0px;
-    border-radius: 10px;
-    transition: background-color 150ms ease-in-out;
-    cursor: pointer;
-    padding: 10px;
-    margin: 10px;
-}
-
-.categoryBtnContainer button:hover {
-    background-color: var(--main-color);
-}
-
-.active {
-    background-color: var(--main-color) !important;
-}
-/*.multi {
-    background-color: var(--main-color) !important;
-}
-
-.movie {
-    background-color: var(--main-color) !important;
-}*/
-
 .headOverResults {
     font-size: 23px;
     margin-top: 10px;

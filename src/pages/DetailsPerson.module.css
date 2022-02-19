@@ -66,6 +66,7 @@
 }
 
 .biographySection {
+    width: 100%;
     background-color: var(--main-color-white);
     display: flex;
     justify-content: center;

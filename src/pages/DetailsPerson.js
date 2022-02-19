@@ -70,7 +70,7 @@ const DetailsPerson = (props) => {
 
             <section className={classes.biographySection}>
                 <div className={classes.biography}>
-                    <b>Biografie:</b> {props.person.biography}
+                    {props.person.biography && <span><b>Biografie:</b> {props.person.biography}</span>}
                 </div>
             </section>
 

@@ -51,7 +51,7 @@ const Showroom = ({saveSelectedMovie}) => {
     const [scrollPosition, setScrollPosition] = useState(80);
     const handleScroll = () => {
         const position = window.pageYOffset;
-        setScrollPosition(Math.max(0, 80 - position))
+        setScrollPosition(Math.max(0, 60 - position))
     }
     useEffect(() => {
         window.addEventListener('scroll', handleScroll, {passive: true})

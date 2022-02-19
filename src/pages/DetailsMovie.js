@@ -8,6 +8,7 @@ import {useState, useEffect} from "react";
 import {FaSmileBeam, FaSadTear, FaMeh, FaSearch, FaChevronRight, FaChevronLeft} from "react-icons/all";
 import {imageUrl} from "../constants";
 import PersonBox from "../components/PersonBox";
+import {Button} from "../styleComponents/ButtonStyleComp";
 
 
 const DetailsMovie = (props) => {
@@ -233,13 +234,13 @@ const DetailsMovie = (props) => {
                     </div>
                 </div>
 
-                <button onClick={() => {
-                    props.saveMovieToDb(movieForDb);
-                    setHappyMovie('')
-                    navigate('/showroom')
-                }}
-                        className={classes.saveButton}>In Datenbank speichern und zum Showroom
-                </button>
+                <Button name="In Datenbank speichern und zum Showroom"
+                        fontSize={1}
+                        onClick={() => {
+                            props.saveMovieToDb(movieForDb);
+                            setHappyMovie('')
+                            navigate('/showroom')
+                        }}/>
 
             </section>
 

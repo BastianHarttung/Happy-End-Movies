@@ -38,15 +38,19 @@ const Filmsuche = (props) => {
 
                 <div className={classes.categoryBtnContainer}>
                     <Button name="Alles"
+                            fontSize={1.2}
                             activated={searchingCategory === 'multi' ? true : false}
                             onClick={() => searchMovie(searchFor, 'multi')}/>
                     <Button name="Filme"
+                            fontSize={1.2}
                             activated={searchingCategory === 'movie' ? true : false}
                             onClick={() => searchMovie(searchFor, 'movie')}/>
                     <Button name="Serien"
+                            fontSize={1.2}
                             activated={searchingCategory === 'tv' ? true : false}
                             onClick={() => searchMovie(searchFor, 'tv')}/>
                     <Button name="Schauspieler"
+                            fontSize={1.2}
                             activated={searchingCategory === 'person' ? true : false}
                             onClick={() => searchMovie(searchFor, 'person')}/>
                 </div>
