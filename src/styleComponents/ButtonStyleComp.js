@@ -24,7 +24,7 @@ export const Button = ({name, activated, onClick}) => {
         borderRadius: "10px",
         transition: "all var(--hover-time-short) ease-in-out",
         cursor: "pointer",
-        padding: "10px",
+        padding: "10px 20px",
         margin: "10px",
     };
 

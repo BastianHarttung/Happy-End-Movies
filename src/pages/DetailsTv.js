@@ -64,13 +64,12 @@ const DetailsTv = (props) => {
                         : ''}
                 </div>
 
-                <p className={classes.releaseYear}>{props.movie.release_date ?
-                    props.movie.release_date.slice(0, 4)
-                    : props.movie.first_air_date.slice(0, 4)}
+                <p className={classes.releaseYear}>
+                    {props.movie.first_air_date.slice(0, 4)} - {props.movie.last_air_date.slice(0, 4)}
                 </p>
 
-                <p>{props.movie.runtime} min
-                    ({laufzeitInStunden(props.movie.runtime).stunden} Std. {laufzeitInStunden(props.movie.runtime).minuten} min.)
+                <p>Folge: ca. {props.movie.episode_run_time[0]} min
+                    {/*({laufzeitInStunden(props.movie.episode_run_time[0]).stunden} Std. {laufzeitInStunden(props.movie.episode_run_time[0]).minuten} min.)*/}
                 </p>
             </div>
 
@@ -100,6 +99,13 @@ const DetailsTv = (props) => {
                                                                className={classes.genre}>{genre.name} </div>)}
                         </div>
 
+                        <div>
+                            Staffeln: {props.movie.number_of_seasons}
+                        </div>
+
+                        <div>
+                            Folgen: {props.movie.number_of_episodes}
+                        </div>
 
                         <h5 className={classes.director}>{props.movie.directors.length > 0 ? 'Regie' : ''}</h5>
                         <div className={classes.directorsContainer}>
