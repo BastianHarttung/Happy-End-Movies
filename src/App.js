@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import {Route, BrowserRouter, Routes} from "react-router-dom";
 import {useState} from "react";
 
@@ -119,11 +119,10 @@ function App() {
      * @return {Promise<void>}
      */
     async function saveSelectedMovieOrPerson(object, searchCategory) {
-        console.log('App movie', object)
-        console.log('app category', searchCategory)
+        //console.log('App movie', object)
+        //console.log('app category', searchCategory)
         if (searchCategory !== 'person') {
             const details = await getDetailMovieInfos(object.id, searchCategory)
-            console.log(details)
             const genres = await getGenreNames(object, searchCategory);
             const fsk = await getGermanFSKFromDetails(details, searchCategory);
             const hasHappyEnd = await calculateHappyEnd(object);

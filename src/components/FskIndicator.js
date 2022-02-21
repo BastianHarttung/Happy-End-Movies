@@ -1,4 +1,4 @@
-import classes from "./FskIndicator.module.css";
+import classes from "./FskIndicator.module.scss";
 import {useState} from "react";
 
 function ColorIndicator(props) {

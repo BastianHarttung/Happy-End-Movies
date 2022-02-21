@@ -1,4 +1,4 @@
-import classes from "./Filmsuche.module.css";
+import classes from "./Filmsuche.module.scss";
 import {useEffect, useState} from "react";
 import SearchResultBox from "../components/SearchResultBox";
 import {searchUrl, trendingMoviesUrl} from "../constants";

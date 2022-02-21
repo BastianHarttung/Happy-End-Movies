@@ -1,4 +1,4 @@
-import classes from "./DetailsPerson.module.css";
+import classes from "./DetailsPerson.module.scss";
 import {imageUrl, imageUrlSmall} from "../constants";
 import {useEffect, useState} from "react";
 import {FaBirthdayCake, FaCross} from "react-icons/all";

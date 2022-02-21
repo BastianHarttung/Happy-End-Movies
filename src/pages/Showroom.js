@@ -1,4 +1,4 @@
-import classes from "./Showroom.module.css";
+import classes from "./Showroom.module.scss";
 import SearchResultBox from "../components/SearchResultBox";
 import {useEffect, useState} from "react";
 import SearchBar from "../components/SearchBar";

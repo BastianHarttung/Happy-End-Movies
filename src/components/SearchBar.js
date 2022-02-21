@@ -1,4 +1,4 @@
-import classes from "./SearchBar.module.css";
+import classes from "./SearchBar.module.scss";
 import {FaSearch} from "react-icons/all";
 import {useState, useEffect} from "react";
 

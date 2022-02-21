@@ -161,9 +161,10 @@ const DetailsMovie = (props) => {
                     <div>
                         {props.movie.images.posters.map((poster, index) => {
                             return (
-                                <a href={imageUrl + poster.file_path} target="_blank" rel="noreferrer">
-                                    <img key={index}
-                                         src={imageUrl + poster.file_path}
+                                <a href={imageUrl + poster.file_path}
+                                   target="_blank" rel="noreferrer"
+                                   key={index}>
+                                    <img src={imageUrl + poster.file_path}
                                          alt="Poster"
                                          className={classes.images}/>
                                 </a>
@@ -171,9 +172,10 @@ const DetailsMovie = (props) => {
                         })}
                         {props.movie.images.backdrops.map((backdrop, index) => {
                             return (
-                                <a href={imageUrl + backdrop.file_path} target="_blank" rel="noreferrer">
-                                    <img key={index}
-                                         src={imageUrl + backdrop.file_path}
+                                <a href={imageUrl + backdrop.file_path}
+                                   target="_blank" rel="noreferrer"
+                                   key={index}>
+                                    <img src={imageUrl + backdrop.file_path}
                                          alt="Backdrop"
                                          className={classes.images}/>
                                 </a>
@@ -181,9 +183,10 @@ const DetailsMovie = (props) => {
                         })}
                         {props.movie.images.logos.map((logo, index) => {
                             return (
-                                <a href={imageUrl + logo.file_path} target="_blank" rel="noreferrer">
-                                    <img key={index}
-                                         src={imageUrl + logo.file_path}
+                                <a href={imageUrl + logo.file_path}
+                                   target="_blank" rel="noreferrer"
+                                   key={index}>
+                                    <img src={imageUrl + logo.file_path}
                                          alt="Logo"
                                          className={classes.images}/>
                                 </a>
@@ -203,7 +206,8 @@ const DetailsMovie = (props) => {
                     </div>
                 </div>
 
-                <div className={classes.description}><b>Beschreibung:</b> {props.movie.overview}</div>
+                {props.movie.overview &&
+                <div className={classes.description}><b>Beschreibung:</b> {props.movie.overview}</div>}
 
             </section>
 

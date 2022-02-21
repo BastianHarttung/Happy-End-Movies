@@ -1,4 +1,4 @@
-import classes from "./Impressum.module.css";
+import classes from "./Impressum.module.scss";
 
 const Impressum = (props) => {
 
