@@ -1,0 +1,137 @@
+.movieContainer {
+  background-color: var(--main-color-white);
+  color: Black;
+  width: 200px;
+  position: relative;
+  border: 1px solid gray;
+  border-radius: 0px 0px var(--border-radius-medium) var(--border-radius-medium);
+  margin: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--hover-time-short) ease-in-out;
+}
+
+.movieContainer:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/*.movieContainerClicked {
+  background-color: var(--main-color-white);
+  color: Black;
+  width: 200px;
+  position: relative;
+  border: 1px solid gray;
+  margin: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--hover-time-short) ease-in-out;
+  animation: big 2000ms infinite;
+  z-index: 100;
+}
+
+@keyframes big {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(4);
+  }
+
+}*/
+
+.movieImage {
+  height: 300px;
+  width: 200px;
+  object-fit: cover;
+}
+
+.movieInfosContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movieTitle {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+.smileyLaugh,
+.smileySad {
+  position: absolute;
+  top: 265px;
+  right: 10px;
+  font-size: 25px;
+  margin-bottom: 10px;
+  filter: drop-shadow(0px 0px 7px rgba(0, 0, 0, 0.5));
+}
+
+.smileyLaugh {
+  color: #28b028;
+}
+
+.smileySad {
+  color: #d91212;
+}
+
+.categoryIcon {
+  height: 25px;
+  position: absolute;
+  top: 265px;
+  left: 10px;
+  filter: drop-shadow(0px 0px 6px white);
+}
+
+/*------------Loading Ring--------------*/
+.loaderContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+.ldsRing {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.ldsRing div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: ldsRing 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+
+.ldsRing div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.ldsRing div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.ldsRing div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes ldsRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

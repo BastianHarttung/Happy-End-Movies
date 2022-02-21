@@ -1,4 +1,4 @@
-import classes from "./SearchResultBox.module.css";
+import classes from "./SearchResultBox.module.scss";
 import emptyImage from "../assets/img/movie-poster.png"
 import {imageUrl} from "../constants";
 import {FaSmileBeam, FaSadTear} from "react-icons/all";
@@ -39,7 +39,7 @@ const SearchResultBox = (props) => {
     }
 
     return (
-        <div className={movieClicked ? classes.movieContainerClicked : classes.movieContainer}
+        <div className={classes.movieContainer}
              onClick={async () => {
                  setMovieClicked(true);
                  const category = () => {
@@ -55,6 +55,16 @@ const SearchResultBox = (props) => {
                          setMovieClicked(false)
                      })
              }}>
+
+            {movieClicked &&
+            <div className={classes.loaderContainer}>
+                <div className={classes.ldsRing}>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>}
 
             <img className={classes.movieImage}
                  src={props.movie.poster_path ?
