@@ -1,5 +1,7 @@
 import classes from "./SearchResultBox.module.scss";
 import emptyImage from "../assets/img/movie-poster.png"
+import emptyImageMan from "../assets/img/actor_man_white.png"
+import emptyImageWoman from "../assets/img/actor_girl_white.png"
 import {imageUrl} from "../constants";
 import {FaSmileBeam, FaSadTear} from "react-icons/all";
 import {useNavigate} from "react-router-dom";
@@ -71,7 +73,11 @@ const SearchResultBox = (props) => {
                      imageUrl + props.movie.poster_path
                      : props.movie.profile_path ?
                          imageUrl + props.movie.profile_path
-                         : emptyImage}
+                         : props.movie.media_type !== "person" ?
+                             emptyImage
+                             : props.movie.gender === 2 ?
+                                 emptyImageMan
+                                 : emptyImageWoman}
                  alt="Poster"/>
 
             <div className={classes.movieInfosContainer}>
