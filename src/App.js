@@ -18,7 +18,7 @@ import firestoreDb from "./firebase-config";
 import {doc, setDoc} from 'firebase/firestore';
 import Hilfe from "./pages/Hilfe";
 import Login from "./pages/Login";
-import Sammlung from "./pages/Sammlung";
+import 'dotenv/config'
 
 
 function App() {
