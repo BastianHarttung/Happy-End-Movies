@@ -69,15 +69,7 @@ const SearchResultBox = (props) => {
             </div>}
 
             <img className={classes.movieImage}
-                 src={props.movie.poster_path ?
-                     imageUrl + props.movie.poster_path
-                     : props.movie.profile_path ?
-                         imageUrl + props.movie.profile_path
-                         : props.movie.media_type !== "person" ?
-                             emptyImage
-                             : props.movie.gender === 2 ?
-                                 emptyImageMan
-                                 : emptyImageWoman}
+                 src={setImageForPoster()}
                  alt="Poster"/>
 
             <div className={classes.movieInfosContainer}>
@@ -92,6 +84,14 @@ const SearchResultBox = (props) => {
 
         </div>
     )
+
+    function setImageForPoster() {
+        if (props.movie.poster_path) return imageUrl + props.movie.poster_path
+        if (props.movie.profile_path) return imageUrl + props.movie.profile_path
+        if (props.movie.media_type !== "person" && props.category !== "person") return emptyImage
+        if (props.movie.gender === 2 || props.movie.gender === 0) return emptyImageMan
+        if (props.movie.gender === 1) return emptyImageWoman
+    }
 
 }
 

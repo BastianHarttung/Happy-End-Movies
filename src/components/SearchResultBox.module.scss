@@ -87,12 +87,14 @@
 
 /*------------Loading Ring--------------*/
 .loaderContainer {
+  background-color: rgba(255, 255, 255, 0.5);
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
+  transition: all var(--hover-time-short) ease-in-out;
 }
 
 .ldsRing {
@@ -109,10 +111,10 @@
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid #fff;
+  border: 8px solid var(--main-color);
   border-radius: 50%;
   animation: ldsRing 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fff transparent transparent transparent;
+  border-color: var(--main-color) transparent transparent transparent;
 }
 
 .ldsRing div:nth-child(1) {
