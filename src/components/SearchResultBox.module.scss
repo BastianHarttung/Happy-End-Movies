@@ -16,29 +16,6 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-/*.movieContainerClicked {
-  background-color: var(--main-color-white);
-  color: Black;
-  width: 200px;
-  position: relative;
-  border: 1px solid gray;
-  margin: 10px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: var(--hover-time-short) ease-in-out;
-  animation: big 2000ms infinite;
-  z-index: 100;
-}
-
-@keyframes big {
-  0% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(4);
-  }
-
-}*/
 
 .movieImage {
   height: 300px;

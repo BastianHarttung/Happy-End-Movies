@@ -17,6 +17,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 //Scrollbar
 body::-webkit-scrollbar {
   width: 20px;
@@ -64,6 +68,8 @@ code {
   --shadow-gray-30: rgba(178, 178, 178, 0.3);
   /*Time*/
   --hover-time-short: 130ms;
+  --hover-time-medium: 230ms;
+  --hover-time-long: 330ms;
   /*Radius*/
   --border-radius-small: 10px;
   --border-radius-medium: 20px;

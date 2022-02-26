@@ -5,6 +5,8 @@ import SearchBar from "../components/SearchBar";
 import {collection, getDocs} from "firebase/firestore";
 import firestoreDb from "../firebase-config";
 import FskIndicator from "../components/FskIndicator";
+//import filterIcon from "../assets/icons/filter.svg";
+import {ReactComponent as FilterIcon} from "../assets/icons/filter.svg";
 
 
 const Showroom = ({saveSelectedMovie}) => {
@@ -25,11 +27,11 @@ const Showroom = ({saveSelectedMovie}) => {
 
     const filteredMoviesPart = filteredMovies.slice(index, Math.max(pageLength, pageLength * (activePage + 1)))
 
-    const widthShowroom = window.innerWidth - 260
-
     const [searchFor, setSearchFor] = useState()
 
     const [fskPosAge, setFskPosAge] = useState(18)
+
+    const [sidebarOpen, setSidebarOpen] = useState(false)
 
 
     useEffect(() => {
@@ -48,7 +50,7 @@ const Showroom = ({saveSelectedMovie}) => {
     /**
      * Scrolling Sidebar
      */
-    const [scrollPosition, setScrollPosition] = useState(80);
+    const [scrollPosition, setScrollPosition] = useState(60);
     const handleScroll = () => {
         const position = window.pageYOffset;
         setScrollPosition(Math.max(0, 60 - position))
@@ -63,76 +65,97 @@ const Showroom = ({saveSelectedMovie}) => {
 
     return (
         <section className={classes.showroomSection}>
-            <div className={classes.sidebar} style={{top: scrollPosition + 'px'}}>
-                <div className={classes.searchContainer}>
-                    <SearchBar
-                        length='13'
-                        size={15}
-                        searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}
-                        saveSearchFor={(movieName) => setSearchFor(movieName)}/>
-                </div>
 
-                <div className={classes.filterContainer}>
+            <div className={classes.sidebar}
+                 style={{
+                     top: scrollPosition + 'px',
+                     width: sidebarOpen ? "100%" : "0",
+                     borderRight: sidebarOpen ? "1px solid var(--gray)" : "0px",
+                 }}>
+                {sidebarOpen &&
+                <div className={classes.sidebarContentContainer}
+                    /*style={{top: scrollPosition + 'px'}}*/>
+                    <div className={classes.searchContainer}>
+                        <SearchBar
+                            length='13'
+                            size={15}
+                            searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}
+                            saveSearchFor={(movieName) => setSearchFor(movieName)}/>
+                    </div>
 
-                    <button onClick={() => {
-                        loadMoviesFromDbAndSetStates();
-                        setFilterActive(false)
-                    }}
-                            className={!filterActive ? classes.btnActive : ''}>{filterActive ? 'Filter deaktivieren' : 'Filter sind deaktiviert'}
-                    </button>
+                    <div className={classes.filterContainer}>
 
-                    <div className={classes.filterSegmentContainer}>
+                        <button onClick={() => {
+                            loadMoviesFromDbAndSetStates();
+                            setFilterActive(false)
+                        }}
+                                className={!filterActive ? classes.btnActive : ''}>{filterActive ? 'Filter deaktivieren' : 'Filter sind deaktiviert'}
+                        </button>
 
-                        <div className={classes.filterSegment}>
-                            <select name="category"
-                                    id="category"
-                                    onChange={() => setFilterActive(false)}>
-                                <option value="allCategories">Filme + Serien</option>
-                                <option value="movie">Filme</option>
-                                <option value="tv">Serien</option>
-                            </select>
+                        <div className={classes.filterSegmentContainer}>
+
+                            <div className={classes.filterSegment}>
+                                <select name="category"
+                                        id="category"
+                                        onChange={() => setFilterActive(false)}>
+                                    <option value="allCategories">Filme + Serien</option>
+                                    <option value="movie">Filme</option>
+                                    <option value="tv">Serien</option>
+                                </select>
+                            </div>
+
+                            <div className={classes.filterSegment}>
+                                <select name="happyEnd"
+                                        id="happyEnd"
+                                        onChange={() => setFilterActive(false)}>
+                                    <option value="allEnds">Alle Enden</option>
+                                    <option value={true}>Happy End</option>
+                                    <option value={false}>kein Happy End</option>
+                                </select>
+                            </div>
+
+                            <div className={classes.fskIndicatorContainer}>
+                                <FskIndicator arrowPos={fskPosAge}
+                                              setFskPos={(fskPosAge) => setFskPosAge(fskPosAge)}/>
+                            </div>
+
                         </div>
 
-                        <div className={classes.filterSegment}>
-                            <select name="happyEnd"
-                                    id="happyEnd"
-                                    onChange={() => setFilterActive(false)}>
-                                <option value="allEnds">Alle Enden</option>
-                                <option value={true}>Happy End</option>
-                                <option value={false}>kein Happy End</option>
-                            </select>
-                        </div>
+                        <button onClick={() => {
+                            setFilterActive(true)
+                            filterDatabase(moviesDb,
+                                document.getElementById('category').value,
+                                document.getElementById('happyEnd').value,
+                                fskPosAge)
 
-                        <div className={classes.fskIndicatorContainer}>
-                            <FskIndicator arrowPos={fskPosAge}
-                                          setFskPos={(fskPosAge) => setFskPosAge(fskPosAge)}/>
+                        }}
+                                className={filterActive ? classes.btnActive : ''}>{filterActive ? 'Gefiltert' : 'Filtern'}
+                        </button>
+
+                        <div className={classes.sidebarInfos}>
+                            <div><b>{filterLength}</b> Filme</div>
                         </div>
 
                     </div>
-
-                    <button onClick={() => {
-                        setFilterActive(true)
-                        filterDatabase(moviesDb,
-                            document.getElementById('category').value,
-                            document.getElementById('happyEnd').value,
-                            fskPosAge)
-
-                    }}
-                            className={filterActive ? classes.btnActive : ''}>{filterActive ? 'Gefiltert' : 'Filtern'}
-                    </button>
-
-                    <div className={classes.sidebarInfos}>
-                        <div><b>{filterLength}</b> Filme</div>
-                    </div>
-
-                </div>
+                </div>}
             </div>
 
-            <div className={classes.showroomContainer} style={{width: widthShowroom + 'px'}}>
+            <div className={classes.showroomContainer}>
+
+                <div className={classes.mainSectionHeader}>
+                    {/*<img src={filterIcon}
+                         alt="Filter"
+                         className={classes.filterMenuIcon}
+                         onClick={() => setSidebarOpen(!sidebarOpen)}/>*/}
+                    <FilterIcon className={classes.filterMenuIcon}
+                                onClick={() => {
+                                    console.log("click")
+                                    setSidebarOpen(!sidebarOpen)
+                                }}/>
+                </div>
 
                 {filteredMovies.length > 0 ?
                     <div className={classes.filteredMoviesContainer}>
-
                         <div className={classes.filteredMoviesResult}>
                             {filteredMoviesPart.map((movie) =>
                                 <SearchResultBox
@@ -142,7 +165,6 @@ const Showroom = ({saveSelectedMovie}) => {
                                     category={undefined} //TODO
                                 />)}
                         </div>
-
                         <div className={classes.infosContainer}>
                             {Array.from(Array(pages).keys()).map((page) =>
                                     <span key={page + 1}
@@ -151,7 +173,6 @@ const Showroom = ({saveSelectedMovie}) => {
                         {page + 1}</span>
                             )}
                         </div>
-
                     </div>
                     : filteredMovies.length === 0 ?
                         <div className={classes.filteredMoviesContainer}>

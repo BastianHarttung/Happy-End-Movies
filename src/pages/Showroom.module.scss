@@ -1,67 +1,73 @@
 .showroomSection {
-    position: relative;
-    overflow: hidden;
+  display: flex;
+  position: relative;
+  overflow: hidden;
 }
 
 /*--------------------Sidebar----------*/
 .sidebar {
-    position: fixed;
-    left: 0;
-    border-right: 1px solid gray;
-    z-index: 2;
+  border-right: 1px solid var(--gray);
+  z-index: 2;
+  box-shadow: 2px 0px 7px var(--shadow-gray-30);
+  overflow: hidden;
+  transition: all var(--hover-time-long) ease-in-out;
+}
+
+.sidebarContentContainer {
+  position: fixed;
 }
 
 .filterContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin: 20px 20px 100px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 10px 25px 10px 25px;
 }
 
 .filterContainer button {
-    background-color: var(--main-color-white);
-    font-size: 15px;
-    border: 0px;
-    border-radius: 10px;
-    padding: 7px;
-    cursor: pointer;
-    transition: background-color var(--hover-time-short);
+  background-color: var(--main-color-white);
+  font-size: 15px;
+  border: 0px;
+  border-radius: 10px;
+  padding: 7px;
+  cursor: pointer;
+  transition: background-color var(--hover-time-short);
 }
 
 .filterContainer button:hover {
-    background-color: var(--main-color);
+  background-color: var(--main-color);
 }
 
 .filterContainer button {
-    margin: 10px 0px;
+  margin: 10px 0px;
 }
 
 .btnActive {
-    background-color: var(--main-color) !important;
+  background-color: var(--main-color) !important;
 }
 
 .filterSegmentContainer {
-    margin: 10px 0px;
+  margin: 10px 0px;
 }
 
 .filterSegment {
-    width: 165px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin: 10px 0px;
+  width: 165px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 10px 0px;
 }
 
 .filterSegment::before {
-    color: black;
-    font-family: FontAwesomeSolid;
-    content: "\f078";
-    font-size: 20px;
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    pointer-events: none;
+  color: black;
+  font-family: FontAwesomeSolid;
+  content: "\f078";
+  font-size: 20px;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  pointer-events: none;
 }
 
 /*.filterSegment label {
@@ -69,127 +75,141 @@
 }*/
 
 .filterSegment select {
-    /* Reset */
-    width: 100%;
-    appearance: none;
-    border: 0;
-    border-radius: 10px;
-    outline: none;
-    font: inherit;
-    /* Personalize */
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
-    cursor: pointer;
+  /* Reset */
+  width: 100%;
+  appearance: none;
+  border: 0;
+  border-radius: 10px;
+  outline: none;
+  font: inherit;
+  /* Personalize */
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 /* <option> colors */
 .filterSegment option {
-    color: inherit;
+  color: inherit;
 }
 
 /* Remove focus outline */
 .filterSegment select:focus {
-    outline: none;
+  outline: none;
 }
 
 /* Remove IE arrow */
 .filterSegment select::-ms-expand {
-    display: none;
+  display: none;
 }
 
 .fskIndicatorContainer {
-    margin-top: 20px;
-    margin-bottom: -30px;
+  margin-top: 20px;
+  margin-bottom: -30px;
 }
 
 .sidebarInfos {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 /*----------Content -----------------*/
 .showroomContainer {
-    position: relative;
-    right: -230px;
+  position: relative;
+}
+
+.mainSectionHeader {
+  border-bottom: 1px solid var(--gray);
+  padding: 10px 20px;
+}
+
+.filterMenuIcon {
+  height: 28px;
+  cursor: pointer;
+  transition: all var(--hover-time-short);
+
+  &:hover {
+    fill: var(--main-color);
+  }
 }
 
 .searchContainer {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 50px 0px 0px 0px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 15px 0px 0px 0px;
 }
 
 .categoryBtns {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
 }
 
 .categoryBtns button {
-    background-color: var(--main-color-white);
-    width: 150px;
-    font-size: 15px;
-    text-transform: uppercase;
-    border: 0px;
-    border-radius: 7px;
-    padding: 10px;
-    margin: 0px 10px;
-    cursor: pointer;
-    transition: all 150ms ease-in-out;
+  background-color: var(--main-color-white);
+  width: 150px;
+  font-size: 15px;
+  text-transform: uppercase;
+  border: 0px;
+  border-radius: 7px;
+  padding: 10px;
+  margin: 0px 10px;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
 }
 
 .categoryBtns button:hover {
-    background-color: var(--main-color);
+  background-color: var(--main-color);
 }
 
 .filteredMoviesContainer {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 50px 0px 50px 0px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 50px 0px 50px 0px;
 }
 
 .filteredMoviesResult {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap
 }
 
 .infosContainer {
-    font-weight: 600;
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 /*--------------Page---------------------*/
 
 .pageBtn {
-    padding: 5px;
-    margin: 5px;
-    cursor: pointer;
+  padding: 5px;
+  margin: 5px;
+  cursor: pointer;
 }
 
 .activePageBtn {
-    color: #66caee;
-    font-weight: bold;
-    padding: 5px;
-    margin: 5px;
+  color: #66caee;
+  font-weight: bold;
+  padding: 5px;
+  margin: 5px;
 }
 
 /*-------------Detailbox-------------*/
 
 .detailbox {
-    background-color: rgba(0, 0, 0, 0.8);
-    width: 100vw;
-    height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100vw;
+  height: 100vh;
 }
 
 
@@ -197,65 +217,65 @@
 .loader,
 .loader:before,
 .loader:after {
-    background: #588afe;
-    -webkit-animation: load1 1s infinite ease-in-out;
-    animation: load1 1s infinite ease-in-out;
-    width: 1em;
-    height: 4em;
+  background: #588afe;
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
+  width: 1em;
+  height: 4em;
 }
 
 .loader {
-    color: #588afe;
-    text-indent: -9999em;
-    margin: 88px auto;
-    position: relative;
-    font-size: 11px;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-animation-delay: -0.16s;
-    animation-delay: -0.16s;
+  color: #588afe;
+  text-indent: -9999em;
+  margin: 88px auto;
+  position: relative;
+  font-size: 11px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
 }
 
 .loader:before,
 .loader:after {
-    position: absolute;
-    top: 0;
-    content: '';
+  position: absolute;
+  top: 0;
+  content: '';
 }
 
 .loader:before {
-    left: -1.5em;
-    -webkit-animation-delay: -0.32s;
-    animation-delay: -0.32s;
+  left: -1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
 }
 
 .loader:after {
-    left: 1.5em;
+  left: 1.5em;
 }
 
 @-webkit-keyframes load1 {
-    0%,
-    80%,
-    100% {
-        box-shadow: 0 0;
-        height: 4em;
-    }
-    40% {
-        box-shadow: 0 -2em;
-        height: 5em;
-    }
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
 }
 
 @keyframes load1 {
-    0%,
-    80%,
-    100% {
-        box-shadow: 0 0;
-        height: 4em;
-    }
-    40% {
-        box-shadow: 0 -2em;
-        height: 5em;
-    }
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
 }
