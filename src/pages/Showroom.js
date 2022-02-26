@@ -5,7 +5,6 @@ import SearchBar from "../components/SearchBar";
 import {collection, getDocs} from "firebase/firestore";
 import firestoreDb from "../firebase-config";
 import FskIndicator from "../components/FskIndicator";
-//import filterIcon from "../assets/icons/filter.svg";
 import {ReactComponent as FilterIcon} from "../assets/icons/filter.svg";
 
 
@@ -62,19 +61,22 @@ const Showroom = ({saveSelectedMovie}) => {
         }
     }, [])
 
+    const styleSidebar = {
+        /*top: scrollPosition + 'px',*/
+        width: sidebarOpen ? "20%" : "0",
+        borderRight: sidebarOpen ? "1px solid var(--gray)" : "0px",
+    }
+
+    const filterIconStyle = {
+        fill: sidebarOpen ? "var(--main-color)" : "black",
+    }
 
     return (
         <section className={classes.showroomSection}>
 
             <div className={classes.sidebar}
-                 style={{
-                     top: scrollPosition + 'px',
-                     width: sidebarOpen ? "100%" : "0",
-                     borderRight: sidebarOpen ? "1px solid var(--gray)" : "0px",
-                 }}>
-                {sidebarOpen &&
-                <div className={classes.sidebarContentContainer}
-                    /*style={{top: scrollPosition + 'px'}}*/>
+                 style={styleSidebar}>
+                <div className={classes.sidebarContentContainer}>
                     <div className={classes.searchContainer}>
                         <SearchBar
                             length='13'
@@ -137,21 +139,15 @@ const Showroom = ({saveSelectedMovie}) => {
                         </div>
 
                     </div>
-                </div>}
+                </div>
             </div>
 
             <div className={classes.showroomContainer}>
 
                 <div className={classes.mainSectionHeader}>
-                    {/*<img src={filterIcon}
-                         alt="Filter"
-                         className={classes.filterMenuIcon}
-                         onClick={() => setSidebarOpen(!sidebarOpen)}/>*/}
                     <FilterIcon className={classes.filterMenuIcon}
-                                onClick={() => {
-                                    console.log("click")
-                                    setSidebarOpen(!sidebarOpen)
-                                }}/>
+                                onClick={() => setSidebarOpen(!sidebarOpen)}
+                                style={filterIconStyle}/>
                 </div>
 
                 {filteredMovies.length > 0 ?

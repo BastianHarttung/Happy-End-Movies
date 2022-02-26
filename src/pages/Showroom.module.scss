@@ -1,20 +1,17 @@
 .showroomSection {
   display: flex;
-  position: relative;
-  overflow: hidden;
 }
 
 /*--------------------Sidebar----------*/
 .sidebar {
+  height: 100vh;
+  position: sticky;
+  top: 0;
   border-right: 1px solid var(--gray);
-  z-index: 2;
   box-shadow: 2px 0px 7px var(--shadow-gray-30);
   overflow: hidden;
   transition: all var(--hover-time-long) ease-in-out;
-}
-
-.sidebarContentContainer {
-  position: fixed;
+  align-self: flex-start;
 }
 
 .filterContainer {
@@ -116,6 +113,7 @@
 
 /*----------Content -----------------*/
 .showroomContainer {
+  width: 100%;
   position: relative;
 }
 
