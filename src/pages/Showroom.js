@@ -62,7 +62,7 @@ const Showroom = ({saveSelectedMovie}) => {
     }, [])
 
     const styleSidebar = {
-        /*top: scrollPosition + 'px',*/
+        minWidth: sidebarOpen ? "210px" : "0px",
         width: sidebarOpen ? "20%" : "0",
         borderRight: sidebarOpen ? "1px solid var(--gray)" : "0px",
     }

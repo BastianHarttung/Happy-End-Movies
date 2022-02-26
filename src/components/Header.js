@@ -5,7 +5,7 @@ import iconSignout from "../assets/icons/sign-out-alt_light.svg"
 import {ReactComponent as HappyLogo} from '../assets/logos/Happy-End_logo-mit-Text.svg';
 
 
-const Header = (props) => {
+const Header = () => {
     return (
         <header className={classes.header}>
             <Link to='/menu'
