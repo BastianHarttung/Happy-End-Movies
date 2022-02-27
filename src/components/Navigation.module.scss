@@ -81,5 +81,22 @@ nav {
   }
   .icons {
     height: 30px;
+    margin-left: 0;
+  }
+  .navLinkContainer,
+  .logoutLinkContainer {
+    background-color: var(--main-color);
+    padding: 10px 20px;
+    border-radius: 0px 0px var(--border-radius-small) var(--border-radius-small);
+    z-index: 10;
+  }
+  .navLinkContainer:hover::after {
+    width: 0%;
+  }
+  .navLinkContainer:hover {
+    transform: translateY(15px);
+  }
+  .logoutLink:hover::after {
+    width: 0%;
   }
 }

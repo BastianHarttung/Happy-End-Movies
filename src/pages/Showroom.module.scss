@@ -294,3 +294,12 @@
     height: 5em;
   }
 }
+
+@media (max-width: 800px) {
+  .mainSectionHeader {
+    margin-top: 10px;
+  }
+  .sidebarCloseBtnContainer {
+    margin-top: 10px;
+  }
+}
