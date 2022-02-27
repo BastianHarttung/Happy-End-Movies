@@ -14,6 +14,23 @@
   align-self: flex-start;
 }
 
+.sidebarCloseBtnContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sidebarCloseBtn {
+  height: 32px;
+  margin: 6px 15px;
+  cursor: pointer;
+  transition: all var(--hover-time-short) ease-in-out;
+
+  &:hover {
+    fill: var(--main-color);
+  }
+}
+
 .filterContainer {
   display: flex;
   flex-direction: column;
@@ -119,11 +136,11 @@
 
 .mainSectionHeader {
   border-bottom: 1px solid var(--gray);
-  padding: 10px 20px;
+  padding: 9px 18px;
 }
 
 .filterMenuIcon {
-  height: 28px;
+  height: 25px;
   cursor: pointer;
   transition: all var(--hover-time-short);
 

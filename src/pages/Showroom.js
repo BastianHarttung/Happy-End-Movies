@@ -6,6 +6,7 @@ import {collection, getDocs} from "firebase/firestore";
 import firestoreDb from "../firebase-config";
 import FskIndicator from "../components/FskIndicator";
 import {ReactComponent as FilterIcon} from "../assets/icons/filter.svg";
+import {ReactComponent as CloseIcon} from "../assets/icons/times.svg";
 
 
 const Showroom = ({saveSelectedMovie}) => {
@@ -76,6 +77,12 @@ const Showroom = ({saveSelectedMovie}) => {
 
             <div className={classes.sidebar}
                  style={styleSidebar}>
+
+                <div className={classes.sidebarCloseBtnContainer}>
+                    <CloseIcon className={classes.sidebarCloseBtn}
+                               onClick={() => setSidebarOpen(false)}/>
+                </div>
+
                 <div className={classes.sidebarContentContainer}>
                     <div className={classes.searchContainer}>
                         <SearchBar
@@ -146,7 +153,7 @@ const Showroom = ({saveSelectedMovie}) => {
 
                 <div className={classes.mainSectionHeader}>
                     <FilterIcon className={classes.filterMenuIcon}
-                                onClick={() => setSidebarOpen(!sidebarOpen)}
+                                onClick={() => setSidebarOpen(true)}
                                 style={filterIconStyle}/>
                 </div>
 
