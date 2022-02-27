@@ -60,10 +60,12 @@
 
 @media (max-width: 800px) {
   .header {
+    height: 50px;
     position: fixed;
     bottom: 0;
   }
-  .happyLogo {
-    display: none;
+
+  .icons{
+    height: 30px;
   }
 }

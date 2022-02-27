@@ -8,35 +8,25 @@ import {useEffect, useState} from "react";
 
 const Header = () => {
 
-    const [windowWidth, setWindowWith] = useState(window.innerWidth);
     const [isHandy, setIsHandy] = useState(false)
 
     useEffect(() => {
-        if (windowWidth < 800) {
+        if (window.innerWidth < 800) {
             setIsHandy(true)
         } else setIsHandy(false)
     }, [])
 
     return (
         <header className={classes.header}>
+            {!isHandy &&
             <Link to='/menu'
                   className={classes.headerLogoLink}>
                 <HappyLogo className={classes.happyLogo}/>
-            </Link>
+            </Link>}
 
             <Navigation isHandy={isHandy}/>
 
-            <div className={classes.userContainer}>
-                {!isHandy && <div className={classes.username}>BASTIAN</div>}
-                <Link to="/"
-                      className={classes.logoutLink}>
-                    <div className={classes.linkContainer}>
-                        {!isHandy && <div>Logout</div>}
-                        <img src={iconSignout}
-                             className={classes.icons}/>
-                    </div>
-                </Link>
-            </div>
+
 
         </header>
     )
