@@ -19,6 +19,7 @@ const Filmsuche = (props) => {
 
     const [popularMovies, setPopularMovies] = useState([])
 
+
     useEffect(() => {
         getPopularMoviesFromTmdb().then((response) => {
             setPopularMovies(response)
@@ -30,8 +31,8 @@ const Filmsuche = (props) => {
 
             <div className={classes.filmsucheContainer}>
                 <SearchBar
-                    length='30'
-                    size={20}
+                    length='22'
+                    size={19}
                     searchMovie={(movieName) => searchMovie(movieName)}
                     saveSearchFor={(movieName) => setSearchFor(movieName)}
                 />

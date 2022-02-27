@@ -2,7 +2,7 @@ nav {
   display: flex;
 }
 
-.navLinkContainer{
+.navLinkContainer {
   color: white;
   display: flex;
   flex-direction: column;
@@ -71,9 +71,14 @@ nav {
   width: 100%;
 }
 
-
-
 @media (max-width: 800px) {
+  nav {
+    width: 100%;
+    justify-content: space-around;
+  }
+  .logoutLinkContainer {
+    margin: 0px 15px;
+  }
   .icons {
     height: 30px;
   }

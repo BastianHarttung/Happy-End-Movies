@@ -2,7 +2,6 @@ import classes from "./SearchBar.module.scss";
 import {FaSearch} from "react-icons/all";
 import {useState, useEffect} from "react";
 
-
 const SearchBar = (props) => {
 
     const locationHashString = window.location.hash.substring(1).split('%20').join(' ')
