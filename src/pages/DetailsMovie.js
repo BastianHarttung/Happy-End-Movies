@@ -162,51 +162,60 @@ const DetailsMovie = (props) => {
                         {!!props.movie.images.posters.length &&
                         <div>
                             <div>Poster</div>
-                            {props.movie.images.posters.map((poster, index) => {
-                                return (
-                                    <a href={imageUrl + poster.file_path}
-                                       target="_blank" rel="noreferrer"
-                                       key={index}>
-                                        <img src={imageUrl + poster.file_path}
-                                             alt="Poster"
-                                             className={classes.images}/>
-                                    </a>
-                                )
-                            })}
+                            <div className={classes.imageContainer}>
+                                {props.movie.images.posters.map((poster, index) => {
+                                    return (
+                                        <a href={imageUrl + poster.file_path}
+                                           target="_blank" rel="noreferrer"
+                                           key={index}>
+                                            <img src={imageUrl + poster.file_path}
+                                                 alt="Poster"
+                                                 className={classes.images}/>
+                                        </a>
+                                    )
+                                })}
+                            </div>
                         </div>
+
                         }
 
                         {!!props.movie.images.backdrops.length &&
                         <div>
-                            <div>Wallpaper</div>
-                            {props.movie.images.backdrops.map((backdrop, index) => {
-                                return (
-                                    <a href={imageUrl + backdrop.file_path}
-                                       target="_blank" rel="noreferrer"
-                                       key={index}>
-                                        <img src={imageUrl + backdrop.file_path}
-                                             alt="Backdrop"
-                                             className={classes.images}/>
-                                    </a>
-                                )
-                            })}
+                            <div>Backdrops</div>
+                            <div className={classes.imageContainer}>
+                                {props.movie.images.backdrops.map((backdrop, index) => {
+                                    return (
+                                        <a href={imageUrl + backdrop.file_path}
+                                           target="_blank" rel="noreferrer"
+                                           key={index}>
+                                            <img src={imageUrl + backdrop.file_path}
+                                                 alt="Backdrop"
+                                                 className={classes.images}/>
+                                        </a>
+                                    )
+                                })}
+                            </div>
                         </div>
                         }
 
-                        {!!props.movie.images.logos.length && <div>
+                        {!!props.movie.images.logos.length &&
+                        <div>
                             <div>Logos</div>
-                            {props.movie.images.logos.map((logo, index) => {
-                                return (
-                                    <a href={imageUrl + logo.file_path}
-                                       target="_blank" rel="noreferrer"
-                                       key={index}>
-                                        <img src={imageUrl + logo.file_path}
-                                             alt="Logo"
-                                             className={classes.images}/>
-                                    </a>
-                                )
-                            })}
-                        </div>}
+                            <div className={classes.imageContainer}>
+                                {props.movie.images.logos.map((logo, index) => {
+                                    return (
+                                        <a href={imageUrl + logo.file_path}
+                                           target="_blank" rel="noreferrer"
+                                           key={index}>
+                                            <img src={imageUrl + logo.file_path}
+                                                 alt="Logo"
+                                                 className={classes.images}/>
+                                        </a>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                        }
 
                     </div>
                     <div className={classes.videoContainer}>
