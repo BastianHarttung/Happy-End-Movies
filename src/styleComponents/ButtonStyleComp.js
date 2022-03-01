@@ -7,7 +7,7 @@ export const Button = ({name, fontSize, activated, onClick}) => {
     const hoveredBackground = () => {
         if (activated) return "var(--main-color)"
         if (hovered) return "var(--main-color)"
-        else return "var(--main-color-white)"
+        else return "var(--main-color-bright)"
     }
     const hoveredFontColor = () => {
         if (activated) return "white"

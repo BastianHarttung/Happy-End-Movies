@@ -3,13 +3,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 50px;
 }
 
 /*-------------------Head ---------------------*/
 .movieHeadContainer {
   width: 100%;
-  min-height: 150px;
+  min-height: 120px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,11 +22,6 @@
     margin-bottom: 10px;
   }
 
-  .subtitle {
-    width: 80%;
-    font-weight: normal;
-    margin: 0;
-  }
 
   .headImage {
     width: 100%;
@@ -87,6 +81,8 @@
 
 .posterImage {
   width: 266px;
+  height: 398px;
+  object-fit: cover;
   border: 1px solid rgba(0, 0, 0, 0.5);
   box-shadow: 2px 3px 12px 3px rgba(128, 128, 128, 0.46);
 }
@@ -244,11 +240,53 @@
   height: 150px;
 }
 
+/*Videos*/
+.videoContainer {
+  display: flex;
+  overflow: auto;
+}
+
+.videoContainer::-webkit-scrollbar {
+  height: 10px;
+}
+
+.videoContainer::-webkit-scrollbar-track {
+  border: 1px solid var(--gray);
+  border-radius: 5px;
+}
+
+.videoContainer::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, var(--main-color) 0%, var(--main-color-bright) 100%);;
+  border: 1px solid var(--gray);
+  border-radius: 5px;
+}
+
+.videoName {
+  width: 260px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/*Description*/
+.subtitle {
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
 .description {
-  margin: 20px 0px 10px 0px;
+  margin: 10px 0px 10px 0px;
 }
 
 /*----------------------User Selection--------------------------*/
+.userSelectionSection {
+  background-color: var(--main-color-white);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 30px 0px 50px 0px;
+}
+
 .userSelectionContainer {
   width: 80%;
   display: flex;
@@ -310,6 +348,7 @@
 .smileySad:hover {
   filter: saturate(0.5);
 }
+
 
 /*---------------save Button-------------------------------*/
 /*

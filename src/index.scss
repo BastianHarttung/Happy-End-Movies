@@ -48,6 +48,10 @@ code {
   align-items: center;
 }
 
+.d-flex-row {
+  display: flex;
+}
+
 #root {
   min-height: 100vh;
   display: flex;
@@ -58,7 +62,8 @@ code {
 :root {
   /*Colors*/
   --main-color: #5e81f8;
-  --main-color-white: #bcd6ff;
+  --main-color-bright: #bcd6ff;
+  --main-color-white: #e6edff;
   --gray: #b2b2b2;
   --green: #28b028;
   --orange: orange;

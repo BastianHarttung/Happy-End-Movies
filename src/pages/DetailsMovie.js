@@ -47,7 +47,7 @@ const DetailsMovie = (props) => {
 
             <div className={classes.movieHeadContainer}>
                 <h2 className={classes.title}>{props.movie.title}</h2>
-                {props.movie.tagline ? <h4 className={classes.subtitle}>{props.movie.tagline}</h4> : ''}
+
                 <img src={props.movie.backdrop_path ?
                     imageUrl + props.movie.backdrop_path
                     : imageUrl + props.movie.poster_path}
@@ -159,92 +159,115 @@ const DetailsMovie = (props) => {
 
                 <div className={classes.videosImagesContainer}>
                     <div>
-                        {props.movie.images.posters.map((poster, index) => {
-                            return (
-                                <a href={imageUrl + poster.file_path}
-                                   target="_blank" rel="noreferrer"
-                                   key={index}>
-                                    <img src={imageUrl + poster.file_path}
-                                         alt="Poster"
-                                         className={classes.images}/>
-                                </a>
-                            )
-                        })}
-                        {props.movie.images.backdrops.map((backdrop, index) => {
-                            return (
-                                <a href={imageUrl + backdrop.file_path}
-                                   target="_blank" rel="noreferrer"
-                                   key={index}>
-                                    <img src={imageUrl + backdrop.file_path}
-                                         alt="Backdrop"
-                                         className={classes.images}/>
-                                </a>
-                            )
-                        })}
-                        {props.movie.images.logos.map((logo, index) => {
-                            return (
-                                <a href={imageUrl + logo.file_path}
-                                   target="_blank" rel="noreferrer"
-                                   key={index}>
-                                    <img src={imageUrl + logo.file_path}
-                                         alt="Logo"
-                                         className={classes.images}/>
-                                </a>
-                            )
-                        })}
+                        {!!props.movie.images.posters.length &&
+                        <div>
+                            <div>Poster</div>
+                            {props.movie.images.posters.map((poster, index) => {
+                                return (
+                                    <a href={imageUrl + poster.file_path}
+                                       target="_blank" rel="noreferrer"
+                                       key={index}>
+                                        <img src={imageUrl + poster.file_path}
+                                             alt="Poster"
+                                             className={classes.images}/>
+                                    </a>
+                                )
+                            })}
+                        </div>
+                        }
+
+                        {!!props.movie.images.backdrops.length &&
+                        <div>
+                            <div>Wallpaper</div>
+                            {props.movie.images.backdrops.map((backdrop, index) => {
+                                return (
+                                    <a href={imageUrl + backdrop.file_path}
+                                       target="_blank" rel="noreferrer"
+                                       key={index}>
+                                        <img src={imageUrl + backdrop.file_path}
+                                             alt="Backdrop"
+                                             className={classes.images}/>
+                                    </a>
+                                )
+                            })}
+                        </div>
+                        }
+
+                        {!!props.movie.images.logos.length && <div>
+                            <div>Logos</div>
+                            {props.movie.images.logos.map((logo, index) => {
+                                return (
+                                    <a href={imageUrl + logo.file_path}
+                                       target="_blank" rel="noreferrer"
+                                       key={index}>
+                                        <img src={imageUrl + logo.file_path}
+                                             alt="Logo"
+                                             className={classes.images}/>
+                                    </a>
+                                )
+                            })}
+                        </div>}
+
                     </div>
-                    <div>
+                    <div className={classes.videoContainer}>
                         {props.movie.videos.results.map((video, index) => {
                             return (
-                                <iframe key={index}
-                                        height="200"
-                                        title={video.name}
-                                        src={'https://www.youtube.com/embed/' + video.key}>
-                                </iframe>
+                                <div>
+                                    <iframe key={index}
+                                            width="260"
+                                            title={video.name}
+                                            src={'https://www.youtube.com/embed/' + video.key}>
+                                    </iframe>
+                                    <div className={classes.videoName}>{video.name}</div>
+                                </div>
                             )
                         })}
                     </div>
                 </div>
 
+                {props.movie.tagline &&
+                <h3 className={classes.subtitle}>{props.movie.tagline}</h3>}
                 {props.movie.overview &&
                 <div className={classes.description}><b>Beschreibung:</b> {props.movie.overview}</div>}
 
             </section>
 
-            <section className={classes.userSelectionContainer}>
+            <section className={classes.userSelectionSection}>
 
-                <div>
-                    <div className={classes.happyEnd}>Dein Happy End ?</div>
+                <div className={classes.userSelectionContainer}>
+                    <div>
+                        <div className={classes.happyEnd}>Dein Happy End ?</div>
 
-                    <div className={classes.smileys}>
-                        <div>
-                            <FaSmileBeam onClick={() => {
-                                props.movie.happyEnd_Voting[props.user] = true;
-                                setMovieForDb({...props.movie})
-                            }}
-                                         className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
-                            <FaMeh onClick={() => {
-                                props.movie.happyEnd_Voting[props.user] = 'neutral';
-                                setMovieForDb({...props.movie})
-                            }}
-                                   className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
+                        <div className={classes.smileys}>
+                            <div>
+                                <FaSmileBeam onClick={() => {
+                                    props.movie.happyEnd_Voting[props.user] = true;
+                                    setMovieForDb({...props.movie})
+                                }}
+                                             className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
+                                <FaMeh onClick={() => {
+                                    props.movie.happyEnd_Voting[props.user] = 'neutral';
+                                    setMovieForDb({...props.movie})
+                                }}
+                                       className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
 
-                            <FaSadTear onClick={() => {
-                                props.movie.happyEnd_Voting[props.user] = false;
-                                setMovieForDb({...props.movie})
-                            }}
-                                       className={props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === false ? classes.smileySad : classes.smiley}></FaSadTear>
+                                <FaSadTear onClick={() => {
+                                    props.movie.happyEnd_Voting[props.user] = false;
+                                    setMovieForDb({...props.movie})
+                                }}
+                                           className={props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === false ? classes.smileySad : classes.smiley}></FaSadTear>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <Button name="In Datenbank speichern und zum Showroom"
-                        fontSize={1}
-                        onClick={() => {
-                            props.saveMovieToDb(movieForDb);
-                            setHappyMovie('')
-                            navigate('/showroom')
-                        }}/>
+                    <Button name="In Datenbank speichern und zum Showroom"
+                            fontSize={1}
+                            onClick={() => {
+                                props.saveMovieToDb(movieForDb);
+                                setHappyMovie('')
+                                navigate('/showroom')
+                            }}/>
+                </div>
 
             </section>
 

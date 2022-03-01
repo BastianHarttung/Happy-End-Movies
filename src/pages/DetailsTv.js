@@ -169,11 +169,14 @@ const DetailsTv = (props) => {
                     <div>
                         {props.movie.images.posters.map((poster, index) => {
                             return (
-                                <a href={imageUrl + poster.file_path} target="_blank" rel="noreferrer">
-                                    <img key={index}
-                                         src={imageUrl + poster.file_path}
-                                         alt="Poster"
-                                         className={classes.images}/>
+                                <a href={imageUrl + poster.file_path}
+                                   key={index}
+                                   target="_blank"
+                                   rel="noreferrer">
+                                    <img
+                                        src={imageUrl + poster.file_path}
+                                        alt="Poster"
+                                        className={classes.images}/>
                                 </a>
                             )
                         })}
