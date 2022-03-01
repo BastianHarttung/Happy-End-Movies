@@ -21,7 +21,8 @@ export const trendingMoviesUrl = `https://api.themoviedb.org/3/trending/all/day?
 export const genreUrl = (searchFor) => `https://api.themoviedb.org/3/genre/${searchFor}/list?api_key=${k}&language=de`
 export const fskUrl = `https://altersfreigaben.de/api2/s/`
 //TODO Use movieDetailsUrl In releases are Certification (FSK)
-export const movieDetailsUrl = (category, tmdbId) => `https://api.themoviedb.org/3/${category}/${tmdbId}?api_key=${k}&language=de&append_to_response=releases,videos,images,content_ratings`
+export const movieDetailsUrl = (category, tmdbId) => `https://api.themoviedb.org/3/${category}/${tmdbId}?api_key=${k}&language=de&append_to_response=releases,videos,content_ratings`
+export const imagesUrl = (category, tmdbId) => `https://api.themoviedb.org/3/${category}/${tmdbId}/images?api_key=${k}`
 
 export const imageUrl = `https://image.tmdb.org/t/p/w500`
 export const imageUrlSmall = `https://image.tmdb.org/t/p/w200`

@@ -12,7 +12,7 @@ import DetailsTv from "./pages/DetailsTv";
 import Showroom from "./pages/Showroom";
 import Impressum from "./pages/Impressum";
 
-import {genreUrl, castUrl, personDetailUrl, searchUrl, movieDetailsUrl} from "./constants"
+import {genreUrl, castUrl, personDetailUrl, searchUrl, movieDetailsUrl, imagesUrl} from "./constants"
 
 import firestoreDb from "./firebase-config";
 import {doc, setDoc} from 'firebase/firestore';
@@ -123,6 +123,7 @@ function App() {
         //console.log('app category', searchCategory)
         if (searchCategory !== 'person') {
             const details = await getDetailMovieInfos(object.id, searchCategory)
+            const images = await getImagesFromMovie(object.id, searchCategory);
             const genres = await getGenreNames(object, searchCategory);
             const fsk = await getGermanFSKFromDetails(details, searchCategory);
             const hasHappyEnd = await calculateHappyEnd(object);
@@ -131,13 +132,14 @@ function App() {
             const completeMovieInfo = {
                 ...object,
                 ...details,
+                images: images,
                 category: searchCategory,
                 genresD: genres,
                 fsk: fsk,
                 happyEnd_Voting: object.happyEnd_Voting ? object.happyEnd_Voting : {},
                 has_happy_end: hasHappyEnd,
                 cast: cast,
-                directors: directors
+                directors: directors,
             }
             setSelectedMovie(completeMovieInfo)
             console.log(completeMovieInfo)
@@ -199,6 +201,18 @@ function App() {
      */
     async function getDetailMovieInfos(id, category) {
         const response = await fetch(movieDetailsUrl(category, id));
+        let data = await response.json();
+        return data
+    }
+
+    /**
+     * Get Images from Movie
+     * @param id
+     * @param category
+     * @return {Promise<void>}
+     */
+    async function getImagesFromMovie(id, category) {
+        const response = await fetch(imagesUrl(category, id));
         let data = await response.json();
         return data
     }
