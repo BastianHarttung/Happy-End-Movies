@@ -4,6 +4,8 @@ import SearchResultBox from "../components/SearchResultBox";
 import {searchUrl, trendingMoviesUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
 import {Button} from "../styleComponents/ButtonStyleComp";
+import {ReactComponent as ArrowLeftIcon} from "../assets/icons/chevron-left.svg";
+import {ReactComponent as ArrowRightIcon} from "../assets/icons/chevron-right.svg";
 
 const Filmsuche = (props) => {
 
@@ -77,11 +79,18 @@ const Filmsuche = (props) => {
                                              movie={movie}/>)}</div>}
 
                 {searchStarted ?
-                    <div className={classes.pageContainer}>Seite: {totalPages.map(page =>
-                        <span key={page}
-                              onClick={() => changePage(page)}
-                              className={activePage === page ? classes.activePageBtn : classes.pageBtn}>
-                          {page}</span>)}
+                    <div className={classes.pageContainer}>
+                        <ArrowLeftIcon className={classes.pageArrow}
+                                       onClick={() => changePage(Math.max(1, activePage - 1))}/>
+                        Seite: {totalPages.slice(Math.max(0, activePage - 4), Math.min(activePage + 3, totalPages.length))
+                        .map(page => <span key={page}
+                                           onClick={() => changePage(page)}
+                                           className={activePage === page ? classes.activePageBtn : classes.pageBtn}>
+                          {page}
+                        </span>
+                        )}
+                        <ArrowRightIcon className={classes.pageArrow}
+                                        onClick={() => changePage(Math.min(activePage + 1, totalPages.length))}/>
                     </div>
                     : ''}
 
