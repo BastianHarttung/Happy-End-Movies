@@ -56,14 +56,14 @@ const DetailsMovie = (props) => {
             </div>
 
             <div className={classes.movieInfosContainer}>
+                {(props.movie.fsk && props.movie.fsk !== 400) &&
                 <div className={classes.fskInfo}>
-                    {props.movie.fsk ?
-                        <img src={`https://altersfreigaben.de/images/rating/de/${props.movie.fsk}_90.png`}
-                             className={classes.fsk}
-                             alt={props.movie.fsk}
-                             title={`FSK ${props.movie.fsk}`}/>
-                        : ''}
-                </div>
+                    <img
+                        src={`https://altersfreigaben.de/images/rating/de/${props.movie.fsk}_90.png`}
+                        className={classes.fsk}
+                        alt={props.movie.fsk}
+                        title={`FSK ${props.movie.fsk}`}/>
+                </div>}
 
                 <p className={classes.releaseYear}>{props.movie.release_date.slice(0, 4)}
                 </p>
@@ -221,9 +221,8 @@ const DetailsMovie = (props) => {
                     <div className={classes.videoContainer}>
                         {props.movie.videos.results.map((video, index) => {
                             return (
-                                <div>
-                                    <iframe key={index}
-                                            width="260"
+                                <div key={index}>
+                                    <iframe width="260"
                                             title={video.name}
                                             src={'https://www.youtube.com/embed/' + video.key}>
                                     </iframe>

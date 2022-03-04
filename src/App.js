@@ -252,10 +252,12 @@ function App() {
     async function getGermanFSKFromDetails(detailsObject, category) {
         if (category === 'movie') {
             const releaseGerman = detailsObject.releases.countries.find((country) => country.iso_3166_1 === 'DE');
-            return +releaseGerman.certification
+            if (!!releaseGerman) return +releaseGerman.certification
+            else return 400
         } else if (category === 'tv') {
             const ratingsGerman = detailsObject.content_ratings.results.find((country) => country.iso_3166_1 === 'DE');
-            return +ratingsGerman.rating
+            if (!!ratingsGerman) return +ratingsGerman.rating
+            else return 400
         }
     }
 
