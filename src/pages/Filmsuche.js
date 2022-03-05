@@ -4,8 +4,7 @@ import SearchResultBox from "../components/SearchResultBox";
 import {searchUrl, trendingMoviesUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
 import {Button} from "../styleComponents/ButtonStyleComp";
-import {ReactComponent as ArrowLeftIcon} from "../assets/icons/chevron-left.svg";
-import {ReactComponent as ArrowRightIcon} from "../assets/icons/chevron-right.svg";
+import Pagination from "../components/Pagination";
 
 const Filmsuche = (props) => {
 
@@ -20,7 +19,6 @@ const Filmsuche = (props) => {
     const [activePage, setActivePage] = useState(0)
 
     const [popularMovies, setPopularMovies] = useState([])
-
 
     useEffect(() => {
         getPopularMoviesFromTmdb().then((response) => {
@@ -78,24 +76,10 @@ const Filmsuche = (props) => {
                                              category={searchingCategory}
                                              movie={movie}/>)}</div>}
 
-                {searchStarted ?
-                    <div className={classes.pageContainer}>
-                        <ArrowLeftIcon className={classes.pageArrow}
-                                       onClick={() => changePage(Math.max(1, activePage - 1))}/>
-                        Seite: {totalPages.slice(Math.max(0, activePage - 4), Math.min(activePage + 3, totalPages.length))
-                        .map(page => <span key={page}
-                                           onClick={() => changePage(page)}
-                                           className={activePage === page ? classes.activePageBtn : classes.pageBtn}>
-                          {page}
-                        </span>
-                        )}
-                        <ArrowRightIcon className={classes.pageArrow}
-                                        onClick={() => changePage(Math.min(activePage + 1, totalPages.length))}/>
-                    </div>
-                    : ''}
-
-                {searchStarted ? <div className={classes.totalResults}>Anzahl Ergebnisse: {totalResults}</div>
-                    : ''}
+                {searchStarted && <Pagination totalPages={totalPages}
+                                              activePage={activePage}
+                                              changePage={(page) => changePage(page)}
+                                              totalResults={totalResults}/>}
 
             </div>
 

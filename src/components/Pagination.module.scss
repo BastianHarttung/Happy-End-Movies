@@ -1,43 +1,10 @@
-.filmsucheSection {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.filmsucheContainer {
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-
-/*---------------Category buttons-----------------*/
-
-.categoryBtnContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.headOverResults {
-  font-size: 23px;
-  margin-top: 10px;
-}
-
-/*-----------Results---------------------*/
-.resultSection {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  margin-bottom: 15px;
-}
-
 /*--------------Page-------------------*/
+.paginationSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .pageContainer {
   max-width: 500px;
   font-size: 1.2rem;
@@ -83,4 +50,3 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
-

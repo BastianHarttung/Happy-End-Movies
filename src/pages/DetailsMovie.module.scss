@@ -251,13 +251,13 @@
 }
 
 .imageContainer::-webkit-scrollbar-track {
-  border: 1px solid var(--gray);
+  //border: 1px solid var(--gray);
   border-radius: 5px;
 }
 
 .imageContainer::-webkit-scrollbar-thumb {
   background: linear-gradient(90deg, var(--main-color) 0%, var(--main-color-bright) 100%);;
-  border: 1px solid var(--gray);
+  //border: 1px solid var(--gray);
   border-radius: 5px;
 }
 
@@ -272,13 +272,13 @@
 }
 
 .videoContainer::-webkit-scrollbar-track {
-  border: 1px solid var(--gray);
+  //border: 1px solid var(--gray);
   border-radius: 5px;
 }
 
 .videoContainer::-webkit-scrollbar-thumb {
   background: linear-gradient(90deg, var(--main-color) 0%, var(--main-color-bright) 100%);;
-  border: 1px solid var(--gray);
+  //border: 1px solid var(--gray);
   border-radius: 5px;
 }
 
