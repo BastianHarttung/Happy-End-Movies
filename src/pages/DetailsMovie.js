@@ -11,32 +11,37 @@ import PersonBox from "../components/PersonBox";
 import {Button} from "../styleComponents/ButtonStyleComp";
 
 
-const DetailsMovie = (props) => {
+const DetailsMovie = ({
+                          movie,
+                          user,
+                          saveMovieToDb,
+                          saveSelectedPerson,
+                      }) => {
 
     const navigate = useNavigate();
     const urlParams = useParams()
 
-    const genres = props.movie.genres ? props.movie.genres : [{name: 'a'}, {name: 'b'}]
+    const genres = movie.genres ? movie.genres : [{name: 'a'}, {name: 'b'}]
 
-    const [movieForDb, setMovieForDb] = useState(props.movie)
-    const [happyMovie, setHappyMovie] = useState(props.movie.has_happy_end === true ? true
-        : props.movie.has_happy_end === false ? false
+    const [movieForDb, setMovieForDb] = useState(movie)
+    const [happyMovie, setHappyMovie] = useState(movie.has_happy_end === true ? true
+        : movie.has_happy_end === false ? false
             : 'neutral')
 
     const [scrollActors, setScrollActors] = useState(0)
     const [scrollWidth, setScrollWidth] = useState(100)
 
     const [searchActor, setSearchActor] = useState('')
-    const [filteredActors, setFilteredActors] = useState(props.movie.cast)
+    const [filteredActors, setFilteredActors] = useState(movie.cast)
 
-    //console.log('details movie', props.movie)
-    //console.log('details happy end', props.movie.has_happy_end)
+    const [userSelection, setUserSelection] = useState({[user]: {happyEnd_Voting: "neutral", haveSeen: false}})
+
 
     useEffect(() => {
-        props.movie.has_happy_end === true ? setHappyMovie(true)
-            : props.movie.has_happy_end === false ? setHappyMovie(false)
+        movie.has_happy_end === true ? setHappyMovie(true)
+            : movie.has_happy_end === false ? setHappyMovie(false)
                 : setHappyMovie('neutral')
-    }, [props.movie.has_happy_end, props.movie]);
+    }, [movie.has_happy_end, movie]);
 
     useEffect(() => {
         setScrollWidth(getScrollWidth())
@@ -46,30 +51,30 @@ const DetailsMovie = (props) => {
         <section className={classes.detailsSection}>
 
             <div className={classes.movieHeadContainer}>
-                <h2 className={classes.title}>{props.movie.title}</h2>
+                <h2 className={classes.title}>{movie.title}</h2>
 
-                <img src={props.movie.backdrop_path ?
-                    imageUrl + props.movie.backdrop_path
-                    : imageUrl + props.movie.poster_path}
+                <img src={movie.backdrop_path ?
+                    imageUrl + movie.backdrop_path
+                    : imageUrl + movie.poster_path}
                      className={classes.headImage}
                      alt="Backdrop"/>
             </div>
 
             <div className={classes.movieInfosContainer}>
-                {(props.movie.fsk && props.movie.fsk !== 400) &&
+                {(movie.fsk || movie.fsk === 0 && movie.fsk !== 400) &&
                 <div className={classes.fskInfo}>
                     <img
-                        src={`https://altersfreigaben.de/images/rating/de/${props.movie.fsk}_90.png`}
+                        src={`https://altersfreigaben.de/images/rating/de/${movie.fsk}_90.png`}
                         className={classes.fsk}
-                        alt={props.movie.fsk}
-                        title={`FSK ${props.movie.fsk}`}/>
+                        alt={movie.fsk}
+                        title={`FSK ${movie.fsk}`}/>
                 </div>}
 
-                <p className={classes.releaseYear}>{props.movie.release_date.slice(0, 4)}
+                <p className={classes.releaseYear}>{movie.release_date.slice(0, 4)}
                 </p>
 
-                <p>{props.movie.runtime} min
-                    ({laufzeitInStunden(props.movie.runtime).stunden} Std. {laufzeitInStunden(props.movie.runtime).minuten} min.)
+                <p>{movie.runtime} min
+                    ({laufzeitInStunden(movie.runtime).stunden} Std. {laufzeitInStunden(movie.runtime).minuten} min.)
                 </p>
             </div>
 
@@ -87,7 +92,7 @@ const DetailsMovie = (props) => {
                                        style={{color: 'var(--orange)'}}/>
                                 : ''}
                     <img className={classes.posterImage}
-                         src={props.movie.poster_path ? imageUrl + props.movie.poster_path : emptyImage}
+                         src={movie.poster_path ? imageUrl + movie.poster_path : emptyImage}
                          alt="Poster"/>
                 </div>
 
@@ -100,17 +105,17 @@ const DetailsMovie = (props) => {
                         </div>
 
 
-                        <h5 className={classes.director}>{props.movie.directors.length > 0 ? 'Regie' : ''}</h5>
+                        <h5 className={classes.director}>{movie.directors.length > 0 ? 'Regie' : ''}</h5>
                         <div className={classes.directorsContainer}>
-                            {props.movie.directors.map((director, index) =>
+                            {movie.directors.map((director, index) =>
                                 <PersonBox
-                                    saveSelectedPerson={(person) => props.saveSelectedPerson(person)}
+                                    saveSelectedPerson={(person) => saveSelectedPerson(person)}
                                     person={director}
                                     key={index}/>)}
                         </div>
                     </div>
 
-                    <div className={classes.voting}>{props.movie.vote_average}</div>
+                    <div className={classes.voting}>{movie.vote_average}</div>
 
                 </div>
             </div>
@@ -137,14 +142,14 @@ const DetailsMovie = (props) => {
                                value={searchActor}
                                onChange={e => setSearchActor(e.target.value)}
                                onKeyPress={keyPressEvent}/>
-                        <div className={classes.lengthActors}>(Gesamt: {props.movie.cast.length} Schauspieler)</div>
+                        <div className={classes.lengthActors}>(Gesamt: {movie.cast.length} Schauspieler)</div>
                     </div>
 
                     <div id='actorContainer' className={classes.actorContainer}>
-                        {props.movie.cast ?
+                        {movie.cast ?
                             filteredActors.map((actor, index) =>
                                 <PersonBox
-                                    saveSelectedPerson={(person) => props.saveSelectedPerson(person)}
+                                    saveSelectedPerson={(person) => saveSelectedPerson(person)}
                                     key={index}
                                     person={actor}/>
                             )
@@ -159,11 +164,11 @@ const DetailsMovie = (props) => {
 
                 <div className={classes.videosImagesContainer}>
                     <div>
-                        {!!props.movie.images.posters.length &&
+                        {!!movie.images.posters.length &&
                         <div>
                             <div>Poster</div>
                             <div className={classes.imageContainer}>
-                                {props.movie.images.posters.map((poster, index) => {
+                                {movie.images.posters.map((poster, index) => {
                                     return (
                                         <a href={imageUrl + poster.file_path}
                                            target="_blank" rel="noreferrer"
@@ -179,11 +184,11 @@ const DetailsMovie = (props) => {
 
                         }
 
-                        {!!props.movie.images.backdrops.length &&
+                        {!!movie.images.backdrops.length &&
                         <div>
                             <div>Backdrops</div>
                             <div className={classes.imageContainer}>
-                                {props.movie.images.backdrops.map((backdrop, index) => {
+                                {movie.images.backdrops.map((backdrop, index) => {
                                     return (
                                         <a href={imageUrl + backdrop.file_path}
                                            target="_blank" rel="noreferrer"
@@ -198,11 +203,11 @@ const DetailsMovie = (props) => {
                         </div>
                         }
 
-                        {!!props.movie.images.logos.length &&
+                        {!!movie.images.logos.length &&
                         <div>
                             <div>Logos</div>
                             <div className={classes.imageContainer}>
-                                {props.movie.images.logos.map((logo, index) => {
+                                {movie.images.logos.map((logo, index) => {
                                     return (
                                         <a href={imageUrl + logo.file_path}
                                            target="_blank" rel="noreferrer"
@@ -219,7 +224,7 @@ const DetailsMovie = (props) => {
 
                     </div>
                     <div className={classes.videoContainer}>
-                        {props.movie.videos.results.map((video, index) => {
+                        {movie.videos.results.map((video, index) => {
                             return (
                                 <div key={index}>
                                     <iframe width="260"
@@ -233,10 +238,10 @@ const DetailsMovie = (props) => {
                     </div>
                 </div>
 
-                {props.movie.tagline &&
-                <h3 className={classes.subtitle}>{props.movie.tagline}</h3>}
-                {props.movie.overview &&
-                <div className={classes.description}><b>Beschreibung:</b> {props.movie.overview}</div>}
+                {movie.tagline &&
+                <h3 className={classes.subtitle}>{movie.tagline}</h3>}
+                {movie.overview &&
+                <div className={classes.description}><b>Beschreibung:</b> {movie.overview}</div>}
 
             </section>
 
@@ -248,22 +253,12 @@ const DetailsMovie = (props) => {
 
                         <div className={classes.smileys}>
                             <div>
-                                <FaSmileBeam onClick={() => {
-                                    props.movie.happyEnd_Voting[props.user] = true;
-                                    setMovieForDb({...props.movie})
-                                }}
-                                             className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
-                                <FaMeh onClick={() => {
-                                    props.movie.happyEnd_Voting[props.user] = 'neutral';
-                                    setMovieForDb({...props.movie})
-                                }}
-                                       className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
-
-                                <FaSadTear onClick={() => {
-                                    props.movie.happyEnd_Voting[props.user] = false;
-                                    setMovieForDb({...props.movie})
-                                }}
-                                           className={props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === false ? classes.smileySad : classes.smiley}></FaSadTear>
+                                <FaSmileBeam onClick={() => setUserSelection({...userSelection, happyEnd_Voting: true})}
+                                             className={(userSelection.happyEnd_Voting && userSelection.happyEnd_Voting === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
+                                <FaMeh onClick={() => setUserSelection({...userSelection, happyEnd_Voting: "neutral"})}
+                                       className={(userSelection.happyEnd_Voting && userSelection.happyEnd_Voting === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
+                                <FaSadTear onClick={() => setUserSelection({...userSelection, happyEnd_Voting: false})}
+                                           className={userSelection.happyEnd_Voting && userSelection.happyEnd_Voting === false ? classes.smileySad : classes.smiley}></FaSadTear>
                             </div>
                         </div>
                     </div>
@@ -271,9 +266,10 @@ const DetailsMovie = (props) => {
                     <Button name="In Datenbank speichern und zum Showroom"
                             fontSize={1}
                             onClick={() => {
-                                props.saveMovieToDb(movieForDb);
-                                setHappyMovie('')
-                                navigate('/showroom')
+                                setMovieForDb({...movie, userSelection});
+                                saveMovieToDb(movieForDb);
+                                setHappyMovie('');
+                                navigate('/showroom');
                             }}/>
                 </div>
 
@@ -290,10 +286,10 @@ const DetailsMovie = (props) => {
         const actorSearchLow = actorSearch.toLowerCase();
         if (actorSearch === '') {
             console.log('alle actors anzeigen')
-            setFilteredActors(props.movie.cast)
+            setFilteredActors(movie.cast)
         } else {
             console.log('suche nach ' + actorSearch)
-            setFilteredActors(props.movie.cast.filter(actor => {
+            setFilteredActors(movie.cast.filter(actor => {
                     if (actor.character) {
                         return actor.name.toLowerCase().includes(actorSearchLow) ||
                             actor.character.toLowerCase().includes(actorSearchLow)

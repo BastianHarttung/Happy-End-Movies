@@ -136,7 +136,12 @@ function App() {
                 category: searchCategory,
                 genresD: genres,
                 fsk: fsk,
-                happyEnd_Voting: object.happyEnd_Voting ? object.happyEnd_Voting : {},
+                userSelections: {
+                    [userId]: {
+                        happyEnd_Voting: object.userSelections ? object.userSelections[userId].happyEnd_Voting : "",
+                        haveSeen: true
+                    }
+                },
                 has_happy_end: hasHappyEnd,
                 cast: cast,
                 directors: directors,
