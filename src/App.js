@@ -139,7 +139,7 @@ function App() {
                 userSelections: {
                     [userId]: {
                         happyEnd_Voting: object.userSelections ? object.userSelections[userId].happyEnd_Voting : "",
-                        haveSeen: true
+                        haveSeen: object.userSelections ? object.userSelections[userId].haveSeen : false,
                     }
                 },
                 has_happy_end: hasHappyEnd,

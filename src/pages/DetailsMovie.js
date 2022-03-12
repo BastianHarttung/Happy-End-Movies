@@ -5,7 +5,15 @@ import emptyImage from "../assets/img/movie-poster.png"
 import {useNavigate, useParams} from "react-router-dom";
 import {useState, useEffect} from "react";
 
-import {FaSmileBeam, FaSadTear, FaMeh, FaSearch, FaChevronRight, FaChevronLeft} from "react-icons/all";
+import {
+    FaSmileBeam,
+    FaSadTear,
+    FaMeh,
+    FaSearch,
+    FaChevronRight,
+    FaChevronLeft,
+    FaRegEyeSlash, FaRegEye
+} from "react-icons/all";
 import {imageUrl} from "../constants";
 import PersonBox from "../components/PersonBox";
 import {Button} from "../styleComponents/ButtonStyleComp";
@@ -248,20 +256,30 @@ const DetailsMovie = ({
             <section className={classes.userSelectionSection}>
 
                 <div className={classes.userSelectionContainer}>
+
+                    <div>
+                        <div className={classes.gesehen}>Schon gesehen?</div>
+                        <div className={classes.eyes}>
+                            <FaRegEye onClick={() => setUserSelection({...userSelection, haveSeen: true})}
+                                      className={(userSelection.haveSeen === true) ? classes.eyeGreen : classes.eye}/>
+                            <FaRegEyeSlash onClick={() => setUserSelection({...userSelection, haveSeen: false})}
+                                           className={(userSelection.haveSeen === false) ? classes.eyeRed : classes.eye}/>
+                        </div>
+                    </div>
+
+                    {userSelection.haveSeen === true &&
                     <div>
                         <div className={classes.happyEnd}>Dein Happy End ?</div>
 
                         <div className={classes.smileys}>
-                            <div>
-                                <FaSmileBeam onClick={() => setUserSelection({...userSelection, happyEnd_Voting: true})}
-                                             className={(userSelection.happyEnd_Voting && userSelection.happyEnd_Voting === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
-                                <FaMeh onClick={() => setUserSelection({...userSelection, happyEnd_Voting: "neutral"})}
-                                       className={(userSelection.happyEnd_Voting && userSelection.happyEnd_Voting === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
-                                <FaSadTear onClick={() => setUserSelection({...userSelection, happyEnd_Voting: false})}
-                                           className={userSelection.happyEnd_Voting && userSelection.happyEnd_Voting === false ? classes.smileySad : classes.smiley}></FaSadTear>
-                            </div>
+                            <FaSmileBeam onClick={() => setUserSelection({...userSelection, happyEnd_Voting: true})}
+                                         className={(userSelection.happyEnd_Voting && userSelection.happyEnd_Voting === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
+                            <FaMeh onClick={() => setUserSelection({...userSelection, happyEnd_Voting: "neutral"})}
+                                   className={(userSelection.happyEnd_Voting && userSelection.happyEnd_Voting === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
+                            <FaSadTear onClick={() => setUserSelection({...userSelection, happyEnd_Voting: false})}
+                                       className={userSelection.happyEnd_Voting === false ? classes.smileySad : classes.smiley}></FaSadTear>
                         </div>
-                    </div>
+                    </div>}
 
                     <Button name="In Datenbank speichern und zum Showroom"
                             fontSize={1}

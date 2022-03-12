@@ -317,7 +317,6 @@
 
 .happyEnd {
   font-weight: 500;
-  margin-top: 5px;
 }
 
 /*-------Smileys----*/
@@ -325,51 +324,92 @@
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+
+  .smiley {
+    font-size: 35px;
+    cursor: pointer;
+  }
+
+  .smiley:hover {
+    color: gray;
+  }
+
+  .smileyLaugh {
+    color: var(--green);
+    font-size: 36px;
+    cursor: pointer;
+  }
+
+  .smileyLaugh:hover {
+    color: var(--green-light);
+  }
+
+  .smileyNeutral {
+    color: var(--orange);
+    font-size: 36px;
+    cursor: pointer;
+  }
+
+  .smileyNeutral:hover {
+    color: var(--orange-light);
+  }
+
+  .smileySad {
+    color: var(--red);
+    font-size: 36px;
+    cursor: pointer;
+  }
+
+  .smileySad:hover {
+    color: var(--red-light);
+  }
 }
 
-.smiley {
-  font-size: 35px;
-  margin-right: 10px;
-  cursor: pointer;
+.gesehen {
+  font-weight: 500;
 }
 
-.smiley:hover {
-  color: gray;
-}
+/*---------------Eyes--------------------*/
+.eyes {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 
-.smileyLaugh {
-  color: var(--green);
-  font-size: 35px;
-  margin-right: 10px;
-  cursor: pointer;
-}
+  .eye {
+    font-size: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 3px;
 
-.smileyLaugh:hover {
-  filter: saturate(0.5);
-}
+    &:hover {
+      background-color: var(--gray-light);
+    }
+  }
 
-.smileyNeutral {
-  color: var(--orange);
-  font-size: 35px;
-  margin-right: 10px;
-  cursor: pointer;
-}
+  .eyeGreen {
+    background-color: var(--green);
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 3px;
 
-.smileyNeutral:hover {
-  filter: saturate(0.5);
-}
+    &:hover {
+      background-color: var(--green-light);
+    }
+  }
 
-.smileySad {
-  color: var(--red);
-  font-size: 35px;
-  margin-right: 10px;
-  cursor: pointer;
-}
+  .eyeRed {
+    background-color: var(--red);
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 3px;
 
-.smileySad:hover {
-  filter: saturate(0.5);
+    &:hover {
+      background-color: var(--red-light);
+    }
+  }
 }
-
 
 /*---------------save Button-------------------------------*/
 /*
