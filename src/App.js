@@ -1,6 +1,6 @@
 import './App.scss';
 import {Route, BrowserRouter, Routes} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -26,12 +26,22 @@ function App() {
     const [selectedMovie, setSelectedMovie] = useState({})
     const [selectedPerson, setSelectedPerson] = useState({})
 
+    const [darkMode, setDarkMode] = useState(false);
+
     const [userId, setUserId] = useState(23)
+
+    useEffect(() => {
+        if (darkMode) {
+            document.body.classList.add("dark")
+        } else {
+            document.body.classList.remove("dark")
+        }
+    }, [darkMode])
 
     return (
         <BrowserRouter basename="/happy-end-movies">
             <div>
-                <Header/>
+                <Header setDarkMode={(dark) => setDarkMode(dark)}/>
                 <Routes>
                     <Route path='/filmsuche'
                            exact={true}

@@ -5,7 +5,7 @@ import {ReactComponent as HappyLogo} from '../assets/logos/Happy-End_logo-mit-Te
 import {useEffect, useState} from "react";
 
 
-const Header = () => {
+const Header = ({setDarkMode}) => {
 
     const [isHandy, setIsHandy] = useState(false)
 
@@ -23,7 +23,8 @@ const Header = () => {
                 <HappyLogo className={classes.happyLogo}/>
             </Link>}
 
-            <Navigation isHandy={isHandy}/>
+            <Navigation isHandy={isHandy}
+                        propSetDarkMode={(dark) => setDarkMode(dark)}/>
 
         </header>
     )
