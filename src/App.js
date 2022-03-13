@@ -19,6 +19,7 @@ import {doc, setDoc} from 'firebase/firestore';
 import Hilfe from "./pages/Hilfe";
 import Login from "./pages/Login";
 import 'dotenv/config'
+import ModalUserSettings from "./components/Modal-UserSettings";
 
 
 function App() {
@@ -27,6 +28,8 @@ function App() {
     const [selectedPerson, setSelectedPerson] = useState({})
 
     const [darkMode, setDarkMode] = useState(false);
+    const [colorTheme, setColorTheme] = useState("blue");
+    const [openUserSettings, setOpenUserSettings] = useState(false);
 
     const [userId, setUserId] = useState(23)
 
@@ -41,7 +44,10 @@ function App() {
     return (
         <BrowserRouter basename="/happy-end-movies">
             <div>
-                <Header setDarkMode={(dark) => setDarkMode(dark)}/>
+                {openUserSettings && <ModalUserSettings openModalUser={(modal) => setOpenUserSettings(modal)}
+                                                        propDarkMode={darkMode}
+                                                        appDarkMode={(mode) => setDarkMode(mode)}/>}
+                <Header openModalUserSettings={(modal) => setOpenUserSettings(modal)}/>
                 <Routes>
                     <Route path='/filmsuche'
                            exact={true}

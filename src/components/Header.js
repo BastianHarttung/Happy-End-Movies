@@ -5,7 +5,7 @@ import {ReactComponent as HappyLogo} from '../assets/logos/Happy-End_logo-mit-Te
 import {useEffect, useState} from "react";
 
 
-const Header = ({setDarkMode}) => {
+const Header = ({openModalUserSettings}) => {
 
     const [isHandy, setIsHandy] = useState(false)
 
@@ -24,7 +24,7 @@ const Header = ({setDarkMode}) => {
             </Link>}
 
             <Navigation isHandy={isHandy}
-                        propSetDarkMode={(dark) => setDarkMode(dark)}/>
+                        openModalUserSettings={(modal) => openModalUserSettings(modal)}/>
 
         </header>
     )

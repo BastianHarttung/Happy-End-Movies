@@ -3,11 +3,9 @@ import icons_search_light from "../assets/icons/search_light.svg"
 import icon_projector from "../assets/icons/projector_light.svg"
 import classes from "./Navigation.module.scss";
 import iconSignout from "../assets/icons/sign-out-alt_light.svg";
-import {useState} from "react";
+import {HiOutlineCog} from "react-icons/all";
 
-const Navigation = ({isHandy, propSetDarkMode}) => {
-
-    const [darkMode, setDarkMode] = useState(false)
+const Navigation = ({isHandy, openModalUserSettings}) => {
 
     return (
         <nav>
@@ -27,9 +25,11 @@ const Navigation = ({isHandy, propSetDarkMode}) => {
                          className={classes.icons}/>
                 </div>
             </Link>
-            <button onClick={saveDarkMode}>DarkMode</button>
+
             <div className={classes.logoutLinkContainer}>
                 {!isHandy && <div className={classes.username}>BASTIAN</div>}
+                <HiOutlineCog className={classes.settingsIcon}
+                              onClick={() => openModalUserSettings(true)}/>
                 <Link to="/"
                       className={classes.logoutLink}>
                     <div className={classes.linkContainer}>
@@ -41,11 +41,6 @@ const Navigation = ({isHandy, propSetDarkMode}) => {
             </div>
         </nav>
     )
-
-    function saveDarkMode() {
-        propSetDarkMode(!darkMode);
-        setDarkMode(!darkMode);
-    }
 
 }
 

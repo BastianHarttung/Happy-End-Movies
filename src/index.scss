@@ -16,6 +16,7 @@ body {
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--font-color);
 
   /*Colors*/
   --background-color: white;
@@ -45,6 +46,9 @@ body {
   &.dark {
     --background-color: #1c1c1c;
     --font-color: white;
+  }
+
+  &.theme-orange {
     --main-color: #c07300;
     --main-color-bright: #eeac6a;
     --main-color-white: #e1c1a5;
