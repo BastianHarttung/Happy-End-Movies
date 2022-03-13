@@ -43,7 +43,6 @@ const Navigation = ({isHandy, propSetDarkMode}) => {
     )
 
     function saveDarkMode() {
-        console.log(!darkMode)
         propSetDarkMode(!darkMode);
         setDarkMode(!darkMode);
     }

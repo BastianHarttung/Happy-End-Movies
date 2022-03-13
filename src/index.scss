@@ -19,6 +19,7 @@ body {
 
   /*Colors*/
   --background-color: white;
+  --font-color: #1c1c1c;
   --main-color: #5e81f8;
   --main-color-bright: #bcd6ff;
   --main-color-white: #e6edff;
@@ -43,7 +44,10 @@ body {
 
   &.dark {
     --background-color: #1c1c1c;
-    --main-color: purple;
+    --font-color: white;
+    --main-color: #c07300;
+    --main-color-bright: #eeac6a;
+    --main-color-white: #e1c1a5;
   }
 }
 
