@@ -20,6 +20,7 @@ import Hilfe from "./pages/Hilfe";
 import Login from "./pages/Login";
 import 'dotenv/config'
 import ModalUserSettings from "./components/Modal-UserSettings";
+import Menu from "./pages/Menu";
 
 
 function App() {
@@ -47,67 +48,70 @@ function App() {
                 {openUserSettings && <ModalUserSettings openModalUser={(modal) => setOpenUserSettings(modal)}
                                                         propDarkMode={darkMode}
                                                         appDarkMode={(mode) => setDarkMode(mode)}/>}
-                <Header openModalUserSettings={(modal) => setOpenUserSettings(modal)}/>
+
                 <Routes>
-                    <Route path='/filmsuche'
-                           exact={true}
-                           element={
-                               <Filmsuche
-                                   saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
-                               />}
-                    />
-                    <Route path='/showroom'
-                           exact={true}
-                           element={
-                               <Showroom
-                                   saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
-                               />}
-                    />
-                    <Route path='/detailansicht/movie/:id'
-                           exact={true}
-                           element={
-                               <DetailsMovie
-                                   saveMovieToDb={(movieForDb) => saveMovieToDb(movieForDb)}
-                                   saveSelectedPerson={(person) => saveSelectedMovieOrPerson(person, 'person')}
-                                   movie={selectedMovie}
-                                   user={userId}/>}
-                    />
-                    <Route path='/detailansicht/tv/:id'
-                           exact={true}
-                           element={
-                               <DetailsTv
-                                   saveMovieToDb={(movieForDb) => saveMovieToDb(movieForDb)}
-                                   saveSelectedPerson={(person) => saveSelectedMovieOrPerson(person, 'person')}
-                                   movie={selectedMovie}
-                                   user={userId}/>}
-                    />
-                    <Route path='/detailansicht/person/:id'
-                           exact={true}
-                           element={
-                               <DetailsPerson
-                                   saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
-                                   person={selectedPerson}/>}
-                    />
-                    <Route path='/impressum'
-                           exact={true}
-                           element={<Impressum/>}
-                    />
-                    <Route path='/hilfe'
-                           exact={true}
-                           element={<Hilfe/>}
-                    />
-                    <Route path='/menu'
-                           exact={true}
-                           element={<Hauptmenue/>}
-                    />
                     <Route path='/'
                            exact={true}
                            element={<Login/>}
                     />
+
+                    <Route path='' element={<Menu setOpenUserSettings={(modal) => setOpenUserSettings(modal)}/>}>
+
+                        <Route path='filmsuche'
+                               exact={true}
+                               element={
+                                   <Filmsuche
+                                       saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
+                                   />}
+                        />
+                        <Route path='showroom'
+                               exact={true}
+                               element={
+                                   <Showroom
+                                       saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
+                                   />}
+                        />
+                        <Route path='detailansicht/movie/:id'
+                               exact={true}
+                               element={
+                                   <DetailsMovie
+                                       saveMovieToDb={(movieForDb) => saveMovieToDb(movieForDb)}
+                                       saveSelectedPerson={(person) => saveSelectedMovieOrPerson(person, 'person')}
+                                       movie={selectedMovie}
+                                       user={userId}/>}
+                        />
+                        <Route path='detailansicht/tv/:id'
+                               exact={true}
+                               element={
+                                   <DetailsTv
+                                       saveMovieToDb={(movieForDb) => saveMovieToDb(movieForDb)}
+                                       saveSelectedPerson={(person) => saveSelectedMovieOrPerson(person, 'person')}
+                                       movie={selectedMovie}
+                                       user={userId}/>}
+                        />
+                        <Route path='detailansicht/person/:id'
+                               exact={true}
+                               element={
+                                   <DetailsPerson
+                                       saveSelectedMovie={(movie, category) => saveSelectedMovieOrPerson(movie, category)}
+                                       person={selectedPerson}/>}
+                        />
+                        <Route path='impressum'
+                               exact={true}
+                               element={<Impressum/>}
+                        />
+                        <Route path='hilfe'
+                               exact={true}
+                               element={<Hilfe/>}
+                        />
+                        <Route path='menu'
+                               exact={true}
+                               element={<Hauptmenue/>}
+                        />
+                    </Route>
                 </Routes>
             </div>
 
-            <Footer/>
         </BrowserRouter>
     );
 

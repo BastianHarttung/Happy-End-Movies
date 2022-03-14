@@ -3,7 +3,7 @@ import icons_search_light from "../assets/icons/search_light.svg"
 import icon_projector from "../assets/icons/projector_light.svg"
 import classes from "./Navigation.module.scss";
 import iconSignout from "../assets/icons/sign-out-alt_light.svg";
-import {HiOutlineCog} from "react-icons/all";
+import {IoSettingsOutline} from "react-icons/all";
 
 const Navigation = ({isHandy, openModalUserSettings}) => {
 
@@ -28,7 +28,7 @@ const Navigation = ({isHandy, openModalUserSettings}) => {
 
             <div className={classes.logoutLinkContainer}>
                 {!isHandy && <div className={classes.username}>BASTIAN</div>}
-                <HiOutlineCog className={classes.settingsIcon}
+                <IoSettingsOutline className={classes.settingsIcon}
                               onClick={() => openModalUserSettings(true)}/>
                 <Link to="/"
                       className={classes.logoutLink}>
