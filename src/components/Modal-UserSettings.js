@@ -1,30 +1,33 @@
-import React, {useState} from 'react';
+import React from "react";
 import classes from "./Modal-UserSettings.module.scss";
-import {Button} from "../styleComponents/ButtonStyleComp";
+import { Button } from "../styleComponents/ButtonStyleComp";
+import globalStore from "../stores/global-store";
 
-function ModalUserSettings({openModalUser, propDarkMode, appDarkMode}) {
+function ModalUserSettings({ openModalUser }) {
+   const { toggleDarkMode, setColorTheme } = globalStore;
 
-    const [darkMode, setDarkMode] = useState(propDarkMode)
-
-    return (
-        <section className={classes.modal}
-                 onClick={() => openModalUser(false)}>
-            <div className={classes.modalBox}
-                 onClick={(event) => event.stopPropagation()}>
-                <div style={{color: "black", fontWeight: "500"}}>Color Settings</div>
-                <button onClick={changeDarkMode}>DarkMode</button>
-                <button>Theme</button>
-                <Button name="Schließen"
-                        onClick={() => openModalUser(false)}/>
+   return (
+      <section className={classes.modal} onClick={() => openModalUser(false)}>
+         <div
+            className={classes.modalBox}
+            onClick={(event) => event.stopPropagation()}
+         >
+            <div style={{ color: "black", fontWeight: "500" }}>
+               Farb Einstellungen
             </div>
-        </section>
-    );
-
-    function changeDarkMode() {
-        setDarkMode(!darkMode);
-        appDarkMode(!darkMode);
-    }
-
+            <button onClick={toggleDarkMode}>Dark Modus</button>
+            <label className={classes.farbThemaContainer}>
+               Farb-Thema:
+               <input
+                  type="color"
+                  className={classes.themeInput}
+                  onChange={(event) => setColorTheme(event.target.value)}
+               />
+            </label>
+            <Button name="Schließen" onClick={() => openModalUser(false)} />
+         </div>
+      </section>
+   );
 }
 
 export default ModalUserSettings;

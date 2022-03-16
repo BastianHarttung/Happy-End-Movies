@@ -20,3 +20,26 @@
     padding: 20px;
   }
 }
+
+.farbThemaContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// Input color design
+.themeInput {
+  -webkit-appearance: none;
+  border: none;
+  width: 90px;
+  height: 40px;
+  margin-top: 7px;
+}
+
+.themeInput::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.themeInput::-webkit-color-swatch {
+  border: none;
+}

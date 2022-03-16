@@ -18,7 +18,7 @@ const Header = ({openModalUserSettings}) => {
         <header className={classes.header}>
 
             {!isHandy &&
-            <Link to='/menu'
+            <Link to='/start'
                   className={classes.headerLogoLink}>
                 <HappyLogo className={classes.happyLogo}/>
             </Link>}
