@@ -2,9 +2,11 @@ import React from "react";
 import classes from "./Modal-UserSettings.module.scss";
 import { Button } from "../styleComponents/ButtonStyleComp";
 import globalStore from "../stores/global-store";
+import { observer } from "mobx-react";
+import { BsMoon, BsSun } from "react-icons/all";
 
 function ModalUserSettings({ openModalUser }) {
-   const { toggleDarkMode, setColorTheme } = globalStore;
+   const { darkMode, toggleDarkMode, setColorTheme } = globalStore;
 
    return (
       <section className={classes.modal} onClick={() => openModalUser(false)}>
@@ -15,7 +17,14 @@ function ModalUserSettings({ openModalUser }) {
             <div style={{ color: "black", fontWeight: "500" }}>
                Farb Einstellungen
             </div>
-            <button onClick={toggleDarkMode}>Dark Modus</button>
+            <div className={classes.darkmodeButton} onClick={toggleDarkMode}>
+               <div
+                  className={classes.darkmodeSwitch}
+                  style={darkMode ? { left: "var(--size)" } : { left: "0px" }}
+               />
+               <BsSun />
+               <BsMoon />
+            </div>
             <label className={classes.farbThemaContainer}>
                Farb-Thema:
                <input
@@ -30,4 +39,4 @@ function ModalUserSettings({ openModalUser }) {
    );
 }
 
-export default ModalUserSettings;
+export default observer(ModalUserSettings);
