@@ -2,6 +2,8 @@
 import { makeAutoObservable } from "mobx";
 
 class GlobalStore {
+   user = { userId: 23, name: "Bastian" };
+
    darkMode = false;
    colorTheme = "";
 
@@ -9,9 +11,21 @@ class GlobalStore {
       makeAutoObservable(this);
    }
 
+   loadDarkModeFromLocalStorage = () => {
+      const localdark = localStorage.getItem("darkmode") === "true";
+      if (localdark) {
+         this.setDarkModeToBody(localdark);
+      }
+   };
+
    toggleDarkMode = () => {
       this.darkMode = !this.darkMode;
-      if (this.darkMode) {
+      localStorage.setItem("darkmode", this.darkMode.toString());
+      this.setDarkModeToBody(this.darkMode);
+   };
+
+   setDarkModeToBody = (dark) => {
+      if (dark) {
          document.body.classList.add("dark");
       } else {
          document.body.classList.remove("dark");

@@ -2,8 +2,6 @@ import "./App.scss";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 import Hauptmenue from "./pages/Hauptmenue";
 import Filmsuche from "./pages/Filmsuche";
 import DetailsMovie from "./pages/DetailsMovie";
@@ -11,7 +9,10 @@ import DetailsPerson from "./pages/DetailsPerson";
 import DetailsTv from "./pages/DetailsTv";
 import Showroom from "./pages/Showroom";
 import Impressum from "./pages/Impressum";
-
+import Hilfe from "./pages/Hilfe";
+import Login from "./pages/Login";
+import Menu from "./pages/Menu";
+import ModalUserSettings from "./components/Modal-UserSettings";
 import {
    genreUrl,
    castUrl,
@@ -20,22 +21,23 @@ import {
    movieDetailsUrl,
    imagesUrl,
 } from "./constants";
-
 import firestoreDb from "./firebase-config";
 import { doc, setDoc } from "firebase/firestore";
-import Hilfe from "./pages/Hilfe";
-import Login from "./pages/Login";
 import "dotenv/config";
-import ModalUserSettings from "./components/Modal-UserSettings";
-import Menu from "./pages/Menu";
+import globalStore from "./stores/global-store";
+import WrongUrl from "./pages/WrongUrl";
 
 function App() {
+   const { user, loadDarkModeFromLocalStorage } = globalStore;
+
    const [selectedMovie, setSelectedMovie] = useState({});
    const [selectedPerson, setSelectedPerson] = useState({});
 
    const [openUserSettings, setOpenUserSettings] = useState(false);
 
-   const [userId, setUserId] = useState(23);
+   useEffect(() => {
+      loadDarkModeFromLocalStorage();
+   }, []);
 
    return (
       <BrowserRouter basename="/happy-end-movies">
@@ -93,7 +95,6 @@ function App() {
                               saveSelectedMovieOrPerson(person, "person")
                            }
                            movie={selectedMovie}
-                           user={userId}
                         />
                      }
                   />
@@ -109,7 +110,6 @@ function App() {
                               saveSelectedMovieOrPerson(person, "person")
                            }
                            movie={selectedMovie}
-                           user={userId}
                         />
                      }
                   />
@@ -133,6 +133,7 @@ function App() {
                   <Route path="hilfe" exact={true} element={<Hilfe />} />
                   <Route path="start" exact={true} element={<Hauptmenue />} />
                </Route>
+               <Route path="*" element={<WrongUrl />} />
             </Routes>
          </div>
       </BrowserRouter>
@@ -180,12 +181,12 @@ function App() {
             genresD: genres,
             fsk: fsk,
             userSelections: {
-               [userId]: {
+               [user.userId]: {
                   happyEnd_Voting: object.userSelections
-                     ? object.userSelections[userId].happyEnd_Voting
+                     ? object.userSelections[user.userId].happyEnd_Voting
                      : "",
                   haveSeen: object.userSelections
-                     ? object.userSelections[userId].haveSeen
+                     ? object.userSelections[user.userId].haveSeen
                      : false,
                },
             },

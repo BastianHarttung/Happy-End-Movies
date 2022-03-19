@@ -17,14 +17,16 @@ import {
 import {imageUrl} from "../constants";
 import PersonBox from "../components/PersonBox";
 import {Button} from "../styleComponents/ButtonStyleComp";
+import globalStore from "../stores/global-store";
 
 
 const DetailsMovie = ({
                           movie,
-                          user,
                           saveMovieToDb,
                           saveSelectedPerson,
                       }) => {
+
+    const {user}=globalStore;
 
     const navigate = useNavigate();
     const urlParams = useParams()
@@ -42,7 +44,7 @@ const DetailsMovie = ({
     const [searchActor, setSearchActor] = useState('')
     const [filteredActors, setFilteredActors] = useState(movie.cast)
 
-    const [userSelection, setUserSelection] = useState({[user]: {happyEnd_Voting: "neutral", haveSeen: false}})
+    const [userSelection, setUserSelection] = useState({[user.userId]: {happyEnd_Voting: "neutral", haveSeen: false}})
 
 
     useEffect(() => {

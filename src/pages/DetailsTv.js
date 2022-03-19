@@ -9,9 +9,12 @@ import {FaSmileBeam, FaSadTear, FaMeh, FaSearch, FaChevronRight, FaChevronLeft} 
 import {imageUrl} from "../constants";
 import PersonBox from "../components/PersonBox";
 import {Button} from "../styleComponents/ButtonStyleComp";
+import globalStore from "../stores/global-store";
 
 
 const DetailsTv = (props) => {
+
+    const {user} = globalStore;
 
     const navigate = useNavigate();
     const urlParams = useParams()
@@ -226,21 +229,21 @@ const DetailsTv = (props) => {
                     <div className={classes.smileys}>
                         <div>
                             <FaSmileBeam onClick={() => {
-                                props.movie.happyEnd_Voting[props.user] = true;
+                                props.movie.happyEnd_Voting[user.userId] = true;
                                 setMovieForDb({...props.movie})
                             }}
-                                         className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
+                                         className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[user.userId] === true) ? classes.smileyLaugh : classes.smiley}></FaSmileBeam>
                             <FaMeh onClick={() => {
-                                props.movie.happyEnd_Voting[props.user] = 'neutral';
+                                props.movie.happyEnd_Voting[user.userId] = 'neutral';
                                 setMovieForDb({...props.movie})
                             }}
-                                   className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
+                                   className={(props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[user.userId] === 'neutral') ? classes.smileyNeutral : classes.smiley}></FaMeh>
 
                             <FaSadTear onClick={() => {
-                                props.movie.happyEnd_Voting[props.user] = false;
+                                props.movie.happyEnd_Voting[user.userId] = false;
                                 setMovieForDb({...props.movie})
                             }}
-                                       className={props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[props.user] === false ? classes.smileySad : classes.smiley}></FaSadTear>
+                                       className={props.movie.happyEnd_Voting && props.movie.happyEnd_Voting[user.userId] === false ? classes.smileySad : classes.smiley}></FaSadTear>
                         </div>
                     </div>
                 </div>
