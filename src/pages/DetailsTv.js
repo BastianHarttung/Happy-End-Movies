@@ -46,7 +46,7 @@ const DetailsTv = (props) => {
     }, [])
 
     return (
-        <section className={classes.detailsSection}>
+        <section className={classes.detailsMovieSection}>
 
             <div className={classes.movieHeadContainer}>
                 <h2 className={classes.title}>{props.movie.title ? props.movie.title : props.movie.original_name}</h2>
@@ -54,7 +54,7 @@ const DetailsTv = (props) => {
                 <img src={props.movie.backdrop_path ?
                     imageUrl + props.movie.backdrop_path
                     : imageUrl + props.movie.poster_path}
-                     className={classes.headImage}
+                     className={classes.backdropImage}
                      alt=""/>
             </div>
 
@@ -77,7 +77,7 @@ const DetailsTv = (props) => {
                 </p>
             </div>
 
-            <div className={classes.movieBox}>
+            <div className={classes.movieSection}>
 
                 <div className={classes.posterContainer}>
                     {happyMovie === true ?

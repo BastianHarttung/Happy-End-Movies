@@ -61,103 +61,106 @@ const DetailsMovie = ({ movie, saveMovieToDb, saveSelectedPerson }) => {
    }, []);
 
    return (
-      <section className={classes.detailsSection}>
-         <div className={classes.movieHeadContainer}>
-            <h2 className={classes.title}>{movie.title}</h2>
-
+      <section className={classes.detailsMovieSection}>
+         <section className={classes.movieSection}>
             <img
                src={
                   movie.backdrop_path
                      ? imageUrl + movie.backdrop_path
                      : imageUrl + movie.poster_path
                }
-               className={classes.headImage}
+               className={classes.backdropImage}
                alt="Backdrop"
             />
-         </div>
-
-         <div className={classes.movieInfosContainer}>
-            {(movie.fsk || (movie.fsk === 0 && movie.fsk !== 400)) && (
-               <div className={classes.fskInfo}>
-                  <img
-                     src={`https://altersfreigaben.de/images/rating/de/${movie.fsk}_90.png`}
-                     className={classes.fsk}
-                     alt={movie.fsk}
-                     title={`FSK ${movie.fsk}`}
-                  />
-               </div>
-            )}
-
-            <p className={classes.releaseYear}>
-               {movie.release_date.slice(0, 4)}
-            </p>
-
-            <p>
-               {movie.runtime} min ({laufzeitInStunden(movie.runtime).stunden}{" "}
-               Std. {laufzeitInStunden(movie.runtime).minuten} min.)
-            </p>
-         </div>
-
-         <div className={classes.movieBox}>
-            <div className={classes.posterContainer}>
-               {happyMovie === true ? (
-                  <FaSmileBeam
-                     className={classes.happyEndSmileyOverall}
-                     style={{ color: "var(--green)" }}
-                  />
-               ) : happyMovie === false ? (
-                  <FaSadTear
-                     className={classes.happyEndSmileyOverall}
-                     style={{ color: "var(--red)" }}
-                  />
-               ) : happyMovie === "neutral" ? (
-                  <FaMeh
-                     className={classes.happyEndSmileyOverall}
-                     style={{ color: "var(--orange)" }}
-                  />
-               ) : (
-                  ""
-               )}
-               <img
-                  className={classes.posterImage}
-                  src={
-                     movie.poster_path
-                        ? imageUrl + movie.poster_path
-                        : emptyImage
-                  }
-                  alt="Poster"
-               />
-            </div>
 
             <div className={classes.detailsContainer}>
-               <div>
-                  <div className={classes.genres}>
-                     {genres.map((genre, index) => (
-                        <div key={index} className={classes.genre}>
-                           {genre.name}{" "}
-                        </div>
-                     ))}
-                  </div>
-
-                  <h5 className={classes.director}>
-                     {movie.directors.length > 0 ? "Regie" : ""}
-                  </h5>
-                  <div className={classes.directorsContainer}>
-                     {movie.directors.map((director, index) => (
-                        <PersonBox
-                           saveSelectedPerson={(person) =>
-                              saveSelectedPerson(person)
-                           }
-                           person={director}
-                           key={index}
-                        />
-                     ))}
-                  </div>
+               <div className={classes.posterContainer}>
+                  {happyMovie === true ? (
+                     <FaSmileBeam
+                        className={classes.happyEndSmileyOverall}
+                        style={{ color: "var(--green)" }}
+                     />
+                  ) : happyMovie === false ? (
+                     <FaSadTear
+                        className={classes.happyEndSmileyOverall}
+                        style={{ color: "var(--red)" }}
+                     />
+                  ) : happyMovie === "neutral" ? (
+                     <FaMeh
+                        className={classes.happyEndSmileyOverall}
+                        style={{ color: "var(--orange)" }}
+                     />
+                  ) : (
+                     ""
+                  )}
+                  <img
+                     className={classes.posterImage}
+                     src={
+                        movie.poster_path
+                           ? imageUrl + movie.poster_path
+                           : emptyImage
+                     }
+                     alt="Poster"
+                  />
                </div>
 
-               <div className={classes.voting}>{movie.vote_average}</div>
+               <div className={classes.infoSection}>
+                  <div>
+                     <h2 className={classes.title}>{movie.title}</h2>
+                     <div className="d-flex-row">
+                        {(movie.fsk ||
+                           (movie.fsk === 0 && movie.fsk !== 400)) && (
+                           <div className={classes.fskInfo}>
+                              <img
+                                 src={`https://altersfreigaben.de/images/rating/de/${movie.fsk}_90.png`}
+                                 className={classes.fsk}
+                                 alt={movie.fsk}
+                                 title={`FSK ${movie.fsk}`}
+                              />
+                           </div>
+                        )}
+
+                        <p className={classes.releaseYear}>
+                           {movie.release_date.slice(0, 4)}
+                        </p>
+
+                        <p>
+                           {movie.runtime} min (
+                           {laufzeitInStunden(movie.runtime).stunden} Std.{" "}
+                           {laufzeitInStunden(movie.runtime).minuten} min.)
+                        </p>
+                     </div>
+
+                     <div>
+                        <div className={classes.genres}>
+                           {genres.map((genre, index) => (
+                              <div key={index} className={classes.genre}>
+                                 {genre.name}{" "}
+                              </div>
+                           ))}
+                        </div>
+
+                        <h5 className={classes.director}>
+                           {movie.directors.length > 0 ? "Regie" : ""}
+                        </h5>
+                        <div className={classes.directorsContainer}>
+                           {movie.directors.map((director, index) => (
+                              <PersonBox
+                                 saveSelectedPerson={(person) =>
+                                    saveSelectedPerson(person)
+                                 }
+                                 person={director}
+                                 key={index}
+                              />
+                           ))}
+                        </div>
+                     </div>
+                  </div>
+
+                  <div className={classes.voting}>{movie.vote_average}</div>
+               </div>
             </div>
-         </div>
+         </section>
 
          <section className={classes.actorSection}>
             <div className={classes.actorSearchContainer}>
