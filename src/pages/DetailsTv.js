@@ -69,7 +69,7 @@ const DetailsTv = (props) => {
                 </div>
 
                 <p className={classes.releaseYear}>
-                    {props.movie.first_air_date.slice(0, 4)} - {props.movie.last_air_date.slice(0, 4)}
+                    {props.movie.first_air_date?.slice(0, 4)} - {props.movie.last_air_date?.slice(0, 4)}
                 </p>
 
                 <p>Folge: ca. {props.movie.episode_run_time[0]} min

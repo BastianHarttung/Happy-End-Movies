@@ -32,6 +32,7 @@
 .detailsContainer {
    width: 80%;
    display: flex;
+   flex-wrap: wrap-reverse;
    margin: 30px 0px;
 }
 
@@ -88,7 +89,7 @@
    display: flex;
    flex-wrap: wrap;
    justify-content: flex-start;
-   margin-bottom: 10px;
+   margin: 10px 0px;
 
    .genre {
       border: 1px solid var(--gray);
@@ -309,6 +310,7 @@
    width: 80%;
    display: flex;
    justify-content: space-between;
+   flex-wrap: wrap;
    align-items: flex-end;
 }
 
@@ -493,5 +495,11 @@
    40% {
       box-shadow: 0 -2em;
       height: 5em;
+   }
+}
+
+@media(max-width: 550px){
+   .infoSection {
+      margin-bottom: 20px;
    }
 }

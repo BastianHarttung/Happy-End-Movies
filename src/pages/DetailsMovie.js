@@ -42,7 +42,9 @@ const DetailsMovie = ({ movie, saveMovieToDb, saveSelectedPerson }) => {
    const [scrollWidth, setScrollWidth] = useState(100);
 
    const [searchActor, setSearchActor] = useState("");
-   const [filteredActors, setFilteredActors] = useState(movie.cast);
+   const [filteredActors, setFilteredActors] = useState(
+      movie.directors.concat(movie.cast)
+   );
 
    const [userSelection, setUserSelection] = useState({
       [user.userId]: { happyEnd_Voting: "neutral", haveSeen: false },
@@ -108,8 +110,7 @@ const DetailsMovie = ({ movie, saveMovieToDb, saveSelectedPerson }) => {
                   <div>
                      <h2 className={classes.title}>{movie.title}</h2>
                      <div className="d-flex-row">
-                        {(movie.fsk ||
-                           (movie.fsk === 0 && movie.fsk !== 400)) && (
+                        {movie.fsk && (movie.fsk === 0 || movie.fsk <= 100) && (
                            <div className={classes.fskInfo}>
                               <img
                                  src={`https://altersfreigaben.de/images/rating/de/${movie.fsk}_90.png`}
@@ -140,20 +141,6 @@ const DetailsMovie = ({ movie, saveMovieToDb, saveSelectedPerson }) => {
                            ))}
                         </div>
 
-                        <h5 className={classes.director}>
-                           {movie.directors.length > 0 ? "Regie" : ""}
-                        </h5>
-                        <div className={classes.directorsContainer}>
-                           {movie.directors.map((director, index) => (
-                              <PersonBox
-                                 saveSelectedPerson={(person) =>
-                                    saveSelectedPerson(person)
-                                 }
-                                 person={director}
-                                 key={index}
-                              />
-                           ))}
-                        </div>
                      </div>
                   </div>
 
