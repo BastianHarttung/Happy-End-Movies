@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import {Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-function Menu({setOpenUserSettings}) {
-    return (
-        <>
-            <Header openModalUserSettings={(modal) => setOpenUserSettings(modal)}/>
+function Menu() {
+   return (
+      <>
+         <Header />
 
-            <Outlet/>
+         <Outlet />
 
-            <Footer/>
-        </>
-    );
+         <Footer />
+      </>
+   );
 }
 
 export default Menu;

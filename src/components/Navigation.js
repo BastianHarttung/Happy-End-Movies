@@ -6,8 +6,8 @@ import iconSignout from "../assets/icons/sign-out-alt_light.svg";
 import { IoSettingsOutline } from "react-icons/all";
 import globalStore from "../stores/global-store";
 
-const Navigation = ({ isHandy, openModalUserSettings }) => {
-   const { user } = globalStore;
+const Navigation = ({ isHandy }) => {
+   const { user, openUserSettingsModal } = globalStore;
 
    return (
       <nav>
@@ -35,7 +35,7 @@ const Navigation = ({ isHandy, openModalUserSettings }) => {
          <div className={classes.logoutLinkContainer}>
             <div
                className={classes.userContainer}
-               onClick={() => openModalUserSettings(true)}
+               onClick={openUserSettingsModal}
             >
                {!isHandy && <div className={classes.username}>{user.name}</div>}
                <IoSettingsOutline className={classes.settingsIcon} />

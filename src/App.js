@@ -26,14 +26,19 @@ import { doc, setDoc } from "firebase/firestore";
 import "dotenv/config";
 import globalStore from "./stores/global-store";
 import WrongUrl from "./pages/WrongUrl";
+import {observer} from "mobx-react";
 
 function App() {
-   const { user, loadDarkModeFromLocalStorage } = globalStore;
+   const {
+      user,
+      openUserSettings,
+      loadDarkModeFromLocalStorage,
+   } = globalStore;
 
    const [selectedMovie, setSelectedMovie] = useState({});
    const [selectedPerson, setSelectedPerson] = useState({});
 
-   const [openUserSettings, setOpenUserSettings] = useState(false);
+   // const [openUserSettings, setOpenUserSettings] = useState(false);
 
    useEffect(() => {
       loadDarkModeFromLocalStorage();
@@ -42,25 +47,12 @@ function App() {
    return (
       <BrowserRouter basename="/happy-end-movies">
          <div>
-            {openUserSettings && (
-               <ModalUserSettings
-                  openModalUser={(modal) => setOpenUserSettings(modal)}
-               />
-            )}
+            {openUserSettings && <ModalUserSettings />}
 
             <Routes>
                <Route path="/" exact={true} element={<Login />} />
 
-               <Route
-                  path=""
-                  element={
-                     <Menu
-                        setOpenUserSettings={(modal) =>
-                           setOpenUserSettings(modal)
-                        }
-                     />
-                  }
-               >
+               <Route path="" element={<Menu />}>
                   <Route
                      path="filmsuche"
                      exact={true}
@@ -353,9 +345,8 @@ function App() {
             directorArray.push(data.crew[i]);
          }
       }
-      console.log(directorArray)
       return directorArray;
    }
 }
 
-export default App;
+export default observer(App);

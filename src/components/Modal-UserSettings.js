@@ -6,10 +6,15 @@ import { observer } from "mobx-react";
 import { BsMoon, BsSun } from "react-icons/all";
 
 function ModalUserSettings({ openModalUser }) {
-   const { darkMode, toggleDarkMode, setColorTheme } = globalStore;
+   const {
+      darkMode,
+      closeUserSettingsModal,
+      toggleDarkMode,
+      setColorTheme,
+   } = globalStore;
 
    return (
-      <section className={classes.modal} onClick={() => openModalUser(false)}>
+      <section className={classes.modal} onClick={closeUserSettingsModal}>
          <div
             className={classes.modalBox}
             onClick={(event) => event.stopPropagation()}
@@ -33,7 +38,7 @@ function ModalUserSettings({ openModalUser }) {
                   onChange={(event) => setColorTheme(event.target.value)}
                />
             </label>
-            <Button name="Schließen" onClick={() => openModalUser(false)} />
+            <Button name="Schließen" onClick={closeUserSettingsModal} />
          </div>
       </section>
    );
