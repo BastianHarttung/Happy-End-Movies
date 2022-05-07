@@ -63,7 +63,7 @@ html {
 
 //Scrollbar
 body::-webkit-scrollbar {
-  width: 18px;
+  width: 12px;
 }
 
 body::-webkit-scrollbar-track {
@@ -81,12 +81,12 @@ body::-webkit-scrollbar-button:single-button {
   background-color: #ffffff;
   display: block;
   border-style: solid;
-  height: 11px;
-  width: 18px;
+  height: 8px;
+  width: 12px;
 }
 
 body::-webkit-scrollbar-button:single-button:vertical:decrement {
-  border-width: 0 9px 9px 9px;
+  border-width: 0 6px 6px 6px;
   border-color: transparent transparent #555555 transparent;
 }
 
@@ -95,7 +95,7 @@ body::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
 }
 
 body::-webkit-scrollbar-button:single-button:vertical:increment {
-  border-width: 9px 9px 0 9px;
+  border-width: 6px 6px 0 6px;
   border-color: #555555 transparent transparent transparent;
 }
 

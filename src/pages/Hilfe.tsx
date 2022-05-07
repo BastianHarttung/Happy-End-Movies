@@ -1,5 +1,5 @@
 
-const Hilfe = (props) =>{
+const Hilfe = () =>{
     return (
         <section>
             <h3>Hilfe</h3>

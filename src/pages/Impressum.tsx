@@ -1,6 +1,6 @@
 import classes from "./Impressum.module.scss";
 
-const Impressum = (props) => {
+const Impressum = () => {
 
     return (
         <section className={classes.impressumContainer}>
