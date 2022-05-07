@@ -2,7 +2,7 @@ import classes from "./Footer.module.scss";
 import {Link} from "react-router-dom";
 import {FaGithubSquare} from "react-icons/all";
 
-const Footer = (props) => {
+const Footer = () => {
     return (
         <footer className={classes.footer}>
             <a href="https://github.com/BastianHarttung/Happy-End-Movies"

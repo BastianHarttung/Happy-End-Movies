@@ -45,12 +45,11 @@ function App() {
         {openUserSettings && <ModalUserSettings/>}
 
         <Routes>
-          <Route path="/" exact={true} element={<Login/>}/>
+          <Route path="/" element={<Login/>}/>
 
           <Route path="" element={<Menu/>}>
             <Route
               path="filmsuche"
-              exact={true}
               element={
                 <Filmsuche
                   saveSelectedMovie={(movie, category) =>
@@ -61,7 +60,6 @@ function App() {
             />
             <Route
               path="showroom"
-              exact={true}
               element={
                 <Showroom
                   saveSelectedMovie={(movie, category) =>
@@ -72,7 +70,6 @@ function App() {
             />
             <Route
               path="detailansicht/movie/:id"
-              exact={true}
               element={
                 <DetailsMovie
                   saveMovieToDb={(movieForDb) =>
@@ -87,7 +84,6 @@ function App() {
             />
             <Route
               path="detailansicht/tv/:id"
-              exact={true}
               element={
                 <DetailsTv
                   saveMovieToDb={(movieForDb) =>
@@ -102,7 +98,6 @@ function App() {
             />
             <Route
               path="detailansicht/person/:id"
-              exact={true}
               element={
                 <DetailsPerson
                   saveSelectedMovie={(movie, category) =>
@@ -114,11 +109,10 @@ function App() {
             />
             <Route
               path="impressum"
-              exact={true}
               element={<Impressum/>}
             />
-            <Route path="hilfe" exact={true} element={<Hilfe/>}/>
-            <Route path="start" exact={true} element={<Hauptmenue/>}/>
+            <Route path="hilfe" element={<Hilfe/>}/>
+            <Route path="start" element={<Hauptmenue/>}/>
           </Route>
           <Route path="*" element={<WrongUrl/>}/>
         </Routes>

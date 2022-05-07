@@ -93,7 +93,7 @@ const Showroom = ({saveSelectedMovie}: IShowroomProps) => {
         <div className={classes.sidebarContentContainer}>
           <div className={classes.searchContainer}>
             <SearchBar
-              length="13"
+              length={13}
               size={15}
               searchMovie={(movieName: string, searchCategory: TCategorySearch) => searchMovieDb(movieName, searchCategory)}
               saveSearchFor={(movieName: string) => setSearchFor(movieName)}/>
@@ -132,7 +132,7 @@ const Showroom = ({saveSelectedMovie}: IShowroomProps) => {
 
               <div className={classes.fskIndicatorContainer}>
                 <FskIndicator arrowPos={fskPosAge}
-                              setFskPos={(fskPosAge: number) => setFskPosAge(fskPosAge)}/>
+                              saveFskPos={(fskPosAge: number) => setFskPosAge(fskPosAge)}/>
               </div>
 
             </div>
