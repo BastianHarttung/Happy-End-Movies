@@ -1,35 +1,35 @@
 import {makeAutoObservable} from "mobx";
-import {IMovie} from "../interfaces/interfaces";
+import {IMovieAllInfos, ITvShow} from "../interfaces/interfaces";
 import {IPerson} from "../interfaces/interfaces";
+import {doc, setDoc} from "firebase/firestore";
+import firestoreDb from "../firebase-config";
+import {emptyMovie, emptyPerson, emptyTvShow} from "../constants";
 
-const emptyMovie = {
-  id: 0,
-  title: "",
-  name: "",
-  original_name: "",
-  has_happy_end: false,
-  // category: "movie",
-  // media_type: "movie",
-  poster_path: "",
-  profile_path: "",
-}
-
-const emptyPerson = {
-  id: 0,
-  profile_path: "",
-  gender: 0,
-  name: "",
-  character: "",
-  job: "",
-  roles: [{character: ""}],
-}
 
 class ApiStore {
 
-  selectedMovie: IMovie = emptyMovie;
+  selectedMovie: IMovieAllInfos = emptyMovie;
+  selectedTv: ITvShow = emptyTvShow;
   selectedPerson: IPerson = emptyPerson;
 
   constructor() {
     makeAutoObservable(this);
   }
+
+  //Save Movie to Database Firebase by clicking on Detailansicht Speichern
+  async saveMovieToDb(movieDb: any): Promise<void> {
+    try {
+      console.log("save to Firestore", movieDb);
+      const actualMoviesDoc = doc(firestoreDb, "movies/" + movieDb.id);
+      await setDoc(actualMoviesDoc, movieDb);
+      console.log("In Firestore Gespeichert");
+    } catch (e) {
+      console.log("Error", e);
+    }
+  }
+
 }
+
+
+const apiStore = new ApiStore();
+export default apiStore;

@@ -9,18 +9,17 @@ import {useState} from "react";
 import iconPopcorn from "../assets/icons/popcorn_solid.svg";
 import iconTv from "../assets/icons/tv-retro_solid.svg";
 import iconUser from "../assets/icons/user-tie_solid.svg";
-import {TCategorySearch} from "../interfaces/types";
+import {TCategory, TCategorySearch} from "../interfaces/types";
 import {IMovie} from "../interfaces/interfaces";
 import {ISearch} from "../interfaces/interfaces";
 
 interface ISearchResultBoxProps {
-  key: string,
-  saveSelectedMovie: (currentMovie: IMovie, category: TCategorySearch) => Promise<void>,
+  saveSelectedMovie: (currentMovie: IMovie, category: TCategory) => Promise<void>,
   category: TCategorySearch | undefined,
   movie: ISearch,
 }
 
-const SearchResultBox = ({key, saveSelectedMovie, category, movie}: ISearchResultBoxProps) => {
+const SearchResultBox = ({ saveSelectedMovie, category, movie}: ISearchResultBoxProps) => {
 
   const navigate = useNavigate();
   const [movieClicked, setMovieClicked] = useState(false);
@@ -57,8 +56,8 @@ const SearchResultBox = ({key, saveSelectedMovie, category, movie}: ISearchResul
       if (category === "movie" || category === "tv" || category === "person") {
         return category;
       } else if (category === "multi") {
-        return movie.media_type;
-      } else return movie.category;
+        return movie.media_type || "movie";
+      } else return movie.category || "movie";
     };
     await saveSelectedMovie(movie, getCategory())
       .then(() => {

@@ -5,10 +5,10 @@ import {searchUrl, trendingMoviesUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
 import {Button} from "../styleComponents/ButtonStyleComp";
 import Pagination from "../components/Pagination";
-import {TCategorySearch} from "../interfaces/types";
+import {TCategory, TCategorySearch} from "../interfaces/types";
 
 interface IFilmsucheProps {
-  saveSelectedMovie: (movie: any, category: TCategorySearch) => Promise<void>,
+  saveSelectedMovie: (movie: any, category: TCategory) => Promise<void>,
 }
 
 const Filmsuche = ({saveSelectedMovie}: IFilmsucheProps) => {
@@ -17,10 +17,10 @@ const Filmsuche = ({saveSelectedMovie}: IFilmsucheProps) => {
   const [searchFor, setSearchFor] = useState("");
   const [searchResult, setSearchResult] = useState("");
   const [searchStarted, setSearchStarted] = useState(false);
-  const [searchingCategory, setSearchingCategory] = useState("multi");
+  const [searchingCategory, setSearchingCategory] = useState<TCategorySearch>("multi");
 
   const [totalResults, setTotalResults] = useState(0);
-  const [totalPages, setTotalPages] = useState([]);
+  const [totalPages, setTotalPages] = useState<number[]>([]);
   const [activePage, setActivePage] = useState(0);
 
   const [popularMovies, setPopularMovies] = useState([]);
@@ -67,23 +67,23 @@ const Filmsuche = ({saveSelectedMovie}: IFilmsucheProps) => {
 
         {searchStarted ?
           <div className={classes.resultSection}>
-            {searchedMovies.map(movie =>
-              <SearchResultBox key={movie.id}
-                               saveSelectedMovie={(currentMovie, category:TCategorySearch) => saveSelectedMovie(currentMovie, category)}
+            {searchedMovies.map((movie, index) =>
+              <SearchResultBox key={index}
+                               saveSelectedMovie={(currentMovie, category: TCategory) => saveSelectedMovie(currentMovie, category)}
                                category={searchingCategory}
                                movie={movie}/>)}</div>
           :
           <div className={classes.resultSection}>
 
-            {popularMovies.slice(0, 5).map(movie =>
-              <SearchResultBox key={movie.id}
-                               saveSelectedMovie={(currentMovie, category) => saveSelectedMovie(currentMovie, category)}
+            {popularMovies.slice(0, 5).map((movie, index) =>
+              <SearchResultBox key={index}
+                               saveSelectedMovie={(currentMovie, category:TCategory) => saveSelectedMovie(currentMovie, category)}
                                category={searchingCategory}
                                movie={movie}/>)}</div>}
 
         {searchStarted && <Pagination totalPages={totalPages}
                                       activePage={activePage}
-                                      changePage={(page) => changePage(page)}
+                                      changePage={(page: number) => changePage(page)}
                                       totalResults={totalResults}/>}
 
       </div>
@@ -109,7 +109,7 @@ const Filmsuche = ({saveSelectedMovie}: IFilmsucheProps) => {
    * @param {string} searchCategory 'movie' || 'tv'
    * @return {Promise<void>}
    */
-  async function searchMovie(movieName, searchCategory = "multi") {
+  async function searchMovie(movieName: string, searchCategory: TCategorySearch = "multi") {
     if (movieName.length > 0) {
       setSearchResult(movieName);
       setSearchingCategory(searchCategory);
@@ -131,7 +131,7 @@ const Filmsuche = ({saveSelectedMovie}: IFilmsucheProps) => {
    * @param {number} page
    * @return {Promise<void>}
    */
-  async function changePage(page) {
+  async function changePage(page: number) {
     setSearchedMovies(await getJsonFromTmdb(searchFor, page, searchingCategory));
     setActivePage(page);
   }
@@ -145,7 +145,7 @@ const Filmsuche = ({saveSelectedMovie}: IFilmsucheProps) => {
    * @param {string} searchCategory Category you are searching for eg 'multi' || 'movie' || 'tv'
    * @return {Promise<*>}
    */
-  async function getJsonFromTmdb(movieName, pageNumber, searchCategory) {
+  async function getJsonFromTmdb(movieName: string, pageNumber: number, searchCategory: TCategorySearch) {
     const response = await fetch(searchUrl(searchCategory) + movieName + "&page=" + pageNumber);
     let data = await response.json();
     setTotalResults(await data.total_results);
@@ -160,7 +160,7 @@ const Filmsuche = ({saveSelectedMovie}: IFilmsucheProps) => {
    * @param numberPages
    * @return {*[]} Array with Numbers from 1 to numberPages
    */
-  function makePageArray(numberPages) {
+  function makePageArray(numberPages: number) {
     let pageArray = [];
     for (let i = 1; i <= numberPages; i++) {
       pageArray.push(i);

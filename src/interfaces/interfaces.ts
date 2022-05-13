@@ -1,4 +1,4 @@
-import {TCategory} from "./types";
+import {TCategory, TGender} from "./types";
 import {TCategorySearch} from "./types";
 
 export interface IUser {
@@ -11,6 +11,10 @@ export interface IUser {
 //Big Data---------------------------
 
 //Movies
+export interface IMovieAllInfos extends IMovie, IMovieDetails {
+
+}
+
 export interface IMovie {
   id: number,
   title: string,
@@ -24,7 +28,7 @@ export interface IMovie {
 }
 
 export interface IMovieDetails {
-  adult: string,
+  adult: boolean,
   backdrop_path: string,    //Image path
   belongs_to_collection: {
     id: number,
@@ -68,7 +72,7 @@ export interface IMovieDetails {
   vote_count: number,
   releases: {
     countries: {    //TODO
-      certification: number,
+      certification: string,
       iso_3166_1: string,
       primary: boolean,
       release_date: string,     //2022-03-23
@@ -76,9 +80,46 @@ export interface IMovieDetails {
   }
 }
 
-export interface ITv {
+//--------------TV----------------------------------
 
+// Coming from TMDB
+export interface ITvShow {
+  "backdrop_path": string,
+  "first_air_date": string,   //2022-02-23
+  "genre_ids": number[],
+  "id": number,
+  "name": string,
+  "origin_country": string[],
+  "original_language": string,
+  "original_name": string,
+  "overview": string,
+  "popularity": number,       //200.000
+  "poster_path": string,
+  "vote_average": number,     //8.7
+  "vote_count": number,       //8000
 }
+
+export interface ITvActor {
+  "adult": boolean,
+  "gender": TGender,                 // 1 | 2 | 0
+  "id": number,
+  "known_for_department": string,     // "Acting"
+  "name": string,
+  "original_name": string,
+  "popularity": number,               // 8.432
+  "profile_path": string,
+  "roles": [
+    {
+      "credit_id": string,    // "52542282760ee313280017f9"
+      "character": string,
+      "episode_count": number
+    }
+  ],
+  "total_episode_count": number,
+  "order": number
+}
+
+//---------------------Person----------------------
 
 export interface IPerson {
   id: number,
@@ -87,10 +128,10 @@ export interface IPerson {
   name: string,
   character: string,
   job: string,
-  roles: { character: string }[],
+  roles: IRole[],
 }
 
-export interface ISearch extends IMovie, ITv, IPerson {
+export interface ISearch extends IMovie, ITvShow, IPerson {
 
 }
 
@@ -102,4 +143,8 @@ export interface IImage {
 export interface IGenre {
   id: number,
   name: string,
+}
+
+export interface IRole {
+  character: string
 }

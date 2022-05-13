@@ -49,7 +49,7 @@ function App() {
               path="filmsuche"
               element={
                 <Filmsuche
-                  saveSelectedMovie={(movie: any, category: TCategorySearch) =>
+                  saveSelectedMovie={(movie: any, category: TCategory) =>
                     saveSelectedMovieOrPerson(movie, category)
                   }
                 />
@@ -59,7 +59,7 @@ function App() {
               path="showroom"
               element={
                 <Showroom
-                  saveSelectedMovie={(movie: any, category: TCategorySearch) =>
+                  saveSelectedMovie={(movie: any, category: TCategory) =>
                     saveSelectedMovieOrPerson(movie, category)
                   }
                 />
@@ -69,9 +69,6 @@ function App() {
               path="detailansicht/movie/:id"
               element={
                 <DetailsMovie
-                  saveMovieToDb={(movieForDb: any) =>
-                    saveMovieToDb(movieForDb)
-                  }
                   saveSelectedPerson={(person: any) =>
                     saveSelectedMovieOrPerson(person, "person")
                   }
@@ -79,25 +76,25 @@ function App() {
                 />
               }
             />
-            <Route
-              path="detailansicht/tv/:id"
-              element={
-                <DetailsTv
-                  saveMovieToDb={(movieForDb: any) =>
-                    saveMovieToDb(movieForDb)
-                  }
-                  saveSelectedPerson={(person: any) =>
-                    saveSelectedMovieOrPerson(person, "person")
-                  }
-                  movie={selectedMovie}
-                />
-              }
-            />
+            {/*<Route*/}
+            {/*  path="detailansicht/tv/:id"*/}
+            {/*  element={*/}
+            {/*    <DetailsTv*/}
+            {/*      saveMovieToDb={(movieForDb: any) =>*/}
+            {/*        saveMovieToDb(movieForDb)*/}
+            {/*      }*/}
+            {/*      saveSelectedPerson={(person: any) =>*/}
+            {/*        saveSelectedMovieOrPerson(person, "person")*/}
+            {/*      }*/}
+            {/*      movie={selectedMovie}*/}
+            {/*    />*/}
+            {/*  }*/}
+            {/*/>*/}
             <Route
               path="detailansicht/person/:id"
               element={
                 <DetailsPerson
-                  saveSelectedMovie={(movie: any, category: TCategorySearch) =>
+                  saveSelectedMovie={(movie: any, category: TCategory) =>
                     saveSelectedMovieOrPerson(movie, category)
                   }
                   person={selectedPerson}
@@ -117,21 +114,7 @@ function App() {
     </BrowserRouter>
   );
 
-  /**
-   * Save Movie to Database Firebase by clicking on Detailansicht Speichern
-   * @param {object} movieDb
-   * @return {Promise<void>}
-   */
-  async function saveMovieToDb(movieDb: any) {
-    try {
-      console.log(movieDb.id);
-      const actualMoviesDoc = doc(firestoreDb, "movies/" + movieDb.id);
-      await setDoc(actualMoviesDoc, movieDb);
-      console.log("In Firestore Gespeichert");
-    } catch (e) {
-      console.log("Error", e);
-    }
-  }
+
 
   /**
    * Get genres and fsk and has_happy_end
@@ -140,7 +123,7 @@ function App() {
    * @param {string} searchCategory eg 'movie' || 'tv'
    * @return {Promise<void>}
    */
-  async function saveSelectedMovieOrPerson(object: any, searchCategory: TCategorySearch) {
+  async function saveSelectedMovieOrPerson(object: any, searchCategory: TCategory) {
     //console.log('App movie', object)
     //console.log('app category', searchCategory)
     if (searchCategory !== "person") {
@@ -231,7 +214,7 @@ function App() {
    * @param category
    * @return {Promise<void>}
    */
-  async function getDetailMovieInfos(id: number, category: TCategory) {
+  async function getDetailMovieInfos(id: number, category: TCategorySearch) {
     const response = await fetch(movieDetailsUrl(category, id));
     let data = await response.json();
     return data;
@@ -243,7 +226,7 @@ function App() {
    * @param category
    * @return {Promise<void>}
    */
-  async function getImagesFromMovie(id: number, category: TCategory) {
+  async function getImagesFromMovie(id: number, category: TCategorySearch) {
     const response = await fetch(imagesUrl(category, id));
     let data = await response.json();
     return data;
@@ -254,7 +237,7 @@ function App() {
    * @param {number} genreId
    * @return {Promise<*>}
    */
-  async function getGenreNameFromApi(genreId: number, searchCategory: TCategory) {
+  async function getGenreNameFromApi(genreId: number, searchCategory: TCategorySearch) {
     const response = await fetch(genreUrl(searchCategory));
     let data = await response.json();
     const genre = data.genres.find((genre: any) => genre.id === genreId);
