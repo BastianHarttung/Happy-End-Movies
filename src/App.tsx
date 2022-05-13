@@ -20,8 +20,7 @@ import "dotenv/config";
 import globalStore from "./stores/global-store";
 import WrongUrl from "./pages/WrongUrl";
 import {observer} from "mobx-react";
-import {TCategorySearch} from "./interfaces/types";
-import {TCategory} from "./interfaces/types";
+import {TCategorySearch, TCategory} from "./interfaces/types";
 
 function App() {
   const {
@@ -32,8 +31,6 @@ function App() {
 
   const [selectedMovie, setSelectedMovie] = useState({});
   const [selectedPerson, setSelectedPerson] = useState({});
-
-  // const [openUserSettings, setOpenUserSettings] = useState(false);
 
   useEffect(() => {
     loadDarkModeFromLocalStorage();
@@ -52,7 +49,7 @@ function App() {
               path="filmsuche"
               element={
                 <Filmsuche
-                  saveSelectedMovie={(movie, category) =>
+                  saveSelectedMovie={(movie: any, category: TCategorySearch) =>
                     saveSelectedMovieOrPerson(movie, category)
                   }
                 />
@@ -62,7 +59,7 @@ function App() {
               path="showroom"
               element={
                 <Showroom
-                  saveSelectedMovie={(movie, category) =>
+                  saveSelectedMovie={(movie: any, category: TCategorySearch) =>
                     saveSelectedMovieOrPerson(movie, category)
                   }
                 />
@@ -72,10 +69,10 @@ function App() {
               path="detailansicht/movie/:id"
               element={
                 <DetailsMovie
-                  saveMovieToDb={(movieForDb) =>
+                  saveMovieToDb={(movieForDb: any) =>
                     saveMovieToDb(movieForDb)
                   }
-                  saveSelectedPerson={(person) =>
+                  saveSelectedPerson={(person: any) =>
                     saveSelectedMovieOrPerson(person, "person")
                   }
                   movie={selectedMovie}
@@ -86,10 +83,10 @@ function App() {
               path="detailansicht/tv/:id"
               element={
                 <DetailsTv
-                  saveMovieToDb={(movieForDb) =>
+                  saveMovieToDb={(movieForDb: any) =>
                     saveMovieToDb(movieForDb)
                   }
-                  saveSelectedPerson={(person) =>
+                  saveSelectedPerson={(person: any) =>
                     saveSelectedMovieOrPerson(person, "person")
                   }
                   movie={selectedMovie}
@@ -100,7 +97,7 @@ function App() {
               path="detailansicht/person/:id"
               element={
                 <DetailsPerson
-                  saveSelectedMovie={(movie, category) =>
+                  saveSelectedMovie={(movie: any, category: TCategorySearch) =>
                     saveSelectedMovieOrPerson(movie, category)
                   }
                   person={selectedPerson}
@@ -125,7 +122,7 @@ function App() {
    * @param {object} movieDb
    * @return {Promise<void>}
    */
-  async function saveMovieToDb(movieDb) {
+  async function saveMovieToDb(movieDb: any) {
     try {
       console.log(movieDb.id);
       const actualMoviesDoc = doc(firestoreDb, "movies/" + movieDb.id);
@@ -143,7 +140,7 @@ function App() {
    * @param {string} searchCategory eg 'movie' || 'tv'
    * @return {Promise<void>}
    */
-  async function saveSelectedMovieOrPerson(object, searchCategory: TCategorySearch) {
+  async function saveSelectedMovieOrPerson(object: any, searchCategory: TCategorySearch) {
     //console.log('App movie', object)
     //console.log('app category', searchCategory)
     if (searchCategory !== "person") {
@@ -212,7 +209,7 @@ function App() {
    * @param {object} movie
    * @return {string|boolean} true|false|'neutral'
    */
-  async function calculateHappyEnd(movie) {
+  async function calculateHappyEnd(movie: any) {
     if (typeof movie.happyEnd_Voting === "object") {
       //console.log('calculate happyend')
       const happyEndArray = Object.values(movie.happyEnd_Voting);
@@ -260,7 +257,7 @@ function App() {
   async function getGenreNameFromApi(genreId: number, searchCategory: TCategory) {
     const response = await fetch(genreUrl(searchCategory));
     let data = await response.json();
-    const genre = data.genres.find((genre) => genre.id === genreId);
+    const genre = data.genres.find((genre: any) => genre.id === genreId);
     return genre.name;
   }
 
@@ -270,7 +267,7 @@ function App() {
    * @param {string} searchCategory 'movie' || 'title'
    * @return {Promise<*[]>} Array with Genres example: ['Action', 'Komödie']
    */
-  async function getGenreNames(movie, searchCategory: TCategory) {
+  async function getGenreNames(movie: any, searchCategory: TCategory) {
     let genres = [];
     for (let i = 0; i < movie.genre_ids.length; i++) {
       const genreName = await getGenreNameFromApi(
@@ -287,16 +284,16 @@ function App() {
    * @param {object} detailsObject
    * @return {Promise<number>} The FSK example: 16
    */
-  async function getGermanFSKFromDetails(detailsObject, category: TCategory) {
+  async function getGermanFSKFromDetails(detailsObject: any, category: TCategory) {
     if (category === "movie") {
       const releaseGerman = detailsObject.releases.countries.find(
-        (country) => country.iso_3166_1 === "DE",
+        (country: any) => country.iso_3166_1 === "DE",
       );
       if (!!releaseGerman) return +releaseGerman.certification;
       else return 400;
     } else if (category === "tv") {
       const ratingsGerman = detailsObject.content_ratings.results.find(
-        (country) => country.iso_3166_1 === "DE",
+        (country: any) => country.iso_3166_1 === "DE",
       );
       if (!!ratingsGerman) return +ratingsGerman.rating;
       else return 400;
@@ -314,7 +311,7 @@ function App() {
     const response = await fetch(castUrlMovie);
     let data = await response.json();
     let castArray: any[] = [];
-    data.cast.forEach((actor) => castArray.push(actor));
+    data.cast.forEach((actor: any) => castArray.push(actor));
     return castArray;
   }
 

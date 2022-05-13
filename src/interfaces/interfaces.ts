@@ -17,7 +17,7 @@ export interface IMovie {
   name: string,
   original_name: string,
   has_happy_end: boolean,
-  category: TCategory,
+  category?: TCategory,
   media_type?: TCategorySearch,
   poster_path: string,           //Image path
   profile_path: string,          //Image path

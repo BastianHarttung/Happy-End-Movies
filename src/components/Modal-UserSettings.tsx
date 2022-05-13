@@ -30,14 +30,14 @@ function ModalUserSettings() {
           <BsSun/>
           <BsMoon/>
         </div>
-        <label className={classes.farbThemaContainer}>
-          Farb-Thema:
-          <input
-            type="color"
-            className={classes.themeInput}
-            onChange={(event) => setColorTheme(event.target.value)}
-          />
-        </label>
+        {/*<label className={classes.farbThemaContainer}>*/}
+        {/*  Farb-Thema:*/}
+        {/*  <input*/}
+        {/*    type="color"*/}
+        {/*    className={classes.themeInput}*/}
+        {/*    onChange={(event) => setColorTheme(event.target.value)}*/}
+        {/*  />*/}
+        {/*</label>*/}
         <Button name="Schließen" onClick={closeUserSettingsModal}/>
       </div>
     </section>

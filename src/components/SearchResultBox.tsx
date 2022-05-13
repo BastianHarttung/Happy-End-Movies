@@ -15,7 +15,7 @@ import {ISearch} from "../interfaces/interfaces";
 
 interface ISearchResultBoxProps {
   key: string,
-  saveSelectedMovie: (currentMovie: IMovie, category: TCategorySearch | undefined) => Promise<void>,
+  saveSelectedMovie: (currentMovie: IMovie, category: TCategorySearch) => Promise<void>,
   category: TCategorySearch | undefined,
   movie: ISearch,
 }
@@ -51,33 +51,35 @@ const SearchResultBox = ({key, saveSelectedMovie, category, movie}: ISearchResul
     } else return <span/>;
   };
 
+  async function handleClick() {
+    setMovieClicked(true);
+    const getCategory = (): TCategorySearch => {
+      if (category === "movie" || category === "tv" || category === "person") {
+        return category;
+      } else if (category === "multi") {
+        return movie.media_type;
+      } else return movie.category;
+    };
+    await saveSelectedMovie(movie, getCategory())
+      .then(() => {
+        navigate(`/detailansicht/${getCategory()}/${movie.id}`);
+        setMovieClicked(false);
+      });
+  }
+
   return (
     <div className={classes.movieContainer}
-         onClick={async () => {
-           setMovieClicked(true);
-           const getCategory = (): TCategorySearch | undefined => {
-             if (category === "movie" || category === "tv" || category === "person") {
-               return category;
-             } else if (category === "multi") {
-               return movie.media_type;
-             } else return movie.category;
-           };
-           await saveSelectedMovie(movie, getCategory())
-             .then(() => {
-               navigate(`/detailansicht/${getCategory()}/${movie.id}`);
-               setMovieClicked(false);
-             });
-         }}>
+         onClick={handleClick}>
 
       {movieClicked &&
-        <div className={classes.loaderContainer}>
+      <div className={classes.loaderContainer}>
           <div className={classes.ldsRing}>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
           </div>
-        </div>}
+      </div>}
 
       <img className={classes.movieImage}
            src={setImageForPoster()}

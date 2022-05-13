@@ -5,8 +5,13 @@ import {searchUrl, trendingMoviesUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
 import {Button} from "../styleComponents/ButtonStyleComp";
 import Pagination from "../components/Pagination";
+import {TCategorySearch} from "../interfaces/types";
 
-const Filmsuche = (props) => {
+interface IFilmsucheProps {
+  saveSelectedMovie: (movie: any, category: TCategorySearch) => Promise<void>,
+}
+
+const Filmsuche = ({saveSelectedMovie}: IFilmsucheProps) => {
 
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [searchFor, setSearchFor] = useState("");
@@ -64,7 +69,7 @@ const Filmsuche = (props) => {
           <div className={classes.resultSection}>
             {searchedMovies.map(movie =>
               <SearchResultBox key={movie.id}
-                               saveSelectedMovie={(currentMovie, category) => props.saveSelectedMovie(currentMovie, category)}
+                               saveSelectedMovie={(currentMovie, category:TCategorySearch) => saveSelectedMovie(currentMovie, category)}
                                category={searchingCategory}
                                movie={movie}/>)}</div>
           :
@@ -72,7 +77,7 @@ const Filmsuche = (props) => {
 
             {popularMovies.slice(0, 5).map(movie =>
               <SearchResultBox key={movie.id}
-                               saveSelectedMovie={(currentMovie, category) => props.saveSelectedMovie(currentMovie, category)}
+                               saveSelectedMovie={(currentMovie, category) => saveSelectedMovie(currentMovie, category)}
                                category={searchingCategory}
                                movie={movie}/>)}</div>}
 

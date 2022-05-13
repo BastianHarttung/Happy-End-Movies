@@ -1,5 +1,5 @@
-import classes from "./SearchBar.module.scss";
-import {FaSearch} from "react-icons/all";
+import classes from './SearchBar.module.scss';
+import {FaSearch} from "react-icons/fa";
 import {useState, useEffect} from "react";
 import React from "react";
 import {TCategorySearch} from "../interfaces/types";
@@ -40,13 +40,15 @@ const SearchBar = ({length, searchSize, searchMovie, saveSearchFor}: ISearchBarP
                  setMovieName(e.target.value);
                }}/>
 
-        <FaSearch onClick={() => {
-          searchMovie(movieName);
-          setMovieName("");
-          window.location.hash = "";
-        }}
-                  style={{width: searchSize + 5, height: searchSize + 5}}
-                  className={classes.searchButton}/>
+
+          <FaSearch onClick={() => {
+            searchMovie(movieName);
+            setMovieName("");
+            window.location.hash = "";
+          }}
+                    style={{width: searchSize + 5, height: searchSize + 5}}
+                    className={classes.searchButton}/>
+
       </div>
 
     </div>
