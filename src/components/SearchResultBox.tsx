@@ -1,25 +1,27 @@
 import classes from "./SearchResultBox.module.scss";
+import {imageUrl} from "../constants";
+import {FaSmileBeam, FaSadTear} from "react-icons/fa";
+import {useNavigate} from "react-router-dom";
+import {useState} from "react";
+//Pictures
 import emptyImage from "../assets/img/movie-poster.png";
 import emptyImageMan from "../assets/img/actor_man_white.png";
 import emptyImageWoman from "../assets/img/actor_girl_white.png";
-import {imageUrl} from "../constants";
-import {FaSmileBeam, FaSadTear} from "react-icons/all";
-import {useNavigate} from "react-router-dom";
-import {useState} from "react";
 import iconPopcorn from "../assets/icons/popcorn_solid.svg";
 import iconTv from "../assets/icons/tv-retro_solid.svg";
 import iconUser from "../assets/icons/user-tie_solid.svg";
-import {TCategory, TCategorySearch} from "../interfaces/types";
-import {IMovie} from "../interfaces/interfaces";
-import {ISearch} from "../interfaces/interfaces";
+//Interfaces
+import {TCategory} from "../interfaces/types";
+import {IMovie, ISearch} from "../interfaces/interfaces";
+
 
 interface ISearchResultBoxProps {
   saveSelectedMovie: (currentMovie: IMovie, category: TCategory) => Promise<void>,
-  category: TCategorySearch | undefined,
+  category: TCategory | undefined,
   movie: ISearch,
 }
 
-const SearchResultBox = ({ saveSelectedMovie, category, movie}: ISearchResultBoxProps) => {
+const SearchResultBox = ({saveSelectedMovie, category, movie}: ISearchResultBoxProps) => {
 
   const navigate = useNavigate();
   const [movieClicked, setMovieClicked] = useState(false);
@@ -52,11 +54,9 @@ const SearchResultBox = ({ saveSelectedMovie, category, movie}: ISearchResultBox
 
   async function handleClick() {
     setMovieClicked(true);
-    const getCategory = (): TCategorySearch => {
+    const getCategory = (): TCategory => {
       if (category === "movie" || category === "tv" || category === "person") {
         return category;
-      } else if (category === "multi") {
-        return movie.media_type || "movie";
       } else return movie.category || "movie";
     };
     await saveSelectedMovie(movie, getCategory())

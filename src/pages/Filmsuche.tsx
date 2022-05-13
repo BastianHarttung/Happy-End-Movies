@@ -6,12 +6,12 @@ import SearchBar from "../components/SearchBar";
 import {Button} from "../styleComponents/ButtonStyleComp";
 import Pagination from "../components/Pagination";
 import {TCategory, TCategorySearch} from "../interfaces/types";
+import apiStore from "../stores/api-store";
 
-interface IFilmsucheProps {
-  saveSelectedMovie: (movie: any, category: TCategory) => Promise<void>,
-}
 
-const Filmsuche = ({saveSelectedMovie}: IFilmsucheProps) => {
+const Filmsuche = () => {
+
+  const {saveSelectedMovieOrPerson} = apiStore;
 
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [searchFor, setSearchFor] = useState("");
@@ -69,7 +69,7 @@ const Filmsuche = ({saveSelectedMovie}: IFilmsucheProps) => {
           <div className={classes.resultSection}>
             {searchedMovies.map((movie, index) =>
               <SearchResultBox key={index}
-                               saveSelectedMovie={(currentMovie, category: TCategory) => saveSelectedMovie(currentMovie, category)}
+                               saveSelectedMovie={(currentMovie, category: TCategory) => saveSelectedMovieOrPerson(currentMovie, category)}
                                category={searchingCategory}
                                movie={movie}/>)}</div>
           :
@@ -77,7 +77,7 @@ const Filmsuche = ({saveSelectedMovie}: IFilmsucheProps) => {
 
             {popularMovies.slice(0, 5).map((movie, index) =>
               <SearchResultBox key={index}
-                               saveSelectedMovie={(currentMovie, category:TCategory) => saveSelectedMovie(currentMovie, category)}
+                               saveSelectedMovie={(currentMovie, category: TCategory) => saveSelectedMovieOrPerson(currentMovie, category)}
                                category={searchingCategory}
                                movie={movie}/>)}</div>}
 
@@ -91,15 +91,12 @@ const Filmsuche = ({saveSelectedMovie}: IFilmsucheProps) => {
     </div>
   );
 
-  /**
-   * Get Popular Movies from TMDB API
-   * @return {Promise<*>}
-   */
-  async function getPopularMoviesFromTmdb() {
+  //Get Popular Movies from TMDB API
+  async function getPopularMoviesFromTmdb(): Promise<any> {
     const response = await fetch(trendingMoviesUrl);
     let data = await response.json();
     return data.results;
-  }
+  };
 
   /**
    * Search Movie by clicking the Search Button
