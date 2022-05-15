@@ -1,4 +1,4 @@
-import {TCategory, TCategorySearch} from "./interfaces/types";
+import {TCategory, TCategorySearch, TCategoryWatch} from "./interfaces/types";
 import {IMovieAllInfos, IPerson, ITvShow} from "./interfaces/interfaces";
 
 //----------Empty Objects-------------------------------------------
@@ -93,29 +93,33 @@ export const emptyPerson: IPerson = {
 const k = process.env.REACT_APP_API_KEY_TMDB;
 
 //---------------URLs from TMDB API-------------------------------------
-/**
- *What are you searching for? Movie, TV-Show, Person, all Things (Multi)
- * @param {string} searchFor eg 'multi' || 'movie' || 'tv' ||  'person' || 'company' || 'keyword'
- * @return {string} `https://api.themoviedb.org/...`
- */
-export const searchUrl = (searchFor: TCategorySearch): string => `https://api.themoviedb.org/3/search/${searchFor}?api_key=${k}&language=de&include_adult=false&query=`;
-export const popularMoviesUrl: string = `https://api.themoviedb.org/3/movie/popular?api_key=${k}&language=de&page=1`;
-export const trendingMoviesUrl: string = `https://api.themoviedb.org/3/trending/all/day?api_key=${k}`;
+
+const BaseUrl = `https://api.themoviedb.org/3`
+
+//What are you searching for? Movie, TV-Show, Person, all Things (Multi)
+export const searchUrl = (searchFor: TCategorySearch, title: string, pageNumber: number): string => `${BaseUrl}/search/${searchFor}?api_key=${k}&language=de&include_adult=false&query=${title}&page=${pageNumber}`;
+export const popularMoviesUrl: string = `${BaseUrl}/movie/popular?api_key=${k}&language=de&page=1`;
+export const trendingMoviesUrl: string = `${BaseUrl}/trending/all/day?api_key=${k}`;
 
 //searchFor = {string} 'movie' || 'tv'
-export const genreUrl = (searchFor: TCategory): string => `https://api.themoviedb.org/3/genre/${searchFor}/list?api_key=${k}&language=de`;
-export const fskUrl: string = `https://altersfreigaben.de/api2/s/`;
-//TODO Use movieDetailsUrl In releases are Certification (FSK)
-export const movieDetailsUrl = (category: TCategory, tmdbId: number): string => `https://api.themoviedb.org/3/${category}/${tmdbId}?api_key=${k}&language=de&append_to_response=releases,videos,content_ratings`;
-export const imagesUrl = (category: TCategory, tmdbId: number): string => `https://api.themoviedb.org/3/${category}/${tmdbId}/images?api_key=${k}`;
+export const genreUrl = (searchFor: TCategoryWatch): string => `${BaseUrl}/genre/${searchFor}/list?api_key=${k}&language=de`;
+// export const fskUrl: string = `https://altersfreigaben.de/api2/s/`;
+export const watchDetailsUrl = (category: TCategoryWatch, tmdbId: number): string => `${BaseUrl}/${category}/${tmdbId}?api_key=${k}&language=de&append_to_response=releases,videos,content_ratings`;
 
-export const imageUrl = `https://image.tmdb.org/t/p/w500`;
+export const imagesUrl = (category: TCategory, tmdbId: number): string => `${BaseUrl}/${category}/${tmdbId}/images?api_key=${k}`;
+export const imageUrlBig = `https://image.tmdb.org/t/p/w500`;
 export const imageUrlSmall = `https://image.tmdb.org/t/p/w200`;
 
-export const castUrl = (movieOrTv: TCategory, id: number): string => {
+export const castUrl = (movieOrTv: TCategoryWatch, id: number): string => {
   if (movieOrTv === "tv") {
-    return `https://api.themoviedb.org/3/${movieOrTv}/${id}/aggregate_credits?api_key=${k}&language=de`;
-  } else return `https://api.themoviedb.org/3/${movieOrTv}/${id}/credits?api_key=${k}&language=de`;
+    return `${BaseUrl}/${movieOrTv}/${id}/aggregate_credits?api_key=${k}&language=de`;
+  } else return `${BaseUrl}/${movieOrTv}/${id}/credits?api_key=${k}&language=de`;
 };
 
-export const personDetailUrl = (personId: number): string => `https://api.themoviedb.org/3/person/${personId}?api_key=${k}&language=de&append_to_response=images`;
+export const personDetailUrl = (personId: number): string => `${BaseUrl}/person/${personId}?api_key=${k}&language=de&append_to_response=images`;
+// Get all the Movies or TV-Shows from Person
+// .cast[] for Acting
+// .crew[] for other Jobs
+export const personCreditsUrl = (personId: number, category: TCategoryWatch): string => `${BaseUrl}/person/${personId}/${category}_credits?api_key=${k}&language=de`
+export const personAllCreditsUrl = (personId: number): string => `${BaseUrl}/person/${personId}/combined_credits?api_key=${k}&language=de`
+

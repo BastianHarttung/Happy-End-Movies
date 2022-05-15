@@ -1,4 +1,6 @@
-export type TCategory = "movie" | "tv" | "person"
+export type TCategoryWatch = "movie" | "tv"
+
+export type TCategory = TCategoryWatch | "person"
 
 export type TCategorySearch = TCategory | "multi"
 

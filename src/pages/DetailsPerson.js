@@ -1,5 +1,5 @@
 import classes from "./DetailsPerson.module.scss";
-import {imageUrl, imageUrlSmall} from "../constants";
+import {imageUrlBig, imageUrlSmall} from "../constants";
 import {useEffect, useState} from "react";
 import {FaBirthdayCake, FaCross} from "react-icons/all";
 import imageActorMan from "../assets/img/actor.png";
@@ -24,7 +24,7 @@ const DetailsPerson = (props) => {
                 <div>
 
                     <img src={props.person.profile_path ?
-                        imageUrl + props.person.profile_path
+                        imageUrlBig + props.person.profile_path
                         : props.person.gender === 2 ?
                             imageActorMan
                             : imageActorWoman}

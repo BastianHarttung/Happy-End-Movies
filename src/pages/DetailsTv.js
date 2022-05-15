@@ -6,7 +6,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useState, useEffect} from "react";
 
 import {FaSmileBeam, FaSadTear, FaMeh, FaSearch, FaChevronRight, FaChevronLeft} from "react-icons/all";
-import {imageUrl} from "../constants";
+import {imageUrlBig} from "../constants";
 import PersonBox from "../components/PersonBox";
 import {Button} from "../styleComponents/ButtonStyleComp";
 import globalStore from "../stores/global-store";
@@ -52,8 +52,8 @@ const DetailsTv = (props) => {
                 <h2 className={classes.title}>{props.movie.title ? props.movie.title : props.movie.original_name}</h2>
                 {props.movie.tagline ? <h4 className={classes.subtitle}>{props.movie.tagline}</h4> : ''}
                 <img src={props.movie.backdrop_path ?
-                    imageUrl + props.movie.backdrop_path
-                    : imageUrl + props.movie.poster_path}
+                    imageUrlBig + props.movie.backdrop_path
+                    : imageUrlBig + props.movie.poster_path}
                      className={classes.backdropImage}
                      alt=""/>
             </div>
@@ -91,7 +91,7 @@ const DetailsTv = (props) => {
                                        style={{color: 'var(--orange)'}}/>
                                 : ''}
                     <img className={classes.posterImage}
-                         src={props.movie.poster_path ? imageUrl + props.movie.poster_path : emptyImage}
+                         src={props.movie.poster_path ? imageUrlBig + props.movie.poster_path : emptyImage}
                          alt="Poster"/>
                 </div>
 
@@ -172,12 +172,12 @@ const DetailsTv = (props) => {
                     <div>
                         {props.movie.images.posters.map((poster, index) => {
                             return (
-                                <a href={imageUrl + poster.file_path}
+                                <a href={imageUrlBig + poster.file_path}
                                    key={index}
                                    target="_blank"
                                    rel="noreferrer">
                                     <img
-                                        src={imageUrl + poster.file_path}
+                                        src={imageUrlBig + poster.file_path}
                                         alt="Poster"
                                         className={classes.images}/>
                                 </a>
@@ -185,9 +185,9 @@ const DetailsTv = (props) => {
                         })}
                         {props.movie.images.backdrops.map((backdrop, index) => {
                             return (
-                                <a href={imageUrl + backdrop.file_path} target="_blank" rel="noreferrer">
+                                <a href={imageUrlBig + backdrop.file_path} target="_blank" rel="noreferrer">
                                     <img key={index}
-                                         src={imageUrl + backdrop.file_path}
+                                         src={imageUrlBig + backdrop.file_path}
                                          alt="Backdrop"
                                          className={classes.images}/>
                                 </a>
@@ -195,9 +195,9 @@ const DetailsTv = (props) => {
                         })}
                         {props.movie.images.logos.map((logo, index) => {
                             return (
-                                <a href={imageUrl + logo.file_path} target="_blank" rel="noreferrer">
+                                <a href={imageUrlBig + logo.file_path} target="_blank" rel="noreferrer">
                                     <img key={index}
-                                         src={imageUrl + logo.file_path}
+                                         src={imageUrlBig + logo.file_path}
                                          alt="Logo"
                                          className={classes.images}/>
                                 </a>

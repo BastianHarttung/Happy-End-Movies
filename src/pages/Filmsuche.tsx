@@ -98,20 +98,17 @@ const Filmsuche = () => {
     return data.results;
   };
 
-  /**
-   * Search Movie by clicking the Search Button
-   * -set page to number 1
-   * -delete die input field
-   * @param {string} movieName
-   * @param {string} searchCategory 'movie' || 'tv'
-   * @return {Promise<void>}
-   */
-  async function searchMovie(movieName: string, searchCategory: TCategorySearch = "multi") {
+  // Search Movie by clicking the Search Button
+  // -set page to number 1
+  // -delete die input field
+  async function searchMovie(movieName: string, searchCategory: TCategorySearch = "multi"): Promise<void> {
     if (movieName.length > 0) {
       setSearchResult(movieName);
       setSearchingCategory(searchCategory);
       const tmdbMovie = await getJsonFromTmdb(movieName, 1, searchCategory);
-      setSearchedMovies(tmdbMovie);
+      setTotalResults(await tmdbMovie.total_results);
+      setTotalPages(makePageArray(await tmdbMovie.total_pages));
+      setSearchedMovies(tmdbMovie.results);
       setActivePage(1);
       setSearchFor(movieName);
       setSearchStarted(true);
@@ -120,6 +117,16 @@ const Filmsuche = () => {
       setSearchingCategory("multi");
       setSearchStarted(false);
     }
+  }
+
+  //  Get Data from TMDB API
+  //  - set total results
+  //  - make array with pages and set to total pages
+  async function getJsonFromTmdb(movieName: string, pageNumber: number, searchCategory: TCategorySearch): Promise<any> {
+    const response = await fetch(searchUrl(searchCategory, movieName, pageNumber));
+    let data = await response.json();
+    console.log("data from Tmdb", data);
+    return data;
   }
 
   /**
@@ -131,25 +138,6 @@ const Filmsuche = () => {
   async function changePage(page: number) {
     setSearchedMovies(await getJsonFromTmdb(searchFor, page, searchingCategory));
     setActivePage(page);
-  }
-
-  /**
-   * Get Data from Movie DB
-   * - set total results
-   * - make array with pages and set to total pages
-   * @param {string} movieName
-   * @param {number} pageNumber
-   * @param {string} searchCategory Category you are searching for eg 'multi' || 'movie' || 'tv'
-   * @return {Promise<*>}
-   */
-  async function getJsonFromTmdb(movieName: string, pageNumber: number, searchCategory: TCategorySearch) {
-    const response = await fetch(searchUrl(searchCategory) + movieName + "&page=" + pageNumber);
-    let data = await response.json();
-    setTotalResults(await data.total_results);
-    setTotalPages(makePageArray(await data.total_pages));
-    console.log("data.results", data.results);
-    //console.log('data', data)
-    return data.results;
   }
 
   /**

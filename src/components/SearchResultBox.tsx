@@ -1,5 +1,5 @@
 import classes from "./SearchResultBox.module.scss";
-import {imageUrl} from "../constants";
+import {imageUrlBig} from "../constants";
 import {FaSmileBeam, FaSadTear} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
@@ -11,13 +11,13 @@ import iconPopcorn from "../assets/icons/popcorn_solid.svg";
 import iconTv from "../assets/icons/tv-retro_solid.svg";
 import iconUser from "../assets/icons/user-tie_solid.svg";
 //Interfaces
-import {TCategory} from "../interfaces/types";
+import {TCategory, TCategorySearch} from "../interfaces/types";
 import {IMovie, ISearch} from "../interfaces/interfaces";
 
 
 interface ISearchResultBoxProps {
   saveSelectedMovie: (currentMovie: IMovie, category: TCategory) => Promise<void>,
-  category: TCategory | undefined,
+  category: TCategorySearch,
   movie: ISearch,
 }
 
@@ -98,8 +98,8 @@ const SearchResultBox = ({saveSelectedMovie, category, movie}: ISearchResultBoxP
   );
 
   function setImageForPoster() {
-    if (movie.poster_path) return imageUrl + movie.poster_path;
-    if (movie.profile_path) return imageUrl + movie.profile_path;
+    if (movie.poster_path) return imageUrlBig + movie.poster_path;
+    if (movie.profile_path) return imageUrlBig + movie.profile_path;
     if (movie.media_type !== "person" && category !== "person") return emptyImage;
     if (movie.gender === 2 || movie.gender === 0) return emptyImageMan;
     if (movie.gender === 1) return emptyImageWoman;

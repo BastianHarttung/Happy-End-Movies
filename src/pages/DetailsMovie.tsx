@@ -12,7 +12,7 @@ import {
   FaRegEyeSlash,
   FaRegEye,
 } from "react-icons/fa";
-import {imageUrl} from "../constants";
+import {imageUrlBig} from "../constants";
 import PersonBox from "../components/PersonBox";
 import ImagesBox from "../components/ImagesBox";
 import {Button} from "../styleComponents/ButtonStyleComp";
@@ -73,8 +73,8 @@ const DetailsMovie = ({saveSelectedPerson}: IDetailsMovieProps) => {
         <img
           src={
             selectedMovie.backdrop_path
-              ? imageUrl + selectedMovie.backdrop_path
-              : imageUrl + selectedMovie.poster_path
+              ? imageUrlBig + selectedMovie.backdrop_path
+              : imageUrlBig + selectedMovie.poster_path
           }
           className={classes.backdropImage}
           alt="Backdrop"
@@ -104,7 +104,7 @@ const DetailsMovie = ({saveSelectedPerson}: IDetailsMovieProps) => {
               className={classes.posterImage}
               src={
                 selectedMovie.poster_path
-                  ? imageUrl + selectedMovie.poster_path
+                  ? imageUrlBig + selectedMovie.poster_path
                   : emptyImage
               }
               alt="Poster"

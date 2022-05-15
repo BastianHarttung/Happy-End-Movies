@@ -15,6 +15,7 @@ export interface IMovieAllInfos extends IMovie, IMovieDetails {
 
 }
 
+
 export interface IMovie {
   id: number,
   title: string,
@@ -27,9 +28,10 @@ export interface IMovie {
   profile_path: string,          //Image path
 }
 
+// Response from Tmdb for Fetching watchDetailsUrl with "movie"-category
 export interface IMovieDetails {
   adult: boolean,
-  backdrop_path: string,    //Image path
+  backdrop_path: string,          //Image path
   belongs_to_collection: {
     id: number,
     name: string,
@@ -39,7 +41,7 @@ export interface IMovieDetails {
   budget: number,
   genres: IGenre[],
   homepage: string,
-  id: number,             //!!!!
+  id: number,                     //!!!!
   imdb_id: string,
   original_language: string,
   original_title: string,
@@ -56,7 +58,7 @@ export interface IMovieDetails {
     iso_3166_1: string,
     name: string,
   } [],
-  release_date: string,     //2022-02-12
+  release_date: string,         //2022-02-12
   revenue: number,
   runtime: number,
   spoken_languages: {   //TODO
@@ -64,19 +66,33 @@ export interface IMovieDetails {
     iso_639_1: string,
     name: string,
   } [  ],
-  status: string,
+  status: string,               //"Released"
   tagline: string,
   title: string,
   video: boolean,
-  vote_average: number,
+  vote_average: number,         //8.4
   vote_count: number,
   releases: {
     countries: {    //TODO
-      certification: string,
-      iso_3166_1: string,
+      certification: string,    // "16"
+      iso_3166_1: string,       // "DE"
       primary: boolean,
       release_date: string,     //2022-03-23
     }[    ]
+  },
+  "videos"?: {   //TODO
+    "results": {
+      "iso_639_1": string,        // "de"
+      "iso_3166_1": string,       // "DE"
+      "name": string,
+      "key": string,              //"G7tr7xcUCFA"
+      "published_at": string,     //"2015-02-22T15:00:05.000Z"
+      "site": string,             //"YouTube"
+      "size": number,             //1080
+      "type": string,             //"Trailer"
+      "official": boolean,
+      "id": string,               //"57494147c3a3682c8f000911"
+    }[]
   }
 }
 
@@ -97,6 +113,108 @@ export interface ITvShow {
   "poster_path": string,
   "vote_average": number,     //8.7
   "vote_count": number,       //8000
+}
+
+// Response from Tmdb for Fetching watchDetailsUrl with "tv"-category
+export interface ITvDetails {
+  "adult": boolean,
+  "backdrop_path": string,        // "/n3u3kgNttY1F5Ixi5bMY9BwZImQ.jpg"
+  "created_by":
+    {
+      "id": number,
+      "credit_id": string,         //"52542286760ee31328001a7b"
+      "name": string,
+      "gender": TGender,
+      "profile_path": string
+    }[],
+  "episode_run_time": number[],     // episode between numbers
+  "first_air_date": string,         //"2022-02-21"
+  "genres":
+    {
+      "id": number,
+      "name": string                //"Drama"
+    }[],
+  "homepage": string,
+  "id": number,
+  "in_production": boolean,
+  "languages": string[],            //"en"
+  "last_air_date": string,          //"2013-09-29"
+  "last_episode_to_air": {        //TODO
+    "air_date": string,             //"2013-09-29"
+    "episode_number": number,
+    "id": number,
+    "name": string,                 //Episode name
+    "overview": string,
+    "production_code": string,
+    "runtime": number,
+    "season_number": number,
+    "still_path": string,
+    "vote_average": number,          //9.2
+    "vote_count": number
+  },
+  "name": string,
+  "next_episode_to_air": null,
+  "networks": {
+    "name": string,
+    "id": number,
+    "logo_path": string,
+    "origin_country": string
+  }[],
+  "number_of_episodes": number,
+  "number_of_seasons": number,
+  "origin_country": string[],         // "US"
+  "original_language": string,        //"en"
+  "original_name": string,
+  "overview": string,
+  "popularity": number,
+  "poster_path": string,
+  "production_companies": {
+    "id": number,
+    "logo_path": string,
+    "name": string,
+    "origin_country": string          //"US"
+  }[],
+  "production_countries": {
+    "iso_3166_1": string,             //"US"
+    "name": string
+  }[],
+  "seasons": {
+    "air_date": string,               //"2009-02-17"
+    "episode_count": number,
+    "id": number,
+    "name": string,                   //"Staffel 2"
+    "overview": string,
+    "poster_path": string,
+    "season_number": number,
+    networks?: {
+      "id": number,
+      "logo": {
+        "path": string,
+        "aspect_ratio": number          //1.768
+      },
+      "name": string,
+      "origin_country": string          //"US"
+    }[]
+  }[],
+  "spoken_languages": {
+    "english_name": string,             //"English"
+    "iso_639_1": string,                //"en"
+    "name": string                      //"English"
+  }[],
+  "status": string,                     //"Ended"
+  "tagline": string,
+  "type": string,                       //"Scripted"
+  "vote_average": number,
+  "vote_count": number,
+  "videos": {
+    "results": []
+  },
+  "content_ratings": {
+    "results": {
+      "iso_3166_1": string,             //"DE"
+      "rating": string                  //"16"
+    }[]
+  }
 }
 
 export interface ITvActor {

@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "../pages/DetailsMovie.module.scss";
-import {imageUrl} from "../constants";
+import {imageUrlBig} from "../constants";
 import {IImage} from "../interfaces/interfaces";
 
 interface IImagesBoxProps {
@@ -16,14 +16,14 @@ function ImagesBox({title, images}: IImagesBoxProps) {
         {images.map((image: IImage, index) => {
           return (
             <a
-              href={imageUrl + image.file_path}
+              href={imageUrlBig + image.file_path}
               target="_blank"
               rel="noreferrer"
               key={index}
               className={classes.imageBox}
             >
               <img
-                src={imageUrl + image.file_path}
+                src={imageUrlBig + image.file_path}
                 alt="Poster"
                 className={classes.images}
               />

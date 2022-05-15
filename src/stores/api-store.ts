@@ -10,10 +10,10 @@ import {
   emptyTvShow,
   genreUrl,
   imagesUrl,
-  movieDetailsUrl, personDetailUrl,
+  watchDetailsUrl, personDetailUrl,
   searchUrl
 } from "../constants";
-import {TCategory, TCategorySearch, THasHappyEnd} from "../interfaces/types";
+import {TCategory, TCategorySearch, TCategoryWatch, THasHappyEnd} from "../interfaces/types";
 import globalStore from "./global-store";
 
 const {user} = globalStore;
@@ -44,8 +44,10 @@ class ApiStore {
   public async saveSelectedMovieOrPerson(object: any, searchCategory: TCategory): Promise<void> {
     //console.log('App movie', object)
     //console.log('app category', searchCategory)
-    if (searchCategory !== "person" && searchCategory === "movie") {
+    if (searchCategory === "movie") {
       this.setAllDataForMovie(object, "movie")
+    } else if (searchCategory === "tv") {
+      this.setAllDataForTv(object, "tv")
     } else {
       this.setAllDataForPerson(object)
     }
@@ -53,10 +55,10 @@ class ApiStore {
 
   //-------------------------------Movie Fetches--------------------------------------------------------------
   // Collecting all Data from Movie
-  private async setAllDataForMovie(object: any, searchCategory: TCategory): Promise<void> {
-    const details = await this.getDetailMovieInfos(object.id, searchCategory);
-    const images = await this.getImagesFromMovie(object.id, searchCategory);
-    const genres = await this.getGenreNames(object, searchCategory);
+  private async setAllDataForMovie(object: any, searchCategory: TCategoryWatch): Promise<void> {
+    const details = await this.getDetailMovieInfos(object.id);
+    const images = await this.getImagesFromMovie(object.id);
+    // const genres = await this.getGenreNames(object, searchCategory);
     const fsk = await this.getGermanFSKFromDetails(details, searchCategory);
     const hasHappyEnd = await this.calculateHappyEnd(object);
     const cast = await this.getCastForMovie(object.id, searchCategory);
@@ -66,7 +68,7 @@ class ApiStore {
       ...details,
       images: images,
       category: searchCategory,
-      genresD: genres,
+      // genresD: genres,
       fsk: fsk,
       userSelections: {
         [user.userId]: {
@@ -87,42 +89,42 @@ class ApiStore {
   }
 
   //Get Details infos from Movie
-  private async getDetailMovieInfos(id: number, category: TCategory): Promise<{}> {
-    const response = await fetch(movieDetailsUrl(category, id));
+  private async getDetailMovieInfos(id: number): Promise<{}> {
+    const response = await fetch(watchDetailsUrl("movie", id));
     let data = await response.json();
     return data;
   };
 
   //Get Images from Movie
-  private async getImagesFromMovie(id: number, category: TCategory): Promise<{}> {
-    const response = await fetch(imagesUrl(category, id));
+  private async getImagesFromMovie(id: number): Promise<{}> {
+    const response = await fetch(imagesUrl("movie", id));
     let data = await response.json();
     return data;
   };
 
-  //Get Genre Names and return in Array
-  private async getGenreNames(movie: any, searchCategory: TCategory): Promise<string[]> {
-    let genres = [];
-    for (let i = 0; i < movie.genre_ids.length; i++) {
-      const genreName = await this.getGenreNameFromApi(
-        movie.genre_ids[i],
-        searchCategory,
-      );
-      genres.push(genreName);
-    }
-    return genres;
-  };
-
-  //Get Genre from TMDB API
-  private async getGenreNameFromApi(genreId: number, searchCategory: TCategory): Promise<string> {
-    const response = await fetch(genreUrl(searchCategory));
-    let data = await response.json();
-    const genre = data.genres.find((genre: any) => genre.id === genreId);
-    return genre.name;
-  };
+  // //Get Genre Names and return in Array
+  // private async getGenreNames(movie: any, searchCategory: TCategory): Promise<string[]> {
+  //   let genres = [];
+  //   for (let i = 0; i < movie.genre_ids.length; i++) {
+  //     const genreName = await this.getGenreNameFromApi(
+  //       movie.genre_ids[i],
+  //       searchCategory,
+  //     );
+  //     genres.push(genreName);
+  //   }
+  //   return genres;
+  // };
+  //
+  // //Get Genre from TMDB API
+  // private async getGenreNameFromApi(genreId: number, searchCategory: TCategory): Promise<string> {
+  //   const response = await fetch(genreUrl(searchCategory));
+  //   let data = await response.json();
+  //   const genre = data.genres.find((genre: any) => genre.id === genreId);
+  //   return genre.name;
+  // };
 
   //Get German FSK from Detail Infos
-  private async getGermanFSKFromDetails(detailsObject: any, category: TCategory): Promise<number> {
+  private async getGermanFSKFromDetails(detailsObject: any, category: TCategoryWatch): Promise<number> {
     if (category === "movie") {
       const releaseGerman = detailsObject.releases.countries.find(
         (country: any) => country.iso_3166_1 === "DE",
@@ -156,7 +158,7 @@ class ApiStore {
   };
 
   //Get Cast for Movie
-  private async getCastForMovie(movieId: number, searchCategory: TCategory): Promise<{}[]> {
+  private async getCastForMovie(movieId: number, searchCategory: TCategoryWatch): Promise<{}[]> {
     const castUrlMovie = castUrl(searchCategory, movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
@@ -166,7 +168,7 @@ class ApiStore {
   };
 
   //Get Director for Movie
-  private async getDirectorForMovie(movieId: number, searchCategory: TCategory): Promise<{}[]> {
+  private async getDirectorForMovie(movieId: number, searchCategory: TCategoryWatch): Promise<{}[]> {
     const castUrlMovie = castUrl(searchCategory, movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
@@ -179,6 +181,40 @@ class ApiStore {
     return directorArray;
   };
 
+  //-----------------------------------TV Show fetches ---------------------------------------------
+  private async setAllDataForTv(object: any, searchCategory: TCategoryWatch): Promise<void> {
+    const details = await this.getDetailMovieInfos(object.id);
+    const images = await this.getImagesFromMovie(object.id);
+    // const genres = await this.getGenreNames(object, searchCategory);
+    const fsk = await this.getGermanFSKFromDetails(details, searchCategory);
+    const hasHappyEnd = await this.calculateHappyEnd(object);
+    const cast = await this.getCastForMovie(object.id, searchCategory);
+    const directors = await this.getDirectorForMovie(object.id, searchCategory);
+    const completeTvInfo = {
+      ...object,
+      ...details,
+      images: images,
+      category: searchCategory,
+      // genresD: genres,
+      fsk: fsk,
+      userSelections: {
+        [user.userId]: {
+          happyEnd_Voting: object.userSelections
+            ? object.userSelections[user.userId].happyEnd_Voting
+            : "",
+          haveSeen: object.userSelections
+            ? object.userSelections[user.userId].haveSeen
+            : false,
+        },
+      },
+      has_happy_end: hasHappyEnd,
+      cast: cast,
+      directors: directors,
+    };
+    this.selectedTv = completeTvInfo;
+    console.log("selectedTv:", completeTvInfo);
+  }
+
   //-------------------------------------Person fetches---------------------------------------------
   // Collecting all Data from Person
   private async setAllDataForPerson(object: any): Promise<void> {
@@ -189,7 +225,7 @@ class ApiStore {
 
   //Get known_for movies and other infos from person
   private async getInfosForPersonFromApi(name: string): Promise<{}> {
-    const response = await fetch(searchUrl("person") + name);
+    const response = await fetch(searchUrl("person", name, 1));
     const data = await response.json();
     const result = await data.results[0];
     return result;
