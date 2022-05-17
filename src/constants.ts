@@ -1,5 +1,13 @@
 import {TCategory, TCategorySearch, TCategoryWatch} from "./interfaces/types";
-import {IMovieAllInfos, IPerson, ITvShow} from "./interfaces/interfaces";
+import {
+  IGenre,
+  IMovieAllInfos,
+  IPerson,
+  IProductionCompany, IProductionCountry, ISpokenLanguage,
+  ITvAllInfos,
+  ITvShow,
+  IVideoResult
+} from "./interfaces/interfaces";
 
 //----------Empty Objects-------------------------------------------
 export const emptyMovie: IMovieAllInfos = {
@@ -21,56 +29,39 @@ export const emptyMovie: IMovieAllInfos = {
     backdrop_path: "",
   },
   budget: 0,
-  genres: [{
-    id: 0,
-    name: "",
-  }],
+  genres: [],
   homepage: "",
   imdb_id: "",
   original_language: "",
   original_title: "",
   overview: "",
   popularity: 0,
-  production_companies: [{
-    id: 0,
-    logo_path: "",
-    name: "",
-    origin_country: "",
-  }],
-  production_countries: [{
-    iso_3166_1: "",
-    name: "",
-  }],
+  production_companies: [],
+  production_countries: [],
   release_date: "",
   revenue: 0,
   runtime: 0,
-  spoken_languages: [{
-    english_name: "",
-    iso_639_1: "",
-    name: "",
-  }],
+  spoken_languages: [],
   status: "",
   tagline: "",
   video: false,
   vote_average: 0,
   vote_count: 0,
   releases: {
-    countries: [{
-      certification: "",
-      iso_3166_1: "",
-      primary: false,
-      release_date: "",
-    }]
+    countries: []
+  },
+  videos: {
+    results: []
   }
 }
 
-export const emptyTvShow: ITvShow = {
+export const emptyTvShow: ITvAllInfos = {
   backdrop_path: "",
   first_air_date: "",
-  genre_ids: [1],
+  genre_ids: [],
   id: 0,
   name: "",
-  origin_country: [""],
+  origin_country: [],
   original_language: "",
   original_name: "",
   overview: "",
@@ -78,6 +69,44 @@ export const emptyTvShow: ITvShow = {
   poster_path: "",
   vote_average: 0,
   vote_count: 0,
+  adult: false,
+  created_by: [],
+  episode_run_time: [],
+  genres: [],
+  homepage: "",
+  in_production: false,
+  languages: [],
+  last_air_date: "",
+  last_episode_to_air: {
+    air_date: "",
+    episode_number: 0,
+    id: 0,
+    name: "",
+    overview: "",
+    production_code: "",
+    runtime: 0,
+    season_number: 0,
+    still_path: "",
+    vote_average: 0,
+    vote_count: 0
+  },
+  next_episode_to_air: null,
+  networks: [],
+  number_of_episodes: 0,
+  number_of_seasons: 0,
+  production_companies: [],
+  production_countries: [],
+  seasons: [],
+  spoken_languages: [],
+  status: "",
+  tagline: "",
+  type: "",
+  videos: {
+    results: []
+  },
+  content_ratings: {
+    results: []
+  }
 }
 
 export const emptyPerson: IPerson = {
