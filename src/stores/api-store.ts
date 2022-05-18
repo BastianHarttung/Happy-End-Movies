@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {IMovieAllInfos, ITvShow} from "../interfaces/interfaces";
+import {ICast, ICrew, IImagesFetching, IMovieAllInfos, IMovieDetails, ITvShow} from "../interfaces/interfaces";
 import {IPerson} from "../interfaces/interfaces";
 import {doc, setDoc} from "firebase/firestore";
 import firestoreDb from "../firebase-config";
@@ -56,13 +56,13 @@ class ApiStore {
   //-------------------------------Movie Fetches--------------------------------------------------------------
   // Collecting all Data from Movie
   private async setAllDataForMovie(object: any, searchCategory: TCategoryWatch): Promise<void> {
-    const details = await this.getDetailMovieInfos(object.id);
-    const images = await this.getImagesFromMovie(object.id);
+    const details: IMovieDetails = await this.getDetailMovieInfos(object.id);
+    const images: IImagesFetching = await this.getImagesFromMovie(object.id);
     // const genres = await this.getGenreNames(object, searchCategory);
-    const fsk = await this.getGermanFSKFromDetails(details, searchCategory);
-    const hasHappyEnd = await this.calculateHappyEnd(object);
-    const cast = await this.getCastForMovie(object.id, searchCategory);
-    const directors = await this.getDirectorForMovie(object.id, searchCategory);
+    const fsk: number = await this.getGermanFSKFromDetails(details, searchCategory);
+    const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
+    const cast: ICast[] = await this.getCastForMovie(object.id, searchCategory);
+    const directors: ICrew[] = await this.getDirectorForMovie(object.id, searchCategory);
     const completeMovieInfo = {
       ...object,
       ...details,
@@ -89,14 +89,14 @@ class ApiStore {
   }
 
   //Get Details infos from Movie
-  private async getDetailMovieInfos(id: number): Promise<{}> {
+  private async getDetailMovieInfos(id: number): Promise<IMovieDetails> {
     const response = await fetch(watchDetailsUrl("movie", id));
     let data = await response.json();
     return data;
   };
 
   //Get Images from Movie
-  private async getImagesFromMovie(id: number): Promise<{}> {
+  private async getImagesFromMovie(id: number): Promise<IImagesFetching> {
     const response = await fetch(imagesUrl("movie", id));
     let data = await response.json();
     return data;
@@ -158,17 +158,15 @@ class ApiStore {
   };
 
   //Get Cast for Movie
-  private async getCastForMovie(movieId: number, searchCategory: TCategoryWatch): Promise<{}[]> {
+  private async getCastForMovie(movieId: number, searchCategory: TCategoryWatch): Promise<ICast[]> {
     const castUrlMovie = castUrl(searchCategory, movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
-    let castArray: any[] = [];
-    data.cast.forEach((actor: any) => castArray.push(actor));
-    return castArray;
+    return data.cast;
   };
 
   //Get Director for Movie
-  private async getDirectorForMovie(movieId: number, searchCategory: TCategoryWatch): Promise<{}[]> {
+  private async getDirectorForMovie(movieId: number, searchCategory: TCategoryWatch): Promise<ICrew[]> {
     const castUrlMovie = castUrl(searchCategory, movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();

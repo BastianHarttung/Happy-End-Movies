@@ -1,6 +1,7 @@
-import {TCategory, TCategorySearch, TCategoryWatch} from "./interfaces/types";
+import {TCategory, TCategorySearch, TCategoryWatch, THasHappyEnd} from "./interfaces/types";
 import {
-  IGenre,
+  ICast, ICrew,
+  IGenre, IImage, IImagesFetching,
   IMovieAllInfos,
   IPerson,
   IProductionCompany, IProductionCountry, ISpokenLanguage,
@@ -15,8 +16,8 @@ export const emptyMovie: IMovieAllInfos = {
   title: "",
   name: "",
   original_name: "",
-  has_happy_end: false,
-  category: undefined,
+  has_happy_end: "neutral",
+  category: "movie",
   media_type: undefined,
   poster_path: "",
   profile_path: "",
@@ -52,7 +53,22 @@ export const emptyMovie: IMovieAllInfos = {
   },
   videos: {
     results: []
-  }
+  },
+  images: {
+    backdrops: [],
+    id: 0,
+    logos: [],
+    posters: []
+  },
+  fsk: 400,
+  userSelections: {
+    [""]: {
+      happyEnd_Voting: "neutral",
+      haveSeen: false,
+    },
+  },
+  cast: [],
+  directors: [],
 }
 
 export const emptyTvShow: ITvAllInfos = {

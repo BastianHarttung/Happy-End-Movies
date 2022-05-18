@@ -1,4 +1,4 @@
-import {TCategory, TGender} from "./types";
+import {TCategory, TCategoryWatch, TDepartment, TGender, THasHappyEnd, TJob, TKnownForDepartment} from "./types";
 import {TCategorySearch} from "./types";
 
 export interface IUser {
@@ -11,17 +11,29 @@ export interface IUser {
 //Big Data---------------------------
 
 //Movies
-export interface IMovieAllInfos extends IMovie, IMovieDetails {
+export interface IMovieAllInfos extends IMovie, IMovieDetails, IMovieFetchedInfos {
 }
 
+export interface IMovieFetchedInfos {
+  images: IImagesFetching,
+  category: TCategoryWatch,
+  fsk: number,
+  userSelections: {
+    [key: string]: {
+      happyEnd_Voting: THasHappyEnd,
+      haveSeen: boolean,
+    },
+  },
+  cast: ICast[],
+  directors: ICrew[],
+}
 
 export interface IMovie {
   id: number,
   title: string,
   name: string,
   original_name: string,
-  has_happy_end: boolean,
-  category?: TCategory,
+  has_happy_end: THasHappyEnd,
   media_type?: TCategorySearch,
   poster_path: string,           //Image path
   profile_path: string,          //Image path
@@ -156,8 +168,56 @@ export interface ISearch extends IMovie, ITvShow, IPerson {
 }
 
 // -----------------Sub Data---------------------------
+export interface ICreditsFetching {
+  id: number,
+  cast: ICast[],
+  crew: ICrew[],
+}
+
+export interface ICast {
+  "adult": boolean,
+  "gender": TGender,
+  "id": number,
+  "known_for_department": TKnownForDepartment | string,
+  "name": string,
+  "original_name": string,
+  "popularity": number,
+  "profile_path": string,
+  "cast_id": number,
+  "character": string,
+  "credit_id": string,
+  "order": number
+}
+
+export interface ICrew {
+  "adult": boolean,
+  "gender": TGender,
+  "id": number,
+  "known_for_department": TKnownForDepartment | string,
+  "name": string,
+  "original_name": string,
+  "popularity": number,
+  "profile_path": string,
+  "credit_id": string,
+  "department": TDepartment | string,
+  "job": TJob | string
+}
+
+export interface IImagesFetching {
+  "backdrops": IImage [],
+  "id": number,
+  "logos": IImage [],
+  "posters": IImage []
+}
+
 export interface IImage {
-  file_path: string,
+  "aspect_ratio": number,       //4.638
+  "height": number,
+  "iso_639_1": string,          //"en"
+  "file_path": string,
+  "vote_average": number,
+  "vote_count": number,
+  "width": number
 }
 
 // Both Movie and TV
