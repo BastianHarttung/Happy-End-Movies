@@ -1,7 +1,7 @@
 import {TCategory, TCategorySearch, TCategoryWatch, THasHappyEnd} from "./interfaces/types";
 import {
   ICast, ICrew,
-  IGenre, IImage, IImagesFetching,
+  IGenre, IImage, IImagesWatchFetching,
   IMovieAllInfos,
   IPerson,
   IProductionCompany, IProductionCountry, ISpokenLanguage,
@@ -149,7 +149,7 @@ export const trendingMoviesUrl: string = `${BaseUrl}/trending/all/day?api_key=${
 //searchFor = {string} 'movie' || 'tv'
 export const genreUrl = (searchFor: TCategoryWatch): string => `${BaseUrl}/genre/${searchFor}/list?api_key=${k}&language=de`;
 // export const fskUrl: string = `https://altersfreigaben.de/api2/s/`;
-export const watchDetailsUrl = (category: TCategoryWatch, tmdbId: number): string => `${BaseUrl}/${category}/${tmdbId}?api_key=${k}&language=de&append_to_response=releases,videos,content_ratings`;
+export const watchDetailsUrl = (movieOrTv: TCategoryWatch, tmdbId: number): string => `${BaseUrl}/${movieOrTv}/${tmdbId}?api_key=${k}&language=de&append_to_response=releases,videos,content_ratings`;
 
 export const imagesUrl = (category: TCategory, tmdbId: number): string => `${BaseUrl}/${category}/${tmdbId}/images?api_key=${k}`;
 export const imageUrlBig = `https://image.tmdb.org/t/p/w500`;

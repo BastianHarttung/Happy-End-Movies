@@ -1,5 +1,13 @@
 import {makeAutoObservable} from "mobx";
-import {ICast, ICrew, IImagesFetching, IMovieAllInfos, IMovieDetails, ITvShow} from "../interfaces/interfaces";
+import {
+  ICast,
+  ICrew, IImagesPersonFetching,
+  IImagesWatchFetching,
+  IMovieAllInfos,
+  IMovieDetails, ITvAllInfos,
+  ITvDetails,
+  ITvShow
+} from "../interfaces/interfaces";
 import {IPerson} from "../interfaces/interfaces";
 import {doc, setDoc} from "firebase/firestore";
 import firestoreDb from "../firebase-config";
@@ -55,20 +63,19 @@ class ApiStore {
 
   //-------------------------------Movie Fetches--------------------------------------------------------------
   // Collecting all Data from Movie
-  private async setAllDataForMovie(object: any, searchCategory: TCategoryWatch): Promise<void> {
-    const details: IMovieDetails = await this.getDetailMovieInfos(object.id);
-    const images: IImagesFetching = await this.getImagesFromMovie(object.id);
-    // const genres = await this.getGenreNames(object, searchCategory);
-    const fsk: number = await this.getGermanFSKFromDetails(details, searchCategory);
+  private async setAllDataForMovie(object: any, searchCategory: TCategoryWatch = "movie"): Promise<void> {
+    const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "movie") as IMovieDetails;
+    const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "movie") as IImagesWatchFetching;
+    const fsk: number = await this.getGermanFSKFromDetails(details, "movie");
     const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
-    const cast: ICast[] = await this.getCastForMovie(object.id, searchCategory);
-    const directors: ICrew[] = await this.getDirectorForMovie(object.id, searchCategory);
-    const completeMovieInfo = {
+    const cast: ICast[] = await this.getCastForMovie(object.id, "movie");
+    const directors: ICrew[] = await this.getDirectorForMovie(object.id, "movie");
+
+    const completeMovieInfo: IMovieAllInfos = {
       ...object,
       ...details,
       images: images,
       category: searchCategory,
-      // genresD: genres,
       fsk: fsk,
       userSelections: {
         [user.userId]: {
@@ -89,39 +96,18 @@ class ApiStore {
   }
 
   //Get Details infos from Movie
-  private async getDetailMovieInfos(id: number): Promise<IMovieDetails> {
-    const response = await fetch(watchDetailsUrl("movie", id));
+  private async getDetailWatchInfos(id: number, categoryWatch: TCategoryWatch): Promise<IMovieDetails | ITvDetails> {
+    const response = await fetch(watchDetailsUrl(categoryWatch, id));
     let data = await response.json();
     return data;
   };
 
   //Get Images from Movie
-  private async getImagesFromMovie(id: number): Promise<IImagesFetching> {
-    const response = await fetch(imagesUrl("movie", id));
+  private async getImagesFromTmdb(id: number, category: TCategory): Promise<IImagesWatchFetching | IImagesPersonFetching> {
+    const response = await fetch(imagesUrl(category, id));
     let data = await response.json();
     return data;
   };
-
-  // //Get Genre Names and return in Array
-  // private async getGenreNames(movie: any, searchCategory: TCategory): Promise<string[]> {
-  //   let genres = [];
-  //   for (let i = 0; i < movie.genre_ids.length; i++) {
-  //     const genreName = await this.getGenreNameFromApi(
-  //       movie.genre_ids[i],
-  //       searchCategory,
-  //     );
-  //     genres.push(genreName);
-  //   }
-  //   return genres;
-  // };
-  //
-  // //Get Genre from TMDB API
-  // private async getGenreNameFromApi(genreId: number, searchCategory: TCategory): Promise<string> {
-  //   const response = await fetch(genreUrl(searchCategory));
-  //   let data = await response.json();
-  //   const genre = data.genres.find((genre: any) => genre.id === genreId);
-  //   return genre.name;
-  // };
 
   //Get German FSK from Detail Infos
   private async getGermanFSKFromDetails(detailsObject: any, category: TCategoryWatch): Promise<number> {
@@ -143,7 +129,6 @@ class ApiStore {
   //Calculate has_happy_end by counting happyEnd_Voting
   private calculateHappyEnd(movie: any): THasHappyEnd {
     if (typeof movie.happyEnd_Voting === "object") {
-      //console.log('calculate happyend')
       const happyEndArray = Object.values(movie.happyEnd_Voting);
       const trueCount = happyEndArray.reduce((acc: number, current) => {
         if (current) acc++;
@@ -181,19 +166,18 @@ class ApiStore {
 
   //-----------------------------------TV Show fetches ---------------------------------------------
   private async setAllDataForTv(object: any, searchCategory: TCategoryWatch): Promise<void> {
-    const details = await this.getDetailMovieInfos(object.id);
-    const images = await this.getImagesFromMovie(object.id);
-    // const genres = await this.getGenreNames(object, searchCategory);
-    const fsk = await this.getGermanFSKFromDetails(details, searchCategory);
-    const hasHappyEnd = await this.calculateHappyEnd(object);
-    const cast = await this.getCastForMovie(object.id, searchCategory);
-    const directors = await this.getDirectorForMovie(object.id, searchCategory);
-    const completeTvInfo = {
+    const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "tv") as IMovieDetails;
+    const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "tv") as IImagesWatchFetching;
+    const fsk: number = await this.getGermanFSKFromDetails(details, "tv");
+    const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
+    const cast: ICast[] = await this.getCastForMovie(object.id, "tv");
+    const directors: ICrew[] = await this.getDirectorForMovie(object.id, "tv");
+
+    const completeTvInfo: ITvAllInfos = {
       ...object,
       ...details,
       images: images,
       category: searchCategory,
-      // genresD: genres,
       fsk: fsk,
       userSelections: {
         [user.userId]: {

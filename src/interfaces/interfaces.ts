@@ -15,7 +15,7 @@ export interface IMovieAllInfos extends IMovie, IMovieDetails, IMovieFetchedInfo
 }
 
 export interface IMovieFetchedInfos {
-  images: IImagesFetching,
+  images: IImagesWatchFetching,
   category: TCategoryWatch,
   fsk: number,
   userSelections: {
@@ -203,11 +203,16 @@ export interface ICrew {
   "job": TJob | string
 }
 
-export interface IImagesFetching {
+export interface IImagesWatchFetching {
   "backdrops": IImage [],
   "id": number,
   "logos": IImage [],
   "posters": IImage []
+}
+
+export interface IImagesPersonFetching {
+  id: number,
+  profiles: IImage[],
 }
 
 export interface IImage {
