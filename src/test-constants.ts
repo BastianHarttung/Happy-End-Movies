@@ -1,10 +1,18 @@
+import {
+  IMovieDetails,
+  ITvShowSearch,
+  ITvActor,
+  ISearch,
+  ICreditsMovieFetching,
+  ICreditsTvFetching
+} from "./interfaces/interfaces";
+
+
 //-----------------------Multi---------------------------------------
-// results.media_type = 'tv' || 'movie' || 'person'
 
-//Suche nach bad; https://api.themoviedb.org/3/search/multi?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&query=bad&page=1&include_adult=false
-import {IMovieDetails, ITvShow, ITvActor} from "./interfaces/interfaces";
+//Suche nach bad; https://api.themoviedb.org/3/search/multi?api_key={key}&language=de&query=bad&page=1&include_adult=false
 
-export const apiMultiSearchFilm = {
+export const apiMultiSearch: ISearch = {
   "page": 1,
   "results": [
     {
@@ -48,41 +56,12 @@ export const apiMultiSearchFilm = {
     },
     {
       "adult": false,
-      "backdrop_path": "/3N316jUSdhvPyYTW29G4v9ebbcS.jpg",
-      "genre_ids": [
-        53,
-        28,
-        80
-      ],
-      "id": 38700,
-      "media_type": "movie",
-      "original_language": "en",
-      "original_title": "Bad Boys for Life",
-      "overview": "Draufgänger Mike Lowrey und sein Partner Marcus Burnett stehen immer noch im Dienst der Polizei und treiben Captain Howard nach wie vor mit Missionen zur Weißglut, die in Destruktionsorgien enden. Während Einzelgänger Mike immer noch mit seinem Job verheiratet ist, wird Familienmensch Marcus zunehmend klar, dass er seine zweite Lebenshälfte lieber im Kreis seiner Liebsten verbringen will - anstatt sich Hals über Kopf von einer waghalsigen Mission in die nächste zu stürzen. Nachdem Mike eines Tages allerdings Ziel eines Attentats wird, überschlagen sich die Ereignisse, sodass den beiden nichts anderes übrig bleibt, als Jagd auf dessen Angreifer zu machen, der ein dunkles Geheimnis birgt und alles in seiner Macht stehende tut, um die Befehle seiner Mutter erfolgreich auszuführen. Und die will vor allem eines: den Tod von Mike Lowrey.",
-      "popularity": 91.163,
-      "poster_path": "/ksJghzOjweRfpAOVbpRVmGPuV4k.jpg",
-      "release_date": "2020-01-15",
-      "title": "Bad Boys for Life",
-      "video": false,
-      "vote_average": 7.2,
-      "vote_count": 6719
-    }],
-  "total_pages": 172,
-  "total_results": 3425
-}
-
-//Suche nach brad pitt; https://api.themoviedb.org/3/search/multi?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&query=brad%20pitt&page=1&include_adult=false
-export const apiMultiSearchPerson = {
-  "page": 1,
-  "results": [
-    {
-      "adult": false,
       "gender": 2,
       "id": 287,
       "known_for": [
         {
           "adult": false,
-          "backdrop_path": "/yguBaPk5V0nZCcSBthre4YFMAgk.jpg",
+          "backdrop_path": "/rr7E0NoGKxvbkb89eR1GwfoYjpA.jpg",
           "genre_ids": [
             18
           ],
@@ -96,11 +75,11 @@ export const apiMultiSearchPerson = {
           "title": "Fight Club",
           "video": false,
           "vote_average": 8.4,
-          "vote_count": 23021
+          "vote_count": 24071
         },
         {
           "adult": false,
-          "backdrop_path": "/50VD6QU0NX0aRB6ftKCVWun80bm.jpg",
+          "backdrop_path": "/yVPcPk96E6Qffiyez2oJc7OKD2A.jpg",
           "genre_ids": [
             18,
             28,
@@ -117,11 +96,11 @@ export const apiMultiSearchPerson = {
           "title": "Inglourious Basterds",
           "video": false,
           "vote_average": 8.2,
-          "vote_count": 17873
+          "vote_count": 18673
         },
         {
           "adult": false,
-          "backdrop_path": "/i5H7zusQGsysGQ8i6P361Vnr0n2.jpg",
+          "backdrop_path": "/bd4RndWxzL2H7aiJKoGgk4clEdD.jpg",
           "genre_ids": [
             80,
             9648,
@@ -137,89 +116,24 @@ export const apiMultiSearchPerson = {
           "title": "Sieben",
           "video": false,
           "vote_average": 8.3,
-          "vote_count": 16197
+          "vote_count": 17058
         }
       ],
       "known_for_department": "Acting",
       "media_type": "person",
       "name": "Brad Pitt",
-      "popularity": 11.761,
-      "profile_path": "/hfkzP7YstXRsj2IM1a8lLz8bvst.jpg"
-    },
-    {
-      "adult": false,
-      "backdrop_path": null,
-      "genre_ids": [],
-      "id": 796833,
-      "media_type": "movie",
-      "original_language": "en",
-      "original_title": "Brad Pitt In America's National Parks",
-      "overview": "",
-      "popularity": 1.816,
-      "poster_path": "/jIKc588syx2DAma55R8z1hRFVCK.jpg",
-      "release_date": "2017-05-03",
-      "title": "Brad Pitt In America's National Parks",
-      "video": false,
-      "vote_average": 0,
-      "vote_count": 0
-    },
-    {
-      "adult": false,
-      "backdrop_path": null,
-      "genre_ids": [
-        53
-      ],
-      "id": 877817,
-      "media_type": "movie",
-      "original_language": "en",
-      "original_title": "Untitled George Clooney/Brad Pitt/Jon Watts Project",
-      "overview": "",
-      "popularity": 1.4,
-      "poster_path": null,
-      "release_date": "",
-      "title": "Untitled George Clooney/Brad Pitt/Jon Watts Project",
-      "video": false,
-      "vote_average": 0,
-      "vote_count": 0
-    },
-    {
-      "adult": false,
-      "gender": 2,
-      "id": 2765075,
-      "known_for": [
-        {
-          "adult": false,
-          "backdrop_path": "/40Y3VwGGNJ43PkDenjHEo7pbDo4.jpg",
-          "genre_ids": [
-            27
-          ],
-          "id": 739345,
-          "media_type": "movie",
-          "original_language": "en",
-          "original_title": "Halloween Homecoming",
-          "overview": "",
-          "poster_path": "/tSzw1SAb6rg9FhZtleVeuZiKLS4.jpg",
-          "release_date": "2019-10-05",
-          "title": "Halloween Homecoming",
-          "video": false,
-          "vote_average": 0,
-          "vote_count": 0
-        }
-      ],
-      "known_for_department": "Acting",
-      "media_type": "person",
-      "name": "James McGarvey",
-      "popularity": 0.6,
-      "profile_path": null
+      "popularity": 38.764,
+      "profile_path": "/oTB9vGIBacH5aQNS0pUM74QSWuf.jpg"
     }
   ],
-  "total_pages": 1,
-  "total_results": 4
+  "total_pages": 172,
+  "total_results": 3425
 }
+
 
 //--------------------Movie--------------------------------------
 
-//https://api.themoviedb.org/3/search/movie?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&include_adult=false&query=fight
+//https://api.themoviedb.org/3/search/movie?api_key={key}&language=de&include_adult=false&query=fight
 export const apiMovieSearch =
   {
     "page": 1,
@@ -597,8 +511,8 @@ export const apiMovieSearch =
     "total_results": 1954
   }
 
-//https://api.themoviedb.org/3/movie/550/credits?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de
-export const apiMovieCastCrew =
+//https://api.themoviedb.org/3/movie/550/credits?api_key={key}&language=de
+export const apiMovieCastCrew: ICreditsMovieFetching =
   {
     "id": 550,
     "cast": [
@@ -4012,7 +3926,7 @@ export const tvActor: ITvActor = {
 }
 
 // Coming from TMDB on Search
-export const tvShow: ITvShow = {
+export const tvShow: ITvShowSearch = {
   "backdrop_path": "/84XPpjGvxNyExjSuLQe0SzioErt.jpg",
   "first_air_date": "2008-01-20",
   "genre_ids": [
@@ -4032,8 +3946,8 @@ export const tvShow: ITvShow = {
   "vote_count": 8000
 }
 
-//https://api.themoviedb.org/3/tv/1396/aggregate_credits?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de
-export const apiTvCastCrew =
+//https://api.themoviedb.org/3/tv/1396/aggregate_credits?api_key={key}&language=de
+export const apiTvCastCrew:ICreditsTvFetching =
   {
     "cast": [
       {
@@ -8807,7 +8721,7 @@ export const apiTvCastCrew =
     "id": 1396
   }
 
-// https://api.themoviedb.org/3/movie/299534?api_key=d2aa68fbfa10f4f356fe29718bfa3508&language=de&append_to_response=releases
+// https://api.themoviedb.org/3/movie/299534?api_key={key}&language=de&append_to_response=releases,videos,content_ratings
 export const movieDetails: IMovieDetails = {
   "adult": false,
   "backdrop_path": "/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
@@ -8838,7 +8752,7 @@ export const movieDetails: IMovieDetails = {
   "original_language": "en",
   "original_title": "Avengers: Endgame",
   "overview": "Thanos hat also tatsächlich Wort gehalten, seinen Plan in die Tat umgesetzt und die Hälfte allen Lebens im Universum ausgelöscht. Die Avengers? Machtlos. Iron Man und Nebula sitzen auf dem Planeten Titan fest, während auf der Erde absolutes Chaos herrscht. Doch dann finden Captain America und die anderen überlebenden Helden auf der Erde heraus, dass Nick Fury vor den verheerenden Ereignissen gerade noch ein Notsignal absetzen konnte, um Verstärkung auf den Plan zu rufen. Die Superhelden-Gemeinschaft bekommt mit Captain Marvel kurzerhand tatkräftige Unterstützung im Kampf gegen ihren vermeintlich übermächtigen Widersacher. Und dann ist da auch noch Ant-Man, der wie aus dem Nichts auftaucht und sich der Truppe erneut anschließt, um die ganze Sache womöglich doch noch zu einem guten Ende zu bringen …",
-  "popularity": 284.509,
+  "popularity": 242.452,
   "poster_path": "/mrh5A3uIE9wDDzPSiBe70YSHvrK.jpg",
   "production_companies": [
     {
@@ -8879,7 +8793,7 @@ export const movieDetails: IMovieDetails = {
   "title": "Avengers: Endgame",
   "video": false,
   "vote_average": 8.3,
-  "vote_count": 20268,
+  "vote_count": 21025,
   "releases": {
     "countries": [
       {
@@ -9321,6 +9235,12 @@ export const movieDetails: IMovieDetails = {
         "release_date": "2019-12-25"
       },
       {
+        "certification": "",
+        "iso_3166_1": "FR",
+        "primary": false,
+        "release_date": "2022-04-08"
+      },
+      {
         "certification": "PG-13",
         "iso_3166_1": "US",
         "primary": false,
@@ -9361,6 +9281,34 @@ export const movieDetails: IMovieDetails = {
         "iso_3166_1": "FR",
         "primary": false,
         "release_date": "2019-12-25"
+      }
+    ]
+  },
+  "videos": {
+    "results": [
+      {
+        "iso_639_1": "de",
+        "iso_3166_1": "DE",
+        "name": "Avengers: Endgame - Trailer 2 - Deutsch HD",
+        "key": "H7a5hXprRvM",
+        "site": "YouTube",
+        "size": 1080,
+        "type": "Trailer",
+        "official": true,
+        "published_at": "2019-03-14T12:08:34.000Z",
+        "id": "5e19f74e255dba0011e1f019"
+      },
+      {
+        "iso_639_1": "de",
+        "iso_3166_1": "DE",
+        "name": "Avengers: Endgame - Trailer 1 - Deutsch HD",
+        "key": "L0d-hlXss_U",
+        "site": "YouTube",
+        "size": 1080,
+        "type": "Trailer",
+        "official": true,
+        "published_at": "2018-12-07T13:01:54.000Z",
+        "id": "5e19f7056f43ec00136342b1"
       }
     ]
   }

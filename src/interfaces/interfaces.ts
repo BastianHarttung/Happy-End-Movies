@@ -1,5 +1,14 @@
-import {TCategory, TCategoryWatch, TDepartment, TGender, THasHappyEnd, TJob, TKnownForDepartment} from "./types";
-import {TCategorySearch} from "./types";
+import {
+  TCategory,
+  TCategoryWatch,
+  TCategorySearch,
+  TDepartment,
+  TGender,
+  THasHappyEnd,
+  TJob,
+  TKnownForDepartment
+} from "./types";
+
 
 export interface IUser {
   userId: string,
@@ -7,11 +16,21 @@ export interface IUser {
   email: string,
 }
 
-
 //Big Data---------------------------
 
 //Movies
 export interface IMovieAllInfos extends IMovie, IMovieDetails, IMovieFetchedInfos {
+}
+
+export interface IMovie {
+  id: number,
+  title: string,
+  name: string,
+  original_name: string,
+  has_happy_end: THasHappyEnd,
+  media_type?: TCategorySearch,
+  poster_path: string,              //Image path
+  profile_path: string,             //Image path
 }
 
 export interface IMovieFetchedInfos {
@@ -24,30 +43,36 @@ export interface IMovieFetchedInfos {
       haveSeen: boolean,
     },
   },
-  cast: ICast[],
-  directors: ICrew[],
+  cast: ICastMovie[],
+  directors: ICrewMovie[],
 }
 
-export interface IMovie {
-  id: number,
-  title: string,
-  name: string,
-  original_name: string,
-  has_happy_end: THasHappyEnd,
-  media_type?: TCategorySearch,
-  poster_path: string,           //Image path
-  profile_path: string,          //Image path
+export interface IMovieSearch {
+  "adult": boolean,
+  "backdrop_path": string,
+  "genre_ids": number[],
+  "id": number,
+  "original_language": string,
+  "original_title": string,
+  "overview": string,
+  "popularity": number,
+  "poster_path": string,
+  "release_date": string,
+  "title": string,
+  "video": boolean,
+  "vote_average": number,
+  "vote_count": number,
 }
 
 // Response from Tmdb for Fetching watchDetailsUrl with "movie"-category
 export interface IMovieDetails {
   adult: boolean,
-  backdrop_path: string,          //Image path
+  backdrop_path: string,              //Image path
   belongs_to_collection: IBelongsToCollection,
   budget: number,
   genres: IGenre[],
   homepage: string,
-  id: number,                     //!!!!
+  id: number,                         //!!!!
   imdb_id: string,
   original_language: string,
   original_title: string,
@@ -56,15 +81,15 @@ export interface IMovieDetails {
   poster_path: string,
   production_companies: IProductionCompany [],
   production_countries: IProductionCountry [],
-  release_date: string,         //2022-02-12
+  release_date: string,               //2022-02-12
   revenue: number,
   runtime: number,
   spoken_languages: ISpokenLanguage [],
-  status: string,               //"Released"
+  status: string,                     //"Released"
   tagline: string,
   title: string,
   video: boolean,
-  vote_average: number,         //8.4
+  vote_average: number,               //8.4
   vote_count: number,
   releases: {
     countries: IReleaseCountry []
@@ -75,13 +100,13 @@ export interface IMovieDetails {
 }
 
 //--------------TV----------------------------------
-export interface ITvAllInfos extends ITvShow, ITvDetails {
+export interface ITvAllInfos extends ITvShowSearch, ITvDetails {
 }
 
 // Coming from TMDB
-export interface ITvShow {
+export interface ITvShowSearch {
   "backdrop_path": string,
-  "first_air_date": string,   //2022-02-23
+  "first_air_date": string,       //2022-02-23
   "genre_ids": number[],
   "id": number,
   "name": string,
@@ -89,16 +114,16 @@ export interface ITvShow {
   "original_language": string,
   "original_name": string,
   "overview": string,
-  "popularity": number,       //200.000
+  "popularity": number,           //200.000
   "poster_path": string,
-  "vote_average": number,     //8.7
-  "vote_count": number,       //8000
+  "vote_average": number,         //8.7
+  "vote_count": number,           //8000
 }
 
 // Response from Tmdb for Fetching watchDetailsUrl with "tv"-category
 export interface ITvDetails {
   "adult": boolean,
-  "backdrop_path": string,        // "/n3u3kgNttY1F5Ixi5bMY9BwZImQ.jpg"
+  "backdrop_path": string,          // "/n3u3kgNttY1F5Ixi5bMY9BwZImQ.jpg"
   "created_by": ICreatedBy [],
   "episode_run_time": number[],     // episode between numbers
   "first_air_date": string,         //"2022-02-21"
@@ -145,13 +170,36 @@ export interface ITvActor {
   "name": string,
   "original_name": string,
   "popularity": number,               // 8.432
-  "profile_path": string,
+  "profile_path": string | null,
   "roles": IRoleTvActor [],
   "total_episode_count": number,
   "order": number
 }
 
+export interface ICrewTv {
+  "adult": boolean,
+  "gender": TGender,
+  "id": number,
+  "known_for_department": TKnownForDepartment,
+  "name": string,
+  "original_name": string,
+  "popularity": number,
+  "profile_path": string | null,
+  "jobs": ICrewTvJobs [],
+  "department": TKnownForDepartment,
+  "total_episode_count": number,
+}
+
+export interface ICrewTvJobs {
+  "credit_id": string,
+  "job": TJob | string,
+  "episode_count": number
+}
+
 //---------------------Person----------------------
+
+export interface IPersonAllData extends IPersonSearch, IPersonFetching {
+}
 
 export interface IPerson {
   id: number,
@@ -163,18 +211,83 @@ export interface IPerson {
   roles: IRole[],
 }
 
-export interface ISearch extends IMovie, ITvShow, IPerson {
+export interface IPersonSearch {
+  "adult": boolean,
+  "gender": TGender,
+  "id": number,
+  "known_for": IPersonSearchKnownFor[],
+  "known_for_department": TKnownForDepartment,
+  "name": string,
+  "popularity": number,
+  "profile_path": string,
+}
 
+export interface IPersonSearchKnownFor {
+  "adult": boolean,
+  "backdrop_path": string,
+  "genre_ids": number[],
+  "id": number,
+  "media_type": TCategory,        //!!!!!!!!!!!!!
+  "original_language": string,
+  "original_title": string,
+  "overview": string,
+  "poster_path": string,
+  "release_date": string,         //"1999-09-12"
+  "title": string,
+  "video": boolean,
+  "vote_average": number,
+  "vote_count": number,
+}
+
+export interface IPersonFetching {
+  "adult": boolean,
+  "also_known_as": string[],
+  "biography": string,
+  "birthday": string,             //"1956-03-07"
+  "deathday": string | null,
+  "gender": TGender,
+  "homepage": string | null,
+  "id": number,
+  "imdb_id": string,
+  "known_for_department": TKnownForDepartment,
+  "name": string,
+  "place_of_birth": string,
+  "popularity": number,
+  "profile_path": string,
+  "images": {
+    "profiles": IImage[]
+  }
+}
+
+//---------------Multi Search------------------------
+
+export interface ISearch {
+  "page": number,
+  "results": (IMovieSearchMultiResult | ITvShowSearchMultiResult | IPersonSearchMultiResult) [],
+  "total_pages": number,
+  "total_results": number,
+}
+
+export interface IMovieSearchMultiResult extends IMovieSearch {
+  "media_type": "movie",
+}
+
+export interface ITvShowSearchMultiResult extends ITvShowSearch {
+  "media_type": "tv",
+}
+
+export interface IPersonSearchMultiResult extends IPersonSearch {
+  "media_type": "person",
 }
 
 // -----------------Sub Data---------------------------
-export interface ICreditsFetching {
+export interface ICreditsMovieFetching {
   id: number,
-  cast: ICast[],
-  crew: ICrew[],
+  cast: ICastMovie[],
+  crew: ICrewMovie[],
 }
 
-export interface ICast {
+export interface ICastMovie {
   "adult": boolean,
   "gender": TGender,
   "id": number,
@@ -182,14 +295,14 @@ export interface ICast {
   "name": string,
   "original_name": string,
   "popularity": number,
-  "profile_path": string,
+  "profile_path": string | null,
   "cast_id": number,
   "character": string,
   "credit_id": string,
   "order": number
 }
 
-export interface ICrew {
+export interface ICrewMovie {
   "adult": boolean,
   "gender": TGender,
   "id": number,
@@ -197,11 +310,18 @@ export interface ICrew {
   "name": string,
   "original_name": string,
   "popularity": number,
-  "profile_path": string,
+  "profile_path": string | null,
   "credit_id": string,
   "department": TDepartment | string,
   "job": TJob | string
 }
+
+export interface ICreditsTvFetching {
+  id: number,
+  cast: ITvActor[],
+  crew: ICrewTv[],
+}
+
 
 export interface IImagesWatchFetching {
   "backdrops": IImage [],

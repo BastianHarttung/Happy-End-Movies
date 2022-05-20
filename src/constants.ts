@@ -1,12 +1,12 @@
 import {TCategory, TCategorySearch, TCategoryWatch, THasHappyEnd} from "./interfaces/types";
 import {
-  ICast, ICrew,
+  ICastMovie, ICrewMovie,
   IGenre, IImage, IImagesWatchFetching,
   IMovieAllInfos,
   IPerson,
   IProductionCompany, IProductionCountry, ISpokenLanguage,
   ITvAllInfos,
-  ITvShow,
+  ITvShowSearch,
   IVideoResult
 } from "./interfaces/interfaces";
 

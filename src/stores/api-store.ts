@@ -1,12 +1,12 @@
 import {makeAutoObservable} from "mobx";
 import {
-  ICast,
-  ICrew, IImagesPersonFetching,
+  ICastMovie,
+  ICrewMovie, IImagesPersonFetching,
   IImagesWatchFetching,
   IMovieAllInfos,
-  IMovieDetails, ITvAllInfos,
+  IMovieDetails, IPersonFetching, IPersonSearch, ITvAllInfos,
   ITvDetails,
-  ITvShow
+  ITvShowSearch
 } from "../interfaces/interfaces";
 import {IPerson} from "../interfaces/interfaces";
 import {doc, setDoc} from "firebase/firestore";
@@ -29,7 +29,7 @@ const {user} = globalStore;
 class ApiStore {
 
   selectedMovie: IMovieAllInfos = emptyMovie;
-  selectedTv: ITvShow = emptyTvShow;
+  selectedTv: ITvShowSearch = emptyTvShow;
   selectedPerson: IPerson = emptyPerson;
 
   constructor() {
@@ -68,8 +68,8 @@ class ApiStore {
     const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "movie") as IImagesWatchFetching;
     const fsk: number = await this.getGermanFSKFromDetails(details, "movie");
     const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
-    const cast: ICast[] = await this.getCastForMovie(object.id, "movie");
-    const directors: ICrew[] = await this.getDirectorForMovie(object.id, "movie");
+    const cast: ICastMovie[] = await this.getCastForMovie(object.id, "movie");
+    const directors: ICrewMovie[] = await this.getDirectorForMovie(object.id, "movie");
 
     const completeMovieInfo: IMovieAllInfos = {
       ...object,
@@ -143,7 +143,7 @@ class ApiStore {
   };
 
   //Get Cast for Movie
-  private async getCastForMovie(movieId: number, searchCategory: TCategoryWatch): Promise<ICast[]> {
+  private async getCastForMovie(movieId: number, searchCategory: TCategoryWatch): Promise<ICastMovie[]> {
     const castUrlMovie = castUrl(searchCategory, movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
@@ -151,7 +151,7 @@ class ApiStore {
   };
 
   //Get Director for Movie
-  private async getDirectorForMovie(movieId: number, searchCategory: TCategoryWatch): Promise<ICrew[]> {
+  private async getDirectorForMovie(movieId: number, searchCategory: TCategoryWatch): Promise<ICrewMovie[]> {
     const castUrlMovie = castUrl(searchCategory, movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
@@ -170,8 +170,8 @@ class ApiStore {
     const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "tv") as IImagesWatchFetching;
     const fsk: number = await this.getGermanFSKFromDetails(details, "tv");
     const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
-    const cast: ICast[] = await this.getCastForMovie(object.id, "tv");
-    const directors: ICrew[] = await this.getDirectorForMovie(object.id, "tv");
+    const cast: ICastMovie[] = await this.getCastForMovie(object.id, "tv");
+    const directors: ICrewMovie[] = await this.getDirectorForMovie(object.id, "tv");
 
     const completeTvInfo: ITvAllInfos = {
       ...object,
@@ -200,13 +200,13 @@ class ApiStore {
   //-------------------------------------Person fetches---------------------------------------------
   // Collecting all Data from Person
   private async setAllDataForPerson(object: any): Promise<void> {
-    const personKnownFor = await this.getInfosForPersonFromApi(object.name);
-    const personDetails = await this.getDetailPersonInfosFromApi(object.id);
+    const personKnownFor: IPersonSearch = await this.getInfosForPersonFromApi(object.name);
+    const personDetails: IPersonFetching = await this.getDetailPersonInfosFromApi(object.id);
     this.selectedPerson = {...object, ...personKnownFor, ...personDetails};
   }
 
   //Get known_for movies and other infos from person
-  private async getInfosForPersonFromApi(name: string): Promise<{}> {
+  private async getInfosForPersonFromApi(name: string): Promise<IPersonSearch> {
     const response = await fetch(searchUrl("person", name, 1));
     const data = await response.json();
     const result = await data.results[0];
@@ -214,7 +214,7 @@ class ApiStore {
   };
 
   //Get Biography, Birthday and other detailed infos and Images from person
-  private async getDetailPersonInfosFromApi(personId: number): Promise<{}> {
+  private async getDetailPersonInfosFromApi(personId: number): Promise<IPersonFetching> {
     const response = await fetch(personDetailUrl(personId));
     let data = await response.json();
     return data;

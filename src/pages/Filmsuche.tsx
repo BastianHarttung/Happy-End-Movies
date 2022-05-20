@@ -101,18 +101,18 @@ const Filmsuche = () => {
   // Search Movie by clicking the Search Button
   // -set page to number 1
   // -delete die input field
-  async function searchMovie(movieName: string, searchCategory: TCategorySearch = "multi"): Promise<void> {
-    if (movieName.length > 0) {
-      setSearchResult(movieName);
+  async function searchMovie(searchString: string, searchCategory: TCategorySearch = "multi"): Promise<void> {
+    if (searchString.length > 0) {
+      setSearchResult(searchString);
       setSearchingCategory(searchCategory);
-      const tmdbMovie = await getJsonFromTmdb(movieName, 1, searchCategory);
+      const tmdbMovie = await getJsonFromTmdb(searchString, 1, searchCategory);
       setTotalResults(await tmdbMovie.total_results);
       setTotalPages(makePageArray(await tmdbMovie.total_pages));
       setSearchedMovies(tmdbMovie.results);
       setActivePage(1);
-      setSearchFor(movieName);
+      setSearchFor(searchString);
       setSearchStarted(true);
-      window.location.hash = movieName;
+      window.location.hash = searchString;
     } else {
       setSearchingCategory("multi");
       setSearchStarted(false);
