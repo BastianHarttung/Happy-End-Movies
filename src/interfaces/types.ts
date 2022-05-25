@@ -1,3 +1,11 @@
+import {
+  IMovieAllInfos,
+  IMovieSearchMultiResult,
+  IPersonSearchMultiResult,
+  ITvAllInfos,
+  ITvShowSearchMultiResult
+} from "./interfaces";
+
 export type TCategoryWatch = "movie" | "tv"
 
 export type TCategory = TCategoryWatch | "person"
@@ -12,7 +20,7 @@ export type THappyEndFilter = "allEnds" | "true" | "false"
 export type THasHappyEnd = "neutral" | "true" | "false"
 
 //Fetching Types
-export type TGender = 0 | 1 | 2
+export type TGender = 0 | 1 | 2 | 3
 
 export type TDepartment =
   | "Production"
@@ -50,3 +58,7 @@ export type TJob =
   | "Stunts"
   | "Stunt Double"
   | "Graphic Designer"
+
+export type TWatchDatabase = IMovieAllInfos | ITvAllInfos
+
+export type TSearchResults = IMovieSearchMultiResult | ITvShowSearchMultiResult | IPersonSearchMultiResult

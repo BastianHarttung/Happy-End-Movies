@@ -1,7 +1,7 @@
 import Navigation from "./Navigation";
 import classes from "./Header.module.scss";
 import {Link} from "react-router-dom";
-import {ReactComponent as HappyLogo} from "../assets/logos/Happy-End_logo-mit-Text.svg";
+import {ReactComponent as HappyLogo} from "../../assets/logos/Happy-End_logo-mit-Text.svg";
 import {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 

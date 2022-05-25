@@ -1,11 +1,11 @@
 import React from "react";
-import classes from "../pages/DetailsMovie.module.scss";
-import {imageUrlBig} from "../constants";
-import {IImage} from "../interfaces/interfaces";
+import classes from "../DetailsMovie.module.scss";
+import {imageUrlBig} from "../../../constants";
+import {IImage} from "../../../interfaces/interfaces";
 
 interface IImagesBoxProps {
   title: string,
-  images: [],
+  images: IImage[],
 }
 
 function ImagesBox({title, images}: IImagesBoxProps) {

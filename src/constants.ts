@@ -18,7 +18,7 @@ export const emptyMovie: IMovieAllInfos = {
   original_name: "",
   has_happy_end: "neutral",
   category: "movie",
-  media_type: undefined,
+  // media_type: undefined,
   poster_path: "",
   profile_path: "",
   adult: false,

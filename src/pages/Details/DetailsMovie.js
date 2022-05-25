@@ -1,5 +1,5 @@
 import classes from "./DetailsMovie.module.scss";
-import emptyImage from "../assets/img/movie-poster.png";
+import emptyImage from "../../assets/img/movie-poster.png";
 import {useNavigate, useParams} from "react-router-dom";
 import {useState, useEffect} from "react";
 import {
@@ -12,20 +12,20 @@ import {
   FaRegEyeSlash,
   FaRegEye,
 } from "react-icons/fa";
-import {imageUrlBig} from "../constants";
-import PersonBox from "../components/PersonBox";
-import ImagesBox from "../components/ImagesBox";
-import {Button} from "../styleComponents/ButtonStyleComp";
-import globalStore from "../stores/global-store";
-import apiStore from "../stores/api-store";
+import {imageUrlBig} from "../../constants";
+import PersonBox from "./details-components/PersonBox";
+import ImagesBox from "./details-components/ImagesBox";
+import {Button} from "../../styleComponents/ButtonStyleComp";
+import globalStore from "../../stores/global-store";
+import apiStore from "../../stores/api-store";
 import {observer} from "mobx-react";
 
 
-interface IDetailsMovieProps {
-  saveSelectedPerson: () => void,
-}
+// interface IDetailsMovieProps {
+//   saveSelectedPerson: () => void,
+// }
 
-const DetailsMovie = ({saveSelectedPerson}: IDetailsMovieProps) => {
+const DetailsMovie = ({saveSelectedPerson}/*: IDetailsMovieProps*/) => {
   const {user} = globalStore;
   const {selectedMovie, saveMovieToDb} = apiStore;
 
@@ -120,7 +120,7 @@ const DetailsMovie = ({saveSelectedPerson}: IDetailsMovieProps) => {
                     <img
                       src={`https://altersfreigaben.de/images/rating/de/${selectedMovie.fsk}_90.png`}
                       className={classes.fsk}
-                      alt={selectedMovie.fsk}
+                      alt={selectedMovie.fsk.toString()}
                       title={`FSK ${selectedMovie.fsk}`}
                     />
                   </div>
@@ -437,7 +437,7 @@ const DetailsMovie = ({saveSelectedPerson}: IDetailsMovieProps) => {
    * @param {number} laufzeit
    * @return {{stunden: number, minuten: number}} Objekt mit den Stunden und Minuten
    */
-  function laufzeitInStunden(laufzeit: number) {
+  function laufzeitInStunden(laufzeit/*: number*/) {
     const laufzeitStunden = Math.floor(laufzeit / 60);
     const restminuten = laufzeit - laufzeitStunden * 60;
     return {stunden: laufzeitStunden, minuten: restminuten};

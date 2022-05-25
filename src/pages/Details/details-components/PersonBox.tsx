@@ -1,9 +1,9 @@
 import classes from "./PersonBox.module.scss";
-import {imageUrlSmall} from "../constants";
-import imageActorMan from "../assets/img/actor.png";
-import imageActorWoman from "../assets/img/actor_girl.png";
+import {imageUrlSmall} from "../../../constants";
+import imageActorMan from "../../../assets/img/actor.png";
+import imageActorWoman from "../../../assets/img/actor_girl.png";
 import {useNavigate} from "react-router-dom";
-import {IPerson} from "../interfaces/interfaces";
+import {IPerson} from "../../../interfaces/interfaces";
 
 interface IPersonBoxProps {
   person: IPerson,

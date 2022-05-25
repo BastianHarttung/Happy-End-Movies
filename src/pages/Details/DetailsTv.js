@@ -1,15 +1,15 @@
 import classes from "./DetailsMovie.module.scss";
 
-import emptyImage from "../assets/img/movie-poster.png"
+import emptyImage from "../../assets/img/movie-poster.png"
 
 import {useNavigate, useParams} from "react-router-dom";
 import {useState, useEffect} from "react";
 
 import {FaSmileBeam, FaSadTear, FaMeh, FaSearch, FaChevronRight, FaChevronLeft} from "react-icons/all";
-import {imageUrlBig} from "../constants";
-import PersonBox from "../components/PersonBox";
-import {Button} from "../styleComponents/ButtonStyleComp";
-import globalStore from "../stores/global-store";
+import {imageUrlBig} from "../../constants";
+import PersonBox from "./details-components/PersonBox";
+import {Button} from "../../styleComponents/ButtonStyleComp";
+import globalStore from "../../stores/global-store";
 
 
 const DetailsTv = (props) => {

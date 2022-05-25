@@ -6,7 +6,7 @@ import {
   TGender,
   THasHappyEnd,
   TJob,
-  TKnownForDepartment
+  TKnownForDepartment, TSearchResults
 } from "./types";
 
 
@@ -19,18 +19,27 @@ export interface IUser {
 //Big Data---------------------------
 
 //Movies
-export interface IMovieAllInfos extends IMovie, IMovieDetails, IMovieFetchedInfos {
+export interface IMovieAllInfos extends IMovieUserInfos, IMovieDetails, IMovieFetchedInfos {
 }
 
-export interface IMovie {
-  id: number,
-  title: string,
+export interface IMovieUserInfos {
+  // id: number,
+  // title: string,
   name: string,
   original_name: string,
-  has_happy_end: THasHappyEnd,
-  media_type?: TCategorySearch,
-  poster_path: string,              //Image path
   profile_path: string,             //Image path
+  images: IImagesWatchFetching,
+  category: TCategoryWatch,
+  fsk: number,
+  userSelections: {
+    [key: string]: {
+      happyEnd_Voting: THasHappyEnd,
+      haveSeen: boolean,
+    },
+  },
+  has_happy_end: THasHappyEnd,
+  cast: ICastMovie [],
+  directors: ICrewMovie[],
 }
 
 export interface IMovieFetchedInfos {
@@ -101,6 +110,10 @@ export interface IMovieDetails {
 
 //--------------TV----------------------------------
 export interface ITvAllInfos extends ITvShowSearch, ITvDetails {
+}
+
+export interface ITvUserInfos {
+
 }
 
 // Coming from TMDB
@@ -263,7 +276,7 @@ export interface IPersonFetching {
 
 export interface ISearch {
   "page": number,
-  "results": (IMovieSearchMultiResult | ITvShowSearchMultiResult | IPersonSearchMultiResult) [],
+  "results": TSearchResults [],
   "total_pages": number,
   "total_results": number,
 }

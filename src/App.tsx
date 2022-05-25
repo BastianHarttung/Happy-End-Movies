@@ -4,10 +4,9 @@ import {useEffect, useState} from "react";
 
 import Hauptmenue from "./pages/Hauptmenue";
 import Filmsuche from "./pages/Filmsuche";
-import DetailsMovie from "./pages/DetailsMovie";
-import DetailsPerson from "./pages/DetailsPerson";
-import DetailsTv from "./pages/DetailsTv";
-import Showroom from "./pages/Showroom";
+import DetailsMovie from "./pages/Details/DetailsMovie";
+import DetailsPerson from "./pages/Details/DetailsPerson";
+import DetailsTv from "./pages/Details/DetailsTv";
 import Impressum from "./pages/Impressum";
 import Hilfe from "./pages/Hilfe";
 import Login from "./pages/Login";

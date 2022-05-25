@@ -1,10 +1,10 @@
 import {Link} from "react-router-dom";
-import icons_search_light from "../assets/icons/search_light.svg";
-import icon_projector from "../assets/icons/projector_light.svg";
+import icons_search_light from "../../assets/icons/search_light.svg";
+import icon_projector from "../../assets/icons/projector_light.svg";
 import classes from "./Navigation.module.scss";
-import iconSignout from "../assets/icons/sign-out-alt_light.svg";
+import iconSignout from "../../assets/icons/sign-out-alt_light.svg";
 import {IoSettingsOutline} from "react-icons/all";
-import globalStore from "../stores/global-store";
+import globalStore from "../../stores/global-store";
 import {observer} from "mobx-react";
 
 interface INavigationProps {

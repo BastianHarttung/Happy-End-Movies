@@ -11,40 +11,46 @@ import iconPopcorn from "../assets/icons/popcorn_solid.svg";
 import iconTv from "../assets/icons/tv-retro_solid.svg";
 import iconUser from "../assets/icons/user-tie_solid.svg";
 //Interfaces
-import {TCategory, TCategorySearch} from "../interfaces/types";
-import {IMovie, ISearch} from "../interfaces/interfaces";
+import {TCategory, TCategorySearch, TGender, THasHappyEnd} from "../interfaces/types";
+import apiStore from "../stores/api-store";
 
 
 interface ISearchResultBoxProps {
-  saveSelectedMovie: (currentMovie: IMovie, category: TCategory) => Promise<void>,
+  id: number,
   category: TCategorySearch,
-  movie: ISearch,
+  movieName: string,
+  hasHappyEnd?: THasHappyEnd,
+  posterPath: string,
+  personGender?: TGender,
 }
 
-const SearchResultBox = ({saveSelectedMovie, category, movie}: ISearchResultBoxProps) => {
+const SearchResultBox = ({id, category, movieName, hasHappyEnd, posterPath, personGender}: ISearchResultBoxProps) => {
+
+  const {saveSelectedMovieOrPerson} = apiStore;
 
   const navigate = useNavigate();
+  // For Loading Sequence on Box
   const [movieClicked, setMovieClicked] = useState(false);
 
 
   const Smiley = (): JSX.Element => {
-    if (movie.has_happy_end) return <FaSmileBeam className={classes.smileyLaugh}/>;
-    if (!movie.has_happy_end) return <FaSadTear className={classes.smileySad}/>;
+    if (hasHappyEnd === "true") return <FaSmileBeam className={classes.smileyLaugh}/>;
+    if (hasHappyEnd === "false") return <FaSadTear className={classes.smileySad}/>;
     else return <span/>;
   };
 
   const CategoryIcon = (): JSX.Element => {
-    if (category === "movie" || movie.category === "movie" || movie.media_type === "movie") {
+    if (category === "movie") {
       return <img src={iconPopcorn}
                   alt="Film"
                   title="Film"
                   className={classes.categoryIcon}/>;
-    } else if (category === "tv" || movie.category === "tv" || movie.media_type === "tv") {
+    } else if (category === "tv") {
       return <img src={iconTv}
                   alt="Serie"
                   title="Serie"
                   className={classes.categoryIcon}/>;
-    } else if (category === "person" || movie.media_type === "person") {
+    } else if (category === "person") {
       return <img src={iconUser}
                   alt="Schauspieler"
                   title="Schauspieler"
@@ -57,11 +63,11 @@ const SearchResultBox = ({saveSelectedMovie, category, movie}: ISearchResultBoxP
     const getCategory = (): TCategory => {
       if (category === "movie" || category === "tv" || category === "person") {
         return category;
-      } else return movie.category || "movie";
+      } else return "movie"; //Todo what if category is multi
     };
-    await saveSelectedMovie(movie, getCategory())
+    await saveSelectedMovieOrPerson({id, name: movieName}, getCategory())
       .then(() => {
-        navigate(`/detailansicht/${getCategory()}/${movie.id}`);
+        navigate(`/detailansicht/${getCategory()}/${id}`);
         setMovieClicked(false);
       });
   }
@@ -85,11 +91,7 @@ const SearchResultBox = ({saveSelectedMovie, category, movie}: ISearchResultBoxP
            alt="Poster"/>
 
       <div className={classes.movieInfosContainer}>
-        {movie.title ?
-          <div className={classes.movieTitle}>{movie.title}</div>
-          : movie.original_name ?
-            <div className={classes.movieTitle}>{movie.original_name}</div>
-            : <div className={classes.movieTitle}>{movie.name}</div>}
+        {movieName}
         <Smiley/>
         <CategoryIcon/>
       </div>
@@ -97,12 +99,13 @@ const SearchResultBox = ({saveSelectedMovie, category, movie}: ISearchResultBoxP
     </div>
   );
 
-  function setImageForPoster() {
-    if (movie.poster_path) return imageUrlBig + movie.poster_path;
-    if (movie.profile_path) return imageUrlBig + movie.profile_path;
-    if (movie.media_type !== "person" && category !== "person") return emptyImage;
-    if (movie.gender === 2 || movie.gender === 0) return emptyImageMan;
-    if (movie.gender === 1) return emptyImageWoman;
+  function setImageForPoster(): string {
+    if (!!posterPath) return imageUrlBig + posterPath;
+    else if (!!!posterPath && category === "person") {
+      if (personGender === 2) return emptyImageMan;
+      if (personGender === 1) return emptyImageWoman;
+      else return emptyImageMan   //Todo possibly Picture Questionmark for Person with gender 0
+    } else return emptyImage
   }
 
 };
