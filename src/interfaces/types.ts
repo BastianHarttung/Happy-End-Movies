@@ -12,7 +12,7 @@ export type TCategory = TCategoryWatch | "person"
 
 export type TCategorySearch = TCategory | "multi"
 
-export type TCategoryFilter = TCategory | "allCategories"
+export type TCategoryFilter = TCategoryWatch | "allCategories"
 
 
 export type THappyEndFilter = "allEnds" | "true" | "false"
