@@ -19,15 +19,13 @@ import {Button} from "../../styleComponents/ButtonStyleComp";
 import globalStore from "../../stores/global-store";
 import apiStore from "../../stores/api-store";
 import {observer} from "mobx-react";
+import {ICastMovie, ICrewMovie} from "../../interfaces/interfaces";
+import {THasHappyEnd} from "../../interfaces/types";
 
 
-// interface IDetailsMovieProps {
-//   saveSelectedPerson: () => void,
-// }
-
-const DetailsMovie = ({saveSelectedPerson}/*: IDetailsMovieProps*/) => {
+const DetailsMovie = () => {
   const {user} = globalStore;
-  const {selectedMovie, saveMovieToDb} = apiStore;
+  const {selectedMovie, saveMovieToDb, saveSelectedMovieOrPerson, concatCastAndCrew} = apiStore;
 
   const navigate = useNavigate();
   const urlParams = useParams();
@@ -35,31 +33,28 @@ const DetailsMovie = ({saveSelectedPerson}/*: IDetailsMovieProps*/) => {
   const genres = selectedMovie.genres ? selectedMovie.genres : [{name: "a"}, {name: "b"}];
 
   const [movieForDb, setMovieForDb] = useState(selectedMovie);
-  const [happyMovie, setHappyMovie] = useState(
-    selectedMovie.has_happy_end === true
-      ? true
-      : selectedMovie.has_happy_end === false
-        ? false
-        : "neutral"
+  const [happyMovie, setHappyMovie] = useState<THasHappyEnd>(
+    selectedMovie.has_happy_end === ("true" || "false")
+      ? selectedMovie.has_happy_end
+      : "neutral"
   );
 
-  const [scrollActors, setScrollActors] = useState(0);
-  const [scrollWidth, setScrollWidth] = useState(100);
+  const [scrollActors, setScrollActors] = useState<number>(0);
+  const [scrollWidth, setScrollWidth] = useState<number>(100);
 
-  const [searchActor, setSearchActor] = useState("");
-  const [filteredActors, setFilteredActors] = useState(
-    selectedMovie.directors.concat(selectedMovie.cast)
-  );
+  const [searchActor, setSearchActor] = useState<string>("");
+
+  const [filteredActors, setFilteredActors] = useState<(ICastMovie | ICrewMovie)[]>(concatCastAndCrew(selectedMovie.cast, selectedMovie.directors));
 
   const [userSelection, setUserSelection] = useState({
     [user.userId]: {happyEnd_Voting: "neutral", haveSeen: false},
   });
 
   useEffect(() => {
-    selectedMovie.has_happy_end === true
-      ? setHappyMovie(true)
-      : selectedMovie.has_happy_end === false
-        ? setHappyMovie(false)
+    selectedMovie.has_happy_end === "true"
+      ? setHappyMovie("true")
+      : selectedMovie.has_happy_end === "false"
+        ? setHappyMovie("false")
         : setHappyMovie("neutral");
   }, [selectedMovie.has_happy_end, selectedMovie]);
 
@@ -82,12 +77,12 @@ const DetailsMovie = ({saveSelectedPerson}/*: IDetailsMovieProps*/) => {
 
         <div className={classes.detailsContainer}>
           <div className={classes.posterContainer}>
-            {happyMovie === true ? (
+            {happyMovie === "true" ? (
               <FaSmileBeam
                 className={classes.happyEndSmileyOverall}
                 style={{color: "var(--green)"}}
               />
-            ) : happyMovie === false ? (
+            ) : happyMovie === "false" ? (
               <FaSadTear
                 className={classes.happyEndSmileyOverall}
                 style={{color: "var(--red)"}}
@@ -196,9 +191,6 @@ const DetailsMovie = ({saveSelectedPerson}/*: IDetailsMovieProps*/) => {
             {selectedMovie.cast
               ? filteredActors.map((actor, index) => (
                 <PersonBox
-                  saveSelectedPerson={(person) =>
-                    saveSelectedPerson(person)
-                  }
                   key={index}
                   person={actor}
                 />
@@ -298,12 +290,12 @@ const DetailsMovie = ({saveSelectedPerson}/*: IDetailsMovieProps*/) => {
                   onClick={() =>
                     setUserSelection({
                       ...userSelection,
-                      happyEnd_Voting: true,
+                      happyEnd_Voting: "true",
                     })
                   }
                   className={
                     userSelection.happyEnd_Voting &&
-                    userSelection.happyEnd_Voting === true
+                    userSelection.happyEnd_Voting === "true"
                       ? classes.smileyLaugh
                       : classes.smiley
                   }
@@ -326,11 +318,11 @@ const DetailsMovie = ({saveSelectedPerson}/*: IDetailsMovieProps*/) => {
                   onClick={() =>
                     setUserSelection({
                       ...userSelection,
-                      happyEnd_Voting: false,
+                      happyEnd_Voting: "false",
                     })
                   }
                   className={
-                    userSelection.happyEnd_Voting === false
+                    userSelection.happyEnd_Voting === "false"
                       ? classes.smileySad
                       : classes.smiley
                   }
@@ -345,7 +337,7 @@ const DetailsMovie = ({saveSelectedPerson}/*: IDetailsMovieProps*/) => {
             onClick={() => {
               setMovieForDb({...selectedMovie, userSelection});
               saveMovieToDb(movieForDb);
-              setHappyMovie("");
+              setHappyMovie("neutral");
               navigate("/showroom");
             }}
           />
@@ -354,11 +346,8 @@ const DetailsMovie = ({saveSelectedPerson}/*: IDetailsMovieProps*/) => {
     </section>
   );
 
-  /**
-   * Searching and Filtering For Actor
-   * @param {string} actorSearch
-   */
-  function searchForActor(actorSearch) {
+  //Searching and Filtering For Actor
+  function searchForActor(actorSearch: string) {
     const actorSearchLow = actorSearch.toLowerCase();
     if (actorSearch === "") {
       console.log("alle actors anzeigen");
@@ -391,17 +380,13 @@ const DetailsMovie = ({saveSelectedPerson}/*: IDetailsMovieProps*/) => {
     }
   }
 
-  /**
-   * Set Scroll Width
-   */
+  //Set Scroll Width
   function getScrollWidth() {
-    const actorContainer = document.getElementById("actorContainer");
+    const actorContainer = document.getElementById("actorContainer") | 0;
     return actorContainer.scrollWidth - actorContainer.offsetWidth;
   }
 
-  /**
-   * Scroll Actors Right
-   */
+  //Scroll Actors Right
   function scrollRight() {
     const actorContainer = document.getElementById("actorContainer");
     const scrollWidth = scrollActors + actorContainer.offsetWidth - 100;
@@ -411,9 +396,7 @@ const DetailsMovie = ({saveSelectedPerson}/*: IDetailsMovieProps*/) => {
     }
   }
 
-  /**
-   * Scroll Actors Left
-   */
+  //Scroll Actors Left
   function scrollLeft() {
     const actorContainer = document.getElementById("actorContainer");
     const scrollWidth = scrollActors - actorContainer.offsetWidth + 100;
@@ -423,21 +406,15 @@ const DetailsMovie = ({saveSelectedPerson}/*: IDetailsMovieProps*/) => {
     }
   }
 
-  /**
-   * Listen if the Enter-Button is pressed
-   */
-  function keyPressEvent(event) {
+  //Listen if the Enter-Button is pressed
+  function keyPressEvent(event: any) {
     if (event.key === "Enter") {
       searchForActor(searchActor);
     }
   }
 
-  /**
-   * Berechnet die Laufzeit in Stunden und Minuten
-   * @param {number} laufzeit
-   * @return {{stunden: number, minuten: number}} Objekt mit den Stunden und Minuten
-   */
-  function laufzeitInStunden(laufzeit/*: number*/) {
+  //Berechnet die Laufzeit in Stunden und Minuten
+  function laufzeitInStunden(laufzeit: number): { stunden: number, minuten: number } {
     const laufzeitStunden = Math.floor(laufzeit / 60);
     const restminuten = laufzeit - laufzeitStunden * 60;
     return {stunden: laufzeitStunden, minuten: restminuten};

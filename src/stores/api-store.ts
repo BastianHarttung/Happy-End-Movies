@@ -6,7 +6,6 @@ import {
   IMovieAllInfos,
   IMovieDetails, IPersonFetching, IPersonSearch, ITvAllInfos,
   ITvDetails,
-  ITvShowSearch
 } from "../interfaces/interfaces";
 import {IPerson} from "../interfaces/interfaces";
 import {doc, setDoc} from "firebase/firestore";
@@ -16,20 +15,20 @@ import {
   emptyMovie,
   emptyPerson,
   emptyTvShow,
-  genreUrl,
   imagesUrl,
   watchDetailsUrl, personDetailUrl,
   searchUrl
 } from "../constants";
-import {TCategory, TCategorySearch, TCategoryWatch, THasHappyEnd} from "../interfaces/types";
+import {TCategory, TCategoryWatch, THasHappyEnd} from "../interfaces/types";
 import globalStore from "./global-store";
 
 const {user} = globalStore;
 
+
 class ApiStore {
 
   selectedMovie: IMovieAllInfos = emptyMovie;
-  selectedTv: ITvShowSearch = emptyTvShow;
+  selectedTv: ITvAllInfos = emptyTvShow;
   selectedPerson: IPerson = emptyPerson;
 
   constructor() {
@@ -68,15 +67,16 @@ class ApiStore {
     const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "movie") as IImagesWatchFetching;
     const fsk: number = await this.getGermanFSKFromDetails(details, "movie");
     const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
-    const cast: ICastMovie[] = await this.getCastForMovie(object.id, "movie");
+    const castAndCrew: (ICastMovie | ICrewMovie)[] = await this.getCastAndCrewFromMedia(object.id, "movie");
+    const cast: ICastMovie[] = await this.getCastFromMedia(object.id, "movie");
     const directors: ICrewMovie[] = await this.getDirectorForMovie(object.id, "movie");
 
     const completeMovieInfo: IMovieAllInfos = {
       ...object,
       ...details,
-      images: images,
+      images,
       category: searchCategory,
-      fsk: fsk,
+      fsk,
       userSelections: {
         [user.userId]: {
           happyEnd_Voting: object.userSelections
@@ -88,8 +88,9 @@ class ApiStore {
         },
       },
       has_happy_end: hasHappyEnd,
-      cast: cast,
-      directors: directors,
+      castAndCrew,
+      cast,
+      directors,
     };
     this.selectedMovie = completeMovieInfo;
     console.log("selectedMovie:", completeMovieInfo);
@@ -142,8 +143,17 @@ class ApiStore {
     } else return "neutral";
   };
 
+  //Get Cast and Crew for Movie
+  private async getCastAndCrewFromMedia(movieId: number, searchCategory: TCategoryWatch): Promise<(ICastMovie | ICrewMovie)[]> {
+    const castUrlMovie = castUrl(searchCategory, movieId);
+    const response = await fetch(castUrlMovie);
+    let data = await response.json();
+    const directors: ICrewMovie[] = await this.getDirectorForMovie(movieId, "movie");
+    return data.cast.concat(directors);
+  };
+
   //Get Cast for Movie
-  private async getCastForMovie(movieId: number, searchCategory: TCategoryWatch): Promise<ICastMovie[]> {
+  private async getCastFromMedia(movieId: number, searchCategory: TCategoryWatch): Promise<ICastMovie[]> {
     const castUrlMovie = castUrl(searchCategory, movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
@@ -164,21 +174,29 @@ class ApiStore {
     return directorArray;
   };
 
+
+  //Concat Cast and Directors
+  public concatCastAndCrew(castArray: ICastMovie[], crewArray: ICrewMovie[]): (ICrewMovie | ICastMovie)[] {
+    const newArray = castArray as (ICrewMovie | ICastMovie)[]
+    return newArray.concat(crewArray)
+  }
+
   //-----------------------------------TV Show fetches ---------------------------------------------
   private async setAllDataForTv(object: any, searchCategory: TCategoryWatch): Promise<void> {
     const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "tv") as IMovieDetails;
     const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "tv") as IImagesWatchFetching;
     const fsk: number = await this.getGermanFSKFromDetails(details, "tv");
     const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
-    const cast: ICastMovie[] = await this.getCastForMovie(object.id, "tv");
+    const castAndCrew: (ICastMovie | ICrewMovie)[] = await this.getCastAndCrewFromMedia(object.id, "tv");
+    const cast: ICastMovie[] = await this.getCastFromMedia(object.id, "tv");
     const directors: ICrewMovie[] = await this.getDirectorForMovie(object.id, "tv");
 
     const completeTvInfo: ITvAllInfos = {
       ...object,
       ...details,
-      images: images,
+      images,
       category: searchCategory,
-      fsk: fsk,
+      fsk,
       userSelections: {
         [user.userId]: {
           happyEnd_Voting: object.userSelections
@@ -190,8 +208,9 @@ class ApiStore {
         },
       },
       has_happy_end: hasHappyEnd,
-      cast: cast,
-      directors: directors,
+      castAndCrew,
+      cast,
+      directors,
     };
     this.selectedTv = completeTvInfo;
     console.log("selectedTv:", completeTvInfo);

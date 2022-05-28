@@ -3,21 +3,23 @@ import {imageUrlSmall} from "../../../constants";
 import imageActorMan from "../../../assets/img/actor.png";
 import imageActorWoman from "../../../assets/img/actor_girl.png";
 import {useNavigate} from "react-router-dom";
-import {IPerson} from "../../../interfaces/interfaces";
+import {ICastMovie, ICrewMovie, IPerson} from "../../../interfaces/interfaces";
+import apiStore from "../../../stores/api-store";
 
 interface IPersonBoxProps {
-  person: IPerson,
-  saveSelectedPerson: (person: IPerson) => void,
+  person: ICastMovie | ICrewMovie,
 }
 
-const PersonBox = ({person, saveSelectedPerson}: IPersonBoxProps) => {
+const PersonBox = ({person}: IPersonBoxProps) => {
+  const {saveSelectedMovieOrPerson} = apiStore;
+
   const navigate = useNavigate();
 
   return (
     <div
       className={classes.actorProfile}
       onClick={async () => {
-        saveSelectedPerson(person);
+        await saveSelectedMovieOrPerson(person, "person");
         navigate(`/detailansicht/person/${person.id}`);
       }}
     >
@@ -35,24 +37,22 @@ const PersonBox = ({person, saveSelectedPerson}: IPersonBoxProps) => {
       />
       <h5 className={classes.actorName}>{person.name}</h5>
 
-      {person.character ? (
+      {"character" in person && person.character ? (
         <p className={classes.character}>"{person.character}"</p>
-      ) : person.job === "Director" ? (
+      ) : "job" in person && person.job === "Director" ? (
         "Regie"
       ) : (
         ""
       )}
-      {person.roles
-        ? person.roles.map((role, index) => {
-          if (role.character !== "") {
-            return (
-              <p key={index} className={classes.character}>
-                "{role.character}"
-              </p>
-            );
-          } else return "";
-        })
-        : ""}
+      {"roles" in person && person.roles.map((role, index) => {
+        if (role.character !== "") {
+          return (
+            <p key={index} className={classes.character}>
+              "{role.character}"
+            </p>
+          );
+        } else return "";
+      })}
     </div>
   );
 };

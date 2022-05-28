@@ -1,7 +1,6 @@
 import {
   TCategory,
   TCategoryWatch,
-  TCategorySearch,
   TDepartment,
   TGender,
   THasHappyEnd,
@@ -19,12 +18,10 @@ export interface IUser {
 //Big Data---------------------------
 
 //Movies
-export interface IMovieAllInfos extends IMovieUserInfos, IMovieDetails, IMovieFetchedInfos {
+export interface IMovieAllInfos extends IMovieUserInfos, IMovieDetails, IMovieFetchedInfos, IMovieSearch {
 }
 
 export interface IMovieUserInfos {
-  // id: number,
-  // title: string,
   name: string,
   original_name: string,
   profile_path: string,             //Image path
@@ -38,6 +35,7 @@ export interface IMovieUserInfos {
     },
   },
   has_happy_end: THasHappyEnd,
+  castAndCrew: (ICastMovie | ICrewMovie)[],
   cast: ICastMovie [],
   directors: ICrewMovie[],
 }
@@ -109,11 +107,26 @@ export interface IMovieDetails {
 }
 
 //--------------TV----------------------------------
-export interface ITvAllInfos extends ITvShowSearch, ITvDetails {
+export interface ITvAllInfos extends ITvUserInfos, ITvShowSearch, ITvDetails {
 }
 
 export interface ITvUserInfos {
-
+  // name: string,
+  // original_name: string,
+  // profile_path: string,             //Image path
+  images: IImagesWatchFetching,
+  category: TCategoryWatch,
+  fsk: number,
+  userSelections: {
+    [key: string]: {
+      happyEnd_Voting: THasHappyEnd,
+      haveSeen: boolean,
+    },
+  },
+  has_happy_end: THasHappyEnd,
+  castAndCrew: (ICastMovie | ICrewMovie)[],
+  cast: ICastMovie [],
+  directors: ICrewMovie[],
 }
 
 // Coming from TMDB

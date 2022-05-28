@@ -1,13 +1,8 @@
-import {TCategory, TCategorySearch, TCategoryWatch, THasHappyEnd} from "./interfaces/types";
+import {TCategory, TCategorySearch, TCategoryWatch} from "./interfaces/types";
 import {
-  ICastMovie, ICrewMovie,
-  IGenre, IImage, IImagesWatchFetching,
   IMovieAllInfos,
   IPerson,
-  IProductionCompany, IProductionCountry, ISpokenLanguage,
   ITvAllInfos,
-  ITvShowSearch,
-  IVideoResult
 } from "./interfaces/interfaces";
 
 //----------Empty Objects-------------------------------------------
@@ -31,6 +26,7 @@ export const emptyMovie: IMovieAllInfos = {
   },
   budget: 0,
   genres: [],
+  genre_ids: [],
   homepage: "",
   imdb_id: "",
   original_language: "",
@@ -67,6 +63,7 @@ export const emptyMovie: IMovieAllInfos = {
       haveSeen: false,
     },
   },
+  castAndCrew: [],
   cast: [],
   directors: [],
 }
@@ -122,7 +119,25 @@ export const emptyTvShow: ITvAllInfos = {
   },
   content_ratings: {
     results: []
-  }
+  },
+  images: {
+    backdrops: [],
+    id: 0,
+    logos: [],
+    posters: []
+  },
+  fsk: 400,
+  userSelections: {
+    [""]: {
+      happyEnd_Voting: "neutral",
+      haveSeen: false,
+    },
+  },
+  castAndCrew: [],
+  cast: [],
+  directors: [],
+  category: "tv",
+  has_happy_end: "neutral",
 }
 
 export const emptyPerson: IPerson = {
