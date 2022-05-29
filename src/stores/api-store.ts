@@ -4,7 +4,7 @@ import {
   ICrewMovie, IImagesPersonFetching,
   IImagesWatchFetching,
   IMovieAllInfos,
-  IMovieDetails, IPersonFetching, IPersonSearch, ITvAllInfos,
+  IMovieDetails, IPersonAllData, IPersonFetching, IPersonSearch, ITvAllInfos,
   ITvDetails,
 } from "../interfaces/interfaces";
 import {IPerson} from "../interfaces/interfaces";
@@ -29,7 +29,7 @@ class ApiStore {
 
   selectedMovie: IMovieAllInfos = emptyMovie;
   selectedTv: ITvAllInfos = emptyTvShow;
-  selectedPerson: IPerson = emptyPerson;
+  selectedPerson: IPersonAllData = emptyPerson;
 
   constructor() {
     makeAutoObservable(this);

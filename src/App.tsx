@@ -82,10 +82,6 @@ function App() {
             {/*  path="detailansicht/person/:id"*/}
             {/*  element={*/}
             {/*    <DetailsPerson*/}
-            {/*      saveSelectedMovie={(movie: any, category: TCategory) =>*/}
-            {/*        saveSelectedMovieOrPerson(movie, category)*/}
-            {/*      }*/}
-            {/*      person={selectedPerson}*/}
             {/*    />*/}
             {/*  }*/}
             {/*/>*/}

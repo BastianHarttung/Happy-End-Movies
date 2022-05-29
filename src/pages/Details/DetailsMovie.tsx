@@ -20,7 +20,7 @@ import globalStore from "../../stores/global-store";
 import apiStore from "../../stores/api-store";
 import {observer} from "mobx-react";
 import {ICastMovie, ICrewMovie, IUserSelections} from "../../interfaces/interfaces";
-import {THasHappyEnd} from "../../interfaces/types";
+import {THasHappyEnd, TUserSelections} from "../../interfaces/types";
 
 
 const DetailsMovie = () => {
@@ -320,7 +320,7 @@ const DetailsMovie = () => {
   );
 
   //Change state for User Selection
-  function handleClickUserSelection(name: string, state: boolean | THasHappyEnd): void {
+  function handleClickUserSelection(name: TUserSelections, state: boolean | THasHappyEnd): void {
     setUserSelection({[user.userId]: {...userSelection[user.userId], [name]: state}})
   }
 

@@ -62,3 +62,5 @@ export type TJob =
 export type TWatchDatabase = IMovieAllInfos | ITvAllInfos
 
 export type TSearchResults = IMovieSearchMultiResult | ITvShowSearchMultiResult | IPersonSearchMultiResult
+
+export type TUserSelections = "haveSeen" | "happyEnd_Voting"

@@ -1,7 +1,8 @@
-import {TCategory, TCategorySearch, TCategoryWatch} from "./interfaces/types";
+import {TCategory, TCategorySearch, TCategoryWatch, TGender, TKnownForDepartment} from "./interfaces/types";
 import {
+  IImage,
   IMovieAllInfos,
-  IPerson,
+  IPerson, IPersonAllData, IPersonSearchKnownFor,
   ITvAllInfos,
 } from "./interfaces/interfaces";
 
@@ -140,14 +141,25 @@ export const emptyTvShow: ITvAllInfos = {
   has_happy_end: "neutral",
 }
 
-export const emptyPerson: IPerson = {
-  id: 0,
-  profile_path: "",
+export const emptyPerson: IPersonAllData = {
+  adult: false,
   gender: 0,
+  id: 0,
+  known_for: [],
+  known_for_department: "Acting",
   name: "",
-  character: "",
-  job: "",
-  roles: [{character: ""}],
+  popularity: 0,
+  profile_path: "",
+  also_known_as: [],
+  biography: "",
+  birthday: "",             //1956-03-07
+  deathday: null,
+  homepage: null,
+  imdb_id: "",
+  place_of_birth: "",
+  images: {
+    profiles: [],
+  }
 }
 
 const k = process.env.REACT_APP_API_KEY_TMDB;
