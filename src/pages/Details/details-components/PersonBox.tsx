@@ -3,11 +3,11 @@ import {imageUrlSmall} from "../../../constants";
 import imageActorMan from "../../../assets/img/actor.png";
 import imageActorWoman from "../../../assets/img/actor_girl.png";
 import {useNavigate} from "react-router-dom";
-import {ICastMovie, ICrewMovie, IPerson} from "../../../interfaces/interfaces";
+import {ICastMovie, ICastTv, ICrewMovie, ICrewTv} from "../../../interfaces/interfaces";
 import apiStore from "../../../stores/api-store";
 
 interface IPersonBoxProps {
-  person: ICastMovie | ICrewMovie,
+  person: ICastMovie | ICrewMovie | ICastTv | ICrewTv,
 }
 
 const PersonBox = ({person}: IPersonBoxProps) => {
@@ -44,7 +44,7 @@ const PersonBox = ({person}: IPersonBoxProps) => {
       ) : (
         ""
       )}
-      {"roles" in person && person.roles.map((role, index) => {
+      {"roles" in person && person.roles ? person.roles.map((role, index) => {
         if (role.character !== "") {
           return (
             <p key={index} className={classes.character}>
@@ -52,7 +52,7 @@ const PersonBox = ({person}: IPersonBoxProps) => {
             </p>
           );
         } else return "";
-      })}
+      }) : ""}
     </div>
   );
 };

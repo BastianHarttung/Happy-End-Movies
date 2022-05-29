@@ -19,7 +19,7 @@ import {Button} from "../../styleComponents/ButtonStyleComp";
 import globalStore from "../../stores/global-store";
 import apiStore from "../../stores/api-store";
 import {observer} from "mobx-react";
-import {ICastMovie, ICrewMovie} from "../../interfaces/interfaces";
+import {ICastMovie, ICrewMovie, IUserSelections} from "../../interfaces/interfaces";
 import {THasHappyEnd} from "../../interfaces/types";
 
 
@@ -46,7 +46,7 @@ const DetailsMovie = () => {
 
   const [filteredActors, setFilteredActors] = useState<(ICastMovie | ICrewMovie)[]>(concatCastAndCrew(selectedMovie.cast, selectedMovie.directors));
 
-  const [userSelection, setUserSelection] = useState({
+  const [userSelection, setUserSelection] = useState<IUserSelections>({
     [user.userId]: {happyEnd_Voting: "neutral", haveSeen: false},
   });
 
@@ -253,27 +253,17 @@ const DetailsMovie = () => {
             <div className={classes.gesehen}>Schon gesehen?</div>
             <div className={classes.eyes}>
               <FaRegEye
-                onClick={() =>
-                  setUserSelection({
-                    ...userSelection,
-                    haveSeen: true,
-                  })
-                }
+                onClick={() => handleClickUserSelection("haveSeen", true)}
                 className={
-                  userSelection.haveSeen === true
+                  userSelection[user.userId].haveSeen === true
                     ? classes.eyeGreen
                     : classes.eye
                 }
               />
               <FaRegEyeSlash
-                onClick={() =>
-                  setUserSelection({
-                    ...userSelection,
-                    haveSeen: false,
-                  })
-                }
+                onClick={() => handleClickUserSelection("haveSeen", false)}
                 className={
-                  userSelection.haveSeen === false
+                  userSelection[user.userId].haveSeen === false
                     ? classes.eyeRed
                     : classes.eye
                 }
@@ -281,48 +271,31 @@ const DetailsMovie = () => {
             </div>
           </div>
 
-          {userSelection.haveSeen === true && (
+          {userSelection[user.userId].haveSeen === true && (
             <div>
               <div className={classes.happyEnd}>Dein Happy End ?</div>
 
               <div className={classes.smileys}>
                 <FaSmileBeam
-                  onClick={() =>
-                    setUserSelection({
-                      ...userSelection,
-                      happyEnd_Voting: "true",
-                    })
-                  }
+                  onClick={() => handleClickUserSelection("happyEnd_Voting", "true")}
                   className={
-                    userSelection.happyEnd_Voting &&
-                    userSelection.happyEnd_Voting === "true"
+                    userSelection[user.userId].happyEnd_Voting === "true"
                       ? classes.smileyLaugh
                       : classes.smiley
                   }
                 ></FaSmileBeam>
                 <FaMeh
-                  onClick={() =>
-                    setUserSelection({
-                      ...userSelection,
-                      happyEnd_Voting: "neutral",
-                    })
-                  }
+                  onClick={() => handleClickUserSelection("happyEnd_Voting", "neutral")}
                   className={
-                    userSelection.happyEnd_Voting &&
-                    userSelection.happyEnd_Voting === "neutral"
+                    userSelection[user.userId].happyEnd_Voting === "neutral"
                       ? classes.smileyNeutral
                       : classes.smiley
                   }
                 ></FaMeh>
                 <FaSadTear
-                  onClick={() =>
-                    setUserSelection({
-                      ...userSelection,
-                      happyEnd_Voting: "false",
-                    })
-                  }
+                  onClick={() => handleClickUserSelection("happyEnd_Voting", "false")}
                   className={
-                    userSelection.happyEnd_Voting === "false"
+                    userSelection[user.userId].happyEnd_Voting === "false"
                       ? classes.smileySad
                       : classes.smiley
                   }
@@ -335,7 +308,7 @@ const DetailsMovie = () => {
             name="In Datenbank speichern und zum Showroom"
             fontSize={1}
             onClick={() => {
-              setMovieForDb({...selectedMovie, userSelection});
+              setMovieForDb({...selectedMovie, userSelections: userSelection});
               saveMovieToDb(movieForDb);
               setHappyMovie("neutral");
               navigate("/showroom");
@@ -345,6 +318,11 @@ const DetailsMovie = () => {
       </section>
     </section>
   );
+
+  //Change state for User Selection
+  function handleClickUserSelection(name: string, state: boolean | THasHappyEnd): void {
+    setUserSelection({[user.userId]: {...userSelection[user.userId], [name]: state}})
+  }
 
   //Searching and Filtering For Actor
   function searchForActor(actorSearch: string) {
@@ -381,28 +359,33 @@ const DetailsMovie = () => {
   }
 
   //Set Scroll Width
-  function getScrollWidth() {
-    const actorContainer = document.getElementById("actorContainer") | 0;
-    return actorContainer.scrollWidth - actorContainer.offsetWidth;
+  function getScrollWidth(): number {
+    const actorContainer = document.getElementById("actorContainer");
+    if (!!actorContainer) return actorContainer.scrollWidth - actorContainer.offsetWidth
+    else return 0
   }
 
   //Scroll Actors Right
-  function scrollRight() {
+  function scrollRight(): void {
     const actorContainer = document.getElementById("actorContainer");
-    const scrollWidth = scrollActors + actorContainer.offsetWidth - 100;
-    if (scrollActors < actorContainer.scrollWidth) {
-      actorContainer.scroll(scrollWidth, 0);
-      setScrollActors(scrollWidth);
+    if (!!actorContainer) {
+      const scrollWidth = scrollActors + actorContainer.offsetWidth - 100;
+      if (scrollActors < actorContainer.scrollWidth) {
+        actorContainer.scroll(scrollWidth, 0);
+        setScrollActors(scrollWidth);
+      }
     }
   }
 
   //Scroll Actors Left
   function scrollLeft() {
     const actorContainer = document.getElementById("actorContainer");
-    const scrollWidth = scrollActors - actorContainer.offsetWidth + 100;
-    if (scrollActors > 0) {
-      actorContainer.scroll(scrollWidth, 0);
-      setScrollActors(scrollWidth);
+    if (!!actorContainer) {
+      const scrollWidth = scrollActors - actorContainer.offsetWidth + 100;
+      if (scrollActors > 0) {
+        actorContainer.scroll(scrollWidth, 0);
+        setScrollActors(scrollWidth);
+      }
     }
   }
 
@@ -419,6 +402,7 @@ const DetailsMovie = () => {
     const restminuten = laufzeit - laufzeitStunden * 60;
     return {stunden: laufzeitStunden, minuten: restminuten};
   }
+
 };
 
 export default observer(DetailsMovie);

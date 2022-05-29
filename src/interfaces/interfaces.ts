@@ -15,6 +15,13 @@ export interface IUser {
   email: string,
 }
 
+export interface IUserSelections {
+  [key: string]: {
+    happyEnd_Voting: THasHappyEnd,
+    haveSeen: boolean,
+  }
+}
+
 //Big Data---------------------------
 
 //Movies
@@ -28,12 +35,7 @@ export interface IMovieUserInfos {
   images: IImagesWatchFetching,
   category: TCategoryWatch,
   fsk: number,
-  userSelections: {
-    [key: string]: {
-      happyEnd_Voting: THasHappyEnd,
-      haveSeen: boolean,
-    },
-  },
+  userSelections: IUserSelections,
   has_happy_end: THasHappyEnd,
   castAndCrew: (ICastMovie | ICrewMovie)[],
   cast: ICastMovie [],
@@ -188,7 +190,7 @@ export interface ITvDetails {
   }
 }
 
-export interface ITvActor {
+export interface ICastTv {
   "adult": boolean,
   "gender": TGender,                 // 1 | 2 | 0
   "id": number,
@@ -344,7 +346,7 @@ export interface ICrewMovie {
 
 export interface ICreditsTvFetching {
   id: number,
-  cast: ITvActor[],
+  cast: ICastTv[],
   crew: ICrewTv[],
 }
 

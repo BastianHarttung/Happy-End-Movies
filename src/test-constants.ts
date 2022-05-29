@@ -1,7 +1,7 @@
 import {
   IMovieDetails,
   ITvShowSearch,
-  ITvActor,
+  ICastTv,
   ISearch,
   ICreditsMovieFetching,
   ICreditsTvFetching
@@ -3905,7 +3905,7 @@ export const apiMovieCastCrew: ICreditsMovieFetching =
 
 //------------------TV--------------------------------------------
 
-export const tvActor: ITvActor = {
+export const tvActor: ICastTv = {
   "adult": false,
   "gender": 2,
   "id": 17419,
