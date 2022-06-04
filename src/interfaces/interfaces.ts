@@ -46,12 +46,7 @@ export interface IMovieFetchedInfos {
   images: IImagesWatchFetching,
   category: TCategoryWatch,
   fsk: number,
-  userSelections: {
-    [key: string]: {
-      happyEnd_Voting: THasHappyEnd,
-      haveSeen: boolean,
-    },
-  },
+  userSelections: IUserSelections,
   cast: ICastMovie[],
   directors: ICrewMovie[],
 }

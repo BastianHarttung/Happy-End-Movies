@@ -7,7 +7,6 @@ import {
   IMovieDetails, IPersonAllData, IPersonFetching, IPersonSearch, ITvAllInfos,
   ITvDetails,
 } from "../interfaces/interfaces";
-import {IPerson} from "../interfaces/interfaces";
 import {doc, setDoc} from "firebase/firestore";
 import firestoreDb from "../firebase-config";
 import {
@@ -49,20 +48,21 @@ class ApiStore {
 
   //Get genres and fsk and has_happy_end and save to selectedMovie state
   public async saveSelectedMovieOrPerson(object: any, searchCategory: TCategory): Promise<void> {
-    //console.log('App movie', object)
-    //console.log('app category', searchCategory)
+    // console.log('App movie', object)
+    // console.log('app category', searchCategory)
     if (searchCategory === "movie") {
-      this.setAllDataForMovie(object, "movie")
+      await this.setAllDataForMovie(object, "movie")
     } else if (searchCategory === "tv") {
-      this.setAllDataForTv(object, "tv")
+      await this.setAllDataForTv(object, "tv")
     } else {
-      this.setAllDataForPerson(object)
+      await this.setAllDataForPerson(object)
     }
   };
 
   //-------------------------------Movie Fetches--------------------------------------------------------------
   // Collecting all Data from Movie
-  private async setAllDataForMovie(object: any, searchCategory: TCategoryWatch = "movie"): Promise<void> {
+  public async setAllDataForMovie(object: any, searchCategory: TCategoryWatch = "movie"): Promise<void> {
+    console.log("setAllDataForMovie", object, searchCategory)
     const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "movie") as IMovieDetails;
     const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "movie") as IImagesWatchFetching;
     const fsk: number = await this.getGermanFSKFromDetails(details, "movie");

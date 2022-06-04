@@ -18,13 +18,22 @@ import apiStore from "../stores/api-store";
 interface ISearchResultBoxProps {
   id: number,
   category: TCategorySearch,
+  mediaType?: TCategory | undefined,
   movieName: string,
   hasHappyEnd?: THasHappyEnd,
   posterPath: string,
   personGender?: TGender,
 }
 
-const SearchResultBox = ({id, category, movieName, hasHappyEnd, posterPath, personGender}: ISearchResultBoxProps) => {
+const SearchResultBox = ({
+                           id,
+                           category,
+                           mediaType,
+                           movieName,
+                           hasHappyEnd,
+                           posterPath,
+                           personGender
+                         }: ISearchResultBoxProps) => {
 
   const {saveSelectedMovieOrPerson} = apiStore;
 
@@ -40,17 +49,19 @@ const SearchResultBox = ({id, category, movieName, hasHappyEnd, posterPath, pers
   };
 
   const CategoryIcon = (): JSX.Element => {
-    if (category === "movie") {
+    const isMulti = category === "multi";
+
+    if (category === "movie" || (isMulti && mediaType === "movie")) {
       return <img src={iconPopcorn}
                   alt="Film"
                   title="Film"
                   className={classes.categoryIcon}/>;
-    } else if (category === "tv") {
+    } else if (category === "tv" || (isMulti && mediaType === "tv")) {
       return <img src={iconTv}
                   alt="Serie"
                   title="Serie"
                   className={classes.categoryIcon}/>;
-    } else if (category === "person") {
+    } else if (category === "person" || (isMulti && mediaType === "person")) {
       return <img src={iconUser}
                   alt="Schauspieler"
                   title="Schauspieler"
@@ -63,7 +74,9 @@ const SearchResultBox = ({id, category, movieName, hasHappyEnd, posterPath, pers
     const getCategory = (): TCategory => {
       if (category === "movie" || category === "tv" || category === "person") {
         return category;
-      } else return "movie"; //Todo what if category is multi
+      } else if (category === "multi" && mediaType) {
+        return mediaType;
+      } else return "movie"
     };
     await saveSelectedMovieOrPerson({id, name: movieName}, getCategory())
       .then(() => {

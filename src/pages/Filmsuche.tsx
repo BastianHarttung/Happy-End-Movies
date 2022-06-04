@@ -69,6 +69,7 @@ const Filmsuche = () => {
               <SearchResultBox key={index}
                                id={movie.id}
                                category={searchingCategory}
+                               mediaType={movie.media_type}
                                movieName={"name" in movie ? movie.name : movie.title}
                                posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}
                                personGender={"gender" in movie ? movie.gender : 0}/>)}</div>
@@ -78,6 +79,7 @@ const Filmsuche = () => {
               <SearchResultBox key={index}
                                id={movie.id}
                                category={searchingCategory}
+                               mediaType={movie.media_type}
                                movieName={"title" in movie ? movie.title : movie.name}
                                posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}/>)}</div>}
 

@@ -9,6 +9,7 @@ import imageActorWoman from "../../assets/img/actor_girl.png";
 import SearchResultBox from "../../components/SearchResultBox";
 
 import apiStore from "../../stores/api-store";
+import {observer} from "mobx-react";
 
 
 const DetailsPerson = () => {
@@ -100,13 +101,15 @@ const DetailsPerson = () => {
   // Calculate Age of Person Today
   function calculateAge(calculateDay: string | null): number {
     const birthday = new Date(selectedPerson.birthday);
-    const monthDiff = new Date(calculateDay).getTime() - birthday.getTime();
-    const ageDate = new Date(monthDiff);
-    const year = ageDate.getUTCFullYear();
-    const age = Math.abs(year - 1970);
-    return age
+    if (calculateDay) {
+      const monthDiff = new Date(calculateDay).getTime() - birthday.getTime();
+      const ageDate = new Date(monthDiff);
+      const year = ageDate.getUTCFullYear();
+      const age = Math.abs(year - 1970);
+      return age
+    } else return 0
   }
 
 }
 
-export default DetailsPerson
+export default observer(DetailsPerson)

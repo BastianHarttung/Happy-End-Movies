@@ -1,4 +1,4 @@
-import classes from "./PersonBox.module.scss";
+import classes from "./personBox.module.scss";
 import {imageUrlSmall} from "../../../constants";
 import imageActorMan from "../../../assets/img/actor.png";
 import imageActorWoman from "../../../assets/img/actor_girl.png";

@@ -13,24 +13,23 @@ import {
   FaRegEye,
 } from "react-icons/fa";
 import {imageUrlBig} from "../../constants";
-import PersonBox from "./details-components/PersonBox";
-import ImagesBox from "./details-components/ImagesBox";
+import PersonBox from "./details-components/personBox";
+import ImagesBox from "./details-components/imagesBox";
 import {Button} from "../../styleComponents/ButtonStyleComp";
 import globalStore from "../../stores/global-store";
 import apiStore from "../../stores/api-store";
 import {observer} from "mobx-react";
 import {ICastMovie, ICrewMovie, IUserSelections} from "../../interfaces/interfaces";
 import {THasHappyEnd, TUserSelections} from "../../interfaces/types";
+import Beschreibung from "./details-components/beschreibung";
 
 
 const DetailsMovie = () => {
   const {user} = globalStore;
-  const {selectedMovie, saveMovieToDb, saveSelectedMovieOrPerson, concatCastAndCrew} = apiStore;
+  const {selectedMovie, saveMovieToDb, concatCastAndCrew} = apiStore;
 
   const navigate = useNavigate();
   const urlParams = useParams();
-
-  const genres = selectedMovie.genres ? selectedMovie.genres : [{name: "a"}, {name: "b"}];
 
   const [movieForDb, setMovieForDb] = useState(selectedMovie);
   const [happyMovie, setHappyMovie] = useState<THasHappyEnd>(
@@ -110,7 +109,7 @@ const DetailsMovie = () => {
             <div>
               <h2 className={classes.title}>{selectedMovie.title}</h2>
               <div className="d-flex-row">
-                {selectedMovie.fsk && (selectedMovie.fsk === 0 || selectedMovie.fsk <= 100) && (
+                {selectedMovie.fsk <= 100 && (
                   <div className={classes.fskInfo}>
                     <img
                       src={`https://altersfreigaben.de/images/rating/de/${selectedMovie.fsk}_90.png`}
@@ -134,7 +133,7 @@ const DetailsMovie = () => {
 
               <div>
                 <div className={classes.genres}>
-                  {genres.map((genre, index) => (
+                  {selectedMovie.genres.map((genre, index) => (
                     <div key={index} className={classes.genre}>
                       {genre.name}{" "}
                     </div>
@@ -237,14 +236,9 @@ const DetailsMovie = () => {
           </div>
         </div>
 
-        {selectedMovie.tagline && (
-          <h3 className={classes.subtitle}>{selectedMovie.tagline}</h3>
-        )}
-        {selectedMovie.overview && (
-          <div className={classes.description}>
-            <b>Beschreibung:</b> {selectedMovie.overview}
-          </div>
-        )}
+        <Beschreibung tagline={selectedMovie.tagline}
+                      overview={selectedMovie.overview}/>
+
       </section>
 
       <section className={classes.userSelectionSection}>
@@ -341,13 +335,13 @@ const DetailsMovie = () => {
             );
           } else {
             let actorCharacter = false;
-            for (let role of actor.roles) {
-              if (
-                role.character.toLowerCase().includes(actorSearchLow)
-              ) {
-                actorCharacter = true;
-              }
-            }
+            // for (let role of actor.roles) {   TODO
+            //   if (
+            //     role.character.toLowerCase().includes(actorSearchLow)
+            //   ) {
+            //     actorCharacter = true;
+            //   }
+            // }
             return (
               actor.name.toLowerCase().includes(actorSearchLow) ||
               actorCharacter
