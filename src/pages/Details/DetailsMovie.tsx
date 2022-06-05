@@ -1,5 +1,5 @@
 import classes from "./DetailsMovie.module.scss";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {
   FaSmileBeam,
@@ -46,7 +46,8 @@ const DetailsMovie = () => {
                      releaseDate={selectedMovie.release_date}
                      runtime={selectedMovie.runtime}
                      genres={selectedMovie.genres}
-                     voteAverage={selectedMovie.vote_average}/>
+                     voteAverage={selectedMovie.vote_average}
+                     classNameContent={classes.sectionContent}/>
       </section>
 
       <section>
@@ -57,7 +58,8 @@ const DetailsMovie = () => {
       </section>
 
       <section className={classes.actorSection}>
-        <CastAndCrew castAndCrew={selectedMovie.castAndCrew}/>
+        <CastAndCrew castAndCrew={selectedMovie.castAndCrew}
+                     classNameContent={classes.sectionContent}/>
       </section>
 
       <section className={classes.extraInfosSection}>
@@ -106,7 +108,7 @@ const DetailsMovie = () => {
               <FaRegEye
                 onClick={() => handleClickUserSelection("haveSeen", true)}
                 className={
-                  userSelection[user.userId].haveSeen === true
+                  userSelection[user.userId].haveSeen
                     ? classes.eyeGreen
                     : classes.eye
                 }
@@ -114,7 +116,7 @@ const DetailsMovie = () => {
               <FaRegEyeSlash
                 onClick={() => handleClickUserSelection("haveSeen", false)}
                 className={
-                  userSelection[user.userId].haveSeen === false
+                  userSelection[user.userId].haveSeen
                     ? classes.eyeRed
                     : classes.eye
                 }
@@ -122,7 +124,7 @@ const DetailsMovie = () => {
             </div>
           </div>
 
-          {userSelection[user.userId].haveSeen === true && (
+          {userSelection[user.userId].haveSeen && (
             <div>
               <div className={classes.happyEnd}>Dein Happy End ?</div>
 

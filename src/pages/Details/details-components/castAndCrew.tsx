@@ -5,10 +5,11 @@ import PersonBox from "./personBox";
 import {ICastMovie, ICastTv, ICrewMovie, ICrewTv} from "../../../interfaces/interfaces";
 
 interface ICastAndCrewProps {
-  castAndCrew: ((ICrewMovie | ICastMovie)[]) | ((ICrewTv | ICastTv)[])
+  castAndCrew: ((ICrewMovie | ICastMovie)[]) | ((ICrewTv | ICastTv)[]);
+  classNameContent?: string;
 }
 
-const CastAndCrew = ({castAndCrew}: ICastAndCrewProps) => {
+const CastAndCrew = ({castAndCrew, classNameContent}: ICastAndCrewProps) => {
 
   const [scrollActors, setScrollActors] = useState<number>(0);
   const [scrollWidth, setScrollWidth] = useState<number>(100);
@@ -22,7 +23,7 @@ const CastAndCrew = ({castAndCrew}: ICastAndCrewProps) => {
   }, []);
 
   return (
-    <div className={`${classes.actorSearchContainer} ${classes.sectionContent}`}>
+    <div className={`${classes.actorSearchContainer} ${classNameContent}`}>
       {scrollActors > 0 ? (
         <FaChevronLeft
           onClick={() => scrollLeft()}

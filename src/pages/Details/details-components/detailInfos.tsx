@@ -16,6 +16,7 @@ interface IDetailInfosProps {
   runtime: number;
   genres: IGenre[];
   voteAverage: number;
+  classNameContent?: string;
 }
 
 const DetailInfos = ({
@@ -28,6 +29,7 @@ const DetailInfos = ({
                        runtime,
                        genres,
                        voteAverage,
+                       classNameContent,
                      }: IDetailInfosProps) => {
 
   const [happyMovie, setHappyMovie] = useState<THasHappyEnd>(hasHappyEnd);
@@ -41,7 +43,7 @@ const DetailInfos = ({
   // }, [selectedMovie.has_happy_end, selectedMovie]);
 
   return (
-    <div>
+    <div className={classNameContent}>
       <img
         src={imageUrlBig + backdropPath}
         className={classes.backdropImage}

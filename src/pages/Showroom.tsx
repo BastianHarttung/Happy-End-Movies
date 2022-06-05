@@ -11,7 +11,7 @@ import SearchResultBox from "../components/SearchResultBox";
 import {ReactComponent as FilterIcon} from "../assets/icons/filter.svg";
 import {ReactComponent as CloseIcon} from "../assets/icons/times.svg";
 //Types
-import {TCategory, TCategorySearch, TCategoryWatch, THappyEndFilter, THasHappyEnd} from "../interfaces/types";
+import {TCategorySearch, TCategoryWatch, THappyEndFilter} from "../interfaces/types";
 import {TCategoryFilter} from "../interfaces/types";
 
 import apiStore from "../stores/api-store";

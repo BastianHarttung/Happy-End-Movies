@@ -1,6 +1,6 @@
 .sectionContent {
   width: clamp(350px, 80%, 1280px);
-  margin: 50px 10px;
+  margin: 40px 10px;
 }
 
 .detailsMoviePage {
@@ -37,7 +37,7 @@
 
 /*------------------------Extra Infos---------------------------*/
 
-/*Images*/
+/*---Images---*/
 .imageContainer {
   display: flex;
   overflow: auto;
@@ -68,7 +68,7 @@
   border-radius: 5px;
 }
 
-/*Videos*/
+/*----Videos---*/
 .videoContainer {
   display: flex;
   overflow: auto;
@@ -176,7 +176,7 @@
   font-weight: 500;
 }
 
-/*---------------Eyes--------------------*/
+/*------Eyes----*/
 .eyes {
   display: flex;
   justify-content: space-between;
@@ -218,7 +218,7 @@
   }
 }
 
-/*----------------Loader-------------------*/
+/*-------Loader------*/
 .loaderContainer {
   height: 100px;
 }
