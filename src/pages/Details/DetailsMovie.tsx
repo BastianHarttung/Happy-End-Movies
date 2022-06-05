@@ -1,5 +1,4 @@
 import classes from "./DetailsMovie.module.scss";
-import emptyImage from "../../assets/img/movie-poster.png";
 import {useNavigate, useParams} from "react-router-dom";
 import {useState, useEffect} from "react";
 import {
@@ -12,7 +11,6 @@ import {
   FaRegEyeSlash,
   FaRegEye,
 } from "react-icons/fa";
-import {imageUrlBig} from "../../constants";
 import PersonBox from "./details-components/personBox";
 import ImagesBox from "./details-components/imagesBox";
 import {Button} from "../../styleComponents/ButtonStyleComp";
@@ -22,6 +20,7 @@ import {observer} from "mobx-react";
 import {ICastMovie, ICrewMovie, IUserSelections} from "../../interfaces/interfaces";
 import {THasHappyEnd, TUserSelections} from "../../interfaces/types";
 import Beschreibung from "./details-components/beschreibung";
+import DetailInfos from "./details-components/detailInfos";
 
 
 const DetailsMovie = () => {
@@ -32,11 +31,6 @@ const DetailsMovie = () => {
   const urlParams = useParams();
 
   const [movieForDb, setMovieForDb] = useState(selectedMovie);
-  const [happyMovie, setHappyMovie] = useState<THasHappyEnd>(
-    selectedMovie.has_happy_end === ("true" || "false")
-      ? selectedMovie.has_happy_end
-      : "neutral"
-  );
 
   const [scrollActors, setScrollActors] = useState<number>(0);
   const [scrollWidth, setScrollWidth] = useState<number>(100);
@@ -49,13 +43,6 @@ const DetailsMovie = () => {
     [user.userId]: {happyEnd_Voting: "neutral", haveSeen: false},
   });
 
-  useEffect(() => {
-    selectedMovie.has_happy_end === "true"
-      ? setHappyMovie("true")
-      : selectedMovie.has_happy_end === "false"
-        ? setHappyMovie("false")
-        : setHappyMovie("neutral");
-  }, [selectedMovie.has_happy_end, selectedMovie]);
 
   useEffect(() => {
     setScrollWidth(getScrollWidth());
@@ -64,88 +51,15 @@ const DetailsMovie = () => {
   return (
     <section className={classes.detailsMoviePage}>
       <section className={classes.movieSection}>
-        <img
-          src={
-            selectedMovie.backdrop_path
-              ? imageUrlBig + selectedMovie.backdrop_path
-              : imageUrlBig + selectedMovie.poster_path
-          }
-          className={classes.backdropImage}
-          alt="Backdrop"
-        />
-
-        <div className={`${classes.detailsContainer} ${classes.sectionContent}`}>
-          <div className={classes.posterContainer}>
-            {happyMovie === "true" ? (
-              <FaSmileBeam
-                className={classes.happyEndSmileyOverall}
-                style={{color: "var(--green)"}}
-              />
-            ) : happyMovie === "false" ? (
-              <FaSadTear
-                className={classes.happyEndSmileyOverall}
-                style={{color: "var(--red)"}}
-              />
-            ) : happyMovie === "neutral" ? (
-              <FaMeh
-                className={classes.happyEndSmileyOverall}
-                style={{color: "var(--orange)"}}
-              />
-            ) : (
-              ""
-            )}
-            <img
-              className={classes.posterImage}
-              src={
-                selectedMovie.poster_path
-                  ? imageUrlBig + selectedMovie.poster_path
-                  : emptyImage
-              }
-              alt="Poster"
-            />
-          </div>
-
-          <div className={classes.infoSection}>
-            <div>
-              <h2 className={classes.title}>{selectedMovie.title}</h2>
-              <div className="d-flex-row">
-                {selectedMovie.fsk <= 100 && (
-                  <div className={classes.fskInfo}>
-                    <img
-                      src={`https://altersfreigaben.de/images/rating/de/${selectedMovie.fsk}_90.png`}
-                      className={classes.fsk}
-                      alt={selectedMovie.fsk.toString()}
-                      title={`FSK ${selectedMovie.fsk}`}
-                    />
-                  </div>
-                )}
-
-                <p className={classes.releaseYear}>
-                  {selectedMovie.release_date.slice(0, 4)}
-                </p>
-
-                <p>
-                  {selectedMovie.runtime} min (
-                  {laufzeitInStunden(selectedMovie.runtime).stunden} Std.{" "}
-                  {laufzeitInStunden(selectedMovie.runtime).minuten} min.)
-                </p>
-              </div>
-
-              <div>
-                <div className={classes.genres}>
-                  {selectedMovie.genres.map((genre, index) => (
-                    <div key={index} className={classes.genre}>
-                      {genre.name}{" "}
-                    </div>
-                  ))}
-                </div>
-
-              </div>
-            </div>
-
-            <div className={classes.voting}>{selectedMovie.vote_average}</div>
-          </div>
-        </div>
+        <DetailInfos title={selectedMovie.title}
+                     fsk={selectedMovie.fsk}
+                     posterPath={selectedMovie.poster_path}
+                     backdropPath={selectedMovie.backdrop_path}
+                     hasHappyEnd={selectedMovie.has_happy_end}
+                     releaseDate={selectedMovie.release_date}
+                     runtime={selectedMovie.runtime}
+                     genres={selectedMovie.genres}
+                     voteAverage={selectedMovie.vote_average}/>
       </section>
 
       <section>
@@ -307,7 +221,6 @@ const DetailsMovie = () => {
             onClick={() => {
               setMovieForDb({...selectedMovie, userSelections: userSelection});
               saveMovieToDb(movieForDb);
-              setHappyMovie("neutral");
               navigate("/showroom");
             }}
           />
@@ -391,13 +304,6 @@ const DetailsMovie = () => {
     if (event.key === "Enter") {
       searchForActor(searchActor);
     }
-  }
-
-  //Berechnet die Laufzeit in Stunden und Minuten
-  function laufzeitInStunden(laufzeit: number): { stunden: number, minuten: number } {
-    const laufzeitStunden = Math.floor(laufzeit / 60);
-    const restminuten = laufzeit - laufzeitStunden * 60;
-    return {stunden: laufzeitStunden, minuten: restminuten};
   }
 
 };
