@@ -13,6 +13,7 @@ import iconUser from "../assets/icons/user-tie_solid.svg";
 //Interfaces
 import {TCategory, TCategorySearch, TGender, THasHappyEnd} from "../interfaces/types";
 import apiStore from "../stores/api-store";
+import {observer} from "mobx-react";
 
 
 interface ISearchResultBoxProps {
@@ -123,4 +124,4 @@ const SearchResultBox = ({
 
 };
 
-export default SearchResultBox;
+export default observer(SearchResultBox);

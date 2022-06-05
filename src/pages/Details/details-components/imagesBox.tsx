@@ -11,7 +11,7 @@ interface IImagesBoxProps {
 function ImagesBox({title, images}: IImagesBoxProps) {
   return (
     <div>
-      <div>{title}</div>
+      <div><i>{title}</i></div>
       <div className={classes.imageContainer}>
         {images.map((image: IImage, index) => {
           return (

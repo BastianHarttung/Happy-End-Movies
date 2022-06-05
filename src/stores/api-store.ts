@@ -47,7 +47,7 @@ class ApiStore {
   }
 
   //Get genres and fsk and has_happy_end and save to selectedMovie state
-  public async saveSelectedMovieOrPerson(object: any, searchCategory: TCategory): Promise<void> {
+  saveSelectedMovieOrPerson = async (object: any, searchCategory: TCategory) => {
     // console.log('App movie', object)
     // console.log('app category', searchCategory)
     if (searchCategory === "movie") {
@@ -61,7 +61,7 @@ class ApiStore {
 
   //-------------------------------Movie Fetches--------------------------------------------------------------
   // Collecting all Data from Movie
-  public async setAllDataForMovie(object: any, searchCategory: TCategoryWatch = "movie"): Promise<void> {
+  private async setAllDataForMovie(object: any, searchCategory: TCategoryWatch = "movie"): Promise<void> {
     console.log("setAllDataForMovie", object, searchCategory)
     const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "movie") as IMovieDetails;
     const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "movie") as IImagesWatchFetching;
@@ -77,16 +77,17 @@ class ApiStore {
       images,
       category: searchCategory,
       fsk,
-      userSelections: {
-        [user.userId]: {
-          happyEnd_Voting: object.userSelections
-            ? object.userSelections[user.userId].happyEnd_Voting
-            : "",
-          haveSeen: object.userSelections
-            ? object.userSelections[user.userId].haveSeen
-            : false,
+      userSelections: object.userSelections ? object.userSelections
+        : {
+          [user.userId]: {
+            happyEnd_Voting: object.userSelections
+              ? object.userSelections[user.userId].happyEnd_Voting
+              : "",
+            haveSeen: object.userSelections
+              ? object.userSelections[user.userId].haveSeen
+              : false,
+          },
         },
-      },
       has_happy_end: hasHappyEnd,
       castAndCrew,
       cast,

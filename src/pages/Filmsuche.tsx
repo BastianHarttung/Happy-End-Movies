@@ -7,6 +7,7 @@ import {Button} from "../styleComponents/ButtonStyleComp";
 import Pagination from "../components/Pagination";
 import {TCategorySearch, TSearchResults} from "../interfaces/types";
 import {ISearch} from "../interfaces/interfaces";
+import {observer} from "mobx-react";
 
 
 const Filmsuche = () => {

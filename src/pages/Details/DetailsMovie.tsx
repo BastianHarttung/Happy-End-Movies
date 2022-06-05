@@ -62,7 +62,7 @@ const DetailsMovie = () => {
   }, []);
 
   return (
-    <section className={classes.detailsMovieSection}>
+    <section className={classes.detailsMoviePage}>
       <section className={classes.movieSection}>
         <img
           src={
@@ -74,7 +74,7 @@ const DetailsMovie = () => {
           alt="Backdrop"
         />
 
-        <div className={classes.detailsContainer}>
+        <div className={`${classes.detailsContainer} ${classes.sectionContent}`}>
           <div className={classes.posterContainer}>
             {happyMovie === "true" ? (
               <FaSmileBeam
@@ -148,8 +148,15 @@ const DetailsMovie = () => {
         </div>
       </section>
 
+      <section>
+        <Beschreibung
+          tagline={selectedMovie.tagline}
+          overview={selectedMovie.overview}
+          className={`${classes.sectionContent}`}/>
+      </section>
+
       <section className={classes.actorSection}>
-        <div className={classes.actorSearchContainer}>
+        <div className={`${classes.actorSearchContainer} ${classes.sectionContent}`}>
           {scrollActors > 0 ? (
             <FaChevronLeft
               onClick={() => scrollLeft()}
@@ -200,7 +207,7 @@ const DetailsMovie = () => {
       </section>
 
       <section className={classes.extraInfosSection}>
-        <div className={classes.videosImagesContainer}>
+        <div className={`${classes.videosImagesContainer} ${classes.sectionContent}`}>
           <div>
             {!!selectedMovie.images.posters.length && (
               <ImagesBox
@@ -235,10 +242,6 @@ const DetailsMovie = () => {
             })}
           </div>
         </div>
-
-        <Beschreibung tagline={selectedMovie.tagline}
-                      overview={selectedMovie.overview}/>
-
       </section>
 
       <section className={classes.userSelectionSection}>
