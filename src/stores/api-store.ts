@@ -37,19 +37,16 @@ class ApiStore {
   //Save Movie to Database Firebase by clicking on Detailansicht Speichern
   async saveMovieToDb(movieDb: any): Promise<void> {
     try {
-      console.log("save to Firestore", movieDb);
       const actualMoviesDoc = doc(firestoreDb, "movies/" + movieDb.id);
       await setDoc(actualMoviesDoc, movieDb);
-      console.log("In Firestore Gespeichert");
+      console.log("In Firestore Gespeichert:", movieDb);
     } catch (e) {
       console.log("Error", e);
     }
   }
 
   //Get genres and fsk and has_happy_end and save to selectedMovie state
-  saveSelectedMovieOrPerson = async (object: any, searchCategory: TCategory) => {
-    // console.log('App movie', object)
-    // console.log('app category', searchCategory)
+  saveSelectedMovieOrPerson = async (object: any, searchCategory: TCategory): Promise<void> => {
     if (searchCategory === "movie") {
       await this.setAllDataForMovie(object, "movie")
     } else if (searchCategory === "tv") {
@@ -61,7 +58,7 @@ class ApiStore {
 
   //-------------------------------Movie Fetches--------------------------------------------------------------
   // Collecting all Data from Movie
-  private async setAllDataForMovie(object: any, searchCategory: TCategoryWatch = "movie"): Promise<void> {
+  private setAllDataForMovie = async (object: any, searchCategory: TCategoryWatch = "movie"): Promise<void> => {
     console.log("setAllDataForMovie", object, searchCategory)
     const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "movie") as IMovieDetails;
     const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "movie") as IImagesWatchFetching;
@@ -145,7 +142,7 @@ class ApiStore {
   };
 
   //Get Cast and Crew for Movie
-  private async getCastAndCrewFromMedia(movieId: number, searchCategory: TCategoryWatch): Promise<(ICastMovie | ICrewMovie)[]> {
+  private getCastAndCrewFromMedia = async (movieId: number, searchCategory: TCategoryWatch): Promise<(ICastMovie | ICrewMovie)[]> => {
     const castUrlMovie = castUrl(searchCategory, movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
@@ -183,7 +180,7 @@ class ApiStore {
   }
 
   //-----------------------------------TV Show fetches ---------------------------------------------
-  private async setAllDataForTv(object: any, searchCategory: TCategoryWatch): Promise<void> {
+  private setAllDataForTv = async (object: any, searchCategory: TCategoryWatch): Promise<void> => {
     const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "tv") as IMovieDetails;
     const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "tv") as IImagesWatchFetching;
     const fsk: number = await this.getGermanFSKFromDetails(details, "tv");
@@ -219,7 +216,7 @@ class ApiStore {
 
   //-------------------------------------Person fetches---------------------------------------------
   // Collecting all Data from Person
-  private async setAllDataForPerson(object: any): Promise<void> {
+  private setAllDataForPerson = async (object: any): Promise<void> => {
     const personKnownFor: IPersonSearch = await this.getInfosForPersonFromApi(object.name);
     const personDetails: IPersonFetching = await this.getDetailPersonInfosFromApi(object.id);
     this.selectedPerson = {...object, ...personKnownFor, ...personDetails};
