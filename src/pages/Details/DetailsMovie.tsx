@@ -1,55 +1,42 @@
 import classes from "./DetailsMovie.module.scss";
 import {useNavigate, useParams} from "react-router-dom";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import {
   FaSmileBeam,
   FaSadTear,
   FaMeh,
-  FaSearch,
-  FaChevronRight,
-  FaChevronLeft,
   FaRegEyeSlash,
   FaRegEye,
 } from "react-icons/fa";
-import PersonBox from "./details-components/personBox";
-import ImagesBox from "./details-components/imagesBox";
-import {Button} from "../../styleComponents/ButtonStyleComp";
 import globalStore from "../../stores/global-store";
 import apiStore from "../../stores/api-store";
 import {observer} from "mobx-react";
-import {ICastMovie, ICrewMovie, IUserSelections} from "../../interfaces/interfaces";
+import {IUserSelections} from "../../interfaces/interfaces";
 import {THasHappyEnd, TUserSelections} from "../../interfaces/types";
+//Components
+import {Button} from "../../styleComponents/ButtonStyleComp";
+import ImagesBox from "./details-components/imagesBox";
 import Beschreibung from "./details-components/beschreibung";
 import DetailInfos from "./details-components/detailInfos";
+import CastAndCrew from "./details-components/castAndCrew";
 
 
 const DetailsMovie = () => {
   const {user} = globalStore;
-  const {selectedMovie, saveMovieToDb, concatCastAndCrew} = apiStore;
+  const {selectedMovie, saveMovieToDb} = apiStore;
 
   const navigate = useNavigate();
-  const urlParams = useParams();
+  // const urlParams = useParams(); //TODO get id from url
 
   const [movieForDb, setMovieForDb] = useState(selectedMovie);
-
-  const [scrollActors, setScrollActors] = useState<number>(0);
-  const [scrollWidth, setScrollWidth] = useState<number>(100);
-
-  const [searchActor, setSearchActor] = useState<string>("");
-
-  const [filteredActors, setFilteredActors] = useState<(ICastMovie | ICrewMovie)[]>(concatCastAndCrew(selectedMovie.cast, selectedMovie.directors));
 
   const [userSelection, setUserSelection] = useState<IUserSelections>({
     [user.userId]: {happyEnd_Voting: "neutral", haveSeen: false},
   });
 
-
-  useEffect(() => {
-    setScrollWidth(getScrollWidth());
-  }, []);
-
   return (
     <section className={classes.detailsMoviePage}>
+
       <section className={classes.movieSection}>
         <DetailInfos title={selectedMovie.title}
                      fsk={selectedMovie.fsk}
@@ -70,54 +57,7 @@ const DetailsMovie = () => {
       </section>
 
       <section className={classes.actorSection}>
-        <div className={`${classes.actorSearchContainer} ${classes.sectionContent}`}>
-          {scrollActors > 0 ? (
-            <FaChevronLeft
-              onClick={() => scrollLeft()}
-              className={classes.arrowBtnLeft}
-            ></FaChevronLeft>
-          ) : (
-            ""
-          )}
-
-          {scrollActors < scrollWidth ? (
-            <FaChevronRight
-              onClick={() => scrollRight()}
-              className={classes.arrowBtnRight}
-            ></FaChevronRight>
-          ) : (
-            ""
-          )}
-
-          <div className={classes.searchContainer}>
-            <FaSearch
-              className={classes.searchBtn}
-              onClick={() => searchForActor(searchActor)}
-            />
-            <input
-              type="text"
-              placeholder="Suche Schauspieler oder Rolle"
-              className={classes.searchInput}
-              value={searchActor}
-              onChange={(e) => setSearchActor(e.target.value)}
-              onKeyPress={keyPressEvent}
-            />
-            <div className={classes.lengthActors}>
-              (Gesamt: {selectedMovie.cast.length} Schauspieler)
-            </div>
-          </div>
-
-          <div id="actorContainer" className={classes.actorContainer}>
-            {selectedMovie.cast
-              ? filteredActors.map((actor, index) => (
-                <PersonBox
-                  key={index}
-                  person={actor}
-                />
-              ))
-              : ""}
-          </div>
-        </div>
+        <CastAndCrew castAndCrew={selectedMovie.castAndCrew}/>
       </section>
 
       <section className={classes.extraInfosSection}>
@@ -232,78 +172,6 @@ const DetailsMovie = () => {
   //Change state for User Selection
   function handleClickUserSelection(name: TUserSelections, state: boolean | THasHappyEnd): void {
     setUserSelection({[user.userId]: {...userSelection[user.userId], [name]: state}})
-  }
-
-  //Searching and Filtering For Actor
-  function searchForActor(actorSearch: string) {
-    const actorSearchLow = actorSearch.toLowerCase();
-    if (actorSearch === "") {
-      console.log("alle actors anzeigen");
-      setFilteredActors(selectedMovie.cast);
-    } else {
-      console.log("suche nach " + actorSearch);
-      setFilteredActors(
-        selectedMovie.cast.filter((actor) => {
-          if (actor.character) {
-            return (
-              actor.name.toLowerCase().includes(actorSearchLow) ||
-              actor.character.toLowerCase().includes(actorSearchLow)
-            );
-          } else {
-            let actorCharacter = false;
-            // for (let role of actor.roles) {   TODO
-            //   if (
-            //     role.character.toLowerCase().includes(actorSearchLow)
-            //   ) {
-            //     actorCharacter = true;
-            //   }
-            // }
-            return (
-              actor.name.toLowerCase().includes(actorSearchLow) ||
-              actorCharacter
-            );
-          }
-        })
-      );
-    }
-  }
-
-  //Set Scroll Width
-  function getScrollWidth(): number {
-    const actorContainer = document.getElementById("actorContainer");
-    if (!!actorContainer) return actorContainer.scrollWidth - actorContainer.offsetWidth
-    else return 0
-  }
-
-  //Scroll Actors Right
-  function scrollRight(): void {
-    const actorContainer = document.getElementById("actorContainer");
-    if (!!actorContainer) {
-      const scrollWidth = scrollActors + actorContainer.offsetWidth - 100;
-      if (scrollActors < actorContainer.scrollWidth) {
-        actorContainer.scroll(scrollWidth, 0);
-        setScrollActors(scrollWidth);
-      }
-    }
-  }
-
-  //Scroll Actors Left
-  function scrollLeft() {
-    const actorContainer = document.getElementById("actorContainer");
-    if (!!actorContainer) {
-      const scrollWidth = scrollActors - actorContainer.offsetWidth + 100;
-      if (scrollActors > 0) {
-        actorContainer.scroll(scrollWidth, 0);
-        setScrollActors(scrollWidth);
-      }
-    }
-  }
-
-  //Listen if the Enter-Button is pressed
-  function keyPressEvent(event: any) {
-    if (event.key === "Enter") {
-      searchForActor(searchActor);
-    }
   }
 
 };

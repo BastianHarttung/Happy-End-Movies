@@ -1,0 +1,98 @@
+
+.backdropImage {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  object-fit: cover;
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/*Movie Infos*/
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.detailsContainer {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap-reverse;
+  margin: 30px 0px;
+}
+
+.title {
+  font-size: 35px;
+  margin: 0 0 10px 0;
+}
+
+.fskInfo {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.fsk {
+  height: 60px;
+}
+
+.releaseYear {
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+/*-------Poster---------*/
+.posterContainer {
+  position: relative;
+  margin-right: 30px;
+
+  .happyEndSmileyOverall {
+    height: 35px;
+    width: 35px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.7));
+  }
+
+  .posterImage {
+    width: 266px;
+    height: 398px;
+    object-fit: cover;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 3px 12px 3px rgba(128, 128, 128, 0.46);
+  }
+}
+
+.detailsContainer h3 {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 10px 0px;
+
+  .genre {
+    border: 1px solid var(--gray);
+    border-radius: var(--border-radius-small);
+    padding: 4px 7px;
+    margin: 0px 5px 5px 0px;
+  }
+}
+
+.voting {
+  width: 40px;
+  height: 40px;
+  background-color: orange;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+}

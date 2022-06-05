@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {imageUrlBig} from "../../../constants";
 import classes from "./detailInfos.module.scss";
 import {FaMeh, FaSadTear, FaSmileBeam} from "react-icons/fa";

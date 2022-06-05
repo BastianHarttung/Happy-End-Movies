@@ -1,0 +1,68 @@
+
+.actorSearchContainer {
+  position: relative;
+}
+
+.searchBtn {
+  font-size: 20px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.searchInput {
+  height: 17px;
+  width: 260px;
+  border: 1px solid black;
+  border-radius: var(--border-radius-small);
+  padding: 2px 8px;
+}
+
+.lengthActors {
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.actorContainer {
+  display: flex;
+  padding: 10px 5px;
+  margin-top: 10px;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  border: 1px solid var(--gray);
+  border-radius: var(--border-radius-medium);
+}
+
+.arrowBtnLeft,
+.arrowBtnRight {
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 130px;
+  border-radius: 50%;
+  z-index: 2;
+  cursor: pointer;
+  padding: 5px;
+  transition: all var(--hover-time-short);
+}
+
+.arrowBtnLeft:hover,
+.arrowBtnRight:hover {
+  box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.4);
+  transform: scale(1.07);
+}
+
+.arrowBtnLeft {
+  left: 0;
+}
+
+.arrowBtnRight {
+  right: 0;
+}
+

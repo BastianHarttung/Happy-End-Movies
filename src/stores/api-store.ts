@@ -1,7 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import {
-  ICastMovie,
-  ICrewMovie, IImagesPersonFetching,
+  ICastMovie, ICastTv,
+  ICrewMovie, ICrewTv, IImagesPersonFetching,
   IImagesWatchFetching,
   IMovieAllInfos,
   IMovieDetails, IPersonAllData, IPersonFetching, IPersonSearch, ITvAllInfos,
@@ -172,12 +172,11 @@ class ApiStore {
     return directorArray;
   };
 
-
   //Concat Cast and Directors
-  public concatCastAndCrew(castArray: ICastMovie[], crewArray: ICrewMovie[]): (ICrewMovie | ICastMovie)[] {
-    const newArray = castArray as (ICrewMovie | ICastMovie)[]
-    return newArray.concat(crewArray)
-  }
+  // public concatCastAndCrew(castArray: ICastMovie[] | ICastTv[], crewArray: ICrewMovie[] | ICrewTv[]): (ICrewMovie | ICastMovie)[] | (ICrewTv | ICastTv)[] {
+  //   const newArray = castArray as (ICrewMovie | ICastMovie)[] | (ICrewTv | ICastTv)[]
+  //   return newArray.concat(crewArray)
+  // }
 
   //-----------------------------------TV Show fetches ---------------------------------------------
   private setAllDataForTv = async (object: any, searchCategory: TCategoryWatch): Promise<void> => {
