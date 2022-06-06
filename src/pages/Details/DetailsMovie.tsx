@@ -15,10 +15,10 @@ import {IUserSelections} from "../../interfaces/interfaces";
 import {THasHappyEnd, TUserSelections} from "../../interfaces/types";
 //Components
 import {Button} from "../../styleComponents/ButtonStyleComp";
-import ImagesBox from "./details-components/imagesBox";
 import Beschreibung from "./details-components/beschreibung";
 import DetailInfos from "./details-components/detailInfos";
 import CastAndCrew from "./details-components/castAndCrew";
+import ImagesVideosSection from "./details-components/imagesVideosSection";
 
 
 const DetailsMovie = () => {
@@ -54,7 +54,7 @@ const DetailsMovie = () => {
         <Beschreibung
           tagline={selectedMovie.tagline}
           overview={selectedMovie.overview}
-          className={`${classes.sectionContent}`}/>
+          className={classes.sectionContent}/>
       </section>
 
       <section className={classes.actorSection}>
@@ -63,41 +63,9 @@ const DetailsMovie = () => {
       </section>
 
       <section className={classes.extraInfosSection}>
-        <div className={`${classes.videosImagesContainer} ${classes.sectionContent}`}>
-          <div>
-            {!!selectedMovie.images.posters.length && (
-              <ImagesBox
-                title={"Poster"}
-                images={selectedMovie.images.posters}
-              />
-            )}
-
-            {!!selectedMovie.images.backdrops.length && (
-              <ImagesBox
-                title={"Hintergründe"}
-                images={selectedMovie.images.backdrops}
-              />
-            )}
-
-            {!!selectedMovie.images.logos.length && (
-              <ImagesBox title={"Logos"} images={selectedMovie.images.logos}/>
-            )}
-          </div>
-          <div className={classes.videoContainer}>
-            {selectedMovie.videos.results.map((video, index) => {
-              return (
-                <div key={index} className={classes.videoBox}>
-                  <iframe
-                    width="260"
-                    title={video.name}
-                    src={"https://www.youtube.com/embed/" + video.key}
-                  ></iframe>
-                  <div className={classes.videoName}>{video.name}</div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <ImagesVideosSection classNameContent={classes.sectionContent}
+                             images={selectedMovie.images}
+                             videos={selectedMovie.videos.results}/>
       </section>
 
       <section className={classes.userSelectionSection}>
