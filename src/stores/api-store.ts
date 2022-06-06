@@ -1,10 +1,15 @@
 import {makeAutoObservable} from "mobx";
 import {
-  ICastMovie, ICastTv,
-  ICrewMovie, ICrewTv, IImagesPersonFetching,
+  ICastMovie,
+  ICrewMovie,
+  IImagesPersonFetching,
   IImagesWatchFetching,
   IMovieAllInfos,
-  IMovieDetails, IPersonAllData, IPersonFetching, IPersonSearch, ITvAllInfos,
+  IMovieDetails,
+  IPersonAllData,
+  IPersonFetching,
+  IPersonSearch,
+  ITvAllInfos,
   ITvDetails,
 } from "../interfaces/interfaces";
 import {doc, setDoc} from "firebase/firestore";

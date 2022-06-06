@@ -1,0 +1,30 @@
+/*---Images---*/
+.imageContainer {
+  display: flex;
+  overflow: auto;
+  margin: 5px 0 10px 0;
+}
+
+.images {
+  height: 150px;
+  margin: 0 5px 0 0;
+}
+
+.imageContainer::-webkit-scrollbar {
+  height: 10px;
+}
+
+.imageContainer::-webkit-scrollbar-track {
+  //border: 1px solid var(--gray);
+  border-radius: 5px;
+}
+
+.imageContainer::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+                  90deg,
+                  var(--main-color) 0%,
+                  var(--main-color-bright) 100%
+  );
+  //border: 1px solid var(--gray);
+  border-radius: 5px;
+}

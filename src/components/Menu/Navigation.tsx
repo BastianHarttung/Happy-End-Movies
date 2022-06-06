@@ -48,7 +48,9 @@ const Navigation = ({isHandy}: INavigationProps) => {
         <Link to="/" className={classes.logoutLink}>
           <div className={classes.linkContainer}>
             {!isHandy && <div>Logout</div>}
-            <img src={iconSignout} className={classes.icons}/>
+            <img src={iconSignout}
+                 alt="Logout"
+                 className={classes.icons}/>
           </div>
         </Link>
       </div>

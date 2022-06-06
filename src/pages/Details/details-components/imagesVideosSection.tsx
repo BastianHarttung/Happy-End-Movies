@@ -6,7 +6,7 @@ import ImagesBox from "./imagesBox";
 interface IImagesVideosSectionProps {
   images: IImagesWatchFetching;
   videos: IVideoResult[];
-  classNameContent: string;
+  classNameContent?: string;
 }
 
 const ImagesVideosSection = ({images, videos, classNameContent}: IImagesVideosSectionProps) => {

@@ -4,7 +4,7 @@
   width: 200px;
   position: relative;
   border: 1px solid gray;
-  border-radius: 0px 0px var(--border-radius-medium) var(--border-radius-medium);
+  border-radius: 0 0 var(--border-radius-medium) var(--border-radius-medium);
   margin: 10px;
   text-decoration: none;
   cursor: pointer;
@@ -28,6 +28,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  padding: 5px 10px 10px 10px;
 }
 
 .movieTitle {

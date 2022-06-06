@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "../DetailsMovie.module.scss";
+import classes from "./imagesBox.module.scss";
 import {imageUrlBig} from "../../../constants";
 import {IImage} from "../../../interfaces/interfaces";
 

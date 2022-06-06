@@ -1,7 +1,8 @@
 import classes from "./Pagination.module.scss";
+import {useEffect, useState} from "react";
+//Icons
 import {ReactComponent as ArrowLeftIcon} from "../assets/icons/chevron-left.svg";
 import {ReactComponent as ArrowRightIcon} from "../assets/icons/chevron-right.svg";
-import {useEffect, useState} from "react";
 
 interface IPaginationProps {
   totalPages: number[],

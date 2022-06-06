@@ -22,7 +22,6 @@
   position: relative;
 }
 
-
 /*-------------------Actor Section-----------------------*/
 .actorSection {
   background-color: var(--main-color-white);
@@ -34,119 +33,13 @@
   position: relative;
 }
 
-
-
-/*----------------------User Selection--------------------------*/
+/*--------------------User Selection--------------------*/
 .userSelectionSection {
   background-color: var(--main-color-white);
   width: 100%;
   display: flex;
   justify-content: center;
   padding: 30px 0 50px 0;
-}
-
-.userSelectionContainer {
-  width: 80%;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: flex-end;
-}
-
-.happyEnd {
-  font-weight: 500;
-}
-
-/*-------Smileys----*/
-.smileys {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-
-  .smiley {
-    font-size: 35px;
-    cursor: pointer;
-  }
-
-  .smiley:hover {
-    color: gray;
-  }
-
-  .smileyLaugh {
-    color: var(--green);
-    font-size: 36px;
-    cursor: pointer;
-  }
-
-  .smileyLaugh:hover {
-    color: var(--green-light);
-  }
-
-  .smileyNeutral {
-    color: var(--orange);
-    font-size: 36px;
-    cursor: pointer;
-  }
-
-  .smileyNeutral:hover {
-    color: var(--orange-light);
-  }
-
-  .smileySad {
-    color: var(--red);
-    font-size: 36px;
-    cursor: pointer;
-  }
-
-  .smileySad:hover {
-    color: var(--red-light);
-  }
-}
-
-.gesehen {
-  font-weight: 500;
-}
-
-/*------Eyes----*/
-.eyes {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-
-  .eye {
-    font-size: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    padding: 3px;
-
-    &:hover {
-      background-color: var(--gray-light);
-    }
-  }
-
-  .eyeGreen {
-    background-color: var(--green);
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    padding: 3px;
-
-    &:hover {
-      background-color: var(--green-light);
-    }
-  }
-
-  .eyeRed {
-    background-color: var(--red);
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    padding: 3px;
-
-    &:hover {
-      background-color: var(--red-light);
-    }
-  }
 }
 
 /*-------Loader------*/

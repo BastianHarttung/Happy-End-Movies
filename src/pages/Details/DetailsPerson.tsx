@@ -65,7 +65,8 @@ const DetailsPerson = () => {
           <div className={classes.imagesContainer}>
             {selectedPerson.images.profiles.slice(1).map(image =>
               <a href={imageUrlSmall + image.file_path}
-                 target="_blank">
+                 target="_blank"
+                 rel="noreferrer">
                 <img src={imageUrlSmall + image.file_path}
                      alt="Foto"/>
               </a>)}

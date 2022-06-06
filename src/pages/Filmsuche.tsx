@@ -7,7 +7,6 @@ import {Button} from "../styleComponents/ButtonStyleComp";
 import Pagination from "../components/Pagination";
 import {TCategorySearch, TSearchResults} from "../interfaces/types";
 import {ISearch} from "../interfaces/interfaces";
-import {observer} from "mobx-react";
 
 
 const Filmsuche = () => {
@@ -99,7 +98,7 @@ const Filmsuche = () => {
     const response = await fetch(trendingMoviesUrl);
     let data = await response.json();
     return data.results;
-  };
+  }
 
   // Search Movie by clicking the Search Button
   // -set page to number 1
@@ -132,24 +131,16 @@ const Filmsuche = () => {
     return data;
   }
 
-  /**
-   * Change Page and load from API by clicking Page Number
-   * And set Active Page Number for colored view
-   * @param {number} page
-   * @return {Promise<void>}
-   */
-  async function changePage(page: number) {
+  //Change Page and load from API by clicking Page Number
+  //And set Active Page Number for colored view
+  async function changePage(page: number): Promise<void> {
     const tmdbData = await getJsonFromTmdb(searchFor, page, searchingCategory)
     setSearchedMovies(tmdbData.results);
     setActivePage(page);
   }
 
-  /**
-   * Make an Array with Pages
-   * @param numberPages
-   * @return {*[]} Array with Numbers from 1 to numberPages
-   */
-  function makePageArray(numberPages: number) {
+  // Make an Array with Pages
+  function makePageArray(numberPages: number): number[] {
     let pageArray = [];
     for (let i = 1; i <= numberPages; i++) {
       pageArray.push(i);

@@ -14,11 +14,8 @@ import {ReactComponent as CloseIcon} from "../assets/icons/times.svg";
 import {TCategorySearch, TCategoryWatch, THappyEndFilter} from "../interfaces/types";
 import {TCategoryFilter} from "../interfaces/types";
 
-import apiStore from "../stores/api-store";
-
 
 const Showroom = () => {
-  const {saveSelectedMovieOrPerson} = apiStore
 
   const [moviesDb, setMoviesDb] = useState<any[]>([]);
   const [dbLength, setDbLength] = useState<number>(0);

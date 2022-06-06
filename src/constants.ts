@@ -1,8 +1,7 @@
-import {TCategory, TCategorySearch, TCategoryWatch, TGender, TKnownForDepartment} from "./interfaces/types";
+import {TCategory, TCategorySearch, TCategoryWatch} from "./interfaces/types";
 import {
-  IImage,
   IMovieAllInfos,
-  IPerson, IPersonAllData, IPersonSearchKnownFor,
+  IPersonAllData,
   ITvAllInfos,
 } from "./interfaces/interfaces";
 
@@ -59,7 +58,7 @@ export const emptyMovie: IMovieAllInfos = {
   },
   fsk: 400,
   userSelections: {
-    [""]: {
+    "0": {
       happyEnd_Voting: "neutral",
       haveSeen: false,
     },
@@ -129,7 +128,7 @@ export const emptyTvShow: ITvAllInfos = {
   },
   fsk: 400,
   userSelections: {
-    [""]: {
+    "0": {
       happyEnd_Voting: "neutral",
       haveSeen: false,
     },
@@ -189,6 +188,7 @@ export const castUrl = (movieOrTv: TCategoryWatch, id: number): string => {
 };
 
 export const personDetailUrl = (personId: number): string => `${BaseUrl}/person/${personId}?api_key=${k}&language=de&append_to_response=images`;
+
 // Get all the Movies or TV-Shows from Person
 // .cast[] for Acting
 // .crew[] for other Jobs
