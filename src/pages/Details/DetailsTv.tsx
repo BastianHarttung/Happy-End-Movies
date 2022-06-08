@@ -11,7 +11,7 @@ import UserSelectionSection from "./details-components/userSelectionSection";
 
 const DetailsMovie = () => {
 
-  const {selectedMovie} = apiStore;
+  const {selectedTv} = apiStore;
 
   // const urlParams = useParams(); //TODO get id from url
 
@@ -19,43 +19,51 @@ const DetailsMovie = () => {
     <section className={classes.detailsMoviePage}>
 
       <section className={classes.movieSection}>
-        <DetailInfos title={selectedMovie.title}
-                     fsk={selectedMovie.fsk}
-                     posterPath={selectedMovie.poster_path}
-                     backdropPath={selectedMovie.backdrop_path}
-                     hasHappyEnd={selectedMovie.has_happy_end}
-                     releaseDate={selectedMovie.release_date}
-                     runtime={selectedMovie.runtime}
-                     genres={selectedMovie.genres}
-                     voteAverage={selectedMovie.vote_average}
+        <DetailInfos title={selectedTv.original_name}
+                     fsk={selectedTv.fsk}
+                     posterPath={selectedTv.poster_path}
+                     backdropPath={selectedTv.backdrop_path}
+                     hasHappyEnd={selectedTv.has_happy_end}
+                     releaseDate={selectedTv.first_air_date}
+                     runtime={calculateAverageRunTime(selectedTv.episode_run_time)}
+                     genres={selectedTv.genres}
+                     voteAverage={selectedTv.vote_average}
                      classNameContent={classes.sectionContent}/>
       </section>
 
       <section className={classes.beschreibungSection}>
         <Beschreibung
-          tagline={selectedMovie.tagline}
-          overview={selectedMovie.overview}
+          tagline={selectedTv.tagline}
+          overview={selectedTv.overview}
           className={classes.sectionContent}/>
       </section>
 
       <section className={classes.actorSection}>
-        <CastAndCrew castAndCrew={selectedMovie.castAndCrew}
+        <CastAndCrew castAndCrew={selectedTv.castAndCrew}
                      classNameContent={classes.sectionContent}/>
       </section>
 
       <section className={classes.imagesVideosSection}>
         <ImagesVideosSection classNameContent={classes.sectionContent}
-                             images={selectedMovie.images}
-                             videos={selectedMovie.videos.results}/>
+                             images={selectedTv.images}
+                             videos={selectedTv.videos.results}/>
       </section>
 
       <section className={classes.userSelectionSection}>
-        <UserSelectionSection selectedMedia={selectedMovie}
+        <UserSelectionSection selectedMedia={selectedTv}
                               classNameContent={classes.sectionContent}/>
       </section>
 
     </section>
   );
+
+  // Average Runtime for Tv Show
+  function calculateAverageRunTime(runtimeArray: number[]): number {
+    const averageRunTime = runtimeArray.reduce((avg, value, _, {length}) => {
+      return avg + (value / length);
+    }, 0)
+    return Math.ceil(averageRunTime)
+  }
 
 };
 

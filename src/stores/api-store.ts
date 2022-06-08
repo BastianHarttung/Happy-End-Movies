@@ -1,7 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import {
-  ICastMovie,
-  ICrewMovie,
+  ICastMovie, ICastTv,
+  ICrewMovie, ICrewTv,
   IImagesPersonFetching,
   IImagesWatchFetching,
   IMovieAllInfos,
@@ -71,7 +71,7 @@ class ApiStore {
     const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
     const castAndCrew: (ICastMovie | ICrewMovie)[] = await this.getCastAndCrewFromMedia(object.id, "movie");
     const cast: ICastMovie[] = await this.getCastFromMedia(object.id, "movie");
-    const directors: ICrewMovie[] = await this.getDirectorForMovie(object.id, "movie");
+    const directors: ICrewMovie[] = await this.getDirectorFromMovie(object.id);
 
     const completeMovieInfo: IMovieAllInfos = {
       ...object,
@@ -151,7 +151,7 @@ class ApiStore {
     const castUrlMovie = castUrl(searchCategory, movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
-    const directors: ICrewMovie[] = await this.getDirectorForMovie(movieId, "movie");
+    const directors: ICrewMovie[] | ICrewTv[] = await this.getDirectorFromMovie(movieId);
     return data.cast.concat(directors);
   };
 
@@ -164,8 +164,8 @@ class ApiStore {
   };
 
   //Get Director for Movie
-  private async getDirectorForMovie(movieId: number, searchCategory: TCategoryWatch): Promise<ICrewMovie[]> {
-    const castUrlMovie = castUrl(searchCategory, movieId);
+  private async getDirectorFromMovie(movieId: number): Promise<ICrewMovie[]> {
+    const castUrlMovie = castUrl("movie", movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
     let directorArray = [];
@@ -177,11 +177,20 @@ class ApiStore {
     return directorArray;
   };
 
-  //Concat Cast and Directors
-  // public concatCastAndCrew(castArray: ICastMovie[] | ICastTv[], crewArray: ICrewMovie[] | ICrewTv[]): (ICrewMovie | ICastMovie)[] | (ICrewTv | ICastTv)[] {
-  //   const newArray = castArray as (ICrewMovie | ICastMovie)[] | (ICrewTv | ICastTv)[]
-  //   return newArray.concat(crewArray)
+  // private getDirectorFromMedia = async (movieId: number, searchCategory: TCategoryWatch) => {
+  //   if (searchCategory === "movie") {
+  //     const movieDirectors = await this.getDirectorFromMovie(movieId)
+  //     return movieDirectors
+  //   } else {
+  //     const tvDirectors = await this.getDirectorFromTv(movieId)
+  //     return tvDirectors
+  //   }
   // }
+
+  //Concat Cast and Directors (TODO not sure if needed)
+  public concatCastAndCrew(castArray: ICastMovie[] | ICastTv[], crewArray: ICrewMovie[] | ICrewTv[]): (ICrewMovie | ICastMovie | ICrewTv | ICastTv)[] {
+    return [...castArray, ...crewArray]
+  }
 
   //-----------------------------------TV Show fetches ---------------------------------------------
   private setAllDataForTv = async (object: any, searchCategory: TCategoryWatch): Promise<void> => {
@@ -191,7 +200,7 @@ class ApiStore {
     const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
     const castAndCrew: (ICastMovie | ICrewMovie)[] = await this.getCastAndCrewFromMedia(object.id, "tv");
     const cast: ICastMovie[] = await this.getCastFromMedia(object.id, "tv");
-    const directors: ICrewMovie[] = await this.getDirectorForMovie(object.id, "tv");
+    const directors: ICrewTv[] = await this.getDirectorFromTv(object.id);
 
     const completeTvInfo: ITvAllInfos = {
       ...object,
@@ -217,6 +226,22 @@ class ApiStore {
     this.selectedTv = completeTvInfo;
     console.log("selectedTv:", completeTvInfo);
   }
+
+  //Get Director for TV
+  private async getDirectorFromTv(movieId: number): Promise<ICrewTv[]> {
+    const castUrlTv = castUrl("tv", movieId);
+    const response = await fetch(castUrlTv);
+    let data = await response.json();
+    let directorArray = [];
+    for (let i = 0; i < data.crew.length; i++) {
+      for (let j = 0; j < data.crew[i].jobs.length; j++) {
+        if (data.crew[i].jobs[j] === "Director") {
+          directorArray.push(data.crew[i]);
+        }
+      }
+    }
+    return directorArray;
+  };
 
   //-------------------------------------Person fetches---------------------------------------------
   // Collecting all Data from Person
