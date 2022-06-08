@@ -31,7 +31,7 @@ const DetailsMovie = () => {
                      classNameContent={classes.sectionContent}/>
       </section>
 
-      <section>
+      <section className={classes.beschreibungSection}>
         <Beschreibung
           tagline={selectedMovie.tagline}
           overview={selectedMovie.overview}
@@ -43,7 +43,7 @@ const DetailsMovie = () => {
                      classNameContent={classes.sectionContent}/>
       </section>
 
-      <section className={classes.extraInfosSection}>
+      <section className={classes.imagesVideosSection}>
         <ImagesVideosSection classNameContent={classes.sectionContent}
                              images={selectedMovie.images}
                              videos={selectedMovie.videos.results}/>

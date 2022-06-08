@@ -32,12 +32,33 @@
   display: flex;
   padding: 10px 5px;
   margin-top: 10px;
-  overflow: hidden;
+  overflow-x: auto;
   scroll-behavior: smooth;
   border: 1px solid var(--gray);
-  border-radius: var(--border-radius-medium);
+  border-radius: var(--border-radius-medium) var(--border-radius-medium) var(--border-radius-small) var(--border-radius-small);
 }
 
+//Scrollbar
+.actorContainer::-webkit-scrollbar {
+  height: 10px;
+}
+
+.actorContainer::-webkit-scrollbar-track {
+  //border: 1px solid var(--gray);
+  border-radius: 5px;
+}
+
+.actorContainer::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+                  90deg,
+                  var(--main-color) 0%,
+                  var(--main-color-bright) 100%
+  );
+  //border: 1px solid var(--gray);
+  border-radius: 5px;
+}
+
+//Arrow Buttons
 .arrowBtnLeft,
 .arrowBtnRight {
   background-color: white;
