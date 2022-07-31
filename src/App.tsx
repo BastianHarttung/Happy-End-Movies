@@ -16,6 +16,7 @@ import WrongUrl from "./pages/WrongUrl";
 import Showroom from "./pages/Showroom";
 import ModalUserSettings from "./components/Modal-UserSettings";
 import globalStore from "./stores/global-store";
+import {ROUTES_DETAIL, ROUTES_MAIN} from "./models/routes";
 
 function App() {
   const {
@@ -37,24 +38,24 @@ function App() {
 
           <Route path="" element={<Menu/>}>
             <Route
-              path="filmsuche"
+              path={ROUTES_MAIN.FILMSUCHE}
               element={<Filmsuche/>}
             />
             <Route
-              path="showroom"
+              path={ROUTES_MAIN.SHOWROOM}
               element={<Showroom/>}
             />
             <Route
-              path="detailansicht/movie/:id"
+              path={ROUTES_DETAIL.MOVIE}
               element={<DetailsMovie/>}
             />
             <Route
-              path="detailansicht/person/:id"
+              path={ROUTES_DETAIL.PERSON}
               element={<DetailsPerson/>}
             />
-            <Route path="impressum" element={<Impressum/>}/>
-            <Route path="hilfe" element={<Hilfe/>}/>
-            <Route path="start" element={<Hauptmenue/>}/>
+            <Route path={ROUTES_MAIN.IMPRESSUM} element={<Impressum/>}/>
+            <Route path={ROUTES_MAIN.HILFE} element={<Hilfe/>}/>
+            <Route path={ROUTES_MAIN.START} element={<Hauptmenue/>}/>
           </Route>
           <Route path="*" element={<WrongUrl/>}/>
         </Routes>

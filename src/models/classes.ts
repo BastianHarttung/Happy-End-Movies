@@ -21,16 +21,15 @@ export class Movie {
               poster_path: string,
               profile_path: string,
               media_type?: TCategorySearch) {
-    this.id = id;
-    this.title = title;
-    this.name = name,
+      this.id = id;
+      this.title = title;
+      this.name = name,
       this.original_name = original_name,
       this.has_happy_end = has_happy_end,
       this.category = category,
       this.media_type = media_type,
       this.poster_path = poster_path,
       this.profile_path = profile_path;
-
   }
 
 }

@@ -1,9 +1,8 @@
-import {TCategory, TCategorySearch, TCategoryWatch} from "./interfaces/types";
-import {
-  IMovieAllInfos,
-  IPersonAllData,
-  ITvAllInfos,
-} from "./interfaces/interfaces";
+import {TCategory, TCategorySearch, TCategoryWatch} from "./models/types";
+import {IMovieAllInfos} from "./models/movie-interfaces";
+import {ITvAllInfos} from "./models/tv-interfaces";
+import {IPersonAllData} from "./models/person-interfaces";
+
 
 //----------Empty Objects-------------------------------------------
 export const emptyMovie: IMovieAllInfos = {

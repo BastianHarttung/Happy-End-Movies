@@ -11,7 +11,7 @@ import iconPopcorn from "../assets/icons/popcorn_solid.svg";
 import iconTv from "../assets/icons/tv-retro_solid.svg";
 import iconUser from "../assets/icons/user-tie_solid.svg";
 //Interfaces
-import {TCategory, TCategorySearch, TGender, THasHappyEnd} from "../interfaces/types";
+import {TCategory, TCategorySearch, TGender, THasHappyEnd} from "../models/types";
 import apiStore from "../stores/api-store";
 import {observer} from "mobx-react";
 

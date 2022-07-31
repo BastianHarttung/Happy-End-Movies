@@ -2,7 +2,7 @@ import classes from './SearchBar.module.scss';
 import {FaSearch} from "react-icons/fa";
 import {useState, useEffect} from "react";
 import React from "react";
-import {TCategorySearch} from "../interfaces/types";
+import {TCategorySearch} from "../models/types";
 
 interface ISearchBarProps {
   length: number,

@@ -1,10 +1,10 @@
 import {
-  IMovieAllInfos,
   IMovieSearchMultiResult,
   IPersonSearchMultiResult,
-  ITvAllInfos,
   ITvShowSearchMultiResult
 } from "./interfaces";
+import {IMovieAllInfos} from "./movie-interfaces";
+import {ITvAllInfos} from "./tv-interfaces";
 
 export type TCategoryWatch = "movie" | "tv"
 

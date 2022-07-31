@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import classes from "./castAndCrew.module.scss";
 import {FaChevronLeft, FaChevronRight, FaSearch} from "react-icons/fa";
 import PersonBox from "./personBox";
-import {ICastMovie, ICastTv, ICrewMovie, ICrewTv} from "../../../interfaces/interfaces";
+import {ICastMovie, ICrewMovie} from "../../../models/movie-interfaces";
+import {ICastTv, ICrewTv} from "../../../models/tv-interfaces";
 
 interface ICastAndCrewProps {
   castAndCrew: ((ICrewMovie | ICastMovie)[]) | ((ICrewTv | ICastTv)[]);

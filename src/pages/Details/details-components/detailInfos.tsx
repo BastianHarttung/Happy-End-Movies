@@ -3,8 +3,9 @@ import {imageUrlBig} from "../../../constants";
 import classes from "./detailInfos.module.scss";
 import {FaMeh, FaSadTear, FaSmileBeam} from "react-icons/fa";
 import emptyImage from "../../../assets/img/movie-poster.png";
-import {THasHappyEnd} from "../../../interfaces/types";
-import {IGenre} from "../../../interfaces/interfaces";
+import {THasHappyEnd} from "../../../models/types";
+import {IGenre} from "../../../models/interfaces";
+import {EHasHappyEnd} from "../../../models/enums";
 
 interface IDetailInfosProps {
   title: string;
@@ -52,17 +53,17 @@ const DetailInfos = ({
 
       <div className={`${classes.detailsContainer} ${classes.sectionContent}`}>
         <div className={classes.posterContainer}>
-          {happyMovie === "true" ? (
+          {happyMovie === EHasHappyEnd.TRUE ? (
             <FaSmileBeam
               className={classes.happyEndSmileyOverall}
               style={{color: "var(--green)"}}
             />
-          ) : happyMovie === "false" ? (
+          ) : happyMovie === EHasHappyEnd.FALSE ? (
             <FaSadTear
               className={classes.happyEndSmileyOverall}
               style={{color: "var(--red)"}}
             />
-          ) : happyMovie === "neutral" ? (
+          ) : happyMovie === EHasHappyEnd.NEUTRAL ? (
             <FaMeh
               className={classes.happyEndSmileyOverall}
               style={{color: "var(--orange)"}}

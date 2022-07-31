@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import classes from "./userSelectionSection.module.scss";
 import {FaMeh, FaRegEye, FaRegEyeSlash, FaSadTear, FaSmileBeam} from "react-icons/fa";
-import {THasHappyEnd, TUserSelections} from "../../../interfaces/types";
-import {IMovieAllInfos, ITvAllInfos, IUserSelections} from "../../../interfaces/interfaces";
+import {THasHappyEnd, TUserSelections} from "../../../models/types";
+import {IUserSelections} from "../../../models/interfaces";
 import globalStore from "../../../stores/global-store";
 import {Button} from "../../../styleComponents/ButtonStyleComp";
 import {useNavigate} from "react-router-dom";
 import apiStore from "../../../stores/api-store";
 import {observer} from "mobx-react";
+import {EHasHappyEnd} from "../../../models/enums";
+import {IMovieAllInfos} from "../../../models/movie-interfaces";
+import {ITvAllInfos} from "../../../models/tv-interfaces";
 
 interface IUserSelectionSectionProps {
   selectedMedia: IMovieAllInfos | ITvAllInfos;
@@ -22,7 +25,7 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
   const navigate = useNavigate();
 
   const [userSelection, setUserSelection] = useState<IUserSelections>({
-    [user.userId]: {happyEnd_Voting: "neutral", haveSeen: false},
+    [user.userId]: {happyEnd_Voting: EHasHappyEnd.NEUTRAL, haveSeen: false},
   });
 
   return (
@@ -55,25 +58,25 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
 
           <div className={classes.smileys}>
             <FaSmileBeam
-              onClick={() => handleClickUserSelection("happyEnd_Voting", "true")}
+              onClick={() => handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.TRUE)}
               className={
-                userSelection[user.userId].happyEnd_Voting === "true"
+                userSelection[user.userId].happyEnd_Voting === EHasHappyEnd.TRUE
                   ? classes.smileyLaugh
                   : classes.smiley
               }
             ></FaSmileBeam>
             <FaMeh
-              onClick={() => handleClickUserSelection("happyEnd_Voting", "neutral")}
+              onClick={() => handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.NEUTRAL)}
               className={
-                userSelection[user.userId].happyEnd_Voting === "neutral"
+                userSelection[user.userId].happyEnd_Voting === EHasHappyEnd.NEUTRAL
                   ? classes.smileyNeutral
                   : classes.smiley
               }
             ></FaMeh>
             <FaSadTear
-              onClick={() => handleClickUserSelection("happyEnd_Voting", "false")}
+              onClick={() => handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.FALSE)}
               className={
-                userSelection[user.userId].happyEnd_Voting === "false"
+                userSelection[user.userId].happyEnd_Voting === EHasHappyEnd.FALSE
                   ? classes.smileySad
                   : classes.smiley
               }

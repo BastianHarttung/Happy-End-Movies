@@ -5,8 +5,8 @@ import {searchUrl, trendingMoviesUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
 import {Button} from "../styleComponents/ButtonStyleComp";
 import Pagination from "../components/Pagination";
-import {TCategorySearch, TSearchResults} from "../interfaces/types";
-import {ISearch} from "../interfaces/interfaces";
+import {TCategorySearch, TSearchResults} from "../models/types";
+import {ISearch} from "../models/interfaces";
 
 
 const Filmsuche = () => {

@@ -3,8 +3,9 @@ import {imageUrlSmall} from "../../../constants";
 import imageActorMan from "../../../assets/img/actor.png";
 import imageActorWoman from "../../../assets/img/actor_girl.png";
 import {useNavigate} from "react-router-dom";
-import {ICastMovie, ICastTv, ICrewMovie, ICrewTv} from "../../../interfaces/interfaces";
 import apiStore from "../../../stores/api-store";
+import {ICastMovie, ICrewMovie} from "../../../models/movie-interfaces";
+import {ICastTv, ICrewTv} from "../../../models/tv-interfaces";
 
 interface IPersonBoxProps {
   person: ICastMovie | ICrewMovie | ICastTv | ICrewTv,

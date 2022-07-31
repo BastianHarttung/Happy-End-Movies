@@ -11,8 +11,13 @@ import SearchResultBox from "../components/SearchResultBox";
 import {ReactComponent as FilterIcon} from "../assets/icons/filter.svg";
 import {ReactComponent as CloseIcon} from "../assets/icons/times.svg";
 //Types
-import {TCategorySearch, TCategoryWatch, THappyEndFilter} from "../interfaces/types";
-import {TCategoryFilter} from "../interfaces/types";
+import {
+  TCategorySearch,
+  TCategoryWatch,
+  THappyEndFilter,
+  TCategoryFilter,
+} from "../models/types";
+import {EHappyEndFilter, EHasHappyEnd} from "../models/enums";
 
 
 const Showroom = () => {
@@ -24,7 +29,7 @@ const Showroom = () => {
   const [searchFilteredMovies, setSearchFilteredMovies] = useState<any[]>([]); //TODO
   const [filterActive, setFilterActive] = useState<boolean>(false);
   const [filterLength, setFilterLength] = useState<number>(dbLength);
-  const [filterHappyEnd, setFilterHappyEnd] = useState<THappyEndFilter>("allEnds");
+  const [filterHappyEnd, setFilterHappyEnd] = useState<THappyEndFilter>(EHappyEndFilter.ALL_ENDS);
   const [filterCategory, setFilterCategory] = useState<TCategoryFilter>("allCategories");
 
 
@@ -47,9 +52,6 @@ const Showroom = () => {
     loadMoviesFromDbAndSetStates();
   }, []);
 
-  /**
-   *
-   */
   useEffect(() => {
     filteredMovies.sort((a, b) => (a.title < b.title) ? -1
       : (a.title > b.title) ? 1
@@ -135,9 +137,9 @@ const Showroom = () => {
                           setFilterHappyEnd(e.target.value as THappyEndFilter)
                           setFilterActive(false)
                         }}>
-                  <option value={"allEnds"}>Alle Enden</option>
-                  <option value={"true"}>Happy End</option>
-                  <option value={"false"}>kein Happy End</option>
+                  <option value={EHappyEndFilter.ALL_ENDS}>Alle Enden</option>
+                  <option value={EHappyEndFilter.TRUE}>Happy End</option>
+                  <option value={EHappyEndFilter.FALSE}>kein Happy End</option>
                 </select>
               </div>
 
@@ -255,7 +257,7 @@ const Showroom = () => {
    */
   function filterDatabase(movies: any[], category: TCategoryFilter, happyEnd: THappyEndFilter, fskPosAge: number) {
     console.log("filterDatabase", movies, category, happyEnd, fskPosAge);
-    if (category !== "allCategories" || happyEnd !== "allEnds" || fskPosAge < 18) {
+    if (category !== "allCategories" || happyEnd !== EHappyEndFilter.ALL_ENDS || fskPosAge < 18) {
       const filteredByCategory = filterMoviesByCategory(movies, category);
       //console.log(filteredByCategory)
       const filteredByCategoryAndHappyEnd = filterMoviesByHappyEnd(filteredByCategory, happyEnd);
@@ -288,7 +290,7 @@ const Showroom = () => {
 
   // Filter Movies with or without HappyEnd
   function filterMoviesByHappyEnd(movies: any[], hasHappyEnd: THappyEndFilter) {
-    if (hasHappyEnd === "true" || hasHappyEnd === "false") {
+    if (hasHappyEnd === EHasHappyEnd.TRUE || hasHappyEnd === EHasHappyEnd.FALSE) {
       console.log("filterHappyEnd", hasHappyEnd);
       return movies.filter(movie => movie.has_happy_end === hasHappyEnd);
     } else return movies;

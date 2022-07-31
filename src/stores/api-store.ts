@@ -1,17 +1,8 @@
 import {makeAutoObservable} from "mobx";
 import {
-  ICastMovie, ICastTv,
-  ICrewMovie, ICrewTv,
   IImagesPersonFetching,
   IImagesWatchFetching,
-  IMovieAllInfos,
-  IMovieDetails,
-  IPersonAllData,
-  IPersonFetching,
-  IPersonSearch,
-  ITvAllInfos,
-  ITvDetails,
-} from "../interfaces/interfaces";
+} from "../models/interfaces";
 import {doc, setDoc} from "firebase/firestore";
 import firestoreDb from "../firebase-config";
 import {
@@ -23,8 +14,11 @@ import {
   watchDetailsUrl, personDetailUrl,
   searchUrl
 } from "../constants";
-import {TCategory, TCategoryWatch, THasHappyEnd} from "../interfaces/types";
+import {TCategory, TCategoryWatch, THasHappyEnd} from "../models/types";
 import globalStore from "./global-store";
+import {ICastMovie, ICrewMovie, IMovieAllInfos, IMovieDetails} from "../models/movie-interfaces";
+import {ICastTv, ICrewTv, ITvAllInfos, ITvDetails} from "../models/tv-interfaces";
+import {IPersonAllData, IPersonFetching, IPersonSearch} from "../models/person-interfaces";
 
 const {user} = globalStore;
 
@@ -70,7 +64,7 @@ class ApiStore {
     const fsk: number = await this.getGermanFSKFromDetails(details, "movie");
     const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
     const castAndCrew: (ICastMovie | ICrewMovie)[] = await this.getCastAndCrewFromMedia(object.id, "movie");
-    const cast: ICastMovie[] = await this.getCastFromMedia(object.id, "movie");
+    const cast: ICastMovie[] = await this.getCastFromMedia(object.id, "movie") as ICastMovie[];
     const directors: ICrewMovie[] = await this.getDirectorFromMovie(object.id);
 
     const completeMovieInfo: IMovieAllInfos = {
@@ -156,7 +150,7 @@ class ApiStore {
   };
 
   //Get Cast for Movie
-  private async getCastFromMedia(movieId: number, searchCategory: TCategoryWatch): Promise<ICastMovie[]> {
+  private async getCastFromMedia(movieId: number, searchCategory: TCategoryWatch): Promise<(ICastMovie | ICastTv)[]> {
     const castUrlMovie = castUrl(searchCategory, movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
@@ -199,7 +193,7 @@ class ApiStore {
     const fsk: number = await this.getGermanFSKFromDetails(details, "tv");
     const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
     const castAndCrew: (ICastMovie | ICrewMovie)[] = await this.getCastAndCrewFromMedia(object.id, "tv");
-    const cast: ICastMovie[] = await this.getCastFromMedia(object.id, "tv");
+    const cast: ICastTv[] = await this.getCastFromMedia(object.id, "tv") as ICastTv[];
     const directors: ICrewTv[] = await this.getDirectorFromTv(object.id);
 
     const completeTvInfo: ITvAllInfos = {

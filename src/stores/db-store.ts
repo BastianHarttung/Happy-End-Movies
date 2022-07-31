@@ -1,5 +1,6 @@
 import {makeAutoObservable} from "mobx";
-import {IMovieAllInfos} from "../interfaces/interfaces";
+import {IMovieAllInfos} from "../models/movie-interfaces";
+
 
 class DbStore {
 
