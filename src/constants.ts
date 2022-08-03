@@ -1,4 +1,4 @@
-import {TCategory, TCategorySearch, TCategoryWatch} from "./models/types";
+import {TCategory, TCategorySearch, TCategoryMedia} from "./models/types";
 import {IMovieAllInfos} from "./models/movie-interfaces";
 import {ITvAllInfos} from "./models/tv-interfaces";
 import {IPersonAllData} from "./models/person-interfaces";
@@ -172,15 +172,15 @@ export const popularMoviesUrl: string = `${BaseUrl}/movie/popular?api_key=${k}&l
 export const trendingMoviesUrl: string = `${BaseUrl}/trending/all/day?api_key=${k}`;
 
 //searchFor = {string} 'movie' || 'tv'
-export const genreUrl = (searchFor: TCategoryWatch): string => `${BaseUrl}/genre/${searchFor}/list?api_key=${k}&language=de`;
+export const genreUrl = (searchFor: TCategoryMedia): string => `${BaseUrl}/genre/${searchFor}/list?api_key=${k}&language=de`;
 // export const fskUrl: string = `https://altersfreigaben.de/api2/s/`;
-export const watchDetailsUrl = (movieOrTv: TCategoryWatch, tmdbId: number): string => `${BaseUrl}/${movieOrTv}/${tmdbId}?api_key=${k}&language=de&append_to_response=releases,videos,content_ratings`;
+export const watchDetailsUrl = (movieOrTv: TCategoryMedia, tmdbId: number): string => `${BaseUrl}/${movieOrTv}/${tmdbId}?api_key=${k}&language=de&append_to_response=releases,videos,content_ratings`;
 
 export const imagesUrl = (category: TCategory, tmdbId: number): string => `${BaseUrl}/${category}/${tmdbId}/images?api_key=${k}`;
 export const imageUrlBig = `https://image.tmdb.org/t/p/w500`;
 export const imageUrlSmall = `https://image.tmdb.org/t/p/w200`;
 
-export const castUrl = (movieOrTv: TCategoryWatch, id: number): string => {
+export const castUrl = (movieOrTv: TCategoryMedia, id: number): string => {
   if (movieOrTv === "tv") {
     return `${BaseUrl}/${movieOrTv}/${id}/aggregate_credits?api_key=${k}&language=de`;
   } else return `${BaseUrl}/${movieOrTv}/${id}/credits?api_key=${k}&language=de`;
@@ -191,6 +191,6 @@ export const personDetailUrl = (personId: number): string => `${BaseUrl}/person/
 // Get all the Movies or TV-Shows from Person
 // .cast[] for Acting
 // .crew[] for other Jobs
-export const personCreditsUrl = (personId: number, category: TCategoryWatch): string => `${BaseUrl}/person/${personId}/${category}_credits?api_key=${k}&language=de`
+export const personCreditsUrl = (personId: number, category: TCategoryMedia): string => `${BaseUrl}/person/${personId}/${category}_credits?api_key=${k}&language=de`
 export const personAllCreditsUrl = (personId: number): string => `${BaseUrl}/person/${personId}/combined_credits?api_key=${k}&language=de`
 

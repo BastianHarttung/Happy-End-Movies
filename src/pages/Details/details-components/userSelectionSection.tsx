@@ -11,6 +11,7 @@ import {observer} from "mobx-react";
 import {EHasHappyEnd} from "../../../models/enums";
 import {IMovieAllInfos} from "../../../models/movie-interfaces";
 import {ITvAllInfos} from "../../../models/tv-interfaces";
+import {ROUTES} from "../../../models/routes";
 
 interface IUserSelectionSectionProps {
   selectedMedia: IMovieAllInfos | ITvAllInfos;
@@ -24,9 +25,15 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
 
   const navigate = useNavigate();
 
-  const [userSelection, setUserSelection] = useState<IUserSelections>({
-    [user.userId]: {happyEnd_Voting: EHasHappyEnd.NEUTRAL, haveSeen: false},
-  });
+  const initialUserSelection = (): IUserSelections => {
+    if (selectedMedia.userSelections[user.userId]) {
+      return selectedMedia.userSelections
+    } else {
+      return {[user.userId]: {happyEnd_Voting: EHasHappyEnd.NEUTRAL, haveSeen: false}}
+    }
+  }
+
+  const [userSelection, setUserSelection] = useState<IUserSelections>(initialUserSelection);
 
   return (
     <div className={`${classes.userSelectionContainer} ${classNameContent}`}>
@@ -101,7 +108,7 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
   function saveMediaInDB() {
     const mediaForDB = {...selectedMedia, userSelections: userSelection};
     saveMovieToDb(mediaForDB)
-      .then(() => navigate("/showroom"))
+      .then(() => navigate(ROUTES.SHOWROOM))
   }
 
 };

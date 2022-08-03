@@ -25,6 +25,7 @@ function ImagesBox({title, images}: IImagesBoxProps) {
               <img
                 src={imageUrlBig + image.file_path}
                 alt="Poster"
+                loading="lazy"
                 className={classes.images}
               />
             </a>

@@ -6,6 +6,7 @@ import emptyImage from "../../../assets/img/movie-poster.png";
 import {THasHappyEnd} from "../../../models/types";
 import {IGenre} from "../../../models/interfaces";
 import {EHasHappyEnd} from "../../../models/enums";
+import VotingRing from "./votingRing";
 
 interface IDetailInfosProps {
   title: string;
@@ -33,16 +34,6 @@ const DetailInfos = ({
                        classNameContent,
                      }: IDetailInfosProps) => {
 
-  const [happyMovie, setHappyMovie] = useState<THasHappyEnd>(hasHappyEnd);
-
-  // useEffect(() => {
-  //   selectedMovie.has_happy_end === "true"
-  //     ? setHappyMovie("true")
-  //     : selectedMovie.has_happy_end === "false"
-  //       ? setHappyMovie("false")
-  //       : setHappyMovie("neutral");
-  // }, [selectedMovie.has_happy_end, selectedMovie]);
-
   return (
     <div className={classNameContent}>
       <img
@@ -53,24 +44,6 @@ const DetailInfos = ({
 
       <div className={`${classes.detailsContainer} ${classes.sectionContent}`}>
         <div className={classes.posterContainer}>
-          {happyMovie === EHasHappyEnd.TRUE ? (
-            <FaSmileBeam
-              className={classes.happyEndSmileyOverall}
-              style={{color: "var(--green)"}}
-            />
-          ) : happyMovie === EHasHappyEnd.FALSE ? (
-            <FaSadTear
-              className={classes.happyEndSmileyOverall}
-              style={{color: "var(--red)"}}
-            />
-          ) : happyMovie === EHasHappyEnd.NEUTRAL ? (
-            <FaMeh
-              className={classes.happyEndSmileyOverall}
-              style={{color: "var(--orange)"}}
-            />
-          ) : (
-            ""
-          )}
           <img
             className={classes.posterImage}
             src={posterPath ? imageUrlBig + posterPath : emptyImage}
@@ -116,7 +89,34 @@ const DetailInfos = ({
             </div>
           </div>
 
-          <div className={classes.voting}>{voteAverage}</div>
+          <div className={`${classes["voting-container"]}`}>
+
+            <VotingRing progress={Math.round(voteAverage * 10)}
+                        radius={35}/>
+
+            {hasHappyEnd === EHasHappyEnd.TRUE ? (
+              <FaSmileBeam
+                className={classes.happyEndSmileyOverall}
+                style={{color: "var(--green)"}}
+                title="Happy End"
+              />
+            ) : hasHappyEnd === EHasHappyEnd.FALSE ? (
+              <FaSadTear
+                className={classes.happyEndSmileyOverall}
+                style={{color: "var(--red)"}}
+                title="Kein Happy End"
+              />
+            ) : hasHappyEnd === EHasHappyEnd.NEUTRAL ? (
+              <FaMeh
+                className={classes.happyEndSmileyOverall}
+                style={{color: "var(--orange)"}}
+                title="Neutral"
+              />
+            ) : (
+              ""
+            )}
+          </div>
+
         </div>
       </div>
     </div>

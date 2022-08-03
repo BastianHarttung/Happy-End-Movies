@@ -1,21 +1,16 @@
-import {TCategoryWatch, TGender, THasHappyEnd, TJob, TKnownForDepartment} from "./types";
+import {TCategoryMedia, TGender, THasHappyEnd, TJob, TKnownForDepartment} from "./types";
 import {
   IImagesWatchFetching,
-  IMediaBaseDetails,
+  IMediaBaseDetails, IMediaBaseSearch,
 } from "./interfaces";
 
 
-//--------------TV----------------------------------
-
-export interface ITvAllInfos extends ITvUserInfos, ITvShowSearch, ITvDetails {
+export interface ITvAllInfos extends ITvFetchedUserInfos, ITvShowSearch, ITvDetails {
 }
 
-export interface ITvUserInfos {
-  // name: string,
-  // original_name: string,
-  // profile_path: string,             //Image path
+export interface ITvFetchedUserInfos {
   images: IImagesWatchFetching,
-  category: TCategoryWatch,
+  category: TCategoryMedia,
   fsk: number,
   userSelections: {
     [key: string]: {
@@ -30,24 +25,15 @@ export interface ITvUserInfos {
 }
 
 // Coming from TMDB
-export interface ITvShowSearch {
-  "backdrop_path": string,
+export interface ITvShowSearch extends IMediaBaseSearch{
   "first_air_date": string,       //2022-02-23
-  "genre_ids": number[],
-  "id": number,
   "name": string,
   "origin_country": string[],
-  "original_language": string,
   "original_name": string,
-  "overview": string,
-  "popularity": number,           //200.000
-  "poster_path": string,
-  "vote_average": number,         //8.7
-  "vote_count": number,           //8000
 }
 
 // Response from Tmdb for Fetching watchDetailsUrl with "tv"-category
-export interface ITvDetails extends IMediaBaseDetails{
+export interface ITvDetails extends IMediaBaseDetails {
   "created_by": ICreatedBy [],
   "episode_run_time": number[],     // episode between numbers
   "first_air_date": string,         //"2022-02-21"

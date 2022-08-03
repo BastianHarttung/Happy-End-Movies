@@ -39,6 +39,7 @@ const ImagesVideosSection = ({images, videos, classNameContent}: IImagesVideosSe
               <iframe
                 width="260"
                 title={video.name}
+                loading="lazy"
                 src={"https://www.youtube.com/embed/" + video.key}
               ></iframe>
               <div className={classes.videoName}>{video.name}</div>

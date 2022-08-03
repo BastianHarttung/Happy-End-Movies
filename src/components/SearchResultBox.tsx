@@ -14,6 +14,7 @@ import iconUser from "../assets/icons/user-tie_solid.svg";
 import {TCategory, TCategorySearch, TGender, THasHappyEnd} from "../models/types";
 import apiStore from "../stores/api-store";
 import {observer} from "mobx-react";
+import {ROUTES} from "../models/routes";
 
 
 interface ISearchResultBoxProps {
@@ -81,7 +82,7 @@ const SearchResultBox = ({
     };
     await saveSelectedMovieOrPerson({id, name: movieName}, getCategory())
       .then(() => {
-        navigate(`/detailansicht/${getCategory()}/${id}`);
+        navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(getCategory(), id.toString()));
         setMovieClicked(false);
       });
   }
@@ -102,6 +103,7 @@ const SearchResultBox = ({
 
       <img className={classes.movieImage}
            src={setImageForPoster()}
+           loading="lazy"
            alt="Poster"/>
 
       <div className={classes.movieInfosContainer}>

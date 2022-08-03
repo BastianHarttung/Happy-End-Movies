@@ -16,7 +16,7 @@ import WrongUrl from "./pages/WrongUrl";
 import Showroom from "./pages/Showroom";
 import ModalUserSettings from "./components/Modal-UserSettings";
 import globalStore from "./stores/global-store";
-import {ROUTES_DETAIL, ROUTES_MAIN} from "./models/routes";
+import {ROUTES} from "./models/routes";
 
 function App() {
   const {
@@ -34,28 +34,28 @@ function App() {
         {openUserSettings && <ModalUserSettings/>}
 
         <Routes>
-          <Route path="/" element={<Login/>}/>
+          <Route path={ROUTES.LOGIN} element={<Login/>}/>
 
           <Route path="" element={<Menu/>}>
             <Route
-              path={ROUTES_MAIN.FILMSUCHE}
+              path={ROUTES.FILMSUCHE}
               element={<Filmsuche/>}
             />
             <Route
-              path={ROUTES_MAIN.SHOWROOM}
+              path={ROUTES.SHOWROOM}
               element={<Showroom/>}
             />
             <Route
-              path={ROUTES_DETAIL.MOVIE}
+              path={ROUTES.DETAILS_MOVIE}
               element={<DetailsMovie/>}
             />
             <Route
-              path={ROUTES_DETAIL.PERSON}
+              path={ROUTES.DETAILS_PERSON}
               element={<DetailsPerson/>}
             />
-            <Route path={ROUTES_MAIN.IMPRESSUM} element={<Impressum/>}/>
-            <Route path={ROUTES_MAIN.HILFE} element={<Hilfe/>}/>
-            <Route path={ROUTES_MAIN.START} element={<Hauptmenue/>}/>
+            <Route path={ROUTES.IMPRESSUM} element={<Impressum/>}/>
+            <Route path={ROUTES.HILFE} element={<Hilfe/>}/>
+            <Route path={ROUTES.START} element={<Hauptmenue/>}/>
           </Route>
           <Route path="*" element={<WrongUrl/>}/>
         </Routes>

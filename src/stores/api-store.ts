@@ -14,11 +14,12 @@ import {
   watchDetailsUrl, personDetailUrl,
   searchUrl
 } from "../constants";
-import {TCategory, TCategoryWatch, THasHappyEnd} from "../models/types";
+import {TCategory, TCategoryMedia, THasHappyEnd} from "../models/types";
 import globalStore from "./global-store";
 import {ICastMovie, ICrewMovie, IMovieAllInfos, IMovieDetails} from "../models/movie-interfaces";
 import {ICastTv, ICrewTv, ITvAllInfos, ITvDetails} from "../models/tv-interfaces";
 import {IPersonAllData, IPersonFetching, IPersonSearch} from "../models/person-interfaces";
+import {EHasHappyEnd} from "../models/enums";
 
 const {user} = globalStore;
 
@@ -26,7 +27,9 @@ const {user} = globalStore;
 class ApiStore {
 
   selectedMovie: IMovieAllInfos = emptyMovie;
+
   selectedTv: ITvAllInfos = emptyTvShow;
+
   selectedPerson: IPersonAllData = emptyPerson;
 
   constructor() {
@@ -44,7 +47,6 @@ class ApiStore {
     }
   }
 
-  //Get genres and fsk and has_happy_end and save to selectedMovie state
   saveSelectedMovieOrPerson = async (object: any, searchCategory: TCategory): Promise<void> => {
     if (searchCategory === "movie") {
       await this.setAllDataForMovie(object, "movie")
@@ -57,12 +59,12 @@ class ApiStore {
 
   //-------------------------------Movie Fetches--------------------------------------------------------------
   // Collecting all Data from Movie
-  private setAllDataForMovie = async (object: any, searchCategory: TCategoryWatch = "movie"): Promise<void> => {
+  private setAllDataForMovie = async (object: any, searchCategory: TCategoryMedia = "movie"): Promise<void> => {
     console.log("setAllDataForMovie", object, searchCategory)
     const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "movie") as IMovieDetails;
     const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "movie") as IImagesWatchFetching;
     const fsk: number = await this.getGermanFSKFromDetails(details, "movie");
-    const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
+    const hasHappyEnd: THasHappyEnd = object.userSelections ? await this.calculateHappyEnd(object) : EHasHappyEnd.NEUTRAL;
     const castAndCrew: (ICastMovie | ICrewMovie)[] = await this.getCastAndCrewFromMedia(object.id, "movie");
     const cast: ICastMovie[] = await this.getCastFromMedia(object.id, "movie") as ICastMovie[];
     const directors: ICrewMovie[] = await this.getDirectorFromMovie(object.id);
@@ -76,10 +78,10 @@ class ApiStore {
       userSelections: object.userSelections ? object.userSelections
         : {
           [user.userId]: {
-            happyEnd_Voting: object.userSelections
+            happyEnd_Voting: object.userSelections[user.userId]
               ? object.userSelections[user.userId].happyEnd_Voting
               : "",
-            haveSeen: object.userSelections
+            haveSeen: object.userSelections[user.userId]
               ? object.userSelections[user.userId].haveSeen
               : false,
           },
@@ -94,7 +96,7 @@ class ApiStore {
   }
 
   //Get Details infos from Movie
-  private async getDetailWatchInfos(id: number, categoryWatch: TCategoryWatch): Promise<IMovieDetails | ITvDetails> {
+  private async getDetailWatchInfos(id: number, categoryWatch: TCategoryMedia): Promise<IMovieDetails | ITvDetails> {
     const response = await fetch(watchDetailsUrl(categoryWatch, id));
     let data = await response.json();
     return data;
@@ -108,7 +110,7 @@ class ApiStore {
   };
 
   //Get German FSK from Detail Infos
-  private async getGermanFSKFromDetails(detailsObject: any, category: TCategoryWatch): Promise<number> {
+  private async getGermanFSKFromDetails(detailsObject: any, category: TCategoryMedia): Promise<number> {
     if (category === "movie") {
       const releaseGerman = detailsObject.releases.countries.find(
         (country: any) => country.iso_3166_1 === "DE",
@@ -126,22 +128,30 @@ class ApiStore {
 
   //Calculate has_happy_end by counting happyEnd_Voting
   private calculateHappyEnd(movie: any): THasHappyEnd {
-    if (typeof movie.happyEnd_Voting === "object") {
-      const happyEndArray = Object.values(movie.happyEnd_Voting);
-      const trueCount = happyEndArray.reduce((acc: number, current) => {
-        if (current) acc++;
-        else if (!current) acc--;
-        return acc;
-      }, 0);
-      if (trueCount > 0) return "true";
-      else if (trueCount === 0 || movie.happyEnd_Voting === false)
-        return "neutral";
-      else return "false";
-    } else return "neutral";
+    let happyCount = 0;
+    Object.keys(movie.userSelections).forEach((user) => {
+      if (movie.userSelections[user].happyEnd_Voting = EHasHappyEnd.TRUE) happyCount++
+      if (movie.userSelections[user].happyEnd_Voting = EHasHappyEnd.FALSE) happyCount--
+    })
+    if (happyCount >= 1) return EHasHappyEnd.TRUE
+    if (happyCount <= -1) return EHasHappyEnd.FALSE
+    else return EHasHappyEnd.NEUTRAL
+    // if (typeof movie.userSelections === "object") {
+    //   const happyEndArray = Object.values(movie.happyEnd_Voting);
+    //   const trueCount = happyEndArray.reduce((acc: number, current) => {
+    //     if (current) acc++;
+    //     else if (!current) acc--;
+    //     return acc;
+    //   }, 0);
+    //   if (trueCount > 0) return "true";
+    //   else if (trueCount === 0 || movie.happyEnd_Voting === false)
+    //     return "neutral";
+    //   else return "false";
+    // } else return "neutral";
   };
 
   //Get Cast and Crew for Movie
-  private getCastAndCrewFromMedia = async (movieId: number, searchCategory: TCategoryWatch): Promise<(ICastMovie | ICrewMovie)[]> => {
+  private getCastAndCrewFromMedia = async (movieId: number, searchCategory: TCategoryMedia): Promise<(ICastMovie | ICrewMovie)[]> => {
     const castUrlMovie = castUrl(searchCategory, movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
@@ -150,7 +160,7 @@ class ApiStore {
   };
 
   //Get Cast for Movie
-  private async getCastFromMedia(movieId: number, searchCategory: TCategoryWatch): Promise<(ICastMovie | ICastTv)[]> {
+  private async getCastFromMedia(movieId: number, searchCategory: TCategoryMedia): Promise<(ICastMovie | ICastTv)[]> {
     const castUrlMovie = castUrl(searchCategory, movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
@@ -187,7 +197,7 @@ class ApiStore {
   }
 
   //-----------------------------------TV Show fetches ---------------------------------------------
-  private setAllDataForTv = async (object: any, searchCategory: TCategoryWatch): Promise<void> => {
+  private setAllDataForTv = async (object: any, searchCategory: TCategoryMedia): Promise<void> => {
     const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "tv") as IMovieDetails;
     const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "tv") as IImagesWatchFetching;
     const fsk: number = await this.getGermanFSKFromDetails(details, "tv");

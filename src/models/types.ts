@@ -6,13 +6,13 @@ import {
 import {IMovieAllInfos} from "./movie-interfaces";
 import {ITvAllInfos} from "./tv-interfaces";
 
-export type TCategoryWatch = "movie" | "tv"
+export type TCategoryMedia = "movie" | "tv"
 
-export type TCategory = TCategoryWatch | "person"
+export type TCategory = TCategoryMedia | "person"
 
 export type TCategorySearch = TCategory | "multi"
 
-export type TCategoryFilter = TCategoryWatch | "allCategories"
+export type TCategoryFilter = TCategoryMedia | "allCategories"
 
 
 export type THappyEndFilter = "allEnds" | "true" | "false"

@@ -13,7 +13,7 @@ import {ReactComponent as CloseIcon} from "../assets/icons/times.svg";
 //Types
 import {
   TCategorySearch,
-  TCategoryWatch,
+  TCategoryMedia,
   THappyEndFilter,
   TCategoryFilter,
 } from "../models/types";
@@ -235,7 +235,7 @@ const Showroom = () => {
    * @param {string} movieName
    * @param {string} searchCategory eg 'movie' || 'tv'
    */
-  function filterMoviesByName(movieName: string, searchCategory: TCategoryWatch): void {
+  function filterMoviesByName(movieName: string, searchCategory: TCategoryMedia): void {
     const movieFilter = moviesDb.filter(movie => {
         if (movie.title) {
           return movie.title.toLowerCase().includes(movieName.toLowerCase()) ||
@@ -314,7 +314,7 @@ const Showroom = () => {
     } else {
       window.location.hash = movieName;
       // setSearchFor(movieName);
-      filterMoviesByName(movieName, searchCategory as TCategoryWatch);
+      filterMoviesByName(movieName, searchCategory as TCategoryMedia);
     }
   }
 

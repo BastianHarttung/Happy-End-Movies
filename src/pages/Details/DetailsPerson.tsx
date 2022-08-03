@@ -68,7 +68,8 @@ const DetailsPerson = () => {
                  target="_blank"
                  rel="noreferrer">
                 <img src={imageUrlSmall + image.file_path}
-                     alt="Foto"/>
+                     alt="Foto"
+                     loading="lazy"/>
               </a>)}
           </div>
 
@@ -86,7 +87,6 @@ const DetailsPerson = () => {
 
       <div className={classes.knownForContainer}>
         {selectedPerson.known_for.map(movie => {
-            console.log(movie)
             return <SearchResultBox key={movie.id}
                                     category={movie.media_type}
                                     id={movie.id}

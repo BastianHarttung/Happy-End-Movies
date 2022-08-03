@@ -1,20 +1,18 @@
 //Movies
-import {TCategoryWatch, TDepartment, TGender, THasHappyEnd, TJob, TKnownForDepartment} from "./types";
+import {TCategoryMedia, TDepartment, TGender, THasHappyEnd, TJob, TKnownForDepartment} from "./types";
 import {
   IImagesWatchFetching,
-  IMediaBaseDetails,
+  IMediaBaseDetails, IMediaBaseSearch,
   IUserSelections,
 } from "./interfaces";
 
-export interface IMovieAllInfos extends IMovieUserInfos, IMovieDetails, IMovieFetchedInfos, IMovieSearch {
+
+export interface IMovieAllInfos extends IMovieFetchedUserInfos, IMovieDetails, IMovieSearch {
 }
 
-export interface IMovieUserInfos {
-  name: string,
-  original_name: string,
-  profile_path: string,             //Image path
+export interface IMovieFetchedUserInfos {
   images: IImagesWatchFetching,
-  category: TCategoryWatch,
+  category: TCategoryMedia,
   fsk: number,
   userSelections: IUserSelections,
   has_happy_end: THasHappyEnd,
@@ -23,30 +21,12 @@ export interface IMovieUserInfos {
   directors: ICrewMovie[],
 }
 
-export interface IMovieFetchedInfos {
-  images: IImagesWatchFetching,
-  category: TCategoryWatch,
-  fsk: number,
-  userSelections: IUserSelections,
-  cast: ICastMovie[],
-  directors: ICrewMovie[],
-}
-
-export interface IMovieSearch {
+export interface IMovieSearch extends IMediaBaseSearch{
   "adult": boolean,
-  "backdrop_path": string,
-  "genre_ids": number[],
-  "id": number,
-  "original_language": string,
   "original_title": string,
-  "overview": string,
-  "popularity": number,
-  "poster_path": string,
   "release_date": string,
   "title": string,
   "video": boolean,
-  "vote_average": number,
-  "vote_count": number,
 }
 
 // Response from Tmdb for Fetching watchDetailsUrl with "movie"-category
