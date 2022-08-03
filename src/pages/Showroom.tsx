@@ -18,14 +18,16 @@ import {
   TCategoryFilter,
 } from "../models/types";
 import {EHappyEndFilter, EHasHappyEnd} from "../models/enums";
+import {IMovieAllInfos} from "../models/movie-interfaces";
+import {ITvAllInfos} from "../models/tv-interfaces";
 
 
 const Showroom = () => {
 
-  const [moviesDb, setMoviesDb] = useState<any[]>([]);
+  const [moviesDb, setMoviesDb] = useState<(IMovieAllInfos | ITvAllInfos)[]>([]);
   const [dbLength, setDbLength] = useState<number>(0);
 
-  const [filteredMovies, setFilteredMovies] = useState<any[]>([]);
+  const [filteredMovies, setFilteredMovies] = useState<(IMovieAllInfos | ITvAllInfos)[]>([]);
   const [searchFilteredMovies, setSearchFilteredMovies] = useState<any[]>([]); //TODO
   const [filterActive, setFilterActive] = useState<boolean>(false);
   const [filterLength, setFilterLength] = useState<number>(dbLength);
@@ -53,9 +55,10 @@ const Showroom = () => {
   }, []);
 
   useEffect(() => {
-    filteredMovies.sort((a, b) => (a.title < b.title) ? -1
-      : (a.title > b.title) ? 1
-        : 0);
+    // filteredMovies.sort((a, b) => (a.title < b.title) ? -1
+    //   : (a.title > b.title) ? 1
+    //     : 0);
+    setFilteredMovies(sortMovies(filteredMovies))
   }, [filteredMovies]);
 
   /**
@@ -181,7 +184,8 @@ const Showroom = () => {
                   key={movie.id}
                   id={movie.id}
                   category={movie.category}
-                  movieName={movie.name}
+                  movie={movie}
+                  movieName={"title" in movie && movie.title ? movie.title : "original_name" in movie ? movie.original_name : ""}
                   hasHappyEnd={movie.has_happy_end}
                   posterPath={movie.poster_path}
                 />)}
@@ -213,7 +217,8 @@ const Showroom = () => {
     const moviesCollectionRef = collection(firestoreDb, "movies");
     const data = await getDocs(moviesCollectionRef);
     const movieDataArray = data.docs.map((doc) => ({...doc.data()}));
-    const movieArraySort = sortMovies(movieDataArray);
+    console.log(movieDataArray)
+    const movieArraySort = sortMovies(movieDataArray as (IMovieAllInfos|ITvAllInfos)[]);
     setDbLength(movieDataArray.length);
     setFilterLength(movieDataArray.length);
     setMoviesDb(movieArraySort);
@@ -223,10 +228,19 @@ const Showroom = () => {
   /**
    * Sort Movies from Database by Title
    */
-  function sortMovies(moviesArray: any[]): any[] {
-    moviesArray.sort((a, b) => (a.title < b.title || a.name < b.name || a.title < b.name || a.name < b.title) ? -1
-      : (a.title > b.title || a.name > b.name || a.title > b.name || a.name > b.title) ? 1
-        : 0);
+  function sortMovies(moviesArray: (IMovieAllInfos | ITvAllInfos)[]): (IMovieAllInfos | ITvAllInfos)[] {
+    moviesArray.sort((a, b) => {
+        let aName = "";
+        let bName = "";
+        if ("title" in a) aName = a.title
+        if ("original_name" in a) aName = a.original_name;
+        if ("title" in b) bName = b.title
+        if ("original_name" in b) bName = b.original_name;
+        return aName < bName ? -1
+          : aName > bName ? 1
+            : 0
+      }
+    )
     return moviesArray;
   }
 
@@ -237,7 +251,7 @@ const Showroom = () => {
    */
   function filterMoviesByName(movieName: string, searchCategory: TCategoryMedia): void {
     const movieFilter = moviesDb.filter(movie => {
-        if (movie.title) {
+        if ("title" in movie) {
           return movie.title.toLowerCase().includes(movieName.toLowerCase()) ||
             movie.original_title.toLowerCase().includes(movieName.toLowerCase());
         } else return movie.original_name.toLowerCase().includes(movieName.toLowerCase());

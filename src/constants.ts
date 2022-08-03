@@ -8,13 +8,10 @@ import {IPersonAllData} from "./models/person-interfaces";
 export const emptyMovie: IMovieAllInfos = {
   id: 0,
   title: "",
-  name: "",
-  original_name: "",
   has_happy_end: "neutral",
   category: "movie",
   // media_type: undefined,
   poster_path: "",
-  profile_path: "",
   adult: false,
   backdrop_path: "",    //Image path
   belongs_to_collection: {

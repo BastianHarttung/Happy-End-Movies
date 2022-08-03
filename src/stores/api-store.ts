@@ -21,8 +21,8 @@ import {ICastTv, ICrewTv, ITvAllInfos, ITvDetails} from "../models/tv-interfaces
 import {IPersonAllData, IPersonFetching, IPersonSearch} from "../models/person-interfaces";
 import {EHasHappyEnd} from "../models/enums";
 
-const {user} = globalStore;
 
+const {user} = globalStore;
 
 class ApiStore {
 
@@ -78,10 +78,10 @@ class ApiStore {
       userSelections: object.userSelections ? object.userSelections
         : {
           [user.userId]: {
-            happyEnd_Voting: object.userSelections[user.userId]
+            happyEnd_Voting: object.userSelections
               ? object.userSelections[user.userId].happyEnd_Voting
               : "",
-            haveSeen: object.userSelections[user.userId]
+            haveSeen: object.userSelections
               ? object.userSelections[user.userId].haveSeen
               : false,
           },

@@ -15,6 +15,8 @@ import {TCategory, TCategorySearch, TGender, THasHappyEnd} from "../models/types
 import apiStore from "../stores/api-store";
 import {observer} from "mobx-react";
 import {ROUTES} from "../models/routes";
+import {IMovieAllInfos} from "../models/movie-interfaces";
+import {ITvAllInfos} from "../models/tv-interfaces";
 
 
 interface ISearchResultBoxProps {
@@ -22,6 +24,7 @@ interface ISearchResultBoxProps {
   category: TCategorySearch,
   mediaType?: TCategory | undefined,
   movieName: string,
+  movie?: IMovieAllInfos | ITvAllInfos,
   hasHappyEnd?: THasHappyEnd,
   posterPath: string,
   personGender?: TGender,
@@ -32,6 +35,7 @@ const SearchResultBox = ({
                            category,
                            mediaType,
                            movieName,
+                           movie,
                            hasHappyEnd,
                            posterPath,
                            personGender
@@ -80,7 +84,7 @@ const SearchResultBox = ({
         return mediaType;
       } else return "movie"
     };
-    await saveSelectedMovieOrPerson({id, name: movieName}, getCategory())
+    await saveSelectedMovieOrPerson({id, ...movie}, getCategory())
       .then(() => {
         navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(getCategory(), id.toString()));
         setMovieClicked(false);

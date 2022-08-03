@@ -22,11 +22,11 @@ export interface IMovieFetchedUserInfos {
 }
 
 export interface IMovieSearch extends IMediaBaseSearch{
-  "adult": boolean,
-  "original_title": string,
-  "release_date": string,
-  "title": string,
-  "video": boolean,
+  adult: boolean,
+  original_title: string,
+  release_date: string,
+  title: string,
+  video: boolean,
 }
 
 // Response from Tmdb for Fetching watchDetailsUrl with "movie"-category

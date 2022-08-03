@@ -1,6 +1,6 @@
 import {TCategory} from "./types";
 
-export class ROUTES {
+export abstract class ROUTES {
   public static readonly LOGIN = "/";
   public static readonly START = "/start";
   public static readonly FILMSUCHE = "/filmsuche";

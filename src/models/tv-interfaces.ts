@@ -26,32 +26,32 @@ export interface ITvFetchedUserInfos {
 
 // Coming from TMDB
 export interface ITvShowSearch extends IMediaBaseSearch{
-  "first_air_date": string,       //2022-02-23
-  "name": string,
-  "origin_country": string[],
-  "original_name": string,
+  first_air_date: string,       //2022-02-23
+  name: string,
+  origin_country: string[],
+  original_name: string,
 }
 
 // Response from Tmdb for Fetching watchDetailsUrl with "tv"-category
 export interface ITvDetails extends IMediaBaseDetails {
-  "created_by": ICreatedBy [],
-  "episode_run_time": number[],     // episode between numbers
-  "first_air_date": string,         //"2022-02-21"
-  "in_production": boolean,
-  "languages": string[],            //"en"
-  "last_air_date": string,          //"2013-09-29"
-  "last_episode_to_air": ILastEpisodeToAir,
-  "name": string,
-  "next_episode_to_air": null,
-  "networks": INetworkShort [],
-  "number_of_episodes": number,
-  "number_of_seasons": number,
-  "origin_country": string[],         // "US"
-  "original_name": string,
-  "seasons": ISeason [],
-  "type": string,                       //"Scripted"
-  "content_ratings": {
-    "results": IContentRatingsResult []
+  created_by: ICreatedBy [],
+  episode_run_time: number[],     // episode between numbers
+  first_air_date: string,         //"2022-02-21"
+  in_production: boolean,
+  languages: string[],            //"en"
+  last_air_date: string,          //"2013-09-29"
+  last_episode_to_air: ILastEpisodeToAir,
+  name: string,
+  next_episode_to_air: null,
+  networks: INetworkShort [],
+  number_of_episodes: number,
+  number_of_seasons: number,
+  origin_country: string[],         // "US"
+  original_name: string,
+  seasons: ISeason [],
+  type: string,                       //"Scripted"
+  content_ratings: {
+    results: IContentRatingsResult []
   }
 }
 
