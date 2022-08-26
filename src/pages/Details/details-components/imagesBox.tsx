@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./imagesBox.module.scss";
 import {imageUrlBig} from "../../../constants";
-import {IImage} from "../../../models/interfaces";
+import {IImage} from "../../../models/interfaces/interfaces";
 
 interface IImagesBoxProps {
   title: string,

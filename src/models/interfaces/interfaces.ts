@@ -1,10 +1,7 @@
-import {
-  THasHappyEnd,
-  TSearchResults
-} from "./types";
 import {IMovieSearch} from "./movie-interfaces";
 import {ITvShowSearch} from "./tv-interfaces";
 import {IPersonSearch} from "./person-interfaces";
+import {THasHappyEnd, TSearchResults} from "../types";
 
 
 export interface IUser {

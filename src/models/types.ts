@@ -2,28 +2,35 @@ import {
   IMovieSearchMultiResult,
   IPersonSearchMultiResult,
   ITvShowSearchMultiResult
-} from "./interfaces";
-import {IMovieAllInfos} from "./movie-interfaces";
-import {ITvAllInfos} from "./tv-interfaces";
+} from "./interfaces/interfaces";
+import {IMovieAllInfos} from "./interfaces/movie-interfaces";
+import {ITvAllInfos} from "./interfaces/tv-interfaces";
+
 
 export type TCategoryMedia = "movie" | "tv"
-
 export type TCategory = TCategoryMedia | "person"
-
 export type TCategorySearch = TCategory | "multi"
 
-export type TCategoryFilter = TCategoryMedia | "allCategories"
-
-
-export type THappyEndFilter = "allEnds" | "true" | "false"
-
 export type THasHappyEnd = "neutral" | "true" | "false"
+
+export type TFskAges = 0 | 6 | 12 | 16 | 18
+
+// Filter
+export type TCategoryFilter = TCategoryMedia | "allCategories"
+export type THappyEndFilter = "allEnds" | "true" | "false"
+export type THaveSeenFilter = "noChoice" | "true" | "false"
+export type TGenreFilter =
+  "allGenres"
+  | "Action"
+  | "Abenteuer"
+  | "Komödie"
 
 //Fetching Types
 export type TGender = 0 | 1 | 2 | 3
 
+
 export type TDepartment =
-  | "Production"
+  "Production"
   | "Visual Effects"
   | "Costume & Make-Up"
   | "Art"
@@ -35,7 +42,7 @@ export type TDepartment =
   | "Lighting"
 
 export type TKnownForDepartment =
-  | "Acting"
+  "Acting"
   | "Directing"
   | TDepartment
 

@@ -8,12 +8,12 @@ import imageActorWoman from "../../assets/img/actor_girl.png";
 //Components
 import SearchResultBox from "../../components/SearchResultBox";
 
-import apiStore from "../../stores/api-store";
 import {observer} from "mobx-react";
+import detailsStore from "../../stores/page-stores/details-store";
 
 
 const DetailsPerson = () => {
-  const {selectedPerson} = apiStore;
+  const {selectedPerson} = detailsStore;
 
   const [age, setAge] = useState<number>(0);
   const [deathAge, setDeathAge] = useState<number>(0);

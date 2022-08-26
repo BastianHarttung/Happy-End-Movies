@@ -1,0 +1,125 @@
+/*--------------------Sidebar----------*/
+.sidebar {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  border-right: 1px solid var(--gray);
+  box-shadow: 2px 0px 7px var(--shadow-gray-30);
+  overflow: hidden;
+  transition: all var(--hover-time-long) ease-in-out;
+  align-self: flex-start;
+}
+
+.sidebarCloseBtnContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sidebarCloseBtn {
+  height: 32px;
+  margin: 6px 15px;
+  cursor: pointer;
+  transition: all var(--hover-time-short) ease-in-out;
+
+  &:hover {
+    fill: var(--main-color);
+  }
+}
+
+.filterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 10px 25px 10px 25px;
+}
+
+.filterContainer button {
+  background-color: var(--main-color-white);
+  font-size: 15px;
+  border: 0px;
+  border-radius: 10px;
+  padding: 7px;
+  cursor: pointer;
+  transition: background-color var(--hover-time-short);
+}
+
+.filterContainer button:hover {
+  background-color: var(--main-color);
+}
+
+.filterContainer button {
+  margin: 10px 0px;
+}
+
+.btnActive {
+  background-color: var(--main-color) !important;
+}
+
+.filterSegmentContainer {
+  margin: 10px 0px;
+}
+
+.filterSegment {
+  width: 165px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 10px 0px;
+}
+
+.filterSegment::before {
+  color: black;
+  font-family: FontAwesomeSolid;
+  content: "\f078";
+  font-size: 20px;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  pointer-events: none;
+}
+
+/*.filterSegment label {
+    margin-bottom: 5px;
+}*/
+
+.filterSegment select {
+  /* Reset */
+  width: 100%;
+  appearance: none;
+  border: 0;
+  border-radius: 10px;
+  outline: none;
+  font: inherit;
+  /* Personalize */
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* <option> colors */
+.filterSegment option {
+  color: inherit;
+}
+
+/* Remove focus outline */
+.filterSegment select:focus {
+  outline: none;
+}
+
+/* Remove IE arrow */
+.filterSegment select::-ms-expand {
+  display: none;
+}
+
+.fskIndicatorContainer {
+  margin-top: 20px;
+  margin-bottom: -30px;
+}
+
+.sidebarInfos {
+  display: flex;
+  justify-content: flex-end;
+}

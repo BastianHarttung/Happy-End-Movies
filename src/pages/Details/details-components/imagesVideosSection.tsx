@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from "./imagesVideosSection.module.scss";
-import {IImagesWatchFetching, IVideoResult} from "../../../models/interfaces";
 import ImagesBox from "./imagesBox";
+import {IImagesWatchFetching, IVideoResult} from "../../../models/interfaces/interfaces";
 
 interface IImagesVideosSectionProps {
   images: IImagesWatchFetching;

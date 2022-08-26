@@ -4,9 +4,9 @@ import classes from "./detailInfos.module.scss";
 import {FaMeh, FaSadTear, FaSmileBeam} from "react-icons/fa";
 import emptyImage from "../../../assets/img/movie-poster.png";
 import {THasHappyEnd} from "../../../models/types";
-import {IGenre} from "../../../models/interfaces";
 import {EHasHappyEnd} from "../../../models/enums";
 import VotingRing from "./votingRing";
+import {IGenre} from "../../../models/interfaces/interfaces";
 
 interface IDetailInfosProps {
   title: string;

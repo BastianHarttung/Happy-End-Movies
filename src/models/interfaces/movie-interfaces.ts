@@ -1,5 +1,5 @@
 //Movies
-import {TCategoryMedia, TDepartment, TGender, THasHappyEnd, TJob, TKnownForDepartment} from "./types";
+import {TCategoryMedia, TDepartment, TGender, THasHappyEnd, TJob, TKnownForDepartment} from "../types";
 import {
   IImagesWatchFetching,
   IMediaBaseDetails, IMediaBaseSearch,

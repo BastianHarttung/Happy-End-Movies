@@ -1,6 +1,7 @@
 // MobX
 import {makeAutoObservable} from "mobx";
-import {IUser} from "../models/interfaces";
+import {IUser} from "../models/interfaces/interfaces";
+
 
 class GlobalStore {
   user: IUser = {userId: "23", name: "Bastian", email: "ich@email.de"};

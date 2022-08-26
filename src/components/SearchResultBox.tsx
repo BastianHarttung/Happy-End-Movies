@@ -12,11 +12,11 @@ import iconTv from "../assets/icons/tv-retro_solid.svg";
 import iconUser from "../assets/icons/user-tie_solid.svg";
 //Interfaces
 import {TCategory, TCategorySearch, TGender, THasHappyEnd} from "../models/types";
-import apiStore from "../stores/api-store";
+import tmdbStore from "../stores/tmdb-store";
 import {observer} from "mobx-react";
 import {ROUTES} from "../models/routes";
-import {IMovieAllInfos} from "../models/movie-interfaces";
-import {ITvAllInfos} from "../models/tv-interfaces";
+import {IMovieAllInfos} from "../models/interfaces/movie-interfaces";
+import {ITvAllInfos} from "../models/interfaces/tv-interfaces";
 
 
 interface ISearchResultBoxProps {
@@ -41,7 +41,7 @@ const SearchResultBox = ({
                            personGender
                          }: ISearchResultBoxProps) => {
 
-  const {saveSelectedMovieOrPerson} = apiStore;
+  const {saveSelectedMovieOrPerson} = tmdbStore;
 
   const navigate = useNavigate();
   // For Loading Sequence on Box

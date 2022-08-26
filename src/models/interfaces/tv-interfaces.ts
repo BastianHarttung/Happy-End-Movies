@@ -1,4 +1,4 @@
-import {TCategoryMedia, TGender, THasHappyEnd, TJob, TKnownForDepartment} from "./types";
+import {TCategoryMedia, TGender, THasHappyEnd, TJob, TKnownForDepartment} from "../types";
 import {
   IImagesWatchFetching,
   IMediaBaseDetails, IMediaBaseSearch,

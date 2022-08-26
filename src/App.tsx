@@ -13,10 +13,10 @@ import Hilfe from "./pages/Hilfe";
 import Login from "./pages/Login";
 import Menu from "./pages/Menu";
 import WrongUrl from "./pages/WrongUrl";
-import Showroom from "./pages/Showroom";
 import ModalUserSettings from "./components/Modal-UserSettings";
 import globalStore from "./stores/global-store";
 import {ROUTES} from "./models/routes";
+import Showroom from "./pages/Showroom/Showroom";
 
 function App() {
   const {

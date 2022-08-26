@@ -1,5 +1,4 @@
 import classes from "./Details.module.scss";
-import apiStore from "../../stores/api-store";
 import {observer} from "mobx-react";
 import {useParams} from "react-router-dom";
 //Components
@@ -8,11 +7,12 @@ import DetailInfos from "./details-components/detailInfos";
 import CastAndCrew from "./details-components/castAndCrew";
 import ImagesVideosSection from "./details-components/imagesVideosSection";
 import UserSelectionSection from "./details-components/userSelectionSection";
+import detailsStore from "../../stores/page-stores/details-store";
 
 
 const DetailsMovie = () => {
 
-  const {selectedMovie} = apiStore;
+  const {selectedMovie} = detailsStore;
 
   const urlParams = useParams(); //TODO get id from url
   console.log("urlParams", urlParams.id)

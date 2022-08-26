@@ -3,16 +3,17 @@ import {imageUrlSmall} from "../../../constants";
 import imageActorMan from "../../../assets/img/actor.png";
 import imageActorWoman from "../../../assets/img/actor_girl.png";
 import {useNavigate} from "react-router-dom";
-import apiStore from "../../../stores/api-store";
-import {ICastMovie, ICrewMovie} from "../../../models/movie-interfaces";
-import {ICastTv, ICrewTv} from "../../../models/tv-interfaces";
+import tmdbStore from "../../../stores/tmdb-store";
+import {ICastMovie, ICrewMovie} from "../../../models/interfaces/movie-interfaces";
+import {ICastTv, ICrewTv} from "../../../models/interfaces/tv-interfaces";
+
 
 interface IPersonBoxProps {
   person: ICastMovie | ICrewMovie | ICastTv | ICrewTv,
 }
 
 const PersonBox = ({person}: IPersonBoxProps) => {
-  const {saveSelectedMovieOrPerson} = apiStore;
+  const {saveSelectedMovieOrPerson} = tmdbStore;
 
   const navigate = useNavigate();
 

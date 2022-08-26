@@ -1,9 +1,11 @@
 import classes from "./FskIndicator.module.scss";
 import {useState} from "react";
+import {TFskAges} from "../models/types";
+
 
 interface IColorIndicatorProps {
   arrowPos?: number,
-  saveFskPos: (fskPosAge: number) => void,
+  saveFskPos: (fskPosAge: TFskAges) => void,
 }
 
 interface IFskColor {
@@ -58,7 +60,7 @@ function FskIndicator({saveFskPos}: IColorIndicatorProps) {
              value={fskPos}
              onChange={(e) => {
                setFskPos(+e.target.value);
-               saveFskPos(fskColors[+e.target.value].fsk);
+               saveFskPos(fskColors[+e.target.value].fsk as TFskAges);
              }}/>
 
     </div>

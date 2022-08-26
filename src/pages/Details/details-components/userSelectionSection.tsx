@@ -2,15 +2,15 @@ import React, {useState} from 'react';
 import classes from "./userSelectionSection.module.scss";
 import {FaMeh, FaRegEye, FaRegEyeSlash, FaSadTear, FaSmileBeam} from "react-icons/fa";
 import {THasHappyEnd, TUserSelections} from "../../../models/types";
-import {IUserSelections} from "../../../models/interfaces";
+import {IUserSelections} from "../../../models/interfaces/interfaces";
 import globalStore from "../../../stores/global-store";
+import databaseStore from "../../../stores/database-store";
 import {Button} from "../../../styleComponents/ButtonStyleComp";
 import {useNavigate} from "react-router-dom";
-import apiStore from "../../../stores/api-store";
 import {observer} from "mobx-react";
 import {EHasHappyEnd} from "../../../models/enums";
-import {IMovieAllInfos} from "../../../models/movie-interfaces";
-import {ITvAllInfos} from "../../../models/tv-interfaces";
+import {IMovieAllInfos} from "../../../models/interfaces/movie-interfaces";
+import {ITvAllInfos} from "../../../models/interfaces/tv-interfaces";
 import {ROUTES} from "../../../models/routes";
 
 interface IUserSelectionSectionProps {
@@ -21,7 +21,7 @@ interface IUserSelectionSectionProps {
 const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionSectionProps) => {
 
   const {user} = globalStore;
-  const {saveMovieToDb} = apiStore;
+  const {saveMovieToDb} = databaseStore
 
   const navigate = useNavigate();
 

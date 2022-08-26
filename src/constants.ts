@@ -1,7 +1,7 @@
 import {TCategory, TCategorySearch, TCategoryMedia} from "./models/types";
-import {IMovieAllInfos} from "./models/movie-interfaces";
-import {ITvAllInfos} from "./models/tv-interfaces";
-import {IPersonAllData} from "./models/person-interfaces";
+import {IMovieAllInfos} from "./models/interfaces/movie-interfaces";
+import {ITvAllInfos} from "./models/interfaces/tv-interfaces";
+import {IPersonAllData} from "./models/interfaces/person-interfaces";
 
 
 //----------Empty Objects-------------------------------------------

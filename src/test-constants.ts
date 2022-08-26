@@ -1,13 +1,10 @@
-
-
-
 //-----------------------Multi---------------------------------------
 
 //Suche nach bad; https://api.themoviedb.org/3/search/multi?api_key={key}&language=de&query=bad&page=1&include_adult=false
 
-import {ISearch} from "./models/interfaces";
-import {ICreditsMovieFetching, IMovieDetails} from "./models/movie-interfaces";
-import {ICastTv, ICreditsTvFetching, ITvShowSearch} from "./models/tv-interfaces";
+import {ISearch} from "./models/interfaces/interfaces";
+import {ICreditsMovieFetching, IMovieDetails} from "./models/interfaces/movie-interfaces";
+import {ICastTv, ICreditsTvFetching, ITvShowSearch} from "./models/interfaces/tv-interfaces";
 
 export const apiMultiSearch: ISearch = {
   "page": 1,

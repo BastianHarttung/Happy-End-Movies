@@ -1,6 +1,6 @@
 //---------------------Person----------------------
 
-import {TCategory, TGender, TKnownForDepartment} from "./types";
+import {TCategory, TGender, TKnownForDepartment} from "../types";
 import {IImage} from "./interfaces";
 
 export interface IPersonAllData extends IPersonSearch, IPersonFetching {

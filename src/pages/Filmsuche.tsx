@@ -1,15 +1,16 @@
 import classes from "./Filmsuche.module.scss";
 import {useEffect, useState} from "react";
+import {observer} from "mobx-react";
 import SearchResultBox from "../components/SearchResultBox";
-import {searchUrl, trendingMoviesUrl} from "../constants";
 import SearchBar from "../components/SearchBar";
 import {Button} from "../styleComponents/ButtonStyleComp";
 import Pagination from "../components/Pagination";
 import {TCategorySearch, TSearchResults} from "../models/types";
-import {ISearch} from "../models/interfaces";
+import tmdbStore from "../stores/tmdb-store";
 
 
 const Filmsuche = () => {
+  const {getPopularMoviesFromTmdb, getJsonFromTmdb} = tmdbStore
 
   const [searchedMovies, setSearchedMovies] = useState<TSearchResults[]>([]);
   const [searchFor, setSearchFor] = useState("");
@@ -93,13 +94,6 @@ const Filmsuche = () => {
     </div>
   );
 
-  //Get Popular Movies from TMDB API
-  async function getPopularMoviesFromTmdb(): Promise<TSearchResults[]> {
-    const response = await fetch(trendingMoviesUrl);
-    let data = await response.json();
-    return data.results;
-  }
-
   // Search Movie by clicking the Search Button
   // -set page to number 1
   // -delete die input field
@@ -121,16 +115,6 @@ const Filmsuche = () => {
     }
   }
 
-  //  Get Data from TMDB API
-  //  - set total results
-  //  - make array with pages and set to total pages
-  async function getJsonFromTmdb(movieName: string, pageNumber: number, searchCategory: TCategorySearch): Promise<ISearch> {
-    const response = await fetch(searchUrl(searchCategory, movieName, pageNumber));
-    let data = await response.json();
-    console.log("data from Tmdb", data);
-    return data;
-  }
-
   //Change Page and load from API by clicking Page Number
   //And set Active Page Number for colored view
   async function changePage(page: number): Promise<void> {
@@ -150,4 +134,4 @@ const Filmsuche = () => {
 
 };
 
-export default Filmsuche;
+export default observer(Filmsuche);
