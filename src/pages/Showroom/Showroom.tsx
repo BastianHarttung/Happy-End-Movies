@@ -1,43 +1,36 @@
 import classes from "./Showroom.module.scss";
 import {useEffect, useState} from "react";
 import {observer} from "mobx-react";
+import showroomStore from "../../stores/page-stores/showroom-store";
 //Components
 import Sidebar from "./sidebar/sidebar";
 import SearchResultBox from "../../components/SearchResultBox";
 //Pictures
-import {ReactComponent as FilterIcon} from "../assets/icons/filter.svg";
-//Types
-import {IMovieAllInfos} from "../../models/interfaces/movie-interfaces";
-import {ITvAllInfos} from "../../models/interfaces/tv-interfaces";
-import showroomStore from "../../stores/page-stores/showroom-store";
+import {ReactComponent as FilterIcon} from "../../assets/icons/filter.svg";
 
 
 const Showroom = () => {
 
-  const {databaseStore,filteredMedias,filteredDbLength} = showroomStore
+  const {
+    filteredMedias,
+    filteredDbLength,
+    databaseStore,
+    paginationStore,
+  } = showroomStore
 
-  // const [moviesDb, setMoviesDb] = useState<(IMovieAllInfos | ITvAllInfos)[]>([]);
-  // const [dbLength, setDbLength] = useState<number>(0);
-
-  const [filteredMovies, setFilteredMovies] = useState<(IMovieAllInfos | ITvAllInfos)[]>([]);
-  // const [searchFilteredMovies, setSearchFilteredMovies] = useState<any[]>([]);
-  // const [filterActive, setFilterActive] = useState<boolean>(false);
-  // const [filterLength, setFilterLength] = useState<number>(databaseStore.dbLength);
-  // const [filterHappyEnd, setFilterHappyEnd] = useState<THappyEndFilter>(EHappyEndFilter.ALL_ENDS);
-  // const [filterCategory, setFilterCategory] = useState<TCategoryFilter>("allCategories");
+  const {
+    activePage,
+    totalPages,
+    pageLength,
+    setActivePage
+  } = paginationStore
 
 
-  const [activePage, setActivePage] = useState<number>(0);
-  const pageLength: number = 24;
   const index: number = activePage * pageLength;
 
   const pages = Math.ceil(filteredDbLength / pageLength);
 
-  const filteredMoviesPart = filteredMovies.slice(index, Math.max(pageLength, pageLength * (activePage + 1)));
-
-  const [searchFor, setSearchFor] = useState<string>("");
-
-  const [fskPosAge, setFskPosAge] = useState<number>(18);
+  const filteredMoviesPart = filteredMedias.slice(index, Math.max(pageLength, pageLength * (activePage + 1)));
 
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
@@ -80,7 +73,7 @@ const Showroom = () => {
                       style={filterIconStyle}/>
         </div>
 
-        {filteredMovies.length > 0 ?
+        {filteredMedias.length > 0 ?
           <div className={classes.filteredMoviesContainer}>
             <div className={classes.filteredMoviesResult}>
               {filteredMoviesPart.map((movie) =>
@@ -103,7 +96,7 @@ const Showroom = () => {
               )}
             </div>
           </div>
-          : filteredMovies.length === 0 ?
+          : filteredMedias.length === 0 ?
             <div className={classes.filteredMoviesContainer}>
               <div className={classes.loader}>Loading...</div>
             </div>

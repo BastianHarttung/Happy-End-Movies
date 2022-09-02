@@ -1,7 +1,7 @@
 import "./sidebar.module.scss"
 import {observer} from "mobx-react";
 import classes from "../Showroom.module.scss";
-import {ReactComponent as CloseIcon} from "*.svg";
+import {ReactComponent as CloseIcon} from "../../../assets/icons/times.svg";
 import SearchBar from "../../../components/SearchBar";
 import {TCategoryFilter, THappyEndFilter} from "../../../models/types";
 import {EHappyEndFilter} from "../../../models/enums";
@@ -45,8 +45,8 @@ const Sidebar = ({sidebarOpen, onCloseSidebar}: ISidebarProps) => {
          style={styleSidebar}>
 
       <div className={classes.sidebarCloseBtnContainer}>
-        {/*<CloseIcon className={classes.sidebarCloseBtn}*/}
-        {/*           onClick={onCloseSidebar}/>*/}
+        <CloseIcon className={classes.sidebarCloseBtn}
+                   onClick={onCloseSidebar}/>
       </div>
 
       <div>

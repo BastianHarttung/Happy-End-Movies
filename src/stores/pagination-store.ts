@@ -9,10 +9,14 @@ class PaginationStore {
 
   pageLength: number = 24;
 
-  pages: number[] = [];
+  pagesArray: number[] = [];
 
   constructor() {
     makeAutoObservable(this)
+  }
+
+  setActivePage = (pageNumber: number) => {
+    this.activePage = pageNumber
   }
 
 }
