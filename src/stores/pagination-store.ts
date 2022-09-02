@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
+import {IPaginationStoreInterface} from "../models/interfaces/stores-interfaces/pagination-store-interface";
 
-class PaginationStore {
+class PaginationStore<IPaginationStoreInterface> {
   totalResults: number = 0;
 
   totalPages: number = 0;
@@ -21,5 +22,5 @@ class PaginationStore {
 
 }
 
-const paginationStore = new PaginationStore();
+const paginationStore: IPaginationStoreInterface = new PaginationStore();
 export default paginationStore;
