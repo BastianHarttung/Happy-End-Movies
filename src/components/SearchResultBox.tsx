@@ -3,6 +3,10 @@ import {imageUrlBig} from "../constants";
 import {FaSmileBeam, FaSadTear} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
+import {observer} from "mobx-react";
+import tmdbStore from "../stores/tmdb-store";
+//Components
+import LoadingSpinner from "./LoadingSpinner";
 //Pictures
 import emptyImage from "../assets/img/movie-poster.png";
 import emptyImageMan from "../assets/img/actor_man_white.png";
@@ -11,12 +15,10 @@ import iconPopcorn from "../assets/icons/popcorn_solid.svg";
 import iconTv from "../assets/icons/tv-retro_solid.svg";
 import iconUser from "../assets/icons/user-tie_solid.svg";
 //Interfaces
-import {TCategory, TCategorySearch, TGender, THasHappyEnd} from "../models/types";
-import tmdbStore from "../stores/tmdb-store";
-import {observer} from "mobx-react";
-import {ROUTES} from "../models/routes";
 import {IMovieAllInfos} from "../models/interfaces/movie-interfaces";
 import {ITvAllInfos} from "../models/interfaces/tv-interfaces";
+import {TCategory, TCategorySearch, TGender, THasHappyEnd} from "../models/types";
+import {ROUTES} from "../models/routes";
 
 
 interface ISearchResultBoxProps {
@@ -75,7 +77,7 @@ const SearchResultBox = ({
     } else return <span/>;
   };
 
-  async function handleClick() {
+  function handleClick() {
     setMovieClicked(true);
     const getCategory = (): TCategory => {
       if (category === "movie" || category === "tv" || category === "person") {
@@ -84,7 +86,7 @@ const SearchResultBox = ({
         return mediaType;
       } else return "movie"
     };
-    await saveSelectedMovieOrPerson({id, ...movie}, getCategory())
+    saveSelectedMovieOrPerson({id, ...movie}, getCategory())
       .then(() => {
         navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(getCategory(), id.toString()));
         setMovieClicked(false);
@@ -95,15 +97,7 @@ const SearchResultBox = ({
     <div className={classes.movieContainer}
          onClick={handleClick}>
 
-      {movieClicked &&
-      <div className={classes.loaderContainer}>
-          <div className={classes.ldsRing}>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-          </div>
-      </div>}
+      {movieClicked && <LoadingSpinner/>}
 
       <img className={classes.movieImage}
            src={setImageForPoster()}
