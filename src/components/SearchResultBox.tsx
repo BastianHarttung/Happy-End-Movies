@@ -26,9 +26,9 @@ interface ISearchResultBoxProps {
   category: TCategorySearch,
   mediaType?: TCategory | undefined,
   movieName: string,
+  posterPath: string,
   movie?: IMovieAllInfos | ITvAllInfos,
   hasHappyEnd?: THasHappyEnd,
-  posterPath: string,
   personGender?: TGender,
 }
 
@@ -37,18 +37,17 @@ const SearchResultBox = ({
                            category,
                            mediaType,
                            movieName,
+                           posterPath,
                            movie,
                            hasHappyEnd,
-                           posterPath,
                            personGender
                          }: ISearchResultBoxProps) => {
 
   const {saveSelectedMovieOrPerson} = tmdbStore;
 
   const navigate = useNavigate();
-  // For Loading Sequence on Box
+  // For Loading Spinner on Box
   const [movieClicked, setMovieClicked] = useState(false);
-
 
   const Smiley = (): JSX.Element => {
     if (hasHappyEnd === "true") return <FaSmileBeam className={classes.smileyLaugh}/>;
@@ -93,6 +92,15 @@ const SearchResultBox = ({
       });
   }
 
+  function setImageForPoster(): string {
+    if (!!posterPath) return imageUrlBig + posterPath;
+    else if (!!!posterPath && category === "person") {
+      if (personGender === 2) return emptyImageMan;
+      if (personGender === 1) return emptyImageWoman;
+      else return emptyImageMan   //Todo possibly Picture Questionmark for Person with gender 0
+    } else return emptyImage
+  }
+
   return (
     <div className={classes.movieContainer}
          onClick={handleClick}>
@@ -112,15 +120,6 @@ const SearchResultBox = ({
 
     </div>
   );
-
-  function setImageForPoster(): string {
-    if (!!posterPath) return imageUrlBig + posterPath;
-    else if (!!!posterPath && category === "person") {
-      if (personGender === 2) return emptyImageMan;
-      if (personGender === 1) return emptyImageWoman;
-      else return emptyImageMan   //Todo possibly Picture Questionmark for Person with gender 0
-    } else return emptyImage
-  }
 
 };
 
