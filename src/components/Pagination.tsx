@@ -7,7 +7,7 @@ import {ReactComponent as ArrowRightIcon} from "../assets/icons/chevron-right.sv
 interface IPaginationProps {
   totalPages: number[],
   activePage: number,
-  changePage: (page: number) => Promise<void>,
+  changePage: (page: number) => void,
   totalResults: number,
 }
 

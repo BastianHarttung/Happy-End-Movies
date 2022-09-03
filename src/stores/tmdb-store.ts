@@ -24,7 +24,11 @@ class TmdbStore {
 
   searchedMedias: TSearchResults[] = [];
 
-  searchCategory: string = "";
+  searchResult: string = "";  // To show String which Results are for
+
+  searchCategory: TCategorySearch = "multi";
+
+  searchTotalResults: number = 0;
 
   isLoadingTmdb: boolean = false;
 
@@ -134,18 +138,6 @@ class TmdbStore {
     if (happyCount >= 1) return EHasHappyEnd.TRUE
     if (happyCount <= -1) return EHasHappyEnd.FALSE
     else return EHasHappyEnd.NEUTRAL
-    // if (typeof movie.userSelections === "object") {
-    //   const happyEndArray = Object.values(movie.happyEnd_Voting);
-    //   const trueCount = happyEndArray.reduce((acc: number, current) => {
-    //     if (current) acc++;
-    //     else if (!current) acc--;
-    //     return acc;
-    //   }, 0);
-    //   if (trueCount > 0) return "true";
-    //   else if (trueCount === 0 || movie.happyEnd_Voting === false)
-    //     return "neutral";
-    //   else return "false";
-    // } else return "neutral";
   };
 
   private getCastAndCrewFromMedia = async (movieId: number, searchCategory: TCategoryMedia): Promise<(ICastMovie | ICrewMovie)[]> => {
@@ -175,16 +167,6 @@ class TmdbStore {
     }
     return directorArray;
   };
-
-  // private getDirectorFromMedia = async (movieId: number, searchCategory: TCategoryWatch) => {
-  //   if (searchCategory === "movie") {
-  //     const movieDirectors = await this.getDirectorFromMovie(movieId)
-  //     return movieDirectors
-  //   } else {
-  //     const tvDirectors = await this.getDirectorFromTv(movieId)
-  //     return tvDirectors
-  //   }
-  // }
 
   //Concat Cast and Directors (TODO not sure if needed)
   public concatCastAndCrew(castArray: ICastMovie[] | ICastTv[], crewArray: ICrewMovie[] | ICrewTv[]): (ICrewMovie | ICastMovie | ICrewTv | ICastTv)[] {

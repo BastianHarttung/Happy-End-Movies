@@ -6,4 +6,5 @@ export interface IPaginationStoreInterface {
   pagesArray: number[],
 
   setActivePage: (pageNumber: number) => void,
+  makePageArray: (numberPages: number) => number[],
 }

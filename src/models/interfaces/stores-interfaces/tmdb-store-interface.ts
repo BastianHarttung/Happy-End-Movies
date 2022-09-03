@@ -6,7 +6,9 @@ import {IPersonAllData} from "../person-interfaces";
 
 export interface ITmdbStoreInterface {
   searchedMedias: TSearchResults[];
-  searchCategory: string;
+  searchResult: string;
+  searchCategory: TCategorySearch;
+  searchTotalResults: number;
   isLoadingTmdb: boolean;
 
   getPopularMoviesFromTmdb: () => Promise<TSearchResults[]>;

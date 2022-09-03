@@ -6,29 +6,44 @@ import SearchBar from "../components/SearchBar";
 import {Button} from "../styleComponents/ButtonStyleComp";
 import Pagination from "../components/Pagination";
 import {TCategorySearch, TSearchResults} from "../models/types";
-import tmdbStore from "../stores/tmdb-store";
+import filmsucheStore from "../stores/page-stores/filmsuche-store";
 
 
 const Filmsuche = () => {
-  const {getPopularMoviesFromTmdb, getJsonFromTmdb} = tmdbStore
 
-  const [searchedMovies, setSearchedMovies] = useState<TSearchResults[]>([]);
   const [searchFor, setSearchFor] = useState("");
-  const [searchResult, setSearchResult] = useState("");
-  const [searchStarted, setSearchStarted] = useState(false);
-  const [searchingCategory, setSearchingCategory] = useState<TCategorySearch>("multi");
-
-  const [totalResults, setTotalResults] = useState(0);
-  const [totalPages, setTotalPages] = useState<number[]>([]);
-  const [activePage, setActivePage] = useState(0);
-
   const [popularMovies, setPopularMovies] = useState<TSearchResults[]>([]);
 
+  const {
+    searchStarted,
+    searchingTmdb,
+    tmdbStore,
+    paginationStore
+  } = filmsucheStore
+  const {
+    searchedMedias,
+    searchCategory,
+    searchResult,
+    getPopularMoviesFromTmdb,
+  } = tmdbStore
+  const {
+    pagesArray,
+    totalResults,
+    activePage,
+    setActivePage,
+  } = paginationStore
+
   useEffect(() => {
-    getPopularMoviesFromTmdb().then((response) => {
-      setPopularMovies(response);
-    });
-  }, []);
+    if (!!searchFor.trim()) {
+      getPopularMoviesFromTmdb().then((response) => {
+        setPopularMovies(response);
+      });
+    }
+  }, [searchFor]);
+
+  const handleSearch = (searchString: string, category: TCategorySearch) => {
+    searchingTmdb(searchString, category)
+  }
 
   return (
     <div className={classes.filmsucheSection}>
@@ -37,27 +52,27 @@ const Filmsuche = () => {
         <SearchBar
           length={22}
           searchSize={19}
-          searchMovie={(movieName) => searchMovie(movieName)}
+          searchMovie={(movieName) => searchingTmdb(movieName, searchCategory)}
           saveSearchFor={(movieName) => setSearchFor(movieName)}
         />
 
         <div className={classes.categoryBtnContainer}>
           <Button name="Alles"
                   fontSize={1.2}
-                  activated={searchingCategory === "multi"}
-                  onClick={() => searchMovie(searchFor, "multi")}/>
+                  activated={searchCategory === "multi"}
+                  onClick={() => handleSearch(searchFor, "multi")}/>
           <Button name="Filme"
                   fontSize={1.2}
-                  activated={searchingCategory === "movie"}
-                  onClick={() => searchMovie(searchFor, "movie")}/>
+                  activated={searchCategory === "movie"}
+                  onClick={() => handleSearch(searchFor, "movie")}/>
           <Button name="Serien"
                   fontSize={1.2}
-                  activated={searchingCategory === "tv"}
-                  onClick={() => searchMovie(searchFor, "tv")}/>
+                  activated={searchCategory === "tv"}
+                  onClick={() => handleSearch(searchFor, "tv")}/>
           <Button name="Schauspieler"
                   fontSize={1.2}
-                  activated={searchingCategory === "person"}
-                  onClick={() => searchMovie(searchFor, "person")}/>
+                  activated={searchCategory === "person"}
+                  onClick={() => handleSearch(searchFor, "person")}/>
         </div>
 
         {searchStarted ?
@@ -66,10 +81,10 @@ const Filmsuche = () => {
 
         {searchStarted ?
           <div className={classes.resultSection}>
-            {searchedMovies.map((movie, index) =>
+            {searchedMedias.map((movie, index) =>
               <SearchResultBox key={index}
                                id={movie.id}
-                               category={searchingCategory}
+                               category={searchCategory}
                                mediaType={movie.media_type}
                                movieName={"name" in movie ? movie.name : movie.title}
                                posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}
@@ -79,58 +94,20 @@ const Filmsuche = () => {
             {popularMovies.slice(0, 5).map((movie, index) =>
               <SearchResultBox key={index}
                                id={movie.id}
-                               category={searchingCategory}
+                               category={searchCategory}
                                mediaType={movie.media_type}
                                movieName={"title" in movie ? movie.title : movie.name}
                                posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}/>)}</div>}
 
-        {searchStarted && <Pagination totalPages={totalPages}
+        {searchStarted && <Pagination totalPages={pagesArray}
                                       activePage={activePage}
-                                      changePage={(page: number) => changePage(page)}
+                                      changePage={(page: number) => setActivePage(page)}
                                       totalResults={totalResults}/>}
 
       </div>
 
     </div>
   );
-
-  // Search Movie by clicking the Search Button
-  // -set page to number 1
-  // -delete die input field
-  async function searchMovie(searchString: string, searchCategory: TCategorySearch = "multi"): Promise<void> {
-    if (searchString.length > 0) {
-      setSearchResult(searchString);
-      setSearchingCategory(searchCategory);
-      const tmdbData = await getJsonFromTmdb(searchString, 1, searchCategory);
-      setTotalResults(await tmdbData.total_results);
-      setTotalPages(makePageArray(await tmdbData.total_pages));
-      setSearchedMovies(tmdbData.results);
-      setActivePage(1);
-      setSearchFor(searchString);
-      setSearchStarted(true);
-      window.location.hash = searchString;
-    } else {
-      setSearchingCategory("multi");
-      setSearchStarted(false);
-    }
-  }
-
-  //Change Page and load from API by clicking Page Number
-  //And set Active Page Number for colored view
-  async function changePage(page: number): Promise<void> {
-    const tmdbData = await getJsonFromTmdb(searchFor, page, searchingCategory)
-    setSearchedMovies(tmdbData.results);
-    setActivePage(page);
-  }
-
-  // Make an Array with Pages
-  function makePageArray(numberPages: number): number[] {
-    let pageArray = [];
-    for (let i = 1; i <= numberPages; i++) {
-      pageArray.push(i);
-    }
-    return pageArray;
-  }
 
 };
 

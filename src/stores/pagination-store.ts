@@ -20,6 +20,15 @@ class PaginationStore<IPaginationStoreInterface> {
     this.activePage = pageNumber
   }
 
+  // Make an Array with Pages
+  makePageArray = (numberPages: number): number[] => {
+    let pageArray = [];
+    for (let i = 1; i <= numberPages; i++) {
+      pageArray.push(i);
+    }
+    return pageArray;
+  }
+
 }
 
 const paginationStore: IPaginationStoreInterface = new PaginationStore();
