@@ -16,13 +16,16 @@ const SearchBar = ({length, searchSize, searchMovie, saveSearchFor}: ISearchBarP
   const locationHashString: string = window.location.hash.substring(1).split("%20").join(" ");
   const [movieName, setMovieName] = useState<string>(locationHashString);
 
-  /**
-   * After hit 4 chars on input search start searching movie
-   */
+  // Debouncing to only start searching after an typing delay
   useEffect(() => {
-    if (movieName.length >= 4) {
-      searchMovie(movieName);
-    }
+    const timeout = setTimeout(() => {
+      if (!!movieName.trim()) {
+        console.log("Searching...")
+        searchMovie(movieName.trim())
+      }
+    }, 800)
+
+    return () => clearTimeout(timeout)
   }, [movieName]);
 
   return (
@@ -41,13 +44,13 @@ const SearchBar = ({length, searchSize, searchMovie, saveSearchFor}: ISearchBarP
                }}/>
 
 
-          <FaSearch onClick={() => {
-            searchMovie(movieName);
-            setMovieName("");
-            window.location.hash = "";
-          }}
-                    style={{width: searchSize + 5, height: searchSize + 5}}
-                    className={classes.searchButton}/>
+        <FaSearch onClick={() => {
+          searchMovie(movieName);
+          setMovieName("");
+          window.location.hash = "";
+        }}
+                  style={{width: searchSize + 5, height: searchSize + 5}}
+                  className={classes.searchButton}/>
 
       </div>
 

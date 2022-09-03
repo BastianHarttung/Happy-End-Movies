@@ -36,16 +36,17 @@ class TmdbStore {
     makeAutoObservable(this);
   }
 
-  getPopularMoviesFromTmdb = async (): Promise<TSearchResults[]> => {
+  getPopularMoviesFromTmdb = async (): Promise<void> => {
     const response = await fetch(trendingMoviesUrl);
     let data = await response.json();
-    return data.results;
+    this.searchedMedias = data.results;
   }
 
-  getJsonFromTmdb = async (movieName: string, pageNumber: number, searchCategory: TCategorySearch): Promise<ISearch> => {
+  getJsonFromTmdb = async (movieName: string, pageNumber: number = 1, searchCategory: TCategorySearch): Promise<ISearch> => {
     const response = await fetch(searchUrl(searchCategory, movieName, pageNumber));
     let data = await response.json();
     console.log("data from Tmdb", data);
+    this.searchedMedias = data.results;
     return data;
   }
 

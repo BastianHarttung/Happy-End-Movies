@@ -21,6 +21,7 @@ class FilmsucheStore {
   // -delete die input field
   public searchingTmdb = async (searchString: string, searchCategory: TCategorySearch = "multi"): Promise<void> => {
     if (searchString.length > 0) {
+      this.searchStarted = true;
       this.tmdbStore.searchResult = searchString;
       this.tmdbStore.searchCategory = searchCategory;
       this.tmdbStore.isLoadingTmdb = true;

@@ -34,12 +34,12 @@ const Filmsuche = () => {
   } = paginationStore
 
   useEffect(() => {
-    if (!!searchFor.trim()) {
-      getPopularMoviesFromTmdb().then((response) => {
-        setPopularMovies(response);
-      });
-    }
-  }, [searchFor]);
+    // if (!!searchFor.trim()) {
+    //   getPopularMoviesFromTmdb().then((response) => {
+    //     setPopularMovies(response);
+    //   });
+    // }
+  }, []);
 
   const handleSearch = (searchString: string, category: TCategorySearch) => {
     searchingTmdb(searchString, category)
