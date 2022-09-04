@@ -9,9 +9,10 @@ export interface ITmdbStoreInterface {
   searchResult: string;
   searchCategory: TCategorySearch;
   searchTotalResults: number;
+  popularMedias: TSearchResults[];
   isLoadingTmdb: boolean;
 
-  getPopularMoviesFromTmdb: () => Promise<void>;
+  getPopularMoviesFromTmdb: () => void;
   getJsonFromTmdb: (movieName: string, pageNumber: number, searchCategory: TCategorySearch) => Promise<ISearch>;
 
   saveSelectedMovieOrPerson: (object: any, searchCategory: TCategory) => Promise<void>;

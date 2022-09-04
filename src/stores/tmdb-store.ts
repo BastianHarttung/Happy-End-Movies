@@ -30,16 +30,23 @@ class TmdbStore {
 
   searchTotalResults: number = 0;
 
+  popularMedias: TSearchResults[] = [];
+
   isLoadingTmdb: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  getPopularMoviesFromTmdb = async (): Promise<void> => {
-    const response = await fetch(trendingMoviesUrl);
-    let data = await response.json();
-    this.searchedMedias = data.results;
+  getPopularMoviesFromTmdb = (): void => {
+    fetch(trendingMoviesUrl)
+      .then(async (response) => {
+        const data = await response.json();
+        this.popularMedias = data.results;
+      })
+      .catch((error) => {
+        console.log("Fetching Error Popular Movies", error.message)
+      })
   }
 
   getJsonFromTmdb = async (movieName: string, pageNumber: number = 1, searchCategory: TCategorySearch): Promise<ISearch> => {

@@ -12,7 +12,6 @@ import filmsucheStore from "../stores/page-stores/filmsuche-store";
 const Filmsuche = () => {
 
   const [searchFor, setSearchFor] = useState("");
-  const [popularMovies, setPopularMovies] = useState<TSearchResults[]>([]);
 
   const {
     searchStarted,
@@ -24,21 +23,18 @@ const Filmsuche = () => {
     searchedMedias,
     searchCategory,
     searchResult,
+    searchTotalResults,
+    popularMedias,
     getPopularMoviesFromTmdb,
   } = tmdbStore
   const {
     pagesArray,
-    totalResults,
     activePage,
     setActivePage,
   } = paginationStore
 
   useEffect(() => {
-    // if (!!searchFor.trim()) {
-    //   getPopularMoviesFromTmdb().then((response) => {
-    //     setPopularMovies(response);
-    //   });
-    // }
+    getPopularMoviesFromTmdb()
   }, []);
 
   const handleSearch = (searchString: string, category: TCategorySearch) => {
@@ -75,34 +71,45 @@ const Filmsuche = () => {
                   onClick={() => handleSearch(searchFor, "person")}/>
         </div>
 
-        {searchStarted ?
+        {(searchStarted && !!!searchTotalResults) &&
+        <div className={classes.headOverResults}>Keine Ergebnisse für:{searchResult}</div>}
+
+        {(searchStarted && !!searchTotalResults) ?
           <div className={classes.headOverResults}>Suchergebnisse für: {searchResult}</div>
           : <div className={classes.headOverResults}>Täglicher Trend</div>}
 
-        {searchStarted ?
-          <div className={classes.resultSection}>
-            {searchedMedias.map((movie, index) =>
-              <SearchResultBox key={index}
-                               id={movie.id}
-                               category={searchCategory}
-                               mediaType={movie.media_type}
-                               movieName={"name" in movie ? movie.name : movie.title}
-                               posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}
-                               personGender={"gender" in movie ? movie.gender : 0}/>)}</div>
+        {(searchStarted && !!searchTotalResults) ?
+          <>
+            <div className={classes.resultSection}>
+              {searchedMedias.map((movie, index) =>
+                <SearchResultBox key={index}
+                                 id={movie.id}
+                                 category={searchCategory}
+                                 mediaType={movie.media_type}
+                                 movieName={"name" in movie ? movie.name : movie.title}
+                                 posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}
+                                 personGender={"gender" in movie ? movie.gender : 0}/>)}
+            </div>
+            <Pagination totalPages={pagesArray}
+                        activePage={activePage}
+                        changePage={(page: number) => setActivePage(page)}
+                        totalResults={searchTotalResults}/>
+          </>
           :
           <div className={classes.resultSection}>
-            {popularMovies.slice(0, 5).map((movie, index) =>
+            {popularMedias.slice(0, 5).map((movie, index) =>
               <SearchResultBox key={index}
                                id={movie.id}
                                category={searchCategory}
                                mediaType={movie.media_type}
                                movieName={"title" in movie ? movie.title : movie.name}
-                               posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}/>)}</div>}
+                               posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}/>)}
+          </div>}
 
-        {searchStarted && <Pagination totalPages={pagesArray}
-                                      activePage={activePage}
-                                      changePage={(page: number) => setActivePage(page)}
-                                      totalResults={totalResults}/>}
+        {/*{searchStarted && <Pagination totalPages={pagesArray}*/}
+        {/*                              activePage={activePage}*/}
+        {/*                              changePage={(page: number) => setActivePage(page)}*/}
+        {/*                              totalResults={totalResults}/>}*/}
 
       </div>
 
