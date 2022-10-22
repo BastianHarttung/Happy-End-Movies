@@ -2,6 +2,7 @@ import React from 'react';
 import classes from "./imagesVideosSection.module.scss";
 import ImagesBox from "./imagesBox";
 import {IImagesWatchFetching, IVideoResult} from "../../../models/interfaces/interfaces";
+import VideoBox from "./videoBox";
 
 interface IImagesVideosSectionProps {
   images: IImagesWatchFetching;
@@ -13,40 +14,29 @@ const ImagesVideosSection = ({images, videos, classNameContent}: IImagesVideosSe
 
   return (
     <div className={`${classes.videosImagesContainer} ${classNameContent}`}>
-      <div>
-        {!!images.posters.length && (
-          <ImagesBox
-            title={"Poster"}
-            images={images.posters}
-          />
-        )}
 
-        {!!images.backdrops.length && (
-          <ImagesBox
-            title={"Hintergründe"}
-            images={images.backdrops}
-          />
-        )}
+      {!!images.posters.length && (
+        <ImagesBox
+          title={"Poster"}
+          images={images.posters}
+        />
+      )}
 
-        {!!images.logos.length && (
-          <ImagesBox title={"Logos"} images={images.logos}/>
-        )}
-      </div>
-      <div className={classes.videoContainer}>
-        {videos.map((video, index) => {
-          return (
-            <div key={index} className={classes.videoBox}>
-              <iframe
-                width="260"
-                title={video.name}
-                loading="lazy"
-                src={"https://www.youtube.com/embed/" + video.key}
-              ></iframe>
-              <div className={classes.videoName}>{video.name}</div>
-            </div>
-          );
-        })}
-      </div>
+      {!!images.backdrops.length && (
+        <ImagesBox
+          title={"Hintergründe"}
+          images={images.backdrops}
+        />
+      )}
+
+      {!!images.logos.length && (
+        <ImagesBox title={"Logos"} images={images.logos}/>
+      )}
+
+      {videos.length && (
+        <VideoBox videos={videos}/>
+      )}
+
     </div>
   );
 

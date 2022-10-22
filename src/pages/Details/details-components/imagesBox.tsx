@@ -9,18 +9,18 @@ interface IImagesBoxProps {
 }
 
 function ImagesBox({title, images}: IImagesBoxProps) {
+
   return (
     <div>
       <div><i>{title}</i></div>
-      <div className={classes.imageContainer}>
+      <div className={classes.imagesContainer}>
         {images.map((image: IImage, index) => {
           return (
             <a
+              key={index}
               href={imageUrlBig + image.file_path}
               target="_blank"
               rel="noreferrer"
-              key={index}
-              className={classes.imageBox}
             >
               <img
                 src={imageUrlBig + image.file_path}

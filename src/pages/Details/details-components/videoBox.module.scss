@@ -1,27 +1,23 @@
-/*---Images---*/
-.imagesContainer {
-  background-color: lightgray;
+/*----Videos---*/
+.videoContainer {
   display: flex;
   overflow: auto;
-  margin: 5px 0 10px 0;
-  padding:5px 5px 0 5px;
 }
 
-.images {
-  height: 150px;
-  margin: 0 5px 0 0;
+.videoBox {
+  margin-right: 5px;
 }
 
-.imagesContainer::-webkit-scrollbar {
+.videoContainer::-webkit-scrollbar {
   height: 10px;
 }
 
-.imagesContainer::-webkit-scrollbar-track {
+.videoContainer::-webkit-scrollbar-track {
   //border: 1px solid var(--gray);
   border-radius: 5px;
 }
 
-.imagesContainer::-webkit-scrollbar-thumb {
+.videoContainer::-webkit-scrollbar-thumb {
   background: linear-gradient(
                   90deg,
                   var(--main-color) 0%,
@@ -29,4 +25,11 @@
   );
   //border: 1px solid var(--gray);
   border-radius: 5px;
+}
+
+.videoName {
+  width: 260px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
