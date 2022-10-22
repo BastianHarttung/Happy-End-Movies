@@ -5,7 +5,7 @@ import SearchResultBox from "../components/SearchResultBox";
 import SearchBar from "../components/SearchBar";
 import {Button} from "../styleComponents/ButtonStyleComp";
 import Pagination from "../components/Pagination";
-import {TCategorySearch, TSearchResults} from "../models/types";
+import {TCategorySearch} from "../models/types";
 import filmsucheStore from "../stores/page-stores/filmsuche-store";
 
 
@@ -105,11 +105,6 @@ const Filmsuche = () => {
                                movieName={"title" in movie ? movie.title : movie.name}
                                posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}/>)}
           </div>}
-
-        {/*{searchStarted && <Pagination totalPages={pagesArray}*/}
-        {/*                              activePage={activePage}*/}
-        {/*                              changePage={(page: number) => setActivePage(page)}*/}
-        {/*                              totalResults={totalResults}/>}*/}
 
       </div>
 

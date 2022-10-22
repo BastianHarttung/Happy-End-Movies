@@ -27,7 +27,7 @@ class DetailsStore {
     makeAutoObservable(this);
   }
 
-  saveSelectedMovieOrPerson = async (object: any, searchCategory: TCategory): Promise<void> => {
+  public setSelectedMediaOrPersonForDetails = async (object: any, searchCategory: TCategory): Promise<void> => {
     if (searchCategory === "movie") {
       this.selectedMovie = await this.tmdbStore.setAllDataForMovie(object, "movie")
     } else if (searchCategory === "tv") {

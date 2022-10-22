@@ -4,7 +4,7 @@ import {FaSmileBeam, FaSadTear} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {observer} from "mobx-react";
-import tmdbStore from "../stores/tmdb-store";
+import detailsStore from "../stores/page-stores/details-store";
 //Components
 import LoadingSpinner from "./LoadingSpinner";
 //Pictures
@@ -43,7 +43,7 @@ const SearchResultBox = ({
                            personGender
                          }: ISearchResultBoxProps) => {
 
-  const {saveSelectedMovieOrPerson} = tmdbStore;
+  const {setSelectedMediaOrPersonForDetails} = detailsStore;
 
   const navigate = useNavigate();
   // For Loading Spinner on Box
@@ -85,7 +85,7 @@ const SearchResultBox = ({
         return mediaType;
       } else return "movie"
     };
-    saveSelectedMovieOrPerson({id, ...movie}, getCategory())
+    setSelectedMediaOrPersonForDetails({id, ...movie}, getCategory())
       .then(() => {
         navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(getCategory(), id.toString()));
         setMovieClicked(false);

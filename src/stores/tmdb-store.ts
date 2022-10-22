@@ -57,7 +57,7 @@ class TmdbStore {
     return data;
   }
 
-  saveSelectedMovieOrPerson = async (object: any, searchCategory: TCategory): Promise<void> => {
+  public saveSelectedMovieOrPerson = async (object: any, searchCategory: TCategory): Promise<void> => {
     if (searchCategory === "movie") {
       await this.setAllDataForMovie(object, "movie")
     } else if (searchCategory === "tv") {
