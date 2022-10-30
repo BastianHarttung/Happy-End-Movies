@@ -13,7 +13,7 @@ interface IPersonBoxProps {
 }
 
 const PersonBox = ({person}: IPersonBoxProps) => {
-  const {saveSelectedMovieOrPerson} = tmdbStore;
+  const {getSelectedMediaOrPerson} = tmdbStore;
 
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const PersonBox = ({person}: IPersonBoxProps) => {
     <div
       className={classes.actorProfile}
       onClick={async () => {
-        await saveSelectedMovieOrPerson(person, "person");
+        await getSelectedMediaOrPerson(person, "person");
         navigate(`/detailansicht/person/${person.id}`);
       }}
     >

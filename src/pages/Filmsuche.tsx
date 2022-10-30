@@ -5,12 +5,16 @@ import SearchResultBox from "../components/SearchResultBox";
 import SearchBar from "../components/SearchBar";
 import {Button} from "../styleComponents/ButtonStyleComp";
 import Pagination from "../components/Pagination";
-import {TCategorySearch} from "../models/types";
+import {TCategory, TCategorySearch} from "../models/types";
 import filmsucheStore from "../stores/page-stores/filmsuche-store";
+import {ROUTES} from "../models/routes";
+import {useNavigate} from "react-router-dom";
+import detailsStore from "../stores/page-stores/details-store";
 
 
 const Filmsuche = () => {
 
+  const navigate = useNavigate();
   const [searchFor, setSearchFor] = useState("");
 
   const {
@@ -19,6 +23,9 @@ const Filmsuche = () => {
     tmdbStore,
     paginationStore
   } = filmsucheStore
+  const {
+    setSelectedMediaOrPersonForDetails,
+  } = detailsStore
   const {
     searchedMedias,
     searchCategory,
@@ -37,8 +44,15 @@ const Filmsuche = () => {
     getPopularMoviesFromTmdb()
   }, []);
 
-  const handleSearch = (searchString: string, category: TCategorySearch) => {
-    searchingTmdb(searchString, category)
+  const handleSearch = async (searchString: string, category: TCategorySearch) => {
+    await searchingTmdb(searchString, category)
+  }
+
+  const handleSearchResultBoxClick = (object: { id: number }, category: TCategory) => {
+    setSelectedMediaOrPersonForDetails(object, category)
+      .then(() => {
+        navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(category, object.id.toString()));
+      });
   }
 
   return (
@@ -71,7 +85,7 @@ const Filmsuche = () => {
                   onClick={() => handleSearch(searchFor, "person")}/>
         </div>
 
-        {(searchStarted && !!!searchTotalResults) &&
+        {(searchStarted && !searchTotalResults) &&
         <div className={classes.headOverResults}>Keine Ergebnisse für:{searchResult}</div>}
 
         {(searchStarted && !!searchTotalResults) ?
@@ -88,7 +102,8 @@ const Filmsuche = () => {
                                  mediaType={movie.media_type}
                                  movieName={"name" in movie ? movie.name : movie.title}
                                  posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}
-                                 personGender={"gender" in movie ? movie.gender : 0}/>)}
+                                 personGender={"gender" in movie ? movie.gender : 0}
+                                 onClick={handleSearchResultBoxClick}/>)}
             </div>
             <Pagination totalPages={pagesArray}
                         activePage={activePage}
@@ -103,7 +118,8 @@ const Filmsuche = () => {
                                category={searchCategory}
                                mediaType={movie.media_type}
                                movieName={"title" in movie ? movie.title : movie.name}
-                               posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}/>)}
+                               posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}
+                               onClick={handleSearchResultBoxClick}/>)}
           </div>}
 
       </div>

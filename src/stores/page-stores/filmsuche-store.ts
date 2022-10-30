@@ -6,7 +6,7 @@ import {IFilmsucheStoreInterface} from "../../models/interfaces/stores-interface
 
 class FilmsucheStore {
 
-  searchStarted:boolean = false;
+  searchStarted: boolean = false;
 
   tmdbStore = tmdbStore;
 
@@ -17,13 +17,11 @@ class FilmsucheStore {
   }
 
   // Search Movie by clicking the Search Button
-  // -set page to number 1
-  // -delete die input field
   public searchingTmdb = async (searchString: string, searchCategory: TCategorySearch = "multi"): Promise<void> => {
+    this.tmdbStore.searchCategory = searchCategory;
     if (searchString.length > 0) {
       this.searchStarted = true;
       this.tmdbStore.searchResult = searchString;
-      this.tmdbStore.searchCategory = searchCategory;
       this.tmdbStore.isLoadingTmdb = true;
       const tmdbData = await this.tmdbStore.getJsonFromTmdb(searchString, this.paginationStore.activePage, searchCategory);
       this.tmdbStore.searchTotalResults = tmdbData.total_results;
@@ -32,9 +30,18 @@ class FilmsucheStore {
       this.tmdbStore.isLoadingTmdb = false;
       window.location.hash = searchString;
     } else {
-      this.tmdbStore.searchCategory = "multi";
-      this.tmdbStore.isLoadingTmdb = false;
+      this.resetSearch()
     }
+  }
+
+  private resetSearch = () => {
+    this.searchStarted = false;
+    this.tmdbStore.searchResult = "";
+    this.tmdbStore.searchTotalResults = 0;
+    this.paginationStore.pagesArray = [];
+    this.tmdbStore.searchedMedias = [];
+    this.tmdbStore.isLoadingTmdb = false;
+    window.location.hash = "";
   }
 
 }

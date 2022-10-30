@@ -35,13 +35,17 @@ class DetailsStore {
 
   public setSelectedMediaOrPersonForDetails = async (object: any, searchCategory: TCategory): Promise<void> => {
     if (searchCategory === "movie") {
-      const selectMovie = await this.tmdbStore.setAllDataForMovie(object, "movie")
+      const selectMovie = await this.tmdbStore.getAllDataForMovie(object, "movie")
       this.selectedMovie = selectMovie
       localStorage.setItem("selectedMovie", JSON.stringify(this.selectedMovie))
     } else if (searchCategory === "tv") {
-      this.selectedTv = await this.tmdbStore.setAllDataForTv(object, "tv")
+      const selectTv = await this.tmdbStore.getAllDataForTv(object, "tv")
+      this.selectedTv = selectTv
+      localStorage.setItem("selectedTv", JSON.stringify(this.selectedTv))
     } else {
-      this.selectedPerson = await this.tmdbStore.setAllDataForPerson(object)
+      const selectPerson = await this.tmdbStore.getAllDataForPerson(object)
+      this.selectedPerson = selectPerson
+      localStorage.setItem("selectedPerson", JSON.stringify(this.selectedPerson))
     }
   };
 

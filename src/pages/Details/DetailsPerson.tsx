@@ -91,7 +91,9 @@ const DetailsPerson = () => {
                                     category={movie.media_type}
                                     id={movie.id}
                                     movieName={movie.title}
-                                    posterPath={movie.poster_path}/>
+                                    posterPath={movie.poster_path}
+                                    onClick={() => {
+                                    }}/>
           }
         )}
       </div>

@@ -30,6 +30,7 @@ interface ISearchResultBoxProps {
   movie?: IMovieAllInfos | ITvAllInfos,
   hasHappyEnd?: THasHappyEnd,
   personGender?: TGender,
+  onClick: ({id}: any, category: TCategory) => void,
 }
 
 const SearchResultBox = ({
@@ -40,12 +41,13 @@ const SearchResultBox = ({
                            posterPath,
                            movie,
                            hasHappyEnd,
-                           personGender
+                           personGender,
+                           onClick,
                          }: ISearchResultBoxProps) => {
 
-  const {setSelectedMediaOrPersonForDetails} = detailsStore;
+  // const {setSelectedMediaOrPersonForDetails} = detailsStore;
+  // const navigate = useNavigate();
 
-  const navigate = useNavigate();
   // For Loading Spinner on Box
   const [movieClicked, setMovieClicked] = useState(false);
 
@@ -85,11 +87,13 @@ const SearchResultBox = ({
         return mediaType;
       } else return "movie"
     };
-    setSelectedMediaOrPersonForDetails({id, ...movie}, getCategory())
-      .then(() => {
-        navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(getCategory(), id.toString()));
-        setMovieClicked(false);
-      });
+    onClick({id: id}, getCategory())
+    // setMovieClicked(false)
+    // setSelectedMediaOrPersonForDetails({id, ...movie}, getCategory())
+    //   .then(() => {
+    //     navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(getCategory(), id.toString()));
+    //     setMovieClicked(false);
+    //   });
   }
 
   function setImageForPoster(): string {

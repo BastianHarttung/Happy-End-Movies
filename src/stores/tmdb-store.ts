@@ -7,7 +7,7 @@ import {
   castUrl,
   imagesUrl,
   watchDetailsUrl, personDetailUrl,
-  searchUrl, trendingMoviesUrl
+  searchUrl, trendingMoviesUrl, emptyTvShow, emptyPerson
 } from "../constants";
 import {TCategory, TCategoryMedia, TCategorySearch, THasHappyEnd, TSearchResults} from "../models/types";
 import {ICastMovie, ICrewMovie, IMovieAllInfos, IMovieDetails} from "../models/interfaces/movie-interfaces";
@@ -57,19 +57,19 @@ class TmdbStore {
     return data;
   }
 
-  public saveSelectedMovieOrPerson = async (object: any, searchCategory: TCategory): Promise<void> => {
+  public getSelectedMediaOrPerson = async (object: any, searchCategory: TCategory): Promise<void> => {
     if (searchCategory === "movie") {
-      await this.setAllDataForMovie(object, "movie")
+      await this.getAllDataForMovie(object, "movie")
     } else if (searchCategory === "tv") {
-      await this.setAllDataForTv(object, "tv")
+      await this.getAllDataForTv(object, "tv")
     } else {
-      await this.setAllDataForPerson(object)
+      await this.getAllDataForPerson(object)
     }
   };
 
   //-------------------------------Movie Fetches--------------------------------------------------------------
   // Collecting all Data from Movie
-  public setAllDataForMovie = async (object: any, searchCategory: TCategoryMedia = "movie"): Promise<IMovieAllInfos> => {
+  public getAllDataForMovie = async (object: any, searchCategory: TCategoryMedia = "movie"): Promise<IMovieAllInfos> => {
     console.log("setAllDataForMovie", object, searchCategory)
     const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "movie") as IMovieDetails;
     const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "movie") as IImagesWatchFetching;
@@ -182,7 +182,7 @@ class TmdbStore {
   }
 
   //-----------------------------------TV Show fetches ---------------------------------------------
-  public setAllDataForTv = async (object: any, searchCategory: TCategoryMedia): Promise<ITvAllInfos> => {
+  public getAllDataForTv = async (object: any, searchCategory: TCategoryMedia): Promise<ITvAllInfos> => {
     const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "tv") as IMovieDetails;
     const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "tv") as IImagesWatchFetching;
     const fsk: number = await this.getGermanFSKFromDetails(details, "tv");
@@ -234,7 +234,7 @@ class TmdbStore {
 
   //-------------------------------------Person fetches---------------------------------------------
   // Collecting all Data from Person
-  public setAllDataForPerson = async (object: any): Promise<IPersonAllData> => {
+  public getAllDataForPerson = async (object: any): Promise<IPersonAllData> => {
     const personKnownFor: IPersonSearch = await TmdbStore.getInfosForPersonFromApi(object.name);
     const personDetails: IPersonFetching = await TmdbStore.getDetailPersonInfosFromApi(object.id);
     return {...object, ...personKnownFor, ...personDetails};
