@@ -126,3 +126,7 @@ code {
   flex-direction: column;
   justify-content: space-between;
 }
+
+main {
+  min-height: calc(100vh - 130px);
+}

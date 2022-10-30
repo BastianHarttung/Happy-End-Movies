@@ -1,0 +1,15 @@
+.logo-container {
+  width: 226px;
+  height: 90px;
+  overflow: hidden;
+}
+
+.logo-svg {
+  height: 100%;
+  animation: move 1s linear infinite;
+}
+@keyframes move {
+  100% {
+    transform: translateX(-75px);
+  }
+}

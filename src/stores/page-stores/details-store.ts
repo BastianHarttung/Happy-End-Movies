@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {computed, makeAutoObservable} from "mobx";
 import {emptyMovie, emptyPerson, emptyTvShow} from "../../constants";
 import {IMovieAllInfos} from "../../models/interfaces/movie-interfaces";
 import {ITvAllInfos} from "../../models/interfaces/tv-interfaces";
@@ -9,7 +9,7 @@ import {TCategory, THasHappyEnd} from "../../models/types";
 
 
 class DetailsStore {
-  selectedMovie: IMovieAllInfos = emptyMovie;
+  selectedMovie: IMovieAllInfos | null = null; //emptyMovie;
 
   selectedTv: ITvAllInfos = emptyTvShow;
 
@@ -24,7 +24,13 @@ class DetailsStore {
   hasHappyEnd: THasHappyEnd = "neutral";
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {isLoading: computed});
+  }
+
+  get isLoading(): boolean {
+    console.log(this.selectedMovie)
+    if (!!this.selectedMovie) return false
+    else return true
   }
 
   public setSelectedMediaOrPersonForDetails = async (object: any, searchCategory: TCategory): Promise<void> => {
