@@ -29,10 +29,10 @@ const DetailsMovie = () => {
   }, []);
 
   return (
-    <main className={classes.detailsMoviePage}>
+    <main className={classes.detailsMediaPage}>
       {/*{isLoading && <LoadingMovieStreifen/>}*/}
       {movie && <>
-          <section className={classes.movieSection}>
+          <section className={classes.mediaSection}>
               <DetailInfos title={movie.title}
                            fsk={movie.fsk}
                            posterPath={movie.poster_path}

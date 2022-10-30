@@ -16,9 +16,9 @@ const DetailsMovie = () => {
   // const urlParams = useParams(); //TODO get id from url
 
   return (
-    <section className={classes.detailsMoviePage}>
+    <section className={classes.detailsMediaPage}>
 
-      <section className={classes.movieSection}>
+      <section className={classes.mediaSection}>
         <DetailInfos title={selectedTv.original_name}
                      fsk={selectedTv.fsk}
                      posterPath={selectedTv.poster_path}
