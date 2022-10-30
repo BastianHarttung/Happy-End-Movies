@@ -35,7 +35,9 @@ class DetailsStore {
 
   public setSelectedMediaOrPersonForDetails = async (object: any, searchCategory: TCategory): Promise<void> => {
     if (searchCategory === "movie") {
-      this.selectedMovie = await this.tmdbStore.setAllDataForMovie(object, "movie")
+      const selectMovie = await this.tmdbStore.setAllDataForMovie(object, "movie")
+      this.selectedMovie = selectMovie
+      localStorage.setItem("selectedMovie", JSON.stringify(this.selectedMovie))
     } else if (searchCategory === "tv") {
       this.selectedTv = await this.tmdbStore.setAllDataForTv(object, "tv")
     } else {

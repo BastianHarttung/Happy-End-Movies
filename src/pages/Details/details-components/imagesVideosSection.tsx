@@ -33,7 +33,7 @@ const ImagesVideosSection = ({images, videos, classNameContent}: IImagesVideosSe
         <ImagesBox title={"Logos"} images={images.logos}/>
       )}
 
-      {videos.length && (
+      {!!videos.length && (
         <VideoBox videos={videos}/>
       )}
 
