@@ -1,8 +1,9 @@
 import "./App.scss";
-import {Route, BrowserRouter, Routes} from "react-router-dom";
 import {useEffect} from "react";
+import {Route, BrowserRouter, Routes} from "react-router-dom";
 import {observer} from "mobx-react";
 import "dotenv/config";
+import globalStore from "./stores/global-store";
 
 import Hauptmenue from "./pages/Hauptmenue";
 import Filmsuche from "./pages/Filmsuche";
@@ -13,10 +14,10 @@ import Hilfe from "./pages/Hilfe";
 import Login from "./pages/Login";
 import Menu from "./pages/Menu";
 import WrongUrl from "./pages/WrongUrl";
-import ModalUserSettings from "./components/Modal-UserSettings";
-import globalStore from "./stores/global-store";
-import {ROUTES} from "./models/routes";
 import Showroom from "./pages/Showroom/Showroom";
+import DetailsTv from "./pages/Details/DetailsTv";
+import ModalUserSettings from "./components/Modal-UserSettings";
+import {ROUTES} from "./models/routes";
 
 function App() {
   const {
@@ -45,14 +46,20 @@ function App() {
               path={ROUTES.SHOWROOM}
               element={<Showroom/>}
             />
-            <Route
-              path={ROUTES.DETAILS_MOVIE}
-              element={<DetailsMovie/>}
-            />
-            <Route
-              path={ROUTES.DETAILS_PERSON}
-              element={<DetailsPerson/>}
-            />
+            <Route path="/detailansicht">
+              <Route
+                path={ROUTES.DETAILS_MOVIE}
+                element={<DetailsMovie/>}
+              />
+              <Route
+                path={ROUTES.DETAILS_TV}
+                element={<DetailsTv/>}
+              />
+              <Route
+                path={ROUTES.DETAILS_PERSON}
+                element={<DetailsPerson/>}
+              />
+            </Route>
             <Route path={ROUTES.IMPRESSUM} element={<Impressum/>}/>
             <Route path={ROUTES.HILFE} element={<Hilfe/>}/>
             <Route path={ROUTES.START} element={<Hauptmenue/>}/>

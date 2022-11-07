@@ -1,60 +1,76 @@
 import classes from "./Details.module.scss";
+import {useEffect, useState} from "react";
 import {observer} from "mobx-react";
+import detailsStore from "../../stores/page-stores/details-store";
 //Components
 import Beschreibung from "./details-components/beschreibung";
 import DetailInfos from "./details-components/detailInfos";
 import CastAndCrew from "./details-components/castAndCrew";
 import ImagesVideosSection from "./details-components/imagesVideosSection";
 import UserSelectionSection from "./details-components/userSelectionSection";
-import detailsStore from "../../stores/page-stores/details-store";
+import {useParams} from "react-router-dom";
+import LoadingMovieStreifen from "../../components/LoadingMovieStreifen";
 
 
 const DetailsMovie = () => {
 
-  const {selectedTv} = detailsStore;
+  const {selectedTv, isLoading} = detailsStore;
 
-  // const urlParams = useParams(); //TODO get id from url
+  const [tv, setTv] = useState(selectedTv)
+
+  const urlParams = useParams();
+
+  useEffect(() => {
+    const storage = localStorage.getItem("selectedTv")
+    if (storage && urlParams) {
+      const storageTv = JSON.parse(storage)
+      if (storageTv.id.toString() === urlParams.id) setTv(storageTv)
+    }
+  }, []);
 
   return (
-    <section className={classes.detailsMediaPage}>
+    <main className={classes.detailsMediaPage}>
+      {isLoading && <LoadingMovieStreifen/>}
+      {tv && <>
+          <section className={classes.mediaSection}>
+              <DetailInfos classNameContent={classes.sectionContent}
+                           title={tv.original_name}
+                           fsk={tv.fsk}
+                           posterPath={tv.poster_path}
+                           backdropPath={tv.backdrop_path}
+                           hasHappyEnd={tv.has_happy_end}
+                           releaseDate={tv.first_air_date}
+                           runtime={calculateAverageRunTime(tv.episode_run_time)}
+                           genres={tv.genres}
+                           voteAverage={tv.vote_average}/>
+          </section>
 
-      <section className={classes.mediaSection}>
-        <DetailInfos title={selectedTv.original_name}
-                     fsk={selectedTv.fsk}
-                     posterPath={selectedTv.poster_path}
-                     backdropPath={selectedTv.backdrop_path}
-                     hasHappyEnd={selectedTv.has_happy_end}
-                     releaseDate={selectedTv.first_air_date}
-                     runtime={calculateAverageRunTime(selectedTv.episode_run_time)}
-                     genres={selectedTv.genres}
-                     voteAverage={selectedTv.vote_average}
-                     classNameContent={classes.sectionContent}/>
-      </section>
+          <section className={classes.beschreibungSection}>
+              <Beschreibung
+                  tagline={tv.tagline}
+                  overview={tv.overview}
+                  className={classes.sectionContent}/>
+          </section>
 
-      <section className={classes.beschreibungSection}>
-        <Beschreibung
-          tagline={selectedTv.tagline}
-          overview={selectedTv.overview}
-          className={classes.sectionContent}/>
-      </section>
+          <section className={classes.actorSection}>
+              <CastAndCrew castAndCrew={tv.castAndCrew}
+                           classNameContent={classes.sectionContent}/>
+          </section>
 
-      <section className={classes.actorSection}>
-        <CastAndCrew castAndCrew={selectedTv.castAndCrew}
-                     classNameContent={classes.sectionContent}/>
-      </section>
+          <section className={classes.imagesVideosSection}>
+              <ImagesVideosSection classNameContent={classes.sectionContent}
+                                   images={tv.images}
+                                   videos={tv.videos.results}/>
+          </section>
 
-      <section className={classes.imagesVideosSection}>
-        <ImagesVideosSection classNameContent={classes.sectionContent}
-                             images={selectedTv.images}
-                             videos={selectedTv.videos.results}/>
-      </section>
+          <section className={classes.userSelectionSection}>
+              <UserSelectionSection selectedMedia={tv}
+                                    classNameContent={classes.sectionContent}/>
+          </section>
+      </>
+      }
 
-      <section className={classes.userSelectionSection}>
-        <UserSelectionSection selectedMedia={selectedTv}
-                              classNameContent={classes.sectionContent}/>
-      </section>
-
-    </section>
+    </main>
   );
 
   // Average Runtime for Tv Show

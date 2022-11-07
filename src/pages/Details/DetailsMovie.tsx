@@ -1,14 +1,15 @@
 import classes from "./Details.module.scss";
+import {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import detailsStore from "../../stores/page-stores/details-store";
 //Components
 import Beschreibung from "./details-components/beschreibung";
 import DetailInfos from "./details-components/detailInfos";
 import CastAndCrew from "./details-components/castAndCrew";
 import ImagesVideosSection from "./details-components/imagesVideosSection";
 import UserSelectionSection from "./details-components/userSelectionSection";
-import detailsStore from "../../stores/page-stores/details-store";
+import LoadingMovieStreifen from "../../components/LoadingMovieStreifen";
 
 
 const DetailsMovie = () => {
@@ -17,8 +18,7 @@ const DetailsMovie = () => {
 
   const [movie, setMovie] = useState(selectedMovie)
 
-  const urlParams = useParams(); //TODO get id from url
-  console.log("urlParams", urlParams.id)
+  const urlParams = useParams();
 
   useEffect(() => {
     const storage = localStorage.getItem("selectedMovie")
@@ -30,7 +30,7 @@ const DetailsMovie = () => {
 
   return (
     <main className={classes.detailsMediaPage}>
-      {/*{isLoading && <LoadingMovieStreifen/>}*/}
+      {isLoading && <LoadingMovieStreifen/>}
       {movie && <>
           <section className={classes.mediaSection}>
               <DetailInfos title={movie.title}

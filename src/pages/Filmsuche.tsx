@@ -103,6 +103,7 @@ const Filmsuche = () => {
                                  movieName={"name" in movie ? movie.name : movie.title}
                                  posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}
                                  personGender={"gender" in movie ? movie.gender : 0}
+                                 movie={movie}
                                  onClick={handleSearchResultBoxClick}/>)}
             </div>
             <Pagination totalPages={pagesArray}

@@ -23,30 +23,34 @@ class DetailsStore {
 
   hasHappyEnd: THasHappyEnd = "neutral";
 
+  isLoading: boolean = false;
+
   constructor() {
-    makeAutoObservable(this, {isLoading: computed});
+    makeAutoObservable(this);
   }
 
-  get isLoading(): boolean {
-    console.log(this.selectedMovie)
-    if (!!this.selectedMovie) return false
-    else return true
-  }
+  //
+  // get isLoading(): boolean {
+  //   if (!!this.selectedMovie) return false
+  //   else return true
+  // }
 
   public setSelectedMediaOrPersonForDetails = async (object: any, searchCategory: TCategory): Promise<void> => {
+    this.isLoading = true;
     if (searchCategory === "movie") {
       const selectMovie = await this.tmdbStore.getAllDataForMovie(object, "movie")
-      this.selectedMovie = selectMovie
+      this.selectedMovie = await selectMovie
       localStorage.setItem("selectedMovie", JSON.stringify(this.selectedMovie))
     } else if (searchCategory === "tv") {
       const selectTv = await this.tmdbStore.getAllDataForTv(object, "tv")
-      this.selectedTv = selectTv
+      this.selectedTv = await selectTv
       localStorage.setItem("selectedTv", JSON.stringify(this.selectedTv))
     } else {
       const selectPerson = await this.tmdbStore.getAllDataForPerson(object)
-      this.selectedPerson = selectPerson
+      this.selectedPerson = await selectPerson
       localStorage.setItem("selectedPerson", JSON.stringify(this.selectedPerson))
     }
+    this.isLoading = false
   };
 
 }

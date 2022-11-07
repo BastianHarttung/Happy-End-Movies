@@ -139,10 +139,12 @@ class TmdbStore {
   //Calculate has_happy_end by counting happyEnd_Voting
   private calculateHappyEnd(movie: any): THasHappyEnd {
     let happyCount = 0;
-    Object.keys(movie.userSelections).forEach((user) => {
-      if (movie.userSelections[user].happyEnd_Voting === EHasHappyEnd.TRUE) happyCount++
-      if (movie.userSelections[user].happyEnd_Voting === EHasHappyEnd.FALSE) happyCount--
-    })
+    if (movie.userSelections) {
+      Object.keys(movie.userSelections).forEach((user) => {
+        if (movie.userSelections[user].happyEnd_Voting === EHasHappyEnd.TRUE) happyCount++
+        if (movie.userSelections[user].happyEnd_Voting === EHasHappyEnd.FALSE) happyCount--
+      })
+    }
     if (happyCount >= 1) return EHasHappyEnd.TRUE
     if (happyCount <= -1) return EHasHappyEnd.FALSE
     else return EHasHappyEnd.NEUTRAL

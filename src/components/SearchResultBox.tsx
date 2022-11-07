@@ -1,24 +1,22 @@
 import classes from "./SearchResultBox.module.scss";
 import {imageUrlBig} from "../constants";
 import {FaSmileBeam, FaSadTear} from "react-icons/fa";
-import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {observer} from "mobx-react";
-import detailsStore from "../stores/page-stores/details-store";
 //Components
 import LoadingSpinner from "./LoadingSpinner";
 //Pictures
 import emptyImage from "../assets/img/movie-poster.png";
 import emptyImageMan from "../assets/img/actor_man_white.png";
 import emptyImageWoman from "../assets/img/actor_girl_white.png";
+import emptyImagePerson from "../assets/img/questionmark.png"
 import iconPopcorn from "../assets/icons/popcorn_solid.svg";
 import iconTv from "../assets/icons/tv-retro_solid.svg";
 import iconUser from "../assets/icons/user-tie_solid.svg";
 //Interfaces
 import {IMovieAllInfos} from "../models/interfaces/movie-interfaces";
 import {ITvAllInfos} from "../models/interfaces/tv-interfaces";
-import {TCategory, TCategorySearch, TGender, THasHappyEnd} from "../models/types";
-import {ROUTES} from "../models/routes";
+import {TCategory, TCategorySearch, TGender, THasHappyEnd, TSearchResults} from "../models/types";
 
 
 interface ISearchResultBoxProps {
@@ -27,7 +25,7 @@ interface ISearchResultBoxProps {
   mediaType?: TCategory | undefined,
   movieName: string,
   posterPath: string,
-  movie?: IMovieAllInfos | ITvAllInfos,
+  movie?: IMovieAllInfos | ITvAllInfos | TSearchResults,
   hasHappyEnd?: THasHappyEnd,
   personGender?: TGender,
   onClick: ({id}: any, category: TCategory) => void,
@@ -44,9 +42,6 @@ const SearchResultBox = ({
                            personGender,
                            onClick,
                          }: ISearchResultBoxProps) => {
-
-  // const {setSelectedMediaOrPersonForDetails} = detailsStore;
-  // const navigate = useNavigate();
 
   // For Loading Spinner on Box
   const [movieClicked, setMovieClicked] = useState(false);
@@ -87,7 +82,7 @@ const SearchResultBox = ({
         return mediaType;
       } else return "movie"
     };
-    onClick({id: id}, getCategory())
+    onClick(movie, getCategory())
     // setMovieClicked(false)
     // setSelectedMediaOrPersonForDetails({id, ...movie}, getCategory())
     //   .then(() => {
@@ -101,7 +96,7 @@ const SearchResultBox = ({
     else if (!!!posterPath && category === "person") {
       if (personGender === 2) return emptyImageMan;
       if (personGender === 1) return emptyImageWoman;
-      else return emptyImageMan   //Todo possibly Picture Questionmark for Person with gender 0
+      else return emptyImagePerson
     } else return emptyImage
   }
 

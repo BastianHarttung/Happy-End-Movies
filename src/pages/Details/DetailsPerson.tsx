@@ -1,109 +1,127 @@
 import classes from "./DetailsPerson.module.scss";
-import {imageUrlBig, imageUrlSmall} from "../../constants";
 import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
+import {observer} from "mobx-react";
 import {FaBirthdayCake, FaCross} from "react-icons/all";
+import detailsStore from "../../stores/page-stores/details-store";
 //Images
 import imageActorMan from "../../assets/img/actor.png";
 import imageActorWoman from "../../assets/img/actor_girl.png";
+import {imageUrlBig, imageUrlSmall} from "../../constants";
 //Components
 import SearchResultBox from "../../components/SearchResultBox";
-
-import {observer} from "mobx-react";
-import detailsStore from "../../stores/page-stores/details-store";
+import LoadingMovieStreifen from "../../components/LoadingMovieStreifen";
 
 
 const DetailsPerson = () => {
-  const {selectedPerson} = detailsStore;
+  const {selectedPerson, isLoading} = detailsStore;
+
+  const urlParams = useParams();
 
   const [age, setAge] = useState<number>(0);
   const [deathAge, setDeathAge] = useState<number>(0);
+  const [person, setPerson] = useState(selectedPerson)
 
   useEffect(() => {
     setAge(calculateAge(new Date().toString()))
     setDeathAge(calculateAge(selectedPerson.deathday))
   }, [])
 
+  useEffect(() => {
+    console.log(person)
+    const storage = localStorage.getItem("selectedMovie")
+    if (storage && urlParams) {
+      const storagePerson = JSON.parse(storage)
+      if (storagePerson.id.toString() === urlParams.id) setPerson(storagePerson)
+    }
+  }, []);
+
+
   return (
-    <section className={classes.detailsPersonSection}>
+    <main>
+      {isLoading && <LoadingMovieStreifen/>}
+      {person && <section className={classes.detailsPersonSection}>
 
-      <div className={classes.personContainer}>
+          <div className={classes.personContainer}>
 
-        <div>
+              <div>
 
-          <img src={selectedPerson.profile_path ?
-            imageUrlBig + selectedPerson.profile_path
-            : selectedPerson.gender === 2 ?
-              imageActorMan
-              : imageActorWoman}
-               className={classes.bigPic}
-               alt='Schauspieler Foto'
-               title={selectedPerson.name}/>
+                  <img src={person.profile_path ?
+                    imageUrlBig + person.profile_path
+                    : person.gender === 2 ?
+                      imageActorMan
+                      : imageActorWoman}
+                       className={classes.bigPic}
+                       alt='Schauspieler Foto'
+                       title={person.name}/>
 
-        </div>
+              </div>
 
-        <div className={classes.personInfosContainer}>
+              <div className={classes.personInfosContainer}>
 
-          <h2>{selectedPerson.name}</h2>
+                  <h2>{person.name}</h2>
 
-          {selectedPerson.homepage ?
-            <a href={selectedPerson.homepage} target='_blank'
-               rel="noreferrer">{selectedPerson.homepage}</a> : ''}
+                {person.homepage ?
+                  <a href={person.homepage} target='_blank'
+                     rel="noreferrer">{person.homepage}</a> : ''}
 
-          <div className={classes.birthday}>
-            <FaBirthdayCake></FaBirthdayCake><span> {selectedPerson.birthday} ({age} Jahre)</span>
+                  <div className={classes.birthday}>
+                      <FaBirthdayCake></FaBirthdayCake><span> {person.birthday} ({age} Jahre)</span>
+                  </div>
+
+                {person.deathday ?
+                  <div className={classes.deathday}>
+                    <FaCross></FaCross><span>{person.deathday} ({deathAge} Jahre)</span>
+                  </div> : ''}
+
+                  <div>
+                      <b>Geburtsort:</b> {person.place_of_birth}
+                  </div>
+
+                  <div className={classes.imagesContainer}>
+                    {person.images.profiles.slice(1).map((image, index) =>
+                      <a key={index}
+                         href={imageUrlSmall + image.file_path}
+                         target="_blank"
+                         rel="noreferrer">
+                        <img src={imageUrlSmall + image.file_path}
+                             alt="Foto"
+                             loading="lazy"/>
+                      </a>)}
+                  </div>
+
+              </div>
+
           </div>
 
-          {selectedPerson.deathday ?
-            <div className={classes.deathday}>
-              <FaCross></FaCross><span>{selectedPerson.deathday} ({deathAge} Jahre)</span>
-            </div> : ''}
+          <section className={classes.biographySection}>
+              <div className={classes.biography}>
+                {person.biography && <span><b>Biografie:</b> {person.biography}</span>}
+              </div>
+          </section>
 
-          <div>
-            <b>Geburtsort:</b> {selectedPerson.place_of_birth}
+          <div className={classes.knownForHeading}>Bekannt für</div>
+
+          <div className={classes.knownForContainer}>
+            {person.known_for?.map(movie => {
+                return <SearchResultBox key={movie.id}
+                                        category={movie.media_type}
+                                        id={movie.id}
+                                        movieName={movie.title}
+                                        posterPath={movie.poster_path}
+                                        onClick={() => {
+                                        }}/>
+              }
+            )}
           </div>
 
-          <div className={classes.imagesContainer}>
-            {selectedPerson.images.profiles.slice(1).map(image =>
-              <a href={imageUrlSmall + image.file_path}
-                 target="_blank"
-                 rel="noreferrer">
-                <img src={imageUrlSmall + image.file_path}
-                     alt="Foto"
-                     loading="lazy"/>
-              </a>)}
-          </div>
-
-        </div>
-
-      </div>
-
-      <section className={classes.biographySection}>
-        <div className={classes.biography}>
-          {selectedPerson.biography && <span><b>Biografie:</b> {selectedPerson.biography}</span>}
-        </div>
-      </section>
-
-      <div className={classes.knownForHeading}>Bekannt für</div>
-
-      <div className={classes.knownForContainer}>
-        {selectedPerson.known_for.map(movie => {
-            return <SearchResultBox key={movie.id}
-                                    category={movie.media_type}
-                                    id={movie.id}
-                                    movieName={movie.title}
-                                    posterPath={movie.poster_path}
-                                    onClick={() => {
-                                    }}/>
-          }
-        )}
-      </div>
-
-    </section>
+      </section>}
+    </main>
   )
 
   // Calculate Age of Person Today
   function calculateAge(calculateDay: string | null): number {
-    const birthday = new Date(selectedPerson.birthday);
+    const birthday = new Date(person.birthday);
     if (calculateDay) {
       const monthDiff = new Date(calculateDay).getTime() - birthday.getTime();
       const ageDate = new Date(monthDiff);
