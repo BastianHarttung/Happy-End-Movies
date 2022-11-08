@@ -16,7 +16,7 @@ export interface ITmdbStoreInterface {
   getJsonFromTmdb: (movieName: string, pageNumber: number, searchCategory: TCategorySearch) => Promise<ISearch>;
 
   getSelectedMediaOrPerson: (object: any, searchCategory: TCategory) => Promise<void>;
-  getAllDataForMovie: (object: any, searchCategory: TCategoryMedia) => Promise<IMovieAllInfos>;
-  getAllDataForTv: (object: any, searchCategory: TCategoryMedia) => Promise<ITvAllInfos>
-  getAllDataForPerson: (object: any) => Promise<IPersonAllData>;
+  getAllDataForMovie: (id: number, searchCategory: TCategoryMedia) => Promise<IMovieAllInfos>;
+  getAllDataForTv: (id: number, searchCategory: TCategoryMedia) => Promise<ITvAllInfos>
+  getAllDataForPerson: (id: number) => Promise<IPersonAllData>;
 }

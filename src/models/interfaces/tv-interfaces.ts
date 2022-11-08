@@ -12,13 +12,13 @@ export interface ITvFetchedUserInfos {
   images: IImagesWatchFetching,
   category: TCategoryMedia,
   fsk: number,
-  userSelections: {
+  userSelections?: {
     [key: string]: {
       happyEnd_Voting: THasHappyEnd,
       haveSeen: boolean,
     },
   },
-  has_happy_end: THasHappyEnd,
+  has_happy_end?: THasHappyEnd,
   castAndCrew: (ICastTv | ICrewTv)[],
   cast: ICastTv [],
   directors: ICrewTv[],

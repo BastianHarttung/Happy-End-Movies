@@ -28,8 +28,8 @@ const DetailsPerson = () => {
   }, [])
 
   useEffect(() => {
-    console.log(person)
-    const storage = localStorage.getItem("selectedMovie")
+    console.log(person.imdb_id)
+    const storage = localStorage.getItem("selectedPerson")
     if (storage && urlParams) {
       const storagePerson = JSON.parse(storage)
       if (storagePerson.id.toString() === urlParams.id) setPerson(storagePerson)

@@ -71,3 +71,5 @@ export type TWatchDatabase = IMovieAllInfos | ITvAllInfos
 export type TSearchResults = IMovieSearchMultiResult | ITvShowSearchMultiResult | IPersonSearchMultiResult
 
 export type TUserSelections = "haveSeen" | "happyEnd_Voting"
+
+export type TStorageKey = "selectedMovie" | "selectedTv" | "selectedPerson"

@@ -69,34 +69,33 @@ class TmdbStore {
 
   //-------------------------------Movie Fetches--------------------------------------------------------------
   // Collecting all Data from Movie
-  public getAllDataForMovie = async (object: any, searchCategory: TCategoryMedia = "movie"): Promise<IMovieAllInfos> => {
-    console.log("setAllDataForMovie", object, searchCategory)
-    const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "movie") as IMovieDetails;
-    const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "movie") as IImagesWatchFetching;
+  public getAllDataForMovie = async (id: number, searchCategory: TCategoryMedia = "movie"): Promise<IMovieAllInfos> => {
+    console.log("setAllDataForMovie", id, searchCategory)
+    const details: IMovieDetails = await this.getDetailWatchInfos(id, "movie") as IMovieDetails;
+    const images: IImagesWatchFetching = await this.getImagesFromTmdb(id, "movie") as IImagesWatchFetching;
     const fsk: number = await this.getGermanFSKFromDetails(details, "movie");
-    const hasHappyEnd: THasHappyEnd = object.userSelections ? await this.calculateHappyEnd(object) : EHasHappyEnd.NEUTRAL;
-    const castAndCrew: (ICastMovie | ICrewMovie)[] = await this.getCastAndCrewFromMedia(object.id, "movie");
-    const cast: ICastMovie[] = await this.getCastFromMedia(object.id, "movie") as ICastMovie[];
-    const directors: ICrewMovie[] = await TmdbStore.getDirectorFromMovie(object.id);
+    // const hasHappyEnd: THasHappyEnd = object.userSelections ? await this.calculateHappyEnd(object) : EHasHappyEnd.NEUTRAL;
+    const castAndCrew: (ICastMovie | ICrewMovie)[] = await this.getCastAndCrewFromMedia<ICastMovie | ICrewMovie>(id, "movie");
+    const cast: ICastMovie[] = await this.getCastFromMedia(id, "movie") as ICastMovie[];
+    const directors: ICrewMovie[] = await TmdbStore.getDirectorFromMovie<ICrewMovie>(id);
 
     const completeMovieInfo: IMovieAllInfos = {
-      ...object,
       ...details,
       images,
       category: searchCategory,
       fsk,
-      userSelections: object.userSelections ? object.userSelections
-        : {
-          [user.userId]: {
-            happyEnd_Voting: object.userSelections
-              ? object.userSelections[user.userId].happyEnd_Voting
-              : "",
-            haveSeen: object.userSelections
-              ? object.userSelections[user.userId].haveSeen
-              : false,
-          },
-        },
-      has_happy_end: hasHappyEnd,
+      // userSelections: object.userSelections ? object.userSelections
+      //   : {
+      //     [user.userId]: {
+      //       happyEnd_Voting: object.userSelections
+      //         ? object.userSelections[user.userId].happyEnd_Voting
+      //         : "",
+      //       haveSeen: object.userSelections
+      //         ? object.userSelections[user.userId].haveSeen
+      //         : false,
+      //     },
+      //   },
+      // has_happy_end: hasHappyEnd,
       castAndCrew,
       cast,
       directors,
@@ -106,7 +105,7 @@ class TmdbStore {
   }
 
   //Get Details infos from Movie
-  private async getDetailWatchInfos(id: number, categoryWatch: TCategoryMedia): Promise<IMovieDetails | ITvDetails> {
+  private async getDetailWatchInfos<T>(id: number, categoryWatch: TCategoryMedia): Promise<T> {
     const response = await fetch(watchDetailsUrl(categoryWatch, id));
     let data = await response.json();
     return data;
@@ -150,22 +149,22 @@ class TmdbStore {
     else return EHasHappyEnd.NEUTRAL
   };
 
-  private getCastAndCrewFromMedia = async (movieId: number, searchCategory: TCategoryMedia): Promise<(ICastMovie | ICrewMovie)[]> => {
-    const castUrlMovie = castUrl(searchCategory, movieId);
+  private getCastAndCrewFromMedia = async <T>(id: number, searchCategory: TCategoryMedia): Promise<T[]> => {
+    const castUrlMovie = castUrl(searchCategory, id);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
-    const directors: ICrewMovie[] | ICrewTv[] = await TmdbStore.getDirectorFromMovie(movieId);
+    const directors = await TmdbStore.getDirectorFromMovie(id);
     return data.cast.concat(directors);
   };
 
-  private async getCastFromMedia(movieId: number, searchCategory: TCategoryMedia): Promise<(ICastMovie | ICastTv)[]> {
-    const castUrlMovie = castUrl(searchCategory, movieId);
+  private async getCastFromMedia(id: number, searchCategory: TCategoryMedia): Promise<(ICastMovie | ICastTv)[]> {
+    const castUrlMovie = castUrl(searchCategory, id);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
     return data.cast;
   };
 
-  private static async getDirectorFromMovie(movieId: number): Promise<ICrewMovie[]> {
+  private static async getDirectorFromMovie<T>(movieId: number): Promise<T[]> {
     const castUrlMovie = castUrl("movie", movieId);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
@@ -184,32 +183,31 @@ class TmdbStore {
   }
 
   //-----------------------------------TV Show fetches ---------------------------------------------
-  public getAllDataForTv = async (object: any, searchCategory: TCategoryMedia): Promise<ITvAllInfos> => {
-    const details: IMovieDetails = await this.getDetailWatchInfos(object.id, "tv") as IMovieDetails;
-    const images: IImagesWatchFetching = await this.getImagesFromTmdb(object.id, "tv") as IImagesWatchFetching;
+  public getAllDataForTv = async (id: number, searchCategory: TCategoryMedia): Promise<ITvAllInfos> => {
+    const details: ITvDetails = await this.getDetailWatchInfos<ITvDetails>(id, "tv");
+    const images: IImagesWatchFetching = await this.getImagesFromTmdb(id, "tv") as IImagesWatchFetching;
     const fsk: number = await this.getGermanFSKFromDetails(details, "tv");
-    const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
-    const castAndCrew: (ICastMovie | ICrewMovie)[] = await this.getCastAndCrewFromMedia(object.id, "tv");
-    const cast: ICastTv[] = await this.getCastFromMedia(object.id, "tv") as ICastTv[];
-    const directors: ICrewTv[] = await TmdbStore.getDirectorFromTv(object.id);
+    // const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
+    const castAndCrew: (ICastTv | ICrewTv)[] = await this.getCastAndCrewFromMedia<ICastTv | ICrewTv>(id, "tv");
+    const cast: ICastTv[] = await this.getCastFromMedia(id, "tv") as ICastTv[];
+    const directors: ICrewTv[] = await TmdbStore.getDirectorFromTv(id);
 
     const completeTvInfo: ITvAllInfos = {
-      ...object,
       ...details,
       images,
       category: searchCategory,
       fsk,
-      userSelections: {
-        [user.userId]: {
-          happyEnd_Voting: object.userSelections
-            ? object.userSelections[user.userId].happyEnd_Voting
-            : "",
-          haveSeen: object.userSelections
-            ? object.userSelections[user.userId].haveSeen
-            : false,
-        },
-      },
-      has_happy_end: hasHappyEnd,
+      // userSelections: {
+      //   [user.userId]: {
+      //     happyEnd_Voting: object.userSelections
+      //       ? object.userSelections[user.userId].happyEnd_Voting
+      //       : "",
+      //     haveSeen: object.userSelections
+      //       ? object.userSelections[user.userId].haveSeen
+      //       : false,
+      //   },
+      // },
+      // has_happy_end: hasHappyEnd,
       castAndCrew,
       cast,
       directors,

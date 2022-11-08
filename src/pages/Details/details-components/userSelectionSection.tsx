@@ -25,15 +25,12 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
 
   const navigate = useNavigate();
 
-  const initialUserSelection = (): IUserSelections => {
-    if (selectedMedia.userSelections[user.userId]) {
-      return selectedMedia.userSelections
-    } else {
-      return {[user.userId]: {happyEnd_Voting: EHasHappyEnd.NEUTRAL, haveSeen: false}}
+  const [userSelection, setUserSelection] = useState<IUserSelections>({
+    [user.userId]: {
+      happyEnd_Voting: "neutral",
+      haveSeen: false
     }
-  }
-
-  const [userSelection, setUserSelection] = useState<IUserSelections>(initialUserSelection);
+  });
 
   return (
     <div className={`${classes.userSelectionContainer} ${classNameContent}`}>
@@ -52,8 +49,8 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
             onClick={() => handleClickUserSelection("haveSeen", false)}
             className={
               userSelection[user.userId].haveSeen
-                ? classes.eyeRed
-                : classes.eye
+                ? classes.eye
+                : classes.eyeRed
             }
           />
         </div>

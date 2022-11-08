@@ -81,7 +81,7 @@ const Showroom = () => {
                   key={movie.id}
                   id={movie.id}
                   category={movie.category}
-                  movie={movie}
+                  // movie={movie}
                   movieName={"title" in movie && movie.title ? movie.title : "original_name" in movie ? movie.original_name : ""}
                   hasHappyEnd={movie.has_happy_end}
                   posterPath={movie.poster_path}

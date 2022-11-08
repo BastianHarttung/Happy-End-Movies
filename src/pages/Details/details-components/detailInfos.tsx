@@ -12,7 +12,7 @@ interface IDetailInfosProps {
   title: string;
   posterPath: string;
   backdropPath: string;
-  hasHappyEnd: THasHappyEnd;
+  hasHappyEnd?: THasHappyEnd;
   fsk: number;
   releaseDate: string;
   runtime: number;
@@ -91,8 +91,8 @@ const DetailInfos = ({
 
           <div className={`${classes["voting-container"]}`}>
 
-            <VotingRing progress={Math.round(voteAverage * 10)}
-                        radius={35}/>
+            {voteAverage > 0 && <VotingRing progress={Math.round(voteAverage * 10)}
+                         radius={35}/>}
 
             {hasHappyEnd === EHasHappyEnd.TRUE ? (
               <FaSmileBeam

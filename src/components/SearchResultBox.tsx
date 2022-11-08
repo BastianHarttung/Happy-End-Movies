@@ -25,7 +25,7 @@ interface ISearchResultBoxProps {
   mediaType?: TCategory | undefined,
   movieName: string,
   posterPath: string,
-  movie?: IMovieAllInfos | ITvAllInfos | TSearchResults,
+  // movie?: IMovieAllInfos | ITvAllInfos | TSearchResults,
   hasHappyEnd?: THasHappyEnd,
   personGender?: TGender,
   onClick: ({id}: any, category: TCategory) => void,
@@ -37,7 +37,7 @@ const SearchResultBox = ({
                            mediaType,
                            movieName,
                            posterPath,
-                           movie,
+                           // movie,
                            hasHappyEnd,
                            personGender,
                            onClick,
@@ -82,7 +82,7 @@ const SearchResultBox = ({
         return mediaType;
       } else return "movie"
     };
-    onClick(movie, getCategory())
+    onClick(id, getCategory())
     // setMovieClicked(false)
     // setSelectedMediaOrPersonForDetails({id, ...movie}, getCategory())
     //   .then(() => {

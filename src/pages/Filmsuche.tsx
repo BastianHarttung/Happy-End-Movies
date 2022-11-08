@@ -48,11 +48,11 @@ const Filmsuche = () => {
     await searchingTmdb(searchString, category)
   }
 
-  const handleSearchResultBoxClick = (object: { id: number }, category: TCategory) => {
-    setSelectedMediaOrPersonForDetails(object, category)
-      .then(() => {
-        navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(category, object.id.toString()));
-      });
+  const handleSearchResultBoxClick = (id: number, category: TCategory) => {
+    // setSelectedMediaOrPersonForDetails(object, category)
+    //   .then(() => {
+    navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(category, id.toString()));
+    // });
   }
 
   return (
@@ -103,7 +103,7 @@ const Filmsuche = () => {
                                  movieName={"name" in movie ? movie.name : movie.title}
                                  posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}
                                  personGender={"gender" in movie ? movie.gender : 0}
-                                 movie={movie}
+                  // movie={movie}
                                  onClick={handleSearchResultBoxClick}/>)}
             </div>
             <Pagination totalPages={pagesArray}

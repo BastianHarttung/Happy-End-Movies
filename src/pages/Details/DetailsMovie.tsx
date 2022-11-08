@@ -14,57 +14,57 @@ import LoadingMovieStreifen from "../../components/LoadingMovieStreifen";
 
 const DetailsMovie = () => {
 
-  const {selectedMovie, isLoading} = detailsStore;
+  const {selectedMovie, isLoading, checkLocalStorage, setSelectedMediaOrPersonForDetails} = detailsStore;
 
   const [movie, setMovie] = useState(selectedMovie)
 
   const urlParams = useParams();
 
   useEffect(() => {
-    const storage = localStorage.getItem("selectedMovie")
-    if (storage && urlParams) {
-      const storageMovie = JSON.parse(storage)
-      if (storageMovie.id.toString() === urlParams.id) setMovie(storageMovie)
+    if (urlParams) {
+      checkLocalStorage("selectedMovie", Number(urlParams.id))
+      setSelectedMediaOrPersonForDetails(Number(urlParams.id), "movie")
+
     }
   }, []);
 
   return (
     <main className={classes.detailsMediaPage}>
       {isLoading && <LoadingMovieStreifen/>}
-      {movie && <>
+      {selectedMovie && <>
           <section className={classes.mediaSection}>
-              <DetailInfos title={movie.title}
-                           fsk={movie.fsk}
-                           posterPath={movie.poster_path}
-                           backdropPath={movie.backdrop_path}
-                           hasHappyEnd={movie.has_happy_end}
-                           releaseDate={movie.release_date}
-                           runtime={movie.runtime}
-                           genres={movie.genres}
-                           voteAverage={movie.vote_average}
+              <DetailInfos title={selectedMovie.title}
+                           fsk={selectedMovie.fsk}
+                           posterPath={selectedMovie.poster_path}
+                           backdropPath={selectedMovie.backdrop_path}
+                           hasHappyEnd={selectedMovie.has_happy_end ? selectedMovie.has_happy_end : "neutral"}
+                           releaseDate={selectedMovie.release_date}
+                           runtime={selectedMovie.runtime}
+                           genres={selectedMovie.genres}
+                           voteAverage={selectedMovie.vote_average}
                            classNameContent={classes.sectionContent}/>
           </section>
 
-          <section className={classes.beschreibungSection}>
-              <Beschreibung
-                  tagline={movie.tagline}
-                  overview={movie.overview}
-                  className={classes.sectionContent}/>
-          </section>
+        {selectedMovie.overview && <section className={classes.beschreibungSection}>
+            <Beschreibung
+                tagline={selectedMovie.tagline}
+                overview={selectedMovie.overview}
+                className={classes.sectionContent}/>
+        </section>}
 
           <section className={classes.actorSection}>
-              <CastAndCrew castAndCrew={movie.castAndCrew}
+              <CastAndCrew castAndCrew={selectedMovie.castAndCrew}
                            classNameContent={classes.sectionContent}/>
           </section>
 
           <section className={classes.imagesVideosSection}>
               <ImagesVideosSection classNameContent={classes.sectionContent}
-                                   images={movie.images}
-                                   videos={movie.videos.results}/>
+                                   images={selectedMovie.images}
+                                   videos={selectedMovie.videos.results}/>
           </section>
 
           <section className={classes.userSelectionSection}>
-              <UserSelectionSection selectedMedia={movie}
+              <UserSelectionSection selectedMedia={selectedMovie}
                                     classNameContent={classes.sectionContent}/>
           </section>
       </>

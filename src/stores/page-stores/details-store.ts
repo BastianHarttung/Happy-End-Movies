@@ -5,11 +5,11 @@ import {ITvAllInfos} from "../../models/interfaces/tv-interfaces";
 import {IPersonAllData} from "../../models/interfaces/person-interfaces";
 import tmdbStore from "../tmdb-store";
 import databaseStore from "../database-store";
-import {TCategory, THasHappyEnd} from "../../models/types";
+import {TCategory, THasHappyEnd, TStorageKey} from "../../models/types";
 
 
 class DetailsStore {
-  selectedMovie: IMovieAllInfos | null = null; //emptyMovie;
+  selectedMovie: IMovieAllInfos | null = null;
 
   selectedTv: ITvAllInfos = emptyTvShow;
 
@@ -29,29 +29,40 @@ class DetailsStore {
     makeAutoObservable(this);
   }
 
-  //
-  // get isLoading(): boolean {
-  //   if (!!this.selectedMovie) return false
-  //   else return true
-  // }
-
-  public setSelectedMediaOrPersonForDetails = async (object: any, searchCategory: TCategory): Promise<void> => {
+  public setSelectedMediaOrPersonForDetails = async (id: number, searchCategory: TCategory): Promise<void> => {
     this.isLoading = true;
+    // TODO check first if movie is in database
     if (searchCategory === "movie") {
-      const selectMovie = await this.tmdbStore.getAllDataForMovie(object, "movie")
+      const selectMovie = await this.tmdbStore.getAllDataForMovie(id, "movie")
       this.selectedMovie = await selectMovie
       localStorage.setItem("selectedMovie", JSON.stringify(this.selectedMovie))
     } else if (searchCategory === "tv") {
-      const selectTv = await this.tmdbStore.getAllDataForTv(object, "tv")
+      const selectTv = await this.tmdbStore.getAllDataForTv(id, "tv")
       this.selectedTv = await selectTv
       localStorage.setItem("selectedTv", JSON.stringify(this.selectedTv))
     } else {
-      const selectPerson = await this.tmdbStore.getAllDataForPerson(object)
+      const selectPerson = await this.tmdbStore.getAllDataForPerson(id)
       this.selectedPerson = await selectPerson
       localStorage.setItem("selectedPerson", JSON.stringify(this.selectedPerson))
     }
     this.isLoading = false
   };
+
+  checkLocalStorage = (storageKey: TStorageKey, paramId: number) => {
+    const storage = localStorage.getItem(storageKey)
+    if (storage) {
+      const localStorage = JSON.parse(storage)
+      if (storageKey === "selectedMovie") {
+        if (localStorage.id.toString() === paramId) this.selectedMovie = localStorage
+      }
+      if (storageKey === "selectedTv") {
+        if (localStorage.id.toString() === paramId) this.selectedTv = localStorage
+      }
+      if (storageKey === "selectedPerson") {
+        if (localStorage.id.toString() === paramId) this.selectedPerson = localStorage
+      }
+    }
+  }
 
 }
 
