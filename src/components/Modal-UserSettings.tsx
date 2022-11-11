@@ -10,7 +10,7 @@ function ModalUserSettings() {
     darkMode,
     closeUserSettingsModal,
     toggleDarkMode,
-    setColorTheme,
+    // setColorTheme,
   } = globalStore;
 
   return (

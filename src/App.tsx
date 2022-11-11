@@ -27,7 +27,7 @@ function App() {
 
   useEffect(() => {
     loadDarkModeFromLocalStorage();
-  }, []);
+  }, [loadDarkModeFromLocalStorage]);
 
   return (
     <BrowserRouter basename="/happy-end-movies">
@@ -38,6 +38,7 @@ function App() {
           <Route path={ROUTES.LOGIN} element={<Login/>}/>
 
           <Route path="" element={<Menu/>}>
+            <Route path={ROUTES.START} element={<Hauptmenue/>}/>
             <Route
               path={ROUTES.FILMSUCHE}
               element={<Filmsuche/>}
@@ -62,7 +63,6 @@ function App() {
             </Route>
             <Route path={ROUTES.IMPRESSUM} element={<Impressum/>}/>
             <Route path={ROUTES.HILFE} element={<Hilfe/>}/>
-            <Route path={ROUTES.START} element={<Hauptmenue/>}/>
           </Route>
           <Route path="*" element={<WrongUrl/>}/>
         </Routes>

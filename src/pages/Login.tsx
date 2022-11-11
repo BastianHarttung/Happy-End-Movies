@@ -3,6 +3,7 @@ import classes from "./Login.module.scss";
 import {ReactComponent as HappyLogo} from "../assets/logos/Happy-End_logo-mit-Text.svg";
 import {Button} from "../styleComponents/ButtonStyleComp";
 import {Link} from "react-router-dom";
+import {ROUTES} from "../models/routes";
 
 function Login() {
 
@@ -30,7 +31,7 @@ function Login() {
         </div>
       </div>
 
-      <Link to="/filmsuche">
+      <Link to={ROUTES.START}>
         <Button name="Gast-Zugang"
                 onClick={() => {
                 }}/>

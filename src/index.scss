@@ -120,13 +120,6 @@ code {
   display: flex;
 }
 
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 main {
   min-height: calc(100vh - 130px);
 }

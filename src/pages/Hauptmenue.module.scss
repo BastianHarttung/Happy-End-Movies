@@ -1,37 +1,42 @@
 .hauptmenueSection {
-    min-height: calc(100vh - 190px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .startImage {
-    object-fit: contain;
-    height: 50vh;
-    width: 100%;
+  object-fit: contain;
+  height: 50vh;
+  width: 100%;
 }
 
 .buttonContainer {
-    display: flex;
-    flex-direction: column;
+  max-width: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 80px;
+  margin: 0 16px;
 }
+
 .button {
-    background-color: var(--main-color-white);
-    font-size: 15px;
-    font-weight: 500;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 0px;
-    border-radius: 10px;
-    text-align: center;
-    padding: 8px;
-    margin: 5px;
-    cursor: pointer;
-    transition: 150ms;
+  background-color: var(--main-color-white);
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0px;
+  border-radius: 10px;
+  text-align: center;
+  padding: 8px;
+  margin: 5px;
+  cursor: pointer;
+  transition: 150ms;
 }
+
 .button:hover {
-    background-color: var(--main-color);
+  background-color: var(--main-color);
 }

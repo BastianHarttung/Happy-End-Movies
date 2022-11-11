@@ -36,7 +36,7 @@ const Pagination = ({
     } else if (activePage > totalPages[totalPages.length - 1] - 4) {
       setDots({...dots, after: false});
     }
-  }, [activePage]);
+  }, [activePage, dots, totalPages]);
 
   return (
     <section className={classes.paginationSection}>

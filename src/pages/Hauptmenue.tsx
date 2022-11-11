@@ -1,26 +1,50 @@
-import image from "../assets/img/hauptmenue_movie-night.png";
 import classes from './Hauptmenue.module.scss';
-import {useNavigate} from "react-router-dom";
-import {MdArrowForwardIos} from "react-icons/all";
+import {ROUTES} from "../models/routes";
+import ButtonStart from "../styleComponents/button-start";
+//Images
+import ImageFilmsuche from "../assets/icons/filmsuche_web_search.svg"
+import ImageShowroom from "../assets/icons/showroom_home_cinema.svg"
+import ImageEinstellungen from "../assets/icons/einstellungen_designer.svg"
 
 const Hauptmenue = () => {
-  const navigate = useNavigate();
+
+  const buttons = [
+    {
+      order: 1,
+      label: "Filmsuche",
+      description: "Suche einen Film aus einer Internet-Datenbank.",
+      linkTo: ROUTES.FILMSUCHE,
+      image: ImageFilmsuche
+    },
+    {
+      order: 2,
+      label: "Showroom",
+      description: "Eine Watchlist mit Filmen nach Happy-End bewertet.",
+      linkTo: ROUTES.SHOWROOM,
+      image: ImageShowroom
+    },
+    {
+      order: 3,
+      label: "Einstellungen",
+      description: "Dark-Mode und Color-Themes",
+      linkTo: ROUTES.START,
+      image: ImageEinstellungen
+    }
+  ]
 
   return (
-    <section className={classes.hauptmenueSection}>
-      <img className={classes.startImage} src={image} alt="Movie Night with Happy End"/>
+    <main className={classes.hauptmenueSection}>
+
       <div className={classes.buttonContainer}>
-        <button className={classes.button}
-                onClick={() => navigate("/filmsuche")}>Gebe einem Film ein Happy End
-          <MdArrowForwardIos/>
-        </button>
-        <button className={classes.button}
-                onClick={() => navigate("/showroom")}>Durchsuche die Datenbank nach Filmen mit Happy End
-          <MdArrowForwardIos/>
-        </button>
+      {buttons.map((button) => (
+        <ButtonStart
+          label={button.label}
+          description={button.description}
+          linkTo={button.linkTo}
+          image={button.image}/>))}
       </div>
 
-    </section>
+    </main>
   );
 };
 
