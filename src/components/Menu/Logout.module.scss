@@ -1,0 +1,93 @@
+/*-------------------User and Logout----------------*/
+.logoutLinkContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.userContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover .settingsIcon {
+    animation: rotate 2s linear infinite;
+  }
+}
+
+.username {
+  color: white;
+  font-size: 1.2em;
+  font-weight: 500;
+  margin-right: 5px;
+}
+
+.settingsIcon {
+  color: white;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+
+  //&:hover {
+  //  animation: rotate 2s linear infinite;
+  //}
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.logoutLink {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.logoutLink::after {
+  content: "";
+  background-color: white;
+  width: 0%;
+  height: 2px;
+  transition: width var(--hover-time-short) ease-in-out;
+}
+
+.logoutLink:hover::after {
+  width: 100%;
+}
+
+.linkContainer {
+  display: flex;
+}
+
+.icons {
+  color: white;
+  height: 20px;
+  filter: invert(1);
+  margin-left: 7px;
+}
+
+@media (max-width: 800px) {
+  .logoutLinkContainer {
+    margin: 0px 15px;
+  }
+  .icons {
+    height: 30px;
+    margin-left: 0;
+  }
+  .logoutLinkContainer {
+    background-color: var(--main-color);
+    padding: 10px 20px;
+    border-radius: 0px 0px var(--border-radius-small) var(--border-radius-small);
+    z-index: 10;
+  }
+  .logoutLink:hover::after {
+    width: 0%;
+  }
+}

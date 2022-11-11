@@ -12,7 +12,6 @@ interface INavigationProps {
 }
 
 const Navigation = ({isHandy}: INavigationProps) => {
-  const {user, openUserSettingsModal} = globalStore;
 
   return (
     <nav>
@@ -36,26 +35,8 @@ const Navigation = ({isHandy}: INavigationProps) => {
           />
         </div>
       </Link>
-
-      <div className={classes.logoutLinkContainer}>
-        <div
-          className={classes.userContainer}
-          onClick={openUserSettingsModal}
-        >
-          {!isHandy && <div className={classes.username}>{user.name}</div>}
-          <IoSettingsOutline className={classes.settingsIcon}/>
-        </div>
-        <Link to="/" className={classes.logoutLink}>
-          <div className={classes.linkContainer}>
-            {!isHandy && <div>Logout</div>}
-            <img src={iconSignout}
-                 alt="Logout"
-                 className={classes.icons}/>
-          </div>
-        </Link>
-      </div>
     </nav>
   );
 };
 
-export default observer(Navigation);
+export default Navigation;

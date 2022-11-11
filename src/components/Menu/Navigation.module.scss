@@ -1,133 +1,61 @@
 nav {
-   display: flex;
+  display: flex;
 }
 
 .navLinkContainer {
-   color: white;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   font-size: 1.2rem;
-   text-decoration: none;
-   margin: 0px 15px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2rem;
+  text-decoration: none;
+  margin: 0px 15px;
 }
 
 .navLinkContainer::after {
-   content: "";
-   background-color: white;
-   width: 0%;
-   height: 2px;
-   transition: width var(--hover-time-short) ease-in-out;
-   margin-top: 2px;
+  content: "";
+  background-color: white;
+  width: 0%;
+  height: 2px;
+  transition: width var(--hover-time-short) ease-in-out;
+  margin-top: 2px;
 }
 
 .navLinkContainer:hover::after {
-   width: 100%;
+  width: 100%;
 }
 
 .linkContainer {
-   display: flex;
-   align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .icons {
-   color: white;
-   height: 20px;
-   filter: invert(1);
-   margin-left: 7px;
-}
-
-/*-------------------User and Logout----------------*/
-.logoutLinkContainer {
-   display: flex;
-   align-items: center;
-}
-
-.userContainer {
-   display: flex;
-   align-items: center;
-   cursor: pointer;
-
-   &:hover .settingsIcon {
-      animation: rotate 2s linear infinite;
-   }
-}
-
-.username {
-   color: white;
-   font-size: 1.2em;
-   font-weight: 500;
-   margin: 0px 5px 0px 30px;
-}
-
-.settingsIcon {
-   color: white;
-   height: 20px;
-   width: 20px;
-   cursor: pointer;
-
-   //&:hover {
-   //  animation: rotate 2s linear infinite;
-   //}
-}
-
-@keyframes rotate {
-   0% {
-      transform: rotate(0deg);
-   }
-   100% {
-      transform: rotate(360deg);
-   }
-}
-
-.logoutLink {
-   color: white;
-   display: flex;
-   flex-direction: column;
-   font-size: 1.2rem;
-   text-decoration: none;
-   margin: 0px 0px 0px 10px;
-}
-
-.logoutLink::after {
-   content: "";
-   background-color: white;
-   width: 0%;
-   height: 2px;
-   transition: width var(--hover-time-short) ease-in-out;
-}
-
-.logoutLink:hover::after {
-   width: 100%;
+  color: white;
+  height: 20px;
+  filter: invert(1);
+  margin-left: 7px;
 }
 
 @media (max-width: 800px) {
-   nav {
-      width: 100%;
-      justify-content: space-around;
-   }
-   .logoutLinkContainer {
-      margin: 0px 15px;
-   }
-   .icons {
-      height: 30px;
-      margin-left: 0;
-   }
-   .navLinkContainer,
-   .logoutLinkContainer {
-      background-color: var(--main-color);
-      padding: 10px 20px;
-      border-radius: 0px 0px var(--border-radius-small)
-         var(--border-radius-small);
-      z-index: 10;
-   }
-   .navLinkContainer:hover::after {
-      width: 0%;
-   }
-   .navLinkContainer:hover {
-      transform: translateY(15px);
-   }
-   .logoutLink:hover::after {
-      width: 0%;
-   }
+  nav {
+    width: 100%;
+    justify-content: space-around;
+  }
+  .icons {
+    height: 30px;
+    margin-left: 0;
+  }
+  .navLinkContainer {
+    background-color: var(--main-color);
+    padding: 10px 20px;
+    border-radius: 0px 0px var(--border-radius-small) var(--border-radius-small);
+    z-index: 10;
+  }
+  .navLinkContainer:hover::after {
+    width: 0%;
+  }
+  .navLinkContainer:hover {
+    transform: translateY(15px);
+  }
 }
