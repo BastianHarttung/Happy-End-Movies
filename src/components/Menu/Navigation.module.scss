@@ -1,5 +1,6 @@
 nav {
   display: flex;
+  gap: 32px
 }
 
 .navLinkContainer {
@@ -9,7 +10,6 @@ nav {
   align-items: center;
   font-size: 1.2rem;
   text-decoration: none;
-  margin: 0px 15px;
 }
 
 .navLinkContainer::after {
@@ -19,6 +19,10 @@ nav {
   height: 2px;
   transition: width var(--hover-time-short) ease-in-out;
   margin-top: 2px;
+}
+
+.navLinkContainer.active::after {
+  width: 100% !important;
 }
 
 .navLinkContainer:hover::after {

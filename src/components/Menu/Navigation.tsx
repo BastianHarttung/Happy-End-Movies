@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import icons_search_light from "../../assets/icons/search_light.svg";
 import icon_projector from "../../assets/icons/projector_light.svg";
 import classes from "./Navigation.module.scss";
@@ -6,16 +6,23 @@ import iconSignout from "../../assets/icons/sign-out-alt_light.svg";
 import {IoSettingsOutline} from "react-icons/all";
 import globalStore from "../../stores/global-store";
 import {observer} from "mobx-react";
+import {ROUTES} from "../../models/routes";
 
 interface INavigationProps {
   isHandy: boolean,
 }
 
 const Navigation = ({isHandy}: INavigationProps) => {
+  const location = useLocation()
+  console.log(location.pathname === ROUTES.FILMSUCHE)
+
+  const filmsucheClasses = `${classes.navLinkContainer} ${location.pathname === ROUTES.FILMSUCHE ? classes.active : ""}`
+  const showroomClasses = `${classes.navLinkContainer} ${location.pathname === ROUTES.SHOWROOM ? classes.active : ""}`
 
   return (
     <nav>
-      <Link to="/filmsuche" className={classes.navLinkContainer}>
+
+      <Link to={ROUTES.FILMSUCHE} className={filmsucheClasses}>
         <div className={classes.linkContainer}>
           {!isHandy && <div>Filmsuche</div>}
           <img
@@ -25,7 +32,8 @@ const Navigation = ({isHandy}: INavigationProps) => {
           />
         </div>
       </Link>
-      <Link to="/showroom" className={classes.navLinkContainer}>
+
+      <Link to={ROUTES.SHOWROOM} className={showroomClasses}>
         <div className={classes.linkContainer}>
           {!isHandy && <div>Showroom</div>}
           <img
@@ -35,6 +43,7 @@ const Navigation = ({isHandy}: INavigationProps) => {
           />
         </div>
       </Link>
+
     </nav>
   );
 };
