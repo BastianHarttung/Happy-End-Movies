@@ -2,16 +2,15 @@ import {makeAutoObservable} from "mobx";
 import {
   castUrl,
   imagesUrl,
-  watchDetailsUrl, personDetailUrl,
-  searchUrl, trendingMoviesUrl, emptyTvShow, emptyPerson
+  watchDetailsUrl,
+  personDetailUrl,
+  searchUrl,
+  trendingMoviesUrl
 } from "../constants";
 import globalStore from "./global-store";
 //Models
 import {TCategory, TCategoryMedia, TCategorySearch, THasHappyEnd, TSearchResults} from "../models/types";
-import {
-  IImagesPersonFetching,
-  IImagesWatchFetching, ISearch,
-} from "../models/interfaces/interfaces";
+import {IImagesWatchFetching, ISearch, IUserSelections} from "../models/interfaces/interfaces";
 import {ICastMovie, ICrewMovie, IMovieAllInfos, IMovieDetails} from "../models/interfaces/movie-interfaces";
 import {ICastTv, ICrewTv, ITvAllInfos, ITvDetails} from "../models/interfaces/tv-interfaces";
 import {IPersonAllData, IPersonFetching, IPersonSearch} from "../models/interfaces/person-interfaces";
@@ -68,6 +67,15 @@ class TmdbStore {
     }
   };
 
+  private defaultUserSelection = (): IUserSelections => {
+    return {
+      [this.globalStore.user.userId]: {
+        happyEnd_Voting: null,
+        haveSeen: false,
+      }
+    }
+  }
+
   //-------------------------------Movie Fetches--------------------------------------------------------------
   // Collecting all Data from Movie
   public getAllDataForMovie = async (id: number, searchCategory: TCategoryMedia = "movie"): Promise<IMovieAllInfos> => {
@@ -75,6 +83,7 @@ class TmdbStore {
     const details: IMovieDetails = await TmdbStore.getDetailWatchInfos<IMovieDetails>(id, "movie");
     const images: IImagesWatchFetching = await TmdbStore.getImagesFromTmdb<IImagesWatchFetching>(id, "movie");
     const fsk: number = await TmdbStore.getGermanFSKFromDetails(details, "movie");
+    const defaultUserSelection = this.defaultUserSelection();
     const castAndCrew: (ICastMovie | ICrewMovie)[] = await this.getCastAndCrewFromMedia<ICastMovie | ICrewMovie>(id, "movie");
     const cast: ICastMovie[] = await TmdbStore.getCastFromMedia<ICastMovie>(id, "movie");
     const directors: ICrewMovie[] = await TmdbStore.getDirectorFromMovie<ICrewMovie>(id);
@@ -84,13 +93,8 @@ class TmdbStore {
       images,
       category: searchCategory,
       fsk,
-      userSelections: {
-        [this.globalStore.user.userId]: {
-          happyEnd_Voting: "neutral",
-          haveSeen: false,
-        }
-      },
-      has_happy_end: "neutral",
+      userSelections: defaultUserSelection,
+      has_happy_end: null,
       castAndCrew,
       cast,
       directors,
@@ -180,6 +184,7 @@ class TmdbStore {
     const details: ITvDetails = await TmdbStore.getDetailWatchInfos<ITvDetails>(id, "tv");
     const images: IImagesWatchFetching = await TmdbStore.getImagesFromTmdb<IImagesWatchFetching>(id, "tv");
     const fsk: number = await TmdbStore.getGermanFSKFromDetails(details, "tv");
+    const defaultUserSelection = this.defaultUserSelection();
     const castAndCrew: (ICastTv | ICrewTv)[] = await this.getCastAndCrewFromMedia<ICastTv | ICrewTv>(id, "tv");
     const cast: ICastTv[] = await TmdbStore.getCastFromMedia<ICastTv>(id, "tv");
     const directors: ICrewTv[] = await TmdbStore.getDirectorFromTv(id);
@@ -189,13 +194,8 @@ class TmdbStore {
       images,
       category: searchCategory,
       fsk,
-      userSelections: {
-        [this.globalStore.user.userId]: {
-          happyEnd_Voting: "neutral",
-          haveSeen: false,
-        }
-      },
-      has_happy_end: "neutral",
+      userSelections: defaultUserSelection,
+      has_happy_end: null,
       castAndCrew,
       cast,
       directors,

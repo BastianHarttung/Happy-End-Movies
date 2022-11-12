@@ -12,7 +12,7 @@ export interface IUser {
 
 export interface IUserSelections {
   [key: string]: {
-    happyEnd_Voting: THasHappyEnd,
+    happyEnd_Voting: THasHappyEnd | null,
     haveSeen: boolean,
   }
 }

@@ -1,7 +1,9 @@
 import {TCategoryMedia, TGender, THasHappyEnd, TJob, TKnownForDepartment} from "../types";
 import {
   IImagesWatchFetching,
-  IMediaBaseDetails, IMediaBaseSearch,
+  IMediaBaseDetails,
+  IMediaBaseSearch,
+  IUserSelections,
 } from "./interfaces";
 
 
@@ -12,20 +14,15 @@ export interface ITvFetchedUserInfos {
   images: IImagesWatchFetching,
   category: TCategoryMedia,
   fsk: number,
-  userSelections?: {
-    [key: string]: {
-      happyEnd_Voting: THasHappyEnd,
-      haveSeen: boolean,
-    },
-  },
-  has_happy_end?: THasHappyEnd,
+  userSelections: IUserSelections,
+  has_happy_end: THasHappyEnd | null,
   castAndCrew: (ICastTv | ICrewTv)[],
   cast: ICastTv [],
   directors: ICrewTv[],
 }
 
 // Coming from TMDB
-export interface ITvShowSearch extends IMediaBaseSearch{
+export interface ITvShowSearch extends IMediaBaseSearch {
   first_air_date: string,       //2022-02-23
   name: string,
   origin_country: string[],
