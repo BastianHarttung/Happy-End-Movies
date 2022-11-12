@@ -110,10 +110,14 @@ const DetailInfos = ({
               <FaMeh
                 className={classes.happyEndSmileyOverall}
                 style={{color: "var(--orange)"}}
-                title="Neutral"
+                title="Ende neutral"
               />
             ) : (
-              ""
+              <FaMeh
+                className={classes.happyEndSmileyOverall}
+                style={{color: "var(--gray)"}}
+                title="Kein Voting vorhanden"
+              />
             )}
           </div>
 
