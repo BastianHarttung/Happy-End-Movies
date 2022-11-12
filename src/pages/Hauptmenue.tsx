@@ -38,6 +38,7 @@ const Hauptmenue = () => {
       <div className={classes.buttonContainer}>
       {buttons.map((button) => (
         <ButtonStart
+          key={button.order}
           label={button.label}
           description={button.description}
           linkTo={button.linkTo}
