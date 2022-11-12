@@ -8,5 +8,6 @@ export interface IFilmsucheStoreInterface {
   tmdbStore: ITmdbStoreInterface;
   paginationStore: IPaginationStoreInterface;
 
-  searchingTmdb: (searchString: string, searchCategory: TCategorySearch) => Promise<void>;
+  searchingOnTmdb(searchString: string, searchCategory: TCategorySearch): Promise<void>;
+  // resetSearch(): void;
 }

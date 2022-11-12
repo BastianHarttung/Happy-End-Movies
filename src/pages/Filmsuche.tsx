@@ -19,7 +19,7 @@ const Filmsuche = () => {
 
   const {
     searchStarted,
-    searchingTmdb,
+    searchingOnTmdb,
     tmdbStore: {
       searchedMedias,
       searchCategory,
@@ -40,7 +40,7 @@ const Filmsuche = () => {
   }, []);
 
   const handleSearch = async (searchString: string, category: TCategorySearch) => {
-    await searchingTmdb(searchString, category)
+    await searchingOnTmdb(searchString, category)
   }
 
   const handleSearchResultBoxClick = (id: number, category: TCategory) => {
@@ -55,7 +55,7 @@ const Filmsuche = () => {
         <SearchBar
           length={22}
           size={19}
-          searchMovie={(movieName) => searchingTmdb(movieName, searchCategory)}
+          searchMovie={(movieName) => searchingOnTmdb(movieName, searchCategory)}
           saveSearchFor={(movieName) => setSearchFor(movieName)}
         />
 

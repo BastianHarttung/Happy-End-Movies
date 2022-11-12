@@ -5,6 +5,11 @@ export interface IPaginationStoreInterface {
   pageLength: number,
   pagesArray: number[],
 
-  setActivePage: (pageNumber: number) => void,
-  makePageArray: (numberPages: number) => number[],
+  resetPagination(): void,
+
+  setActivePage(pageNumber: number): void,
+
+  setPagesArray(totalPages: number): void,
+
+  makePageArray(numberPages: number): number[],
 }

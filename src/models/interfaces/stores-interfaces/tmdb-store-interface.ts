@@ -12,11 +12,19 @@ export interface ITmdbStoreInterface {
   popularMedias: TSearchResults[];
   isLoadingTmdb: boolean;
 
-  getPopularMoviesFromTmdb: () => void;
-  getJsonFromTmdb: (movieName: string, pageNumber: number, searchCategory: TCategorySearch) => Promise<ISearch>;
+  resetTmdbStore(): void;
 
-  getSelectedMediaOrPerson: (object: any, searchCategory: TCategory) => Promise<void>;
-  getAllDataForMovie: (id: number, searchCategory: TCategoryMedia) => Promise<IMovieAllInfos>;
-  getAllDataForTv: (id: number, searchCategory: TCategoryMedia) => Promise<ITvAllInfos>
-  getAllDataForPerson: (id: number) => Promise<IPersonAllData>;
+  getPopularMoviesFromTmdb(): void;
+
+  setDataFromTmdb(searchString: string, searchCategory: TCategorySearch, activePage: number): Promise<ISearch>;
+
+  fetchJsonFromTmdb(movieName: string, pageNumber: number, searchCategory: TCategorySearch): Promise<ISearch>;
+
+  getSelectedMediaOrPerson(object: any, searchCategory: TCategory): Promise<void>;
+
+  getAllDataForMovie(id: number, searchCategory: TCategoryMedia): Promise<IMovieAllInfos>;
+
+  getAllDataForTv(id: number, searchCategory: TCategoryMedia): Promise<ITvAllInfos>
+
+  getAllDataForPerson(id: number): Promise<IPersonAllData>;
 }

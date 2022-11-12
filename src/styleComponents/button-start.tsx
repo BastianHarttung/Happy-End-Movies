@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {CSSProperties, useState} from "react";
+import {useState} from "react";
 
 
 interface IButtonStartProps {

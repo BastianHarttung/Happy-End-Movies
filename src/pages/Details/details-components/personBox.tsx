@@ -36,6 +36,7 @@ const PersonBox = ({person}: IPersonBoxProps) => {
         }
         alt={person.name}
         title={person.name}
+        loading="lazy"
       />
       <h5 className={classes.actorName}>{person.name}</h5>
 

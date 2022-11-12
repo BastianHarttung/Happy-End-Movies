@@ -17,17 +17,11 @@ class FilmsucheStore {
   }
 
   // Search Movie by clicking the Search Button
-  public searchingTmdb = async (searchString: string, searchCategory: TCategorySearch = "multi"): Promise<void> => {
-    this.tmdbStore.searchCategory = searchCategory;
+  public searchingOnTmdb = async (searchString: string, searchCategory: TCategorySearch = "multi"): Promise<void> => {
     if (searchString.length > 0) {
       this.searchStarted = true;
-      this.tmdbStore.searchResult = searchString;
-      this.tmdbStore.isLoadingTmdb = true;
-      const tmdbData = await this.tmdbStore.getJsonFromTmdb(searchString, this.paginationStore.activePage, searchCategory);
-      this.tmdbStore.searchTotalResults = tmdbData.total_results;
-      this.paginationStore.pagesArray = this.paginationStore.makePageArray(tmdbData.total_pages);
-      this.tmdbStore.searchedMedias = tmdbData.results;
-      this.tmdbStore.isLoadingTmdb = false;
+      const data = await this.tmdbStore.setDataFromTmdb(searchString, searchCategory, this.paginationStore.activePage)
+      this.paginationStore.setPagesArray(data.total_pages)
       window.location.hash = searchString;
     } else {
       this.resetSearch()
@@ -36,11 +30,8 @@ class FilmsucheStore {
 
   private resetSearch = () => {
     this.searchStarted = false;
-    this.tmdbStore.searchResult = "";
-    this.tmdbStore.searchTotalResults = 0;
-    this.paginationStore.pagesArray = [];
-    this.tmdbStore.searchedMedias = [];
-    this.tmdbStore.isLoadingTmdb = false;
+    this.tmdbStore.resetTmdbStore();
+    this.paginationStore.resetPagination();
     window.location.hash = "";
   }
 

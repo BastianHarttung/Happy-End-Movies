@@ -34,6 +34,40 @@ const DetailInfos = ({
                        classNameContent,
                      }: IDetailInfosProps) => {
 
+  //Berechnet die Laufzeit in Stunden und Minuten
+  const laufzeitInStunden = (laufzeit: number): { stunden: number, minuten: number } => {
+    const laufzeitStunden = Math.floor(laufzeit / 60);
+    const restminuten = laufzeit - laufzeitStunden * 60;
+    return {stunden: laufzeitStunden, minuten: restminuten};
+  }
+
+  const happyEndSmiley = () => {
+    if (hasHappyEnd === EHasHappyEnd.TRUE) return (
+      <FaSmileBeam
+        className={classes.happyEndSmileyOverall}
+        style={{color: "var(--green)"}}
+        title="Happy End"
+      />)
+    else if (hasHappyEnd === EHasHappyEnd.FALSE) return (
+      <FaSadTear
+        className={classes.happyEndSmileyOverall}
+        style={{color: "var(--red)"}}
+        title="Kein Happy End"
+      />)
+    else if (hasHappyEnd === EHasHappyEnd.NEUTRAL) return (
+      <FaMeh
+        className={classes.happyEndSmileyOverall}
+        style={{color: "var(--orange)"}}
+        title="Ende neutral"
+      />)
+    else return (
+        <FaMeh
+          className={classes.happyEndSmileyOverall}
+          style={{color: "var(--gray)"}}
+          title="Kein Voting vorhanden"
+        />)
+  }
+
   return (
     <div className={classNameContent}>
       <img
@@ -92,46 +126,16 @@ const DetailInfos = ({
           <div className={`${classes["voting-container"]}`}>
 
             {voteAverage > 0 && <VotingRing progress={Math.round(voteAverage * 10)}
-                         radius={35}/>}
+                                            radius={35}/>}
 
-            {hasHappyEnd === EHasHappyEnd.TRUE ? (
-              <FaSmileBeam
-                className={classes.happyEndSmileyOverall}
-                style={{color: "var(--green)"}}
-                title="Happy End"
-              />
-            ) : hasHappyEnd === EHasHappyEnd.FALSE ? (
-              <FaSadTear
-                className={classes.happyEndSmileyOverall}
-                style={{color: "var(--red)"}}
-                title="Kein Happy End"
-              />
-            ) : hasHappyEnd === EHasHappyEnd.NEUTRAL ? (
-              <FaMeh
-                className={classes.happyEndSmileyOverall}
-                style={{color: "var(--orange)"}}
-                title="Ende neutral"
-              />
-            ) : (
-              <FaMeh
-                className={classes.happyEndSmileyOverall}
-                style={{color: "var(--gray)"}}
-                title="Kein Voting vorhanden"
-              />
-            )}
+            {happyEndSmiley()}
+
           </div>
 
         </div>
       </div>
     </div>
   );
-
-  //Berechnet die Laufzeit in Stunden und Minuten
-  function laufzeitInStunden(laufzeit: number): { stunden: number, minuten: number } {
-    const laufzeitStunden = Math.floor(laufzeit / 60);
-    const restminuten = laufzeit - laufzeitStunden * 60;
-    return {stunden: laufzeitStunden, minuten: restminuten};
-  }
 
 };
 

@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {action, makeAutoObservable, runInAction} from "mobx";
 import {
   castUrl,
   imagesUrl,
@@ -35,25 +35,54 @@ class TmdbStore {
   isLoadingTmdb: boolean = false;
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {setDataFromTmdb: action});
   }
 
-  getPopularMoviesFromTmdb = (): void => {
+  public resetTmdbStore = () => {
+    this.searchResult = "";
+    this.searchTotalResults = 0;
+    this.searchedMedias = [];
+    this.isLoadingTmdb = false;
+  }
+
+  public getPopularMoviesFromTmdb = (): void => {
     fetch(trendingMoviesUrl)
       .then(async (response) => {
         const data = await response.json();
-        this.popularMedias = data.results;
+        runInAction(() => {
+          this.popularMedias = data.results;
+        })
       })
       .catch((error) => {
         console.log("Fetching Error Popular Movies", error.message)
       })
   }
 
-  getJsonFromTmdb = async (movieName: string, pageNumber: number = 1, searchCategory: TCategorySearch): Promise<ISearch> => {
+  public setDataFromTmdb = async (searchString: string, searchCategory: TCategorySearch = "multi", activePage: number): Promise<ISearch> => {
+    this.isLoadingTmdb = true;
+    this.searchCategory = searchCategory;
+    this.searchResult = searchString;
+
+    let data: ISearch = {page: 0, results: [], total_pages: 0, total_results: 0};
+
+    this.fetchJsonFromTmdb(searchString, activePage, searchCategory)
+      .then((tmdbData) => {
+        runInAction(() => {
+          this.searchTotalResults = tmdbData.total_results;
+          this.searchedMedias = tmdbData.results;
+          this.isLoadingTmdb = false;
+        })
+        window.location.hash = searchString;
+        data = tmdbData
+      })
+    return data
+  }
+
+  public fetchJsonFromTmdb = async (movieName: string, pageNumber: number = 1, searchCategory: TCategorySearch): Promise<ISearch> => {
     const response = await fetch(searchUrl(searchCategory, movieName, pageNumber));
     let data = await response.json();
     console.log("data from Tmdb", data);
-    this.searchedMedias = data.results;
+    // this.searchedMedias = data.results;
     return data;
   }
 

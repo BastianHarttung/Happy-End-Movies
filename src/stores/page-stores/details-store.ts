@@ -1,5 +1,5 @@
-import {computed, makeAutoObservable} from "mobx";
-import {emptyMovie, emptyPerson, emptyTvShow} from "../../constants";
+import {makeAutoObservable} from "mobx";
+import {emptyPerson, emptyTvShow} from "../../constants";
 import {IMovieAllInfos} from "../../models/interfaces/movie-interfaces";
 import {ITvAllInfos} from "../../models/interfaces/tv-interfaces";
 import {IPersonAllData} from "../../models/interfaces/person-interfaces";

@@ -1,7 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import {IPaginationStoreInterface} from "../models/interfaces/stores-interfaces/pagination-store-interface";
 
-class PaginationStore<IPaginationStoreInterface> {
+class PaginationStore {
   totalResults: number = 0;
 
   totalPages: number = 0;
@@ -16,12 +16,20 @@ class PaginationStore<IPaginationStoreInterface> {
     makeAutoObservable(this)
   }
 
-  setActivePage = (pageNumber: number) => {
+  public resetPagination = () => {
+    this.pagesArray = []
+  }
+
+  public setActivePage = (pageNumber: number) => {
     this.activePage = pageNumber
   }
 
+  public setPagesArray = (totalPages: number) => {
+    this.pagesArray = this.makePageArray(totalPages);
+  }
+
   // Make an Array with Pages
-  makePageArray = (numberPages: number): number[] => {
+  public makePageArray = (numberPages: number): number[] => {
     let pageArray = [];
     for (let i = 1; i <= numberPages; i++) {
       pageArray.push(i);
