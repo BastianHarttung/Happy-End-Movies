@@ -53,7 +53,7 @@ const Sidebar = ({sidebarOpen, onCloseSidebar}: ISidebarProps) => {
         <div className={classes.searchContainer}>
           <SearchBar
             length={13}
-            searchSize={15}
+            size={15}
             searchMovie={(movieName, searchCategory) => searchMovieDb(movieName, searchCategory)}
             saveSearchFor={setSearchFor}
           />

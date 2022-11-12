@@ -3,6 +3,7 @@ import {useEffect} from "react";
 import {Route, BrowserRouter, Routes} from "react-router-dom";
 import {observer} from "mobx-react";
 import "dotenv/config";
+import {ROUTES} from "./models/routes";
 import globalStore from "./stores/global-store";
 
 import Hauptmenue from "./pages/Hauptmenue";
@@ -17,7 +18,7 @@ import WrongUrl from "./pages/WrongUrl";
 import Showroom from "./pages/Showroom/Showroom";
 import DetailsTv from "./pages/Details/DetailsTv";
 import ModalUserSettings from "./components/Modal-UserSettings";
-import {ROUTES} from "./models/routes";
+
 
 function App() {
   const {

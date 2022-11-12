@@ -6,12 +6,12 @@ import {TCategorySearch} from "../models/types";
 
 interface ISearchBarProps {
   length: number,
-  searchSize: number,
+  size?: number,
   searchMovie: (movieName: string, searchCategory?: TCategorySearch) => void,
   saveSearchFor: (movieName: string) => void,
 }
 
-const SearchBar = ({length, searchSize, searchMovie, saveSearchFor}: ISearchBarProps) => {
+const SearchBar = ({length, size = 50, searchMovie, saveSearchFor}: ISearchBarProps) => {
 
   const locationHashString: string = window.location.hash.substring(1).split("%20").join(" ");
   const [movieName, setMovieName] = useState<string>(locationHashString);
@@ -32,7 +32,7 @@ const SearchBar = ({length, searchSize, searchMovie, saveSearchFor}: ISearchBarP
     <div className={classes.searchBarContainer}>
       <div className={classes.searchContainer}>
         <input className={classes.searchInput}
-               style={{fontSize: searchSize + "px"}}
+               style={{fontSize: size + "px"}}
                type="search"
                size={length}
                placeholder="Suche"
@@ -49,7 +49,7 @@ const SearchBar = ({length, searchSize, searchMovie, saveSearchFor}: ISearchBarP
           setMovieName("");
           window.location.hash = "";
         }}
-                  style={{width: searchSize + 5, height: searchSize + 5}}
+                  style={{width: size + 5, height: size + 5}}
                   className={classes.searchButton}/>
 
       </div>

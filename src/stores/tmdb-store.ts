@@ -1,26 +1,27 @@
 import {makeAutoObservable} from "mobx";
 import {
-  IImagesPersonFetching,
-  IImagesWatchFetching, ISearch,
-} from "../models/interfaces/interfaces";
-import {
   castUrl,
   imagesUrl,
   watchDetailsUrl, personDetailUrl,
   searchUrl, trendingMoviesUrl, emptyTvShow, emptyPerson
 } from "../constants";
+import globalStore from "./global-store";
+//Models
 import {TCategory, TCategoryMedia, TCategorySearch, THasHappyEnd, TSearchResults} from "../models/types";
+import {
+  IImagesPersonFetching,
+  IImagesWatchFetching, ISearch,
+} from "../models/interfaces/interfaces";
 import {ICastMovie, ICrewMovie, IMovieAllInfos, IMovieDetails} from "../models/interfaces/movie-interfaces";
 import {ICastTv, ICrewTv, ITvAllInfos, ITvDetails} from "../models/interfaces/tv-interfaces";
 import {IPersonAllData, IPersonFetching, IPersonSearch} from "../models/interfaces/person-interfaces";
 import {EHasHappyEnd} from "../models/enums";
-import globalStore from "./global-store";
 import {ITmdbStoreInterface} from "../models/interfaces/stores-interfaces/tmdb-store-interface";
 
 
-const {user} = globalStore;
-
 class TmdbStore {
+
+  globalStore = globalStore;
 
   searchedMedias: TSearchResults[] = [];
 
@@ -70,13 +71,12 @@ class TmdbStore {
   //-------------------------------Movie Fetches--------------------------------------------------------------
   // Collecting all Data from Movie
   public getAllDataForMovie = async (id: number, searchCategory: TCategoryMedia = "movie"): Promise<IMovieAllInfos> => {
-    console.log("setAllDataForMovie", id, searchCategory)
-    const details: IMovieDetails = await this.getDetailWatchInfos(id, "movie") as IMovieDetails;
-    const images: IImagesWatchFetching = await this.getImagesFromTmdb(id, "movie") as IImagesWatchFetching;
-    const fsk: number = await this.getGermanFSKFromDetails(details, "movie");
-    // const hasHappyEnd: THasHappyEnd = object.userSelections ? await this.calculateHappyEnd(object) : EHasHappyEnd.NEUTRAL;
+    console.log("getAllDataForMovie tmdb", id, searchCategory)
+    const details: IMovieDetails = await TmdbStore.getDetailWatchInfos<IMovieDetails>(id, "movie");
+    const images: IImagesWatchFetching = await TmdbStore.getImagesFromTmdb<IImagesWatchFetching>(id, "movie");
+    const fsk: number = await TmdbStore.getGermanFSKFromDetails(details, "movie");
     const castAndCrew: (ICastMovie | ICrewMovie)[] = await this.getCastAndCrewFromMedia<ICastMovie | ICrewMovie>(id, "movie");
-    const cast: ICastMovie[] = await this.getCastFromMedia(id, "movie") as ICastMovie[];
+    const cast: ICastMovie[] = await TmdbStore.getCastFromMedia<ICastMovie>(id, "movie");
     const directors: ICrewMovie[] = await TmdbStore.getDirectorFromMovie<ICrewMovie>(id);
 
     const completeMovieInfo: IMovieAllInfos = {
@@ -84,18 +84,13 @@ class TmdbStore {
       images,
       category: searchCategory,
       fsk,
-      // userSelections: object.userSelections ? object.userSelections
-      //   : {
-      //     [user.userId]: {
-      //       happyEnd_Voting: object.userSelections
-      //         ? object.userSelections[user.userId].happyEnd_Voting
-      //         : "",
-      //       haveSeen: object.userSelections
-      //         ? object.userSelections[user.userId].haveSeen
-      //         : false,
-      //     },
-      //   },
-      // has_happy_end: hasHappyEnd,
+      userSelections: {
+        [this.globalStore.user.userId]: {
+          happyEnd_Voting: "neutral",
+          haveSeen: false,
+        }
+      },
+      has_happy_end: "neutral",
       castAndCrew,
       cast,
       directors,
@@ -105,21 +100,19 @@ class TmdbStore {
   }
 
   //Get Details infos from Movie
-  private async getDetailWatchInfos<T>(id: number, categoryWatch: TCategoryMedia): Promise<T> {
+  private static async getDetailWatchInfos<T>(id: number, categoryWatch: TCategoryMedia): Promise<T> {
     const response = await fetch(watchDetailsUrl(categoryWatch, id));
-    let data = await response.json();
-    return data;
+    return await response.json();
   };
 
   //Get Images from Movie
-  private async getImagesFromTmdb(id: number, category: TCategory): Promise<IImagesWatchFetching | IImagesPersonFetching> {
+  private static async getImagesFromTmdb<T>(id: number, category: TCategory): Promise<T> {
     const response = await fetch(imagesUrl(category, id));
-    let data = await response.json();
-    return data;
+    return await response.json();
   };
 
   //Get German FSK from Detail Infos
-  private async getGermanFSKFromDetails(detailsObject: any, category: TCategoryMedia): Promise<number> {
+  private static async getGermanFSKFromDetails(detailsObject: any, category: TCategoryMedia): Promise<number> {
     if (category === "movie") {
       const releaseGerman = detailsObject.releases.countries.find(
         (country: any) => country.iso_3166_1 === "DE",
@@ -135,7 +128,7 @@ class TmdbStore {
     } else return 500
   };
 
-  //Calculate has_happy_end by counting happyEnd_Voting
+  //Calculate has_happy_end by counting happyEnd_Voting TODO Move to database-store
   private calculateHappyEnd(movie: any): THasHappyEnd {
     let happyCount = 0;
     if (movie.userSelections) {
@@ -153,11 +146,11 @@ class TmdbStore {
     const castUrlMovie = castUrl(searchCategory, id);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
-    const directors = await TmdbStore.getDirectorFromMovie(id);
+    const directors = await TmdbStore.getDirectorFromMovie<ICrewMovie>(id);
     return data.cast.concat(directors);
   };
 
-  private async getCastFromMedia(id: number, searchCategory: TCategoryMedia): Promise<(ICastMovie | ICastTv)[]> {
+  private static async getCastFromMedia<T>(id: number, searchCategory: TCategoryMedia): Promise<T[]> {
     const castUrlMovie = castUrl(searchCategory, id);
     const response = await fetch(castUrlMovie);
     let data = await response.json();
@@ -184,12 +177,11 @@ class TmdbStore {
 
   //-----------------------------------TV Show fetches ---------------------------------------------
   public getAllDataForTv = async (id: number, searchCategory: TCategoryMedia): Promise<ITvAllInfos> => {
-    const details: ITvDetails = await this.getDetailWatchInfos<ITvDetails>(id, "tv");
-    const images: IImagesWatchFetching = await this.getImagesFromTmdb(id, "tv") as IImagesWatchFetching;
-    const fsk: number = await this.getGermanFSKFromDetails(details, "tv");
-    // const hasHappyEnd: THasHappyEnd = await this.calculateHappyEnd(object);
+    const details: ITvDetails = await TmdbStore.getDetailWatchInfos<ITvDetails>(id, "tv");
+    const images: IImagesWatchFetching = await TmdbStore.getImagesFromTmdb<IImagesWatchFetching>(id, "tv");
+    const fsk: number = await TmdbStore.getGermanFSKFromDetails(details, "tv");
     const castAndCrew: (ICastTv | ICrewTv)[] = await this.getCastAndCrewFromMedia<ICastTv | ICrewTv>(id, "tv");
-    const cast: ICastTv[] = await this.getCastFromMedia(id, "tv") as ICastTv[];
+    const cast: ICastTv[] = await TmdbStore.getCastFromMedia<ICastTv>(id, "tv");
     const directors: ICrewTv[] = await TmdbStore.getDirectorFromTv(id);
 
     const completeTvInfo: ITvAllInfos = {
@@ -197,17 +189,13 @@ class TmdbStore {
       images,
       category: searchCategory,
       fsk,
-      // userSelections: {
-      //   [user.userId]: {
-      //     happyEnd_Voting: object.userSelections
-      //       ? object.userSelections[user.userId].happyEnd_Voting
-      //       : "",
-      //     haveSeen: object.userSelections
-      //       ? object.userSelections[user.userId].haveSeen
-      //       : false,
-      //   },
-      // },
-      // has_happy_end: hasHappyEnd,
+      userSelections: {
+        [this.globalStore.user.userId]: {
+          happyEnd_Voting: "neutral",
+          haveSeen: false,
+        }
+      },
+      has_happy_end: "neutral",
       castAndCrew,
       cast,
       directors,
@@ -244,15 +232,13 @@ class TmdbStore {
   private static async getInfosForPersonFromApi(name: string): Promise<IPersonSearch> {
     const response = await fetch(searchUrl("person", name, 1));
     const data = await response.json();
-    const result = await data.results[0];
-    return result;
+    return await data.results[0]
   };
 
   //Get Biography, Birthday and other detailed infos and Images from person
   private static async getDetailPersonInfosFromApi(personId: number): Promise<IPersonFetching> {
     const response = await fetch(personDetailUrl(personId));
-    let data = await response.json();
-    return data;
+    return await response.json();
   };
 
 }

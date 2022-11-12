@@ -14,7 +14,6 @@ interface INavigationProps {
 
 const Navigation = ({isHandy}: INavigationProps) => {
   const location = useLocation()
-  console.log(location.pathname === ROUTES.FILMSUCHE)
 
   const filmsucheClasses = `${classes.navLinkContainer} ${location.pathname === ROUTES.FILMSUCHE ? classes.active : ""}`
   const showroomClasses = `${classes.navLinkContainer} ${location.pathname === ROUTES.SHOWROOM ? classes.active : ""}`

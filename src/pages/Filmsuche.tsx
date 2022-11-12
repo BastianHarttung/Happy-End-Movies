@@ -20,25 +20,20 @@ const Filmsuche = () => {
   const {
     searchStarted,
     searchingTmdb,
-    tmdbStore,
-    paginationStore
+    tmdbStore: {
+      searchedMedias,
+      searchCategory,
+      searchResult,
+      searchTotalResults,
+      popularMedias,
+      getPopularMoviesFromTmdb,
+    },
+    paginationStore: {
+      pagesArray,
+      activePage,
+      setActivePage,
+    }
   } = filmsucheStore
-  const {
-    setSelectedMediaOrPersonForDetails,
-  } = detailsStore
-  const {
-    searchedMedias,
-    searchCategory,
-    searchResult,
-    searchTotalResults,
-    popularMedias,
-    getPopularMoviesFromTmdb,
-  } = tmdbStore
-  const {
-    pagesArray,
-    activePage,
-    setActivePage,
-  } = paginationStore
 
   useEffect(() => {
     getPopularMoviesFromTmdb()
@@ -49,10 +44,8 @@ const Filmsuche = () => {
   }
 
   const handleSearchResultBoxClick = (id: number, category: TCategory) => {
-    // setSelectedMediaOrPersonForDetails(object, category)
-    //   .then(() => {
     navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(category, id.toString()));
-    // });
+
   }
 
   return (
@@ -61,7 +54,7 @@ const Filmsuche = () => {
       <div className={classes.filmsucheContainer}>
         <SearchBar
           length={22}
-          searchSize={19}
+          size={19}
           searchMovie={(movieName) => searchingTmdb(movieName, searchCategory)}
           saveSearchFor={(movieName) => setSearchFor(movieName)}
         />
@@ -103,7 +96,6 @@ const Filmsuche = () => {
                                  movieName={"name" in movie ? movie.name : movie.title}
                                  posterPath={"poster_path" in movie ? movie.poster_path : movie.profile_path}
                                  personGender={"gender" in movie ? movie.gender : 0}
-                  // movie={movie}
                                  onClick={handleSearchResultBoxClick}/>)}
             </div>
             <Pagination totalPages={pagesArray}
