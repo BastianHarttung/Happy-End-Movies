@@ -14,9 +14,7 @@ import iconPopcorn from "../assets/icons/popcorn_solid.svg";
 import iconTv from "../assets/icons/tv-retro_solid.svg";
 import iconUser from "../assets/icons/user-tie_solid.svg";
 //Interfaces
-import {IMovieAllInfos} from "../models/interfaces/movie-interfaces";
-import {ITvAllInfos} from "../models/interfaces/tv-interfaces";
-import {TCategory, TCategorySearch, TGender, THasHappyEnd, TSearchResults} from "../models/types";
+import {TCategory, TCategorySearch, TGender, THasHappyEnd} from "../models/types";
 
 
 interface ISearchResultBoxProps {
@@ -25,8 +23,7 @@ interface ISearchResultBoxProps {
   mediaType?: TCategory | undefined,
   movieName: string,
   posterPath: string,
-  // movie?: IMovieAllInfos | ITvAllInfos | TSearchResults,
-  hasHappyEnd?: THasHappyEnd,
+  hasHappyEnd: THasHappyEnd | null,
   personGender?: TGender,
   onClick: ({id}: any, category: TCategory) => void,
 }
@@ -37,7 +34,6 @@ const SearchResultBox = ({
                            mediaType,
                            movieName,
                            posterPath,
-                           // movie,
                            hasHappyEnd,
                            personGender,
                            onClick,

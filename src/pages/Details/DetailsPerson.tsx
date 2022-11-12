@@ -107,6 +107,7 @@ const DetailsPerson = () => {
                 return <SearchResultBox key={movie.id}
                                         category={movie.media_type}
                                         id={movie.id}
+                                        hasHappyEnd={null}
                                         movieName={movie.title}
                                         posterPath={movie.poster_path}
                                         onClick={() => {

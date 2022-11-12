@@ -12,7 +12,7 @@ interface IDetailInfosProps {
   title: string;
   posterPath: string;
   backdropPath: string;
-  hasHappyEnd?: THasHappyEnd;
+  hasHappyEnd: THasHappyEnd | null;
   fsk: number;
   releaseDate: string;
   runtime: number;

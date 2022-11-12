@@ -37,7 +37,7 @@ const DetailsMovie = () => {
                            fsk={selectedMovie.fsk}
                            posterPath={selectedMovie.poster_path}
                            backdropPath={selectedMovie.backdrop_path}
-                           hasHappyEnd={selectedMovie.has_happy_end ? selectedMovie.has_happy_end : "neutral"}
+                           hasHappyEnd={selectedMovie.has_happy_end}
                            releaseDate={selectedMovie.release_date}
                            runtime={selectedMovie.runtime}
                            genres={selectedMovie.genres}

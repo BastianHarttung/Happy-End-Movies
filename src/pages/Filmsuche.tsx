@@ -91,6 +91,7 @@ const Filmsuche = () => {
               {searchedMedias.map((movie, index) =>
                 <SearchResultBox key={index}
                                  id={movie.id}
+                                 hasHappyEnd={null}
                                  category={searchCategory}
                                  mediaType={movie.media_type}
                                  movieName={"name" in movie ? movie.name : movie.title}
@@ -108,6 +109,7 @@ const Filmsuche = () => {
             {popularMedias.slice(0, 5).map((movie, index) =>
               <SearchResultBox key={index}
                                id={movie.id}
+                               hasHappyEnd={null}
                                category={searchCategory}
                                mediaType={movie.media_type}
                                movieName={"title" in movie ? movie.title : movie.name}
