@@ -3,7 +3,7 @@ import classes from "./Impressum.module.scss";
 const Impressum = () => {
 
     return (
-        <section className={classes.impressumContainer}>
+        <main className={classes.impressumContainer}>
 
             <div className={classes.impressum}>
 
@@ -82,7 +82,7 @@ const Impressum = () => {
 
             </div>
 
-        </section>
+        </main>
 )
 }
 

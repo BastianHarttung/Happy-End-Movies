@@ -31,7 +31,7 @@ const DetailsMovie = () => {
   return (
     <main className={classes.detailsMediaPage}>
       {isLoading && <LoadingMovieStreifen/>}
-      {selectedMovie && <>
+      {(!isLoading && selectedMovie) && <>
           <section className={classes.mediaSection}>
               <DetailInfos title={selectedMovie.title}
                            fsk={selectedMovie.fsk}
@@ -45,12 +45,13 @@ const DetailsMovie = () => {
                            classNameContent={classes.sectionContent}/>
           </section>
 
-        {selectedMovie.overview && <section className={classes.beschreibungSection}>
+        {selectedMovie.overview && (
+          <section className={classes.beschreibungSection}>
             <Beschreibung
-                tagline={selectedMovie.tagline}
-                overview={selectedMovie.overview}
-                className={classes.sectionContent}/>
-        </section>}
+              tagline={selectedMovie.tagline}
+              overview={selectedMovie.overview}
+              className={classes.sectionContent}/>
+          </section>)}
 
           <section className={classes.actorSection}>
               <CastAndCrew castAndCrew={selectedMovie.castAndCrew}
