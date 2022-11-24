@@ -1,4 +1,4 @@
-import {Link, useLocation} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 import icons_search_light from "../../assets/icons/search_light.svg";
 import icon_projector from "../../assets/icons/projector_light.svg";
 import classes from "./Navigation.module.scss";
@@ -9,15 +9,12 @@ interface INavigationProps {
 }
 
 const Navigation = ({isHandy}: INavigationProps) => {
-  const location = useLocation()
-
-  const filmsucheClasses = `${classes.navLinkContainer} ${location.pathname === ROUTES.FILMSUCHE ? classes.active : ""}`
-  const showroomClasses = `${classes.navLinkContainer} ${location.pathname === ROUTES.SHOWROOM ? classes.active : ""}`
 
   return (
     <nav>
 
-      <Link to={ROUTES.FILMSUCHE} className={filmsucheClasses}>
+      <NavLink to={ROUTES.FILMSUCHE}
+               className={({isActive}) => `${classes.navLinkContainer} ${isActive && classes.active}`}>
         <div className={classes.linkContainer}>
           {!isHandy && <div>Filmsuche</div>}
           <img
@@ -26,9 +23,10 @@ const Navigation = ({isHandy}: INavigationProps) => {
             className={classes.icons}
           />
         </div>
-      </Link>
+      </NavLink>
 
-      <Link to={ROUTES.SHOWROOM} className={showroomClasses}>
+      <NavLink to={ROUTES.SHOWROOM}
+               className={({isActive}) => `${classes.navLinkContainer} ${isActive && classes.active}`}>
         <div className={classes.linkContainer}>
           {!isHandy && <div>Showroom</div>}
           <img
@@ -37,7 +35,7 @@ const Navigation = ({isHandy}: INavigationProps) => {
             className={classes.icons}
           />
         </div>
-      </Link>
+      </NavLink>
 
     </nav>
   );
