@@ -19,6 +19,7 @@ const VideoBox = ({videos}: IVideoBoxProps) => {
               width="260"
               loading="lazy"
               src={"https://www.youtube.com/embed/" + video.key}
+              allowFullScreen
             ></iframe>
             <div className={classes.videoName}
                  title={video.name}>
