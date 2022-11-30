@@ -7,16 +7,24 @@ import {ROUTES} from "../models/routes";
 
 function Login() {
 
-  const [register, setRegister] = useState(false);
+  const [register, setRegister] = useState<boolean>(false);
 
   return (
     <section className={classes.loginSection}>
       <div className={classes.loginBoxContainer}>
+
         <div className={classes.header}>
           <HappyLogo className={classes.happyLogo}/>
         </div>
 
-        <div className={classes.loginInputContainer}>
+        <div className={classes.loginSwitchHeader}>
+          <div onClick={() => setRegister(false)}>Login</div>
+          <div onClick={() => setRegister(true)}>Registrierung</div>
+        </div>
+
+        <hr className={classes.line}/>
+
+        <form className={classes.loginInputContainer}>
           <input type="text"
                  placeholder="Name"/>
           <input type="email"
@@ -25,10 +33,17 @@ function Login() {
                  placeholder="Passwort"/>
           {register && <input type="password"
                               placeholder="Passwort bestätigen"/>}
-          <Button name={register ? "Register" : "Login"}
+          <Button name={register ? "Registrierung" : "Login"}
+                  className={classes.loginButton}
                   onClick={() => {
                   }}/>
-        </div>
+          {!register && <Button name="Testdaten für Login"
+                               buttonStyle="third"
+                               onClick={() => {
+                               }}/>}
+
+        </form>
+
       </div>
 
       <Link to={ROUTES.START}>
