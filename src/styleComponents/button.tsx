@@ -6,6 +6,7 @@ interface IButtonProps {
   onClick: () => void,
   buttonStyle?: "primary" | "secondary" | "third",
   activated?: boolean,
+  disabled?: boolean,
   style?: CSSProperties,
   className?: string,
   type?: "button" | "submit" | "reset" | undefined,
@@ -17,6 +18,7 @@ export const Button = (
     onClick,
     buttonStyle = "primary",
     activated,
+    disabled,
     className,
     type = "button",
     ...restProps
@@ -25,12 +27,14 @@ export const Button = (
   const buttonClasses = `${classes.button} 
                          ${!!buttonStyle ? classes[buttonStyle] : classes.primary} 
                          ${className ? className : ""} 
-                         ${activated ? classes.activated : ""}`
+                         ${activated ? classes.activated : ""}
+                         ${disabled ? classes.disabled : ""}`
 
   return (
     <button type={type}
             className={buttonClasses}
             onClick={onClick}
+            disabled={disabled}
             {...restProps}
     >
       {name}

@@ -38,9 +38,9 @@ function Login() {
                   onClick={() => {
                   }}/>
           {!register && <Button name="Testdaten für Login"
-                               buttonStyle="third"
-                               onClick={() => {
-                               }}/>}
+                                buttonStyle="third"
+                                onClick={() => {
+                                }}/>}
 
         </form>
 
@@ -49,15 +49,8 @@ function Login() {
       <Link to={ROUTES.START}>
         <Button name="Gast-Zugang"
                 onClick={() => {
-                }}/>
-        <Button name="Gast-Zugang secondary"
-                buttonStyle="secondary"
-                onClick={() => {
-                }}/>
-        <Button name="Gast-Zugang third"
-                buttonStyle="third"
-                onClick={() => {
-                }}/>
+                }}
+                disabled={true}/>
       </Link>
 
     </section>
