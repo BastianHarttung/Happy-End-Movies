@@ -3,13 +3,12 @@ import {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import SearchResultBox from "../components/SearchResultBox";
 import SearchBar from "../components/SearchBar";
-import {Button} from "../styleComponents/ButtonStyleComp";
+import {Button} from "../styleComponents/button";
 import Pagination from "../components/Pagination";
 import {TCategory, TCategorySearch} from "../models/types";
 import filmsucheStore from "../stores/page-stores/filmsuche-store";
 import {ROUTES} from "../models/routes";
 import {useNavigate} from "react-router-dom";
-import detailsStore from "../stores/page-stores/details-store";
 
 
 const Filmsuche = () => {
@@ -61,25 +60,25 @@ const Filmsuche = () => {
 
         <div className={classes.categoryBtnContainer}>
           <Button name="Alles"
-                  fontSize={1.2}
                   activated={searchCategory === "multi"}
-                  onClick={() => handleSearch(searchFor, "multi")}/>
+                  onClick={() => handleSearch(searchFor, "multi")}
+                  style={{fontSize: "1.2em"}}/>
           <Button name="Filme"
-                  fontSize={1.2}
                   activated={searchCategory === "movie"}
-                  onClick={() => handleSearch(searchFor, "movie")}/>
+                  onClick={() => handleSearch(searchFor, "movie")}
+                  style={{fontSize: "1.2em"}}/>
           <Button name="Serien"
-                  fontSize={1.2}
                   activated={searchCategory === "tv"}
-                  onClick={() => handleSearch(searchFor, "tv")}/>
+                  onClick={() => handleSearch(searchFor, "tv")}
+                  style={{fontSize: "1.2em"}}/>
           <Button name="Schauspieler"
-                  fontSize={1.2}
                   activated={searchCategory === "person"}
-                  onClick={() => handleSearch(searchFor, "person")}/>
+                  onClick={() => handleSearch(searchFor, "person")}
+                  style={{fontSize: "1.2em"}}/>
         </div>
 
         {(searchStarted && !searchTotalResults) &&
-        <div className={classes.headOverResults}>Keine Ergebnisse für:{searchResult}</div>}
+            <div className={classes.headOverResults}>Keine Ergebnisse für:{searchResult}</div>}
 
         {(searchStarted && !!searchTotalResults) ?
           <div className={classes.headOverResults}>Suchergebnisse für: {searchResult}</div>

@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Modal-UserSettings.module.scss";
-import {Button} from "../styleComponents/ButtonStyleComp";
+import {Button} from "../styleComponents/button";
 import globalStore from "../stores/global-store";
 import {observer} from "mobx-react";
 import {BsMoon, BsSun} from "react-icons/all";

@@ -5,7 +5,7 @@ import {THasHappyEnd, TUserSelections} from "../../../models/types";
 import {IUserSelections} from "../../../models/interfaces/interfaces";
 import globalStore from "../../../stores/global-store";
 import databaseStore from "../../../stores/database-store";
-import {Button} from "../../../styleComponents/ButtonStyleComp";
+import {Button} from "../../../styleComponents/button";
 import {useNavigate} from "react-router-dom";
 import {observer} from "mobx-react";
 import {EHasHappyEnd} from "../../../models/enums";
@@ -91,8 +91,8 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
 
       <Button
         name="In Datenbank speichern und zum Showroom"
-        fontSize={1}
         onClick={saveMediaInDB}
+        style={{fontSize: "1em"}}
       />
     </div>
   );

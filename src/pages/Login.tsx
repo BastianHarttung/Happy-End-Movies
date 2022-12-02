@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import classes from "./Login.module.scss";
 import {ReactComponent as HappyLogo} from "../assets/logos/Happy-End_logo-mit-Text.svg";
-import {Button} from "../styleComponents/ButtonStyleComp";
+import {Button} from "../styleComponents/button";
 import {Link} from "react-router-dom";
 import {ROUTES} from "../models/routes";
 
@@ -48,6 +48,14 @@ function Login() {
 
       <Link to={ROUTES.START}>
         <Button name="Gast-Zugang"
+                onClick={() => {
+                }}/>
+        <Button name="Gast-Zugang secondary"
+                buttonStyle="secondary"
+                onClick={() => {
+                }}/>
+        <Button name="Gast-Zugang third"
+                buttonStyle="third"
                 onClick={() => {
                 }}/>
       </Link>
