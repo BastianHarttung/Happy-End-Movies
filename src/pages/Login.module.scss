@@ -53,18 +53,18 @@
       align-items: center;
       margin: 20px 0;
 
-      input {
-        font-size: 1.05rem;
-        width: 70%;
-        border: 1px solid var(--gray);
-        border-radius: var(--border-radius-small);
-        padding: 7px;
-        margin: 5px 0;
-
-        &:focus {
-          outline: 2px solid var(--main-color);
-        }
-      }
+      //input {
+      //  font-size: 1.05rem;
+      //  width: 70%;
+      //  border: 1px solid var(--gray);
+      //  border-radius: var(--border-radius-small);
+      //  padding: 7px;
+      //  margin: 5px 0;
+      //
+      //  &:focus {
+      //    outline: 2px solid var(--main-color);
+      //  }
+      //}
 
       .loginButton {
         margin-top: 20px !important;
