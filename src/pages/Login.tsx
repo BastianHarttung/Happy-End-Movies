@@ -2,30 +2,76 @@ import React, {useState} from "react";
 import classes from "./Login.module.scss";
 import {ReactComponent as HappyLogo} from "../assets/logos/Happy-End_logo-mit-Text.svg";
 import {Button} from "../styleComponents/button";
-import {Link} from "react-router-dom";
-import {ROUTES} from "../models/routes";
 import InputString from "../styleComponents/input-string";
+import useInput from "../hooks/useInput";
 
 function Login() {
 
   const [register, setRegister] = useState<boolean>(false);
 
-  const changeNameHandler = (newValue: string) => {
-    console.log(newValue)
-  }
-  const changeEmailHandler = (newValue: string) => {
-    console.log(newValue)
-  }
-  const changePasswordHandler = (newValue: string) => {
-    console.log(newValue)
-  }
-  const changePwConfirmHandler = (newValue: string) => {
-    console.log(newValue)
-  }
+  const {
+    value: nameValue,
+    isValid: nameIsValid,
+    showError: nameShowError,
+    changeValue: changeName,
+    handleBlur: blurName,
+    isDirty: isDirtyName,
+  } = useInput(
+    (value) => !!value.trim(),
+    ""
+  );
+
+  const {
+    value: emailValue,
+    isValid: emailIsValid,
+    showError: emailShowError,
+    changeValue: changeEmail,
+    handleBlur: blurEmail,
+    isDirty: isDirtyEmail,
+  } = useInput(
+    (value) => value.includes("@"),
+    ""
+  );
+
+  const {
+    value: passwordValue,
+    isValid: passwordIsValid,
+    showError: passwordShowError,
+    changeValue: changePassword,
+    handleBlur: blurPassword,
+    isDirty: isDirtyPassword,
+  } = useInput(
+    (value) => value.length >= 8,
+    ""
+  );
+
+  const {
+    value: pwconfirmValue,
+    isValid: pwconfirmIsValid,
+    showError: pwconfirmShowError,
+    changeValue: changePwconfirm,
+    handleBlur: blurPwconfirm,
+    isDirty: isDirtyPwconfirm,
+  } = useInput(
+    (value) => value === passwordValue,
+    ""
+  );
+
+  const formIsValid = nameIsValid && emailIsValid && passwordIsValid && (register ? pwconfirmIsValid : true)
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
   }
+
+  const handleTestLoginClick = ()=>{
+    changeName("Rainer Zufall")
+    changeEmail("rainer.zufall@test.de")
+    changePassword("test1234")
+  }
+
+  // useEffect(() => {
+  //   changeName({target: {value: `${initialValue}`}} as React.ChangeEvent<HTMLInputElement>);
+  // }, []);
 
   return (
     <section className={classes.loginSection}>
@@ -44,51 +90,69 @@ function Login() {
 
         <form onSubmit={submitHandler} className={classes.loginInputContainer}>
 
-          <InputString onChange={changeNameHandler}
-                       placeholder="Name..."/>
+          <InputString
+            placeholder="Name..."
+            value={nameValue}
+            changeInput={changeName}
+            showError={nameShowError}
+            isDirty={isDirtyName}
+            handleBlur={blurName}
+            style={{width: "224px"}}
+          />
 
-          <InputString onChange={changeEmailHandler}
-                       placeholder="Email..."
-                       type="email"/>
+          <InputString
+            placeholder="Email..."
+            value={emailValue}
+            changeInput={changeEmail}
+            showError={emailShowError}
+            isDirty={isDirtyEmail}
+            handleBlur={blurEmail}
+            type="email"
+            style={{width: "224px"}}
+          />
 
-          <InputString onChange={changePasswordHandler}
-                       placeholder="Passwort..."
-                       type="password"/>
+          <InputString
+            placeholder="Passwort..."
+            value={passwordValue}
+            changeInput={changePassword}
+            showError={passwordShowError}
+            isDirty={isDirtyPassword}
+            handleBlur={blurPassword}
+            style={{width: "224px"}}
+            type="password"
+          />
 
-          {register && <InputString onChange={changePwConfirmHandler}
-                                    placeholder="Passwort bestätigen..."
-                                    type="password"/>}
+          {register && (
+            <InputString
+              placeholder="Passwort bestätigen..."
+              value={pwconfirmValue}
+              changeInput={changePwconfirm}
+              showError={pwconfirmShowError}
+              isDirty={isDirtyPwconfirm}
+              handleBlur={blurPwconfirm}
+              style={{width: "224px"}}
+              type="password"
+            />)}
 
-          {/*<input type="text"*/}
-          {/*       placeholder="Name"*/}
-          {/*       value={name}*/}
-          {/*       onChange={changeName}*/}
-          {/*       onBlur={nameBlur}*/}
-          {/*/>*/}
-          {/*<input type="email"*/}
-          {/*       placeholder="Email"/>*/}
-          {/*<input type="password"*/}
-          {/*       placeholder="Passwort"/>*/}
-          {/*{register && <input type="password"*/}
-          {/*                    placeholder="Passwort bestätigen"/>}*/}
           <Button name={register ? "Registrierung" : "Login"}
                   className={classes.loginButton}
                   onClick={() => {
-                  }}/>
+                  }}
+                  disabled={!formIsValid}
+          />
           {!register && <Button name="Testdaten für Login"
                                 buttonStyle="third"
-                                onClick={() => {
-                                }}/>}
+                                onClick={handleTestLoginClick}/>}
 
         </form>
 
       </div>
 
-      <Link to={ROUTES.START}>
-        <Button name="Gast-Zugang"
-                onClick={() => {
-                }}/>
-      </Link>
+      {/*<Link to={ROUTES.START}>*/}
+      {/*  <Button name="Gast-Zugang"*/}
+      {/*          onClick={() => {*/}
+      {/*          }}/>*/}
+      {/*</Link>*/}
 
     </section>
   );

@@ -1,41 +1,38 @@
 import classes from "./input-string.module.scss";
-import useInput from "../hooks/useInput";
-import React, {useEffect} from "react";
+import React, {CSSProperties} from "react";
 
 interface IInputStringProps {
-  onChange: (value: string) => void;
+  changeInput: (value: string) => void;
+  value: string;
+  showError: boolean;
+  isDirty: boolean;
+  handleBlur: () => void;
   label?: string;
   placeholder?: string;
   initialValue?: string;
   type?: string;
+  style?: CSSProperties;
 }
 
 const InputString = ({
-                       onChange,
-                       label = "",
-                       placeholder = "",
+                       changeInput,
+                       value,
+                       showError,
+                       isDirty,
+                       handleBlur,
+                       label,
+                       placeholder,
                        initialValue = "",
                        type = "text",
+                       style,
                        ...restProps
                      }: IInputStringProps) => {
-  const {value, showError, changeValue, handleBlur, isDirty} = useInput(
-    (value: string) => !!value.trim(),
-    initialValue
-  );
 
   const containerClasses = `
     ${classes.inputContainer} 
     ${showError ? classes.invalid : ""} 
     ${(!!initialValue ?? isDirty) ? classes.dirty : ""}`;
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    changeValue(event);
-    onChange(event.target.value);
-  };
-
-  useEffect(() => {
-    changeValue({target: {value: `${initialValue}`}} as React.ChangeEvent<HTMLInputElement>);
-  }, []);
 
   return (
     <div className={containerClasses}>
@@ -43,10 +40,11 @@ const InputString = ({
       <input
         id={!!label ? label : "input"}
         type={type}
-        placeholder={showError ? `Please fill in ${label ? label : placeholder ? placeholder : "correct"}.` : placeholder}
+        placeholder={showError ? `Bitte korrekt ausfüllen.` : placeholder}
         value={value}
-        onChange={handleChange}
+        onChange={(event) => changeInput(event.target.value)}
         onBlur={handleBlur}
+        style={style}
         {...restProps}
       />
     </div>

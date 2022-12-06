@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 
 const useInput = (validateFn: (value: string) => boolean, initialValue: string) => {
 
@@ -9,8 +9,8 @@ const useInput = (validateFn: (value: string) => boolean, initialValue: string) 
   const showError = !isValid && isTouched;
   const isDirty = value !== initialValue;
 
-  const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+  const changeValue = (value: string) => {
+    setValue(value);
   };
 
   const handleBlur = () => {
