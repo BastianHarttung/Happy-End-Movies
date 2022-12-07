@@ -6,9 +6,10 @@
   justify-content: center;
 
   .loginBoxContainer {
+    --login-box-width: 340px;
+
     background-color: white;
-    //min-height: 400px;
-    width: 340px;
+    width: var(--login-box-width);
     display: flex;
     flex-direction: column;
     border: 1px solid var(--gray);
@@ -32,19 +33,44 @@
     }
 
     .loginSwitchHeader {
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      padding: 15px 0;
+      position: relative;
 
-      div {
-        cursor: pointer;
+      .loginSwitch {
+        color: var(--gray);
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        padding: 15px 0;
+
+        .active {
+          color: black;
+        }
+
+        div {
+          cursor: pointer;
+        }
       }
-    }
 
-    .line {
-      width: 100%;
-      margin: 0;
+      .activeLine {
+        background-color: var(--main-color);
+        height: 4px;
+        width: calc(var(--login-box-width) / 2);
+        position: absolute;
+        left: 0;
+        bottom: 2px;
+        margin: 0;
+        transition: left var(--hover-time-medium) ease-in-out;
+
+        &.register {
+          left: calc(var(--login-box-width) / 2);
+        }
+
+      }
+
+      .line {
+        width: 100%;
+        margin: 0;
+      }
     }
 
     .loginInputContainer {

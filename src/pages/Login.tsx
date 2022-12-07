@@ -63,7 +63,7 @@ function Login() {
     event.preventDefault()
   }
 
-  const handleTestLoginClick = ()=>{
+  const handleTestLoginClick = () => {
     changeName("Rainer Zufall")
     changeEmail("rainer.zufall@test.de")
     changePassword("test1234")
@@ -82,11 +82,15 @@ function Login() {
         </div>
 
         <div className={classes.loginSwitchHeader}>
-          <div onClick={() => setRegister(false)}>Login</div>
-          <div onClick={() => setRegister(true)}>Registrierung</div>
-        </div>
+          <div className={classes.loginSwitch}>
+            <div className={register ? "" : classes.active} onClick={() => setRegister(false)}>Login</div>
+            <div className={register ? classes.active : ""} onClick={() => setRegister(true)}>Registrierung</div>
+          </div>
 
-        <hr className={classes.line}/>
+          <div className={`${classes.activeLine} ${register ? classes.register : ""}`}/>
+
+          <hr className={classes.line}/>
+        </div>
 
         <form onSubmit={submitHandler} className={classes.loginInputContainer}>
 
