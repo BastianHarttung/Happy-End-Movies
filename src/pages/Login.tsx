@@ -59,8 +59,14 @@ function Login() {
 
   const formIsValid = nameIsValid && emailIsValid && passwordIsValid && (register ? pwconfirmIsValid : true)
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitLoginHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    console.log("login")
+  }
+
+  const submitRegisterHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    console.log("register")
   }
 
   const handleTestLoginClick = () => {
@@ -69,9 +75,6 @@ function Login() {
     changePassword("test1234")
   }
 
-  // useEffect(() => {
-  //   changeName({target: {value: `${initialValue}`}} as React.ChangeEvent<HTMLInputElement>);
-  // }, []);
 
   return (
     <section className={classes.loginSection}>
@@ -92,41 +95,89 @@ function Login() {
           <hr className={classes.line}/>
         </div>
 
-        <form onSubmit={submitHandler} className={classes.loginInputContainer}>
+        <div className={`${classes.loginMainContainer} ${register ? classes.register : ""}`}>
 
-          <InputString
-            placeholder="Name..."
-            value={nameValue}
-            changeInput={changeName}
-            showError={nameShowError}
-            isDirty={isDirtyName}
-            handleBlur={blurName}
-            style={{width: "224px"}}
-          />
+          <form onSubmit={submitLoginHandler} className={classes.loginInputContainer}>
 
-          <InputString
-            placeholder="Email..."
-            value={emailValue}
-            changeInput={changeEmail}
-            showError={emailShowError}
-            isDirty={isDirtyEmail}
-            handleBlur={blurEmail}
-            type="email"
-            style={{width: "224px"}}
-          />
+            <InputString
+              placeholder="Name..."
+              value={nameValue}
+              changeInput={changeName}
+              showError={nameShowError}
+              isDirty={isDirtyName}
+              handleBlur={blurName}
+              style={{width: "224px"}}
+            />
 
-          <InputString
-            placeholder="Passwort..."
-            value={passwordValue}
-            changeInput={changePassword}
-            showError={passwordShowError}
-            isDirty={isDirtyPassword}
-            handleBlur={blurPassword}
-            style={{width: "224px"}}
-            type="password"
-          />
+            <InputString
+              placeholder="Email..."
+              value={emailValue}
+              changeInput={changeEmail}
+              showError={emailShowError}
+              isDirty={isDirtyEmail}
+              handleBlur={blurEmail}
+              type="email"
+              style={{width: "224px"}}
+            />
 
-          {register && (
+            <InputString
+              placeholder="Passwort..."
+              value={passwordValue}
+              changeInput={changePassword}
+              showError={passwordShowError}
+              isDirty={isDirtyPassword}
+              handleBlur={blurPassword}
+              style={{width: "224px"}}
+              type="password"
+            />
+
+            <Button name="Login"
+                    className={classes.loginButton}
+                    onClick={() => {
+                    }}
+                    disabled={!formIsValid}
+            />
+            <Button name="Testdaten für Login"
+                    buttonStyle="third"
+                    onClick={handleTestLoginClick}
+            />
+
+          </form>
+
+          <form onSubmit={submitRegisterHandler} className={classes.registerInputContainer}>
+            <InputString
+              placeholder="Name..."
+              value={nameValue}
+              changeInput={changeName}
+              showError={nameShowError}
+              isDirty={isDirtyName}
+              handleBlur={blurName}
+              style={{width: "224px"}}
+            />
+
+            <InputString
+              placeholder="Email..."
+              value={emailValue}
+              changeInput={changeEmail}
+              showError={emailShowError}
+              isDirty={isDirtyEmail}
+              handleBlur={blurEmail}
+              type="email"
+              style={{width: "224px"}}
+            />
+
+            <InputString
+              placeholder="Passwort..."
+              value={passwordValue}
+              changeInput={changePassword}
+              showError={passwordShowError}
+              isDirty={isDirtyPassword}
+              handleBlur={blurPassword}
+              style={{width: "224px"}}
+              type="password"
+            />
+
+
             <InputString
               placeholder="Passwort bestätigen..."
               value={pwconfirmValue}
@@ -136,19 +187,18 @@ function Login() {
               handleBlur={blurPwconfirm}
               style={{width: "224px"}}
               type="password"
-            />)}
+            />
 
-          <Button name={register ? "Registrierung" : "Login"}
-                  className={classes.loginButton}
-                  onClick={() => {
-                  }}
-                  disabled={!formIsValid}
-          />
-          {!register && <Button name="Testdaten für Login"
-                                buttonStyle="third"
-                                onClick={handleTestLoginClick}/>}
+            <Button name="Registrierung"
+                    className={classes.loginButton}
+                    onClick={() => {
+                    }}
+                    disabled={!formIsValid}
+            />
 
-        </form>
+          </form>
+
+        </div>
 
       </div>
 
