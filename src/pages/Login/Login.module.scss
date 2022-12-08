@@ -10,7 +10,7 @@
 
     background-color: white;
     width: var(--login-box-width);
-    height: 400px;
+    height: 410px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -85,28 +85,6 @@
 
       &.register {
         left: calc(0px - var(--login-box-width))
-      }
-
-      .loginInputContainer {
-        min-width: var(--login-box-width);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        margin: 20px 0;
-
-        .loginButton {
-          margin-top: 20px !important;
-        }
-      }
-
-      .registerInputContainer {
-        min-width: var(--login-box-width);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        margin: 20px 0;
       }
 
     }

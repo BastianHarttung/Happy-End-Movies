@@ -12,7 +12,7 @@ import DetailsMovie from "./pages/Details/DetailsMovie";
 import DetailsPerson from "./pages/Details/DetailsPerson";
 import Impressum from "./pages/Impressum";
 import Hilfe from "./pages/Hilfe";
-import Login from "./pages/Login";
+import Login from "./pages/Login/Login";
 import Menu from "./pages/Menu";
 import WrongUrl from "./pages/WrongUrl";
 import Showroom from "./pages/Showroom/Showroom";

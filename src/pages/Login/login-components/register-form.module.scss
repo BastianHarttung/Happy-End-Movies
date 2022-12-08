@@ -1,0 +1,8 @@
+.registerInputContainer {
+  min-width: var(--login-box-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
