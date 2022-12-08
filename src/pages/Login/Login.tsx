@@ -3,6 +3,9 @@ import classes from "./Login.module.scss";
 import {ReactComponent as HappyLogo} from "../../assets/logos/Happy-End_logo-mit-Text.svg";
 import LoginForm from "./login-components/login-form";
 import RegisterForm from "./login-components/register-form";
+import {Link} from "react-router-dom";
+import {ROUTES} from "../../models/routes";
+import {Button} from "../../styleComponents/button";
 
 function Login() {
 
@@ -38,11 +41,11 @@ function Login() {
 
       </div>
 
-      {/*<Link to={ROUTES.START}>*/}
-      {/*  <Button name="Gast-Zugang"*/}
-      {/*          onClick={() => {*/}
-      {/*          }}/>*/}
-      {/*</Link>*/}
+      <Link to={ROUTES.START}>
+        <Button name="Gast-Zugang"
+                onClick={() => {
+                }}/>
+      </Link>
 
     </section>
   );

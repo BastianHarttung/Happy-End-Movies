@@ -12,6 +12,7 @@ interface IInputStringProps {
   initialValue?: string;
   type?: string;
   style?: CSSProperties;
+  icon?: string;
 }
 
 const InputString = ({
@@ -25,6 +26,7 @@ const InputString = ({
                        initialValue = "",
                        type = "text",
                        style,
+                       icon,
                        ...restProps
                      }: IInputStringProps) => {
 
@@ -47,6 +49,7 @@ const InputString = ({
         style={style}
         {...restProps}
       />
+      {icon && <img src={icon} alt="Name"/>}
     </div>
   );
 };

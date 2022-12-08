@@ -3,6 +3,9 @@ import classes from "./login-form.module.scss";
 import InputString from "../../../styleComponents/input-string";
 import {Button} from "../../../styleComponents/button";
 import useInput from "../../../hooks/useInput";
+//Icons
+import UserIcon from "../../../assets/icons/user-alt.svg"
+import MailIcon from "../../../assets/icons/envelope.svg"
 
 const LoginForm = () => {
   const {
@@ -65,6 +68,7 @@ const LoginForm = () => {
         showError={nameShowError}
         isDirty={isDirtyName}
         handleBlur={blurName}
+        icon={UserIcon}
         style={{width: "224px"}}
       />
 
@@ -76,6 +80,7 @@ const LoginForm = () => {
         isDirty={isDirtyEmail}
         handleBlur={blurEmail}
         type="email"
+        icon={MailIcon}
         style={{width: "224px"}}
       />
 

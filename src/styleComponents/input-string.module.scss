@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 
   label {
     margin-right: 6px;
@@ -13,7 +14,7 @@
     border-radius: 10px;
     border: 1px solid var(--gray);
     outline: none;
-    padding: 8px;
+    padding: 8px 40px 8px 8px;
 
     &:focus {
       border: 1px solid black;
@@ -44,5 +45,11 @@
 
   .error {
     color: red
+  }
+
+  img {
+    height: 24px;
+    position: absolute;
+    right: 10px;
   }
 }
