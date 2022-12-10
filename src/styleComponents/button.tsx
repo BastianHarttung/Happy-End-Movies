@@ -27,8 +27,7 @@ export const Button = (
   const buttonClasses = `${classes.button} 
                          ${!!buttonStyle ? classes[buttonStyle] : classes.primary} 
                          ${className ? className : ""} 
-                         ${activated ? classes.activated : ""}
-                         ${disabled ? classes.disabled : ""}`
+                         ${activated ? classes.activated : ""}`
 
   return (
     <button type={type}

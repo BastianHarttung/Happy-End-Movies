@@ -1,5 +1,6 @@
 import classes from "./input-string.module.scss";
 import React, {CSSProperties} from "react";
+import {v4 as uuid4} from "uuid";
 
 interface IInputStringProps {
   changeInput: (value: string) => void;
@@ -40,7 +41,7 @@ const InputString = ({
     <div className={containerClasses}>
       {!!label && <label htmlFor={label}>{label}:</label>}
       <input
-        id={!!label ? label : "input"}
+        id={uuid4()}
         type={type}
         placeholder={showError ? `Bitte korrekt ausfüllen.` : placeholder}
         value={value}

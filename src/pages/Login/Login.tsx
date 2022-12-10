@@ -47,6 +47,7 @@ function Login() {
 
       <Link to={ROUTES.START}>
         <Button name="Gast-Zugang"
+                buttonStyle="secondary"
                 onClick={() => {
                 }}/>
       </Link>
