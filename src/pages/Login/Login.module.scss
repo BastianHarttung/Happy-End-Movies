@@ -45,6 +45,11 @@
         justify-content: space-around;
         padding: 15px 0;
 
+        .loginBtn {
+          width: 50%;
+          text-align: center;
+        }
+
         .active {
           color: black;
         }

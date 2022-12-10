@@ -22,8 +22,12 @@ function Login() {
 
         <div className={classes.loginSwitchHeader}>
           <div className={classes.loginSwitch}>
-            <div className={register ? "" : classes.active} onClick={() => setRegister(false)}>Login</div>
-            <div className={register ? classes.active : ""} onClick={() => setRegister(true)}>Registrierung</div>
+            <div className={`${classes.loginBtn} ${register ? "" : classes.active}`}
+                 onClick={() => setRegister(false)}>Login
+            </div>
+            <div className={`${classes.loginBtn} ${register ? classes.active : ""}`}
+                 onClick={() => setRegister(true)}>Registrierung
+            </div>
           </div>
 
           <div className={`${classes.activeLine} ${register ? classes.register : ""}`}/>
