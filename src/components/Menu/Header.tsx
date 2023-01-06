@@ -1,13 +1,12 @@
-import Navigation from "./Navigation";
 import classes from "./Header.module.scss";
-import {Link} from "react-router-dom";
-import {ReactComponent as HappyLogo} from "../../assets/logos/Happy-End_logo-mit-Text.svg";
-import {useEffect, useState} from "react";
-import {observer} from "mobx-react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { observer } from "mobx-react";
+import Navigation from "./Navigation";
 import Logout from "./Logout";
+import HappyLogo from "../../assets/logos/Happy-End_logo-mit-Text.svg";
 
 const Header = () => {
-
   const [isHandy, setIsHandy] = useState(false);
 
   useEffect(() => {
@@ -17,17 +16,15 @@ const Header = () => {
 
   return (
     <header className={classes.header}>
-
       {!isHandy && (
         <Link to="/start" className={classes.headerLogoLink}>
-          <HappyLogo className={classes.happyLogo}/>
+          <img src={HappyLogo} alt="Logo" className={classes.happyLogo} />
         </Link>
       )}
 
-      <Navigation isHandy={isHandy}/>
+      <Navigation isHandy={isHandy} />
 
-      <Logout isHandy={isHandy}/>
-
+      <Logout isHandy={isHandy} />
     </header>
   );
 };

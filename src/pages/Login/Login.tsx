@@ -1,11 +1,11 @@
-import React, {useState} from "react";
 import classes from "./Login.module.scss";
-import {ReactComponent as HappyLogo} from "../../assets/logos/Happy-End_logo-mit-Text.svg";
+import React, {useState} from "react";
+import {Link} from "react-router-dom";
 import LoginForm from "./login-components/login-form";
 import RegisterForm from "./login-components/register-form";
-import {Link} from "react-router-dom";
 import {ROUTES} from "../../models/routes";
 import {Button} from "../../styleComponents/button";
+import HappyLogo from "../../assets/logos/Happy-End_logo-mit-Text.svg";
 
 function Login() {
 
@@ -17,7 +17,7 @@ function Login() {
       <div className={classes.loginBoxContainer}>
 
         <div className={classes.header}>
-          <HappyLogo className={classes.happyLogo}/>
+          <img src={HappyLogo} className={classes.happyLogo} alt="Logo" />
         </div>
 
         <div className={classes.loginSwitchHeader}>
