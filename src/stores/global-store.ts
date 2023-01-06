@@ -1,10 +1,21 @@
 // MobX
-import {makeAutoObservable} from "mobx";
-import {IUser} from "../models/interfaces/interfaces";
+import { makeAutoObservable } from "mobx";
+//Firebase
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+} from "firebase/auth";
+import { firebaseAuth, firestoreDb } from "../firebase-config";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 
+import { IUser } from "../models/interfaces/interfaces";
 
 class GlobalStore {
-  user: IUser = {userId: "23", name: "Bastian", email: "ich@email.de"};
+  user: IUser = { userId: "23", name: "Bastian", email: "ich@email.de" };
 
   openUserSettings: boolean = false;
 
@@ -49,6 +60,78 @@ class GlobalStore {
   // Color Theme
   setColorTheme = (color: string) => {
     this.colorTheme = color;
+  };
+
+  //Authentication
+  logInWithEmailAndPassword = async (email: string, password: string) => {
+    try {
+      await signInWithEmailAndPassword(firebaseAuth, email, password);
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message);
+    }
+  };
+
+  registerWithEmailAndPassword = async (
+    name: string,
+    email: string,
+    password: string
+  ) => {
+    try {
+      const res = await createUserWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password
+      );
+      const user = res.user;
+      await addDoc(collection(firestoreDb, "users"), {
+        uid: user.uid,
+        name,
+        authProvider: "local",
+        email,
+      });
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message);
+    }
+  };
+
+  sendPasswordReset = async (email: string) => {
+    try {
+      await sendPasswordResetEmail(firebaseAuth, email);
+      alert("Password reset link sent!");
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message);
+    }
+  };
+
+  logout = () => {
+    signOut(firebaseAuth);
+  };
+
+  signInWithGoogle = async () => {
+    const googleProvider = new GoogleAuthProvider();
+    try {
+      const res = await signInWithPopup(firebaseAuth, googleProvider);
+      const user = res.user;
+      const q = query(
+        collection(firestoreDb, "users"),
+        where("uid", "==", user.uid)
+      );
+      const docs = await getDocs(q);
+      if (docs.docs.length === 0) {
+        await addDoc(collection(firestoreDb, "users"), {
+          uid: user.uid,
+          name: user.displayName,
+          authProvider: "google",
+          email: user.email,
+        });
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message);
+    }
   };
 }
 
