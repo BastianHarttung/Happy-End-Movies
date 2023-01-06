@@ -1,13 +1,24 @@
-import React from 'react';
 import classes from "./register-form.module.scss";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { firebaseAuth } from "../../../firebase-config";
 import InputString from "../../../styleComponents/input-string";
-import {Button} from "../../../styleComponents/button";
+import { Button } from "../../../styleComponents/button";
 import useInput from "../../../hooks/useInput";
 //Icons
-import UserIcon from "../../../assets/icons/user-alt.svg"
-import MailIcon from "../../../assets/icons/envelope.svg"
+import UserIcon from "../../../assets/icons/user-alt.svg";
+import MailIcon from "../../../assets/icons/envelope.svg";
+import { ROUTES } from "../../../models/routes";
+import globalStore from "../../../stores/global-store";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
+
+  const [user, loading, error] = useAuthState(firebaseAuth);
+
+  const { registerWithEmailAndPassword } = globalStore;
+
   const {
     value: nameValue,
     isValid: nameIsValid,
@@ -15,10 +26,7 @@ const RegisterForm = () => {
     changeValue: changeName,
     handleBlur: blurName,
     isDirty: isDirtyName,
-  } = useInput(
-    (value) => !!value.trim(),
-    ""
-  );
+  } = useInput((value) => !!value.trim(), "");
 
   const {
     value: emailValue,
@@ -27,10 +35,7 @@ const RegisterForm = () => {
     changeValue: changeEmail,
     handleBlur: blurEmail,
     isDirty: isDirtyEmail,
-  } = useInput(
-    (value) => value.includes("@"),
-    ""
-  );
+  } = useInput((value) => value.includes("@"), "");
 
   const {
     value: passwordValue,
@@ -39,10 +44,7 @@ const RegisterForm = () => {
     changeValue: changePassword,
     handleBlur: blurPassword,
     isDirty: isDirtyPassword,
-  } = useInput(
-    (value) => value.length >= 8,
-    ""
-  );
+  } = useInput((value) => value.length >= 8, "");
 
   const {
     value: pwconfirmValue,
@@ -51,21 +53,29 @@ const RegisterForm = () => {
     changeValue: changePwconfirm,
     handleBlur: blurPwconfirm,
     isDirty: isDirtyPwconfirm,
-  } = useInput(
-    (value) => value === passwordValue,
-    ""
-  );
+  } = useInput((value) => value === passwordValue, "");
 
-  const formIsValid = nameIsValid && emailIsValid && passwordIsValid && pwconfirmIsValid
+  const formIsValid =
+    nameIsValid && emailIsValid && passwordIsValid && pwconfirmIsValid;
 
   const submitRegisterHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    console.log("register")
-  }
+    event.preventDefault();
+    console.log("register");
+    registerWithEmailAndPassword(nameValue, emailValue, passwordValue)
+      .then(() => navigate(ROUTES.START))
+      .catch(() => console.log("fail"));
+  };
 
+  useEffect(() => {
+    if (loading) return;
+    if (user) navigate(ROUTES.START);
+  }, [user, loading]);
 
   return (
-    <form onSubmit={submitRegisterHandler} className={classes.registerInputContainer}>
+    <form
+      onSubmit={submitRegisterHandler}
+      className={classes.registerInputContainer}
+    >
       <InputString
         placeholder="Name..."
         value={nameValue}
@@ -74,7 +84,7 @@ const RegisterForm = () => {
         isDirty={isDirtyName}
         handleBlur={blurName}
         icon={UserIcon}
-        style={{width: "224px"}}
+        style={{ width: "224px" }}
       />
 
       <InputString
@@ -86,7 +96,7 @@ const RegisterForm = () => {
         handleBlur={blurEmail}
         type="email"
         icon={MailIcon}
-        style={{width: "224px"}}
+        style={{ width: "224px" }}
       />
 
       <InputString
@@ -96,10 +106,9 @@ const RegisterForm = () => {
         showError={passwordShowError}
         isDirty={isDirtyPassword}
         handleBlur={blurPassword}
-        style={{width: "224px"}}
+        style={{ width: "224px" }}
         type="password"
       />
-
 
       <InputString
         placeholder="Passwort bestätigen..."
@@ -108,18 +117,17 @@ const RegisterForm = () => {
         showError={pwconfirmShowError}
         isDirty={isDirtyPwconfirm}
         handleBlur={blurPwconfirm}
-        style={{width: "224px"}}
+        style={{ width: "224px" }}
         type="password"
       />
 
-      <Button name="Registrierung"
-              type="submit"
-              className={classes.loginButton}
-              onClick={() => {
-              }}
-              disabled={!formIsValid}
+      <Button
+        name="Registrierung"
+        type="submit"
+        className={classes.loginButton}
+        onClick={() => {}}
+        disabled={!formIsValid}
       />
-
     </form>
   );
 };
