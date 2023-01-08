@@ -1,9 +1,9 @@
 import "./App.scss";
-import {useEffect} from "react";
-import {Route, BrowserRouter, Routes} from "react-router-dom";
-import {observer} from "mobx-react";
+import { useEffect } from "react";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
+import { observer } from "mobx-react";
 import "dotenv/config";
-import {ROUTES} from "./models/routes";
+import { ROUTES } from "./models/routes";
 import globalStore from "./stores/global-store";
 
 import Hauptmenue from "./pages/Hauptmenue";
@@ -18,11 +18,13 @@ import WrongUrl from "./pages/WrongUrl";
 import Showroom from "./pages/Showroom/Showroom";
 import DetailsTv from "./pages/Details/DetailsTv";
 import ModalUserSettings from "./components/Modal-UserSettings";
-
+import ModalPasswordReset from "./components/ModalPasswordReset";
 
 function App() {
   const {
+    user,
     openUserSettings,
+    openPasswordResetModal,
     loadDarkModeFromLocalStorage,
   } = globalStore;
 
@@ -30,47 +32,39 @@ function App() {
     loadDarkModeFromLocalStorage();
   }, [loadDarkModeFromLocalStorage]);
 
+  console.log(user.userId);
+
   return (
     <BrowserRouter basename="/happy-end-movies">
       <div>
-        {openUserSettings && <ModalUserSettings/>}
+        {openUserSettings && <ModalUserSettings />}
+        {openPasswordResetModal && <ModalPasswordReset />}
 
         <Routes>
-          <Route path={ROUTES.LOGIN} element={<Login/>}/>
+          <Route path={ROUTES.LOGIN} element={<Login />} />
 
-          <Route path="" element={<Menu/>}>
-            <Route path={ROUTES.START} element={<Hauptmenue/>}/>
-            <Route
-              path={ROUTES.FILMSUCHE}
-              element={<Filmsuche/>}
-            />
-            <Route
-              path={ROUTES.SHOWROOM}
-              element={<Showroom/>}
-            />
-            <Route path="/detailansicht">
-              <Route
-                path={ROUTES.DETAILS_MOVIE}
-                element={<DetailsMovie/>}
-              />
-              <Route
-                path={ROUTES.DETAILS_TV}
-                element={<DetailsTv/>}
-              />
-              <Route
-                path={ROUTES.DETAILS_PERSON}
-                element={<DetailsPerson/>}
-              />
+          {user.userId !== "0" && (
+            <Route path="" element={<Menu />}>
+              <Route path={ROUTES.START} element={<Hauptmenue />} />
+              <Route path={ROUTES.FILMSUCHE} element={<Filmsuche />} />
+              <Route path={ROUTES.SHOWROOM} element={<Showroom />} />
+              <Route path="/detailansicht">
+                <Route path={ROUTES.DETAILS_MOVIE} element={<DetailsMovie />} />
+                <Route path={ROUTES.DETAILS_TV} element={<DetailsTv />} />
+                <Route
+                  path={ROUTES.DETAILS_PERSON}
+                  element={<DetailsPerson />}
+                />
+              </Route>
+              <Route path={ROUTES.IMPRESSUM} element={<Impressum />} />
+              <Route path={ROUTES.HILFE} element={<Hilfe />} />
             </Route>
-            <Route path={ROUTES.IMPRESSUM} element={<Impressum/>}/>
-            <Route path={ROUTES.HILFE} element={<Hilfe/>}/>
-          </Route>
-          <Route path="*" element={<WrongUrl/>}/>
+          )}
+          <Route path="*" element={<WrongUrl />} />
         </Routes>
       </div>
     </BrowserRouter>
   );
-
 }
 
 export default observer(App);

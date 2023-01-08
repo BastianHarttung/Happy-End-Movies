@@ -15,9 +15,10 @@ interface ILogoutProps {
 }
 
 const Logout = ({ isHandy }: ILogoutProps) => {
-  const { openUserSettingsModal } = globalStore;
+  const { openUserSettingsModal,logout } = globalStore;
 
   const [user, loading, error] = useAuthState(firebaseAuth);
+
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const fetchUserName = async () => {
@@ -48,12 +49,12 @@ const Logout = ({ isHandy }: ILogoutProps) => {
         <IoSettingsOutline className={classes.settingsIcon} />
       </div>
 
-      <Link to={ROUTES.LOGIN} className={classes.logoutLink}>
+      <div className={classes.logoutLink}  onClick={logout}>
         <div className={classes.linkContainer}>
           {!isHandy && <div>Logout</div>}
           <img src={iconSignout} alt="Logout" className={classes.icons} />
         </div>
-      </Link>
+      </div>
     </div>
   );
 };

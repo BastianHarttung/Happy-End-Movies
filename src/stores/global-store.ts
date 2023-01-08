@@ -10,15 +10,23 @@ import {
   signOut,
 } from "firebase/auth";
 import { firebaseAuth, firestoreDb } from "../firebase-config";
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
 import { IUser } from "../models/interfaces/interfaces";
 
 class GlobalStore {
-  user: IUser = { userId: "23", name: "Bastian", email: "ich@email.de" };
+  user: IUser = { userId: "0", name: "", email: "" };
+  openPasswordResetModal: boolean = false;
 
   openUserSettings: boolean = false;
-
   darkMode: boolean = false;
   colorTheme: string = "";
 
@@ -33,6 +41,14 @@ class GlobalStore {
 
   closeUserSettingsModal = (): void => {
     this.openUserSettings = false;
+  };
+
+  // Password Reset Modal
+  openModalPasswordReset = (): void => {
+    this.openPasswordResetModal = true;
+  };
+  closeModalPasswordReset = (): void => {
+    this.openPasswordResetModal = false;
   };
 
   // Dark Mode
@@ -65,7 +81,12 @@ class GlobalStore {
   //Authentication
   logInWithEmailAndPassword = async (email: string, password: string) => {
     try {
-      await signInWithEmailAndPassword(firebaseAuth, email, password);
+      const res = await signInWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password
+      );
+      console.log("logIn res", res);
     } catch (err: any) {
       console.error(err);
       alert(err.message);
@@ -84,12 +105,23 @@ class GlobalStore {
         password
       );
       const user = res.user;
-      await addDoc(collection(firestoreDb, "users"), {
+      this.user = {
+        userId: user.uid,
+        name,
+        email,
+      };
+      await setDoc(doc(firestoreDb, "users", user.uid), {
         uid: user.uid,
         name,
-        authProvider: "local",
         email,
+        authProvider: "local",
       });
+      // await addDoc(collection(firestoreDb, "users"), {
+      //   uid: user.uid,
+      //   name,
+      //   email,
+      //   authProvider: "local",
+      // });
     } catch (err: any) {
       console.error(err);
       alert(err.message);
@@ -106,8 +138,18 @@ class GlobalStore {
     }
   };
 
-  logout = () => {
-    signOut(firebaseAuth);
+  logout = async () => {
+    try {
+      await signOut(firebaseAuth);
+      this.user = {
+        userId: "0",
+        name: "",
+        email: "",
+      };
+    } catch (err: any) {
+      console.log(err);
+      alert(err.message);
+    }
   };
 
   signInWithGoogle = async () => {

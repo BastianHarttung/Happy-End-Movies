@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
 import classes from "./login-form.module.scss";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import InputString from "../../../styleComponents/input-string";
 import { Button } from "../../../styleComponents/button";
 import useInput from "../../../hooks/useInput";
 //Icons
 import MailIcon from "../../../assets/icons/envelope.svg";
 import globalStore from "../../../stores/global-store";
-import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../models/routes";
+//Firebase
 import { useAuthState } from "react-firebase-hooks/auth";
 import { firebaseAuth } from "../../../firebase-config";
 
@@ -16,16 +18,11 @@ const LoginForm = () => {
 
   const [user, loading, error] = useAuthState(firebaseAuth);
 
-  const { logInWithEmailAndPassword } = globalStore;
-
-  // const {
-  //   value: nameValue,
-  //   isValid: nameIsValid,
-  //   showError: nameShowError,
-  //   changeValue: changeName,
-  //   handleBlur: blurName,
-  //   isDirty: isDirtyName,
-  // } = useInput((value) => !!value.trim(), "");
+  const {
+    logInWithEmailAndPassword,
+    openModalPasswordReset,
+    signInWithGoogle,
+  } = globalStore;
 
   const {
     value: emailValue,
@@ -48,7 +45,7 @@ const LoginForm = () => {
   const formIsValid = emailIsValid && passwordIsValid;
 
   const handleTestLoginClick = () => {
-    changeEmail("rainer.zufall@test.de");
+    changeEmail("rainer.zufall@testmail.de");
     changePassword("test1234");
   };
 
@@ -70,17 +67,6 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={submitLoginHandler} className={classes.loginInputContainer}>
-      {/*<InputString*/}
-      {/*  placeholder="Name..."*/}
-      {/*  value={nameValue}*/}
-      {/*  changeInput={changeName}*/}
-      {/*  showError={nameShowError}*/}
-      {/*  isDirty={isDirtyName}*/}
-      {/*  handleBlur={blurName}*/}
-      {/*  icon={UserIcon}*/}
-      {/*  style={{ width: "224px" }}*/}
-      {/*/>*/}
-
       <InputString
         placeholder="Email..."
         value={emailValue}
@@ -115,12 +101,18 @@ const LoginForm = () => {
       <Button
         name="Passwort vergessen?"
         buttonStyle="third"
-        onClick={() => {}} //TODO Modal zur Email-Eingabe öffnen
+        onClick={openModalPasswordReset}
       />
       <Button
         name="Testdaten für Login"
         buttonStyle="third"
         onClick={handleTestLoginClick}
+      />
+
+      <Button
+        name="Mit Google einloggen"
+        buttonStyle="secondary"
+        onClick={signInWithGoogle}
       />
     </form>
   );

@@ -60,15 +60,6 @@ function Login() {
         </div>
       </div>
 
-      <Button
-        name="Mit Google einloggen"
-        buttonStyle="secondary"
-        onClick={signInWithGoogle}
-      />
-
-      <Link to={ROUTES.START}>
-        <Button name="Gast-Zugang" buttonStyle="secondary" onClick={() => {}} />
-      </Link>
     </section>
   );
 }
