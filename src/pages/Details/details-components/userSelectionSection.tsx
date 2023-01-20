@@ -20,13 +20,13 @@ interface IUserSelectionSectionProps {
 
 const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionSectionProps) => {
 
-  const {user} = globalStore;
+  const {userData} = globalStore;
   const {saveMovieToDb} = databaseStore
 
   const navigate = useNavigate();
 
   const [userSelection, setUserSelection] = useState<IUserSelections>({
-    [user.userId]: {
+    [userData?.userId || ""]: {
       happyEnd_Voting: "neutral",
       haveSeen: false
     }
@@ -40,7 +40,7 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
           <FaRegEye
             onClick={() => handleClickUserSelection("haveSeen", true)}
             className={
-              userSelection[user.userId].haveSeen
+              userSelection[userData?.userId || ""].haveSeen
                 ? classes.eyeGreen
                 : classes.eye
             }
@@ -48,7 +48,7 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
           <FaRegEyeSlash
             onClick={() => handleClickUserSelection("haveSeen", false)}
             className={
-              userSelection[user.userId].haveSeen
+              userSelection[userData?.userId || ""].haveSeen
                 ? classes.eye
                 : classes.eyeRed
             }
@@ -56,7 +56,7 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
         </div>
       </div>
 
-      {userSelection[user.userId].haveSeen && (
+      {userSelection[userData?.userId || ""].haveSeen && (
         <div>
           <div className={classes.happyEnd}>Dein Happy End ?</div>
 
@@ -64,7 +64,7 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
             <FaSmileBeam
               onClick={() => handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.TRUE)}
               className={
-                userSelection[user.userId].happyEnd_Voting === EHasHappyEnd.TRUE
+                userSelection[userData?.userId || ""].happyEnd_Voting === EHasHappyEnd.TRUE
                   ? classes.smileyLaugh
                   : classes.smiley
               }
@@ -72,7 +72,7 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
             <FaMeh
               onClick={() => handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.NEUTRAL)}
               className={
-                userSelection[user.userId].happyEnd_Voting === EHasHappyEnd.NEUTRAL
+                userSelection[userData?.userId || ""].happyEnd_Voting === EHasHappyEnd.NEUTRAL
                   ? classes.smileyNeutral
                   : classes.smiley
               }
@@ -80,7 +80,7 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
             <FaSadTear
               onClick={() => handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.FALSE)}
               className={
-                userSelection[user.userId].happyEnd_Voting === EHasHappyEnd.FALSE
+                userSelection[userData?.userId || ""].happyEnd_Voting === EHasHappyEnd.FALSE
                   ? classes.smileySad
                   : classes.smiley
               }
@@ -99,7 +99,7 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
 
   //Change state for User Selection
   function handleClickUserSelection(name: TUserSelections, state: boolean | THasHappyEnd): void {
-    setUserSelection({[user.userId]: {...userSelection[user.userId], [name]: state}})
+    setUserSelection({[userData?.userId || ""]: {...userSelection[userData?.userId || ""], [name]: state}})
   }
 
   function saveMediaInDB() {

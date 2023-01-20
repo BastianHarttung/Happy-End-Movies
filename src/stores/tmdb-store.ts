@@ -139,7 +139,7 @@ class TmdbStore {
 
   private defaultUserSelection = (): IUserSelections => {
     return {
-      [this.globalStore.user.userId]: {
+      [this.globalStore.userData?.userId || ""]: {
         happyEnd_Voting: null,
         haveSeen: false,
       },

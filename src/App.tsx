@@ -19,20 +19,25 @@ import Showroom from "./pages/Showroom/Showroom";
 import DetailsTv from "./pages/Details/DetailsTv";
 import ModalUserSettings from "./components/Modal-UserSettings";
 import ModalPasswordReset from "./components/ModalPasswordReset";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { firebaseAuth } from "./firebase-config";
 
 function App() {
   const {
-    user,
     openUserSettings,
     openPasswordResetModal,
     loadDarkModeFromLocalStorage,
   } = globalStore;
 
+  const [user, loading, error] = useAuthState(firebaseAuth);
+
   useEffect(() => {
     loadDarkModeFromLocalStorage();
   }, [loadDarkModeFromLocalStorage]);
 
-  console.log(user.userId);
+  useEffect(() => {
+    if (loading || error) return;
+  }, [user, loading]);
 
   return (
     <BrowserRouter basename="/happy-end-movies">
@@ -43,7 +48,7 @@ function App() {
         <Routes>
           <Route path={ROUTES.LOGIN} element={<Login />} />
 
-          {user.userId !== "0" && (
+          {user && (
             <Route path="" element={<Menu />}>
               <Route path={ROUTES.START} element={<Hauptmenue />} />
               <Route path={ROUTES.FILMSUCHE} element={<Filmsuche />} />

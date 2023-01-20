@@ -2,6 +2,7 @@
 import { makeAutoObservable } from "mobx";
 //Firebase
 import {
+  User,
   GoogleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
@@ -14,6 +15,7 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   setDoc,
@@ -23,7 +25,8 @@ import {
 import { IUser } from "../models/interfaces/interfaces";
 
 class GlobalStore {
-  user: IUser = { userId: "0", name: "", email: "" };
+  userData: IUser | null = null;
+
   openPasswordResetModal: boolean = false;
 
   openUserSettings: boolean = false;
@@ -86,7 +89,26 @@ class GlobalStore {
         email,
         password
       );
-      console.log("logIn res", res);
+
+      await this.setUserData(res.user);
+
+      // const docSnap = await getDoc(doc(firestoreDb, "users", res.user.uid));
+      //
+      // let name = "";
+      //
+      // if (docSnap.exists()) {
+      //   name = docSnap.data().name;
+      // } else {
+      //   // doc.data() will be undefined in this case
+      //   console.log("No such document!");
+      // }
+      // console.log(name);
+      //
+      // this.userData = {
+      //   userId: res.user.uid,
+      //   email: res.user.email || "",
+      //   name: name,
+      // };
     } catch (err: any) {
       console.error(err);
       alert(err.message);
@@ -105,7 +127,8 @@ class GlobalStore {
         password
       );
       const user = res.user;
-      this.user = {
+      console.log(user);
+      this.userData = {
         userId: user.uid,
         name,
         email,
@@ -116,12 +139,6 @@ class GlobalStore {
         email,
         authProvider: "local",
       });
-      // await addDoc(collection(firestoreDb, "users"), {
-      //   uid: user.uid,
-      //   name,
-      //   email,
-      //   authProvider: "local",
-      // });
     } catch (err: any) {
       console.error(err);
       alert(err.message);
@@ -141,7 +158,7 @@ class GlobalStore {
   logout = async () => {
     try {
       await signOut(firebaseAuth);
-      this.user = {
+      this.userData = {
         userId: "0",
         name: "",
         email: "",
@@ -174,6 +191,39 @@ class GlobalStore {
       console.error(err);
       alert(err.message);
     }
+  };
+
+  // fetchUserName = async (userId: string) => {
+  //   try {
+  //     const q = query(
+  //       collection(firestoreDb, "users"),
+  //       where("uid", "==", userId)
+  //     );
+  //     const doc = await getDocs(q);
+  //     const data = doc.docs[0].data();
+  //     this.user = {};
+  //   } catch (err) {
+  //     console.error(err);
+  //     alert("Ein Fehler ist während des Datenübernahme des Users passiert");
+  //   }
+  // };
+
+  setUserData = async (user: User) => {
+    const docSnap = await getDoc(doc(firestoreDb, "users", user.uid));
+
+    let name = "";
+    if (docSnap.exists()) {
+      name = docSnap.data().name;
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+
+    this.userData = {
+      userId: user.uid,
+      email: user.email || "",
+      name: name,
+    };
   };
 }
 

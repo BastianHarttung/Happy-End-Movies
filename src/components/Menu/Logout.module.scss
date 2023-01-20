@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  cursor: pointer;
 }
 
 .userContainer {
@@ -26,7 +27,6 @@
   color: white;
   height: 20px;
   width: 20px;
-  cursor: pointer;
 
   //&:hover {
   //  animation: rotate 2s linear infinite;
@@ -53,7 +53,7 @@
 .logoutLink::after {
   content: "";
   background-color: white;
-  width: 0%;
+  width: 0;
   height: 2px;
   transition: width var(--hover-time-short) ease-in-out;
 }
@@ -75,7 +75,7 @@
 
 @media (max-width: 800px) {
   .logoutLinkContainer {
-    margin: 0px 15px;
+    margin: 0 15px;
   }
   .icons {
     height: 30px;
@@ -84,10 +84,10 @@
   .logoutLinkContainer {
     background-color: var(--main-color);
     padding: 10px 20px;
-    border-radius: 0px 0px var(--border-radius-small) var(--border-radius-small);
+    border-radius: 0 0 var(--border-radius-small) var(--border-radius-small);
     z-index: 10;
   }
   .logoutLink:hover::after {
-    width: 0%;
+    width: 0;
   }
 }

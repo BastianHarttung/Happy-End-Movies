@@ -1,8 +1,6 @@
 import classes from "./register-form.module.scss";
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { firebaseAuth } from "../../../firebase-config";
 import InputString from "../../../styleComponents/input-string";
 import { Button } from "../../../styleComponents/button";
 import useInput from "../../../hooks/useInput";
@@ -14,8 +12,6 @@ import globalStore from "../../../stores/global-store";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-
-  const [user, loading, error] = useAuthState(firebaseAuth);
 
   const { registerWithEmailAndPassword } = globalStore;
 
@@ -60,16 +56,10 @@ const RegisterForm = () => {
 
   const submitRegisterHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("register");
     registerWithEmailAndPassword(nameValue, emailValue, passwordValue)
       .then(() => navigate(ROUTES.START))
       .catch(() => console.log("fail"));
   };
-
-  useEffect(() => {
-    if (loading) return;
-    if (user) navigate(ROUTES.START);
-  }, [user, loading]);
 
   return (
     <form

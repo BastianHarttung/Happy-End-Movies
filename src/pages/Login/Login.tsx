@@ -1,17 +1,26 @@
 import classes from "./Login.module.scss";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import LoginForm from "./login-components/login-form";
 import RegisterForm from "./login-components/register-form";
-import { ROUTES } from "../../models/routes";
-import { Button } from "../../styleComponents/button";
 import HappyLogo from "../../assets/logos/Happy-End_logo-mit-Text.svg";
-import globalStore from "../../stores/global-store";
+import { ROUTES } from "../../models/routes";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { firebaseAuth } from "../../firebase-config";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const { signInWithGoogle } = globalStore;
-
   const [register, setRegister] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
+  const [user, loading, error] = useAuthState(firebaseAuth);
+
+  console.log(user);
+
+  useEffect(() => {
+    if (loading || error) return;
+    if (user) navigate(ROUTES.START);
+  }, [user, loading]);
 
   return (
     <section className={classes.loginSection}>
@@ -59,7 +68,6 @@ function Login() {
           <RegisterForm />
         </div>
       </div>
-
     </section>
   );
 }

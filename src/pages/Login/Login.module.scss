@@ -10,7 +10,7 @@
 
     background-color: white;
     width: var(--login-box-width);
-    height: 400px;
+    height: 455px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -21,7 +21,7 @@
     margin: 50px 0;
 
     .header {
-      background-color: var(--main-color);
+      background-color: var(--main-color-dark);
       width: 100%;
       height: 60px;
       display: flex;
