@@ -7,7 +7,7 @@ import LoginForm from "./login-components/login-form";
 import RegisterForm from "./login-components/register-form";
 import HappyLogo from "../../assets/logos/Happy-End_logo-mit-Text.svg";
 import { ROUTES } from "../../models/routes";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import LoadingSpinner from "../../components/Loaders/LoadingSpinner";
 
 function Login() {
   const [register, setRegister] = useState<boolean>(false);

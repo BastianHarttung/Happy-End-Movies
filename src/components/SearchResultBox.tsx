@@ -4,7 +4,7 @@ import {FaSmileBeam, FaSadTear} from "react-icons/fa";
 import {useState} from "react";
 import {observer} from "mobx-react";
 //Components
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "./Loaders/LoadingSpinner";
 //Pictures
 import emptyImage from "../assets/img/movie-poster.png";
 import emptyImageMan from "../assets/img/actor_man_white.png";

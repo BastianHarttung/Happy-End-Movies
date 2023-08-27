@@ -1,5 +1,5 @@
 import classes from "./LoadingMovieStreifen.module.scss";
-import MovieStreifen from "../assets/icons/MovieStreifen.svg";
+import MovieStreifen from "../../assets/icons/MovieStreifen.svg";
 
 export default function LoadingMovieStreifen() {
   return (

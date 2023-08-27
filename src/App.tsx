@@ -19,9 +19,9 @@ import Menu from "./pages/Menu";
 import WrongUrl from "./pages/WrongUrl";
 import Showroom from "./pages/Showroom/Showroom";
 import DetailsTv from "./pages/Details/DetailsTv";
-import ModalUserSettings from "./components/Modal-UserSettings";
-import ModalPasswordReset from "./components/ModalPasswordReset";
-import LoadingSpinner from "./components/LoadingSpinner";
+import ModalUserSettings from "./components/Modals/Modal-UserSettings";
+import ModalPasswordReset from "./components/Modals/ModalPasswordReset";
+import LoadingSpinner from "./components/Loaders/LoadingSpinner";
 
 
 function App() {

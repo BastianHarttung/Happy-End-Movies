@@ -9,7 +9,7 @@ import DetailInfos from "./details-components/detailInfos";
 import CastAndCrew from "./details-components/castAndCrew";
 import ImagesVideosSection from "./details-components/imagesVideosSection";
 import UserSelectionSection from "./details-components/userSelectionSection";
-import LoadingMovieStreifen from "../../components/LoadingMovieStreifen";
+import LoadingMovieStreifen from "../../components/Loaders/LoadingMovieStreifen";
 
 
 const DetailsMovie = () => {

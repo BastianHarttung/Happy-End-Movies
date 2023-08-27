@@ -9,7 +9,7 @@ import CastAndCrew from "./details-components/castAndCrew";
 import ImagesVideosSection from "./details-components/imagesVideosSection";
 import UserSelectionSection from "./details-components/userSelectionSection";
 import { useParams } from "react-router-dom";
-import LoadingMovieStreifen from "../../components/LoadingMovieStreifen";
+import LoadingMovieStreifen from "../../components/Loaders/LoadingMovieStreifen";
 
 const DetailsMovie = () => {
   const { selectedTv, isLoading } = detailsStore;

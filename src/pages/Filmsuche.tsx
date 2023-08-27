@@ -10,7 +10,6 @@ import filmsucheStore from "../stores/page-stores/filmsuche-store";
 import { TCategory, TCategorySearch } from "../models/types";
 import { ROUTES } from "../models/routes";
 
-
 const Filmsuche = () => {
   const navigate = useNavigate();
   const [searchFor, setSearchFor] = useState("");
@@ -50,9 +49,7 @@ const Filmsuche = () => {
         <SearchBar
           length={22}
           size={19}
-          searchMovie={(movieName) =>
-            handleSearch(movieName, searchCategory)
-          }
+          searchMovie={(movieName) => handleSearch(movieName, searchCategory)}
           saveSearchFor={(movieName) => setSearchFor(movieName)}
         />
 
@@ -60,26 +57,30 @@ const Filmsuche = () => {
           <Button
             name="Alles"
             activated={searchCategory === "multi"}
+            buttonStyle={searchCategory === "multi" ? "primary" : "secondary"}
             onClick={() => handleSearch(searchFor, "multi")}
-            style={{ fontSize: "1.2em" }}
+            style={{ fontSize: "1.2em", width: "147px" }}
           />
           <Button
             name="Filme"
             activated={searchCategory === "movie"}
+            buttonStyle={searchCategory === "movie" ? "primary" : "secondary"}
             onClick={() => handleSearch(searchFor, "movie")}
-            style={{ fontSize: "1.2em" }}
+            style={{ fontSize: "1.2em", width: "147px" }}
           />
           <Button
             name="Serien"
             activated={searchCategory === "tv"}
+            buttonStyle={searchCategory === "tv" ? "primary" : "secondary"}
             onClick={() => handleSearch(searchFor, "tv")}
-            style={{ fontSize: "1.2em" }}
+            style={{ fontSize: "1.2em", width: "147px" }}
           />
           <Button
             name="Schauspieler"
             activated={searchCategory === "person"}
+            buttonStyle={searchCategory === "person" ? "primary" : "secondary"}
             onClick={() => handleSearch(searchFor, "person")}
-            style={{ fontSize: "1.2em" }}
+            style={{ fontSize: "1.2em", width: "147px" }}
           />
         </div>
 

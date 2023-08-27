@@ -8,7 +8,7 @@ import { firebaseAuth } from "../../firebase-config";
 import iconSignout from "../../assets/icons/sign-out-alt_light.svg";
 import globalStore from "../../stores/global-store";
 import { ROUTES } from "../../models/routes";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "../Loaders/LoadingSpinner";
 
 interface ILogoutProps {
   isHandy: boolean;

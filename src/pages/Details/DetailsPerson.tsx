@@ -10,7 +10,7 @@ import imageActorWoman from "../../assets/img/actor_girl.png";
 import {imageUrlBig, imageUrlSmall} from "../../constants";
 //Components
 import SearchResultBox from "../../components/SearchResultBox";
-import LoadingMovieStreifen from "../../components/LoadingMovieStreifen";
+import LoadingMovieStreifen from "../../components/Loaders/LoadingMovieStreifen";
 
 
 const DetailsPerson = () => {
