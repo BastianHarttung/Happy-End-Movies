@@ -1,35 +1,44 @@
-import React, {useState} from 'react';
 import classes from "./userSelectionSection.module.scss";
-import {FaMeh, FaRegEye, FaRegEyeSlash, FaSadTear, FaSmileBeam} from "react-icons/fa";
-import {THasHappyEnd, TUserSelections} from "../../../models/types";
-import {IUserSelections} from "../../../models/interfaces/interfaces";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { observer } from "mobx-react";
+import {
+  FaMeh,
+  FaRegEye,
+  FaRegEyeSlash,
+  FaSadTear,
+  FaSmileBeam,
+} from "react-icons/fa";
+import { Button } from "../../../styleComponents";
+import { IUserSelections } from "../../../models/interfaces/interfaces";
 import globalStore from "../../../stores/global-store";
 import databaseStore from "../../../stores/database-store";
-import {Button} from "../../../styleComponents/button";
-import {useNavigate} from "react-router-dom";
-import {observer} from "mobx-react";
-import {EHasHappyEnd} from "../../../models/enums";
-import {IMovieAllInfos} from "../../../models/interfaces/movie-interfaces";
-import {ITvAllInfos} from "../../../models/interfaces/tv-interfaces";
-import {ROUTES} from "../../../models/routes";
+import { EHasHappyEnd } from "../../../models/enums";
+import { IMovieAllInfos } from "../../../models/interfaces/movie-interfaces";
+import { ITvAllInfos } from "../../../models/interfaces/tv-interfaces";
+import { ROUTES } from "../../../models/routes";
+import { THasHappyEnd, TUserSelections } from "../../../models/types";
+
 
 interface IUserSelectionSectionProps {
   selectedMedia: IMovieAllInfos | ITvAllInfos;
   classNameContent?: string;
 }
 
-const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionSectionProps) => {
-
-  const {userData} = globalStore;
-  const {saveMovieToDb} = databaseStore
+const UserSelectionSection = ({
+  selectedMedia,
+  classNameContent,
+}: IUserSelectionSectionProps) => {
+  const { userData } = globalStore;
+  const { saveMovieToDb } = databaseStore;
 
   const navigate = useNavigate();
 
   const [userSelection, setUserSelection] = useState<IUserSelections>({
     [userData?.userId || ""]: {
       happyEnd_Voting: "neutral",
-      haveSeen: false
-    }
+      haveSeen: false,
+    },
   });
 
   return (
@@ -62,25 +71,37 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
 
           <div className={classes.smileys}>
             <FaSmileBeam
-              onClick={() => handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.TRUE)}
+              onClick={() =>
+                handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.TRUE)
+              }
               className={
-                userSelection[userData?.userId || ""].happyEnd_Voting === EHasHappyEnd.TRUE
+                userSelection[userData?.userId || ""].happyEnd_Voting ===
+                EHasHappyEnd.TRUE
                   ? classes.smileyLaugh
                   : classes.smiley
               }
             ></FaSmileBeam>
             <FaMeh
-              onClick={() => handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.NEUTRAL)}
+              onClick={() =>
+                handleClickUserSelection(
+                  "happyEnd_Voting",
+                  EHasHappyEnd.NEUTRAL
+                )
+              }
               className={
-                userSelection[userData?.userId || ""].happyEnd_Voting === EHasHappyEnd.NEUTRAL
+                userSelection[userData?.userId || ""].happyEnd_Voting ===
+                EHasHappyEnd.NEUTRAL
                   ? classes.smileyNeutral
                   : classes.smiley
               }
             ></FaMeh>
             <FaSadTear
-              onClick={() => handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.FALSE)}
+              onClick={() =>
+                handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.FALSE)
+              }
               className={
-                userSelection[userData?.userId || ""].happyEnd_Voting === EHasHappyEnd.FALSE
+                userSelection[userData?.userId || ""].happyEnd_Voting ===
+                EHasHappyEnd.FALSE
                   ? classes.smileySad
                   : classes.smiley
               }
@@ -92,22 +113,28 @@ const UserSelectionSection = ({selectedMedia, classNameContent}: IUserSelectionS
       <Button
         name="In Datenbank speichern und zum Showroom"
         onClick={saveMediaInDB}
-        style={{fontSize: "1em"}}
+        style={{ fontSize: "1em" }}
       />
     </div>
   );
 
   //Change state for User Selection
-  function handleClickUserSelection(name: TUserSelections, state: boolean | THasHappyEnd): void {
-    setUserSelection({[userData?.userId || ""]: {...userSelection[userData?.userId || ""], [name]: state}})
+  function handleClickUserSelection(
+    name: TUserSelections,
+    state: boolean | THasHappyEnd
+  ): void {
+    setUserSelection({
+      [userData?.userId || ""]: {
+        ...userSelection[userData?.userId || ""],
+        [name]: state,
+      },
+    });
   }
 
   function saveMediaInDB() {
-    const mediaForDB = {...selectedMedia, userSelections: userSelection};
-    saveMovieToDb(mediaForDB)
-      .then(() => navigate(ROUTES.SHOWROOM))
+    const mediaForDB = { ...selectedMedia, userSelections: userSelection };
+    saveMovieToDb(mediaForDB).then(() => navigate(ROUTES.SHOWROOM));
   }
-
 };
 
 export default observer(UserSelectionSection);

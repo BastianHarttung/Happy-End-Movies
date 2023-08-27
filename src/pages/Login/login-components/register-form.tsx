@@ -1,14 +1,14 @@
 import classes from "./register-form.module.scss";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import InputString from "../../../styleComponents/input-string";
-import { Button } from "../../../styleComponents/button";
+import { Button, InputString } from "../../../styleComponents";
 import useInput from "../../../hooks/useInput";
 //Icons
 import UserIcon from "../../../assets/icons/user-alt.svg";
 import MailIcon from "../../../assets/icons/envelope.svg";
 import { ROUTES } from "../../../models/routes";
 import globalStore from "../../../stores/global-store";
+
 
 const RegisterForm = () => {
   const navigate = useNavigate();

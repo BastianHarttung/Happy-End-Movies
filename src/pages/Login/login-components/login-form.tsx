@@ -2,13 +2,13 @@ import classes from "./login-form.module.scss";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import InputString from "../../../styleComponents/input-string";
-import { Button } from "../../../styleComponents/button";
+import { Button, InputString } from "../../../styleComponents";
 import useInput from "../../../hooks/useInput";
 //Icons
 import MailIcon from "../../../assets/icons/envelope.svg";
 import globalStore from "../../../stores/global-store";
 import { ROUTES } from "../../../models/routes";
+
 
 const LoginForm = () => {
   const navigate = useNavigate();

@@ -16,7 +16,7 @@ interface IInputStringProps {
   icon?: string;
 }
 
-const InputString = ({
+export const InputString = ({
                        changeInput,
                        value,
                        showError,
@@ -54,5 +54,3 @@ const InputString = ({
     </div>
   );
 };
-
-export default InputString;
