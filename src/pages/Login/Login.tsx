@@ -1,12 +1,13 @@
 import classes from "./Login.module.scss";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { firebaseAuth } from "../../firebase-config";
 import LoginForm from "./login-components/login-form";
 import RegisterForm from "./login-components/register-form";
 import HappyLogo from "../../assets/logos/Happy-End_logo-mit-Text.svg";
 import { ROUTES } from "../../models/routes";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { firebaseAuth } from "../../firebase-config";
-import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 function Login() {
   const [register, setRegister] = useState<boolean>(false);
@@ -15,12 +16,16 @@ function Login() {
 
   const [user, loading, error] = useAuthState(firebaseAuth);
 
-  console.log(user);
-
   useEffect(() => {
-    if (loading || error) return;
-    if (user) navigate(ROUTES.START);
-  }, [user, loading]);
+    if (user) {
+      console.log(user);
+      navigate(ROUTES.START);
+    }
+  }, [user, navigate]);
+
+  if (loading) return <LoadingSpinner />;
+
+  if (error) return <>Error {error.message}</>;
 
   return (
     <section className={classes.loginSection}>

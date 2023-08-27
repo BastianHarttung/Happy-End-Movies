@@ -1,24 +1,27 @@
-import React, {useEffect, useState} from 'react';
 import classes from "./castAndCrew.module.scss";
-import {FaChevronLeft, FaChevronRight, FaSearch} from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaChevronLeft, FaChevronRight, FaSearch } from "react-icons/fa";
 import PersonBox from "./personBox";
-import {ICastMovie, ICrewMovie} from "../../../models/interfaces/movie-interfaces";
-import {ICastTv, ICrewTv} from "../../../models/interfaces/tv-interfaces";
-
+import {
+  ICastMovie,
+  ICrewMovie,
+} from "../../../models/interfaces/movie-interfaces";
+import { ICastTv, ICrewTv } from "../../../models/interfaces/tv-interfaces";
 
 interface ICastAndCrewProps {
-  castAndCrew: ((ICrewMovie | ICastMovie)[]) | ((ICrewTv | ICastTv)[]);
+  castAndCrew: (ICrewMovie | ICastMovie)[] | (ICrewTv | ICastTv)[];
   classNameContent?: string;
 }
 
-const CastAndCrew = ({castAndCrew, classNameContent}: ICastAndCrewProps) => {
-
+const CastAndCrew = ({ castAndCrew, classNameContent }: ICastAndCrewProps) => {
   const [scrollActors, setScrollActors] = useState<number>(0);
   const [scrollWidth, setScrollWidth] = useState<number>(100);
 
   const [searchActor, setSearchActor] = useState<string>("");
 
-  const [filteredActors, setFilteredActors] = useState<((ICrewMovie | ICastMovie)[]) | ((ICrewTv | ICastTv)[])>(castAndCrew);
+  const [filteredActors, setFilteredActors] = useState<
+    (ICrewMovie | ICastMovie)[] | (ICrewTv | ICastTv)[]
+  >(castAndCrew);
 
   useEffect(() => {
     setScrollWidth(getScrollWidth());
@@ -65,11 +68,8 @@ const CastAndCrew = ({castAndCrew, classNameContent}: ICastAndCrewProps) => {
       <div id="actorContainer" className={classes.actorContainer}>
         {castAndCrew
           ? filteredActors.map((actor, index) => (
-            <PersonBox
-              key={index}
-              person={actor}
-            />
-          ))
+              <PersonBox key={index} person={actor} />
+            ))
           : ""}
       </div>
     </div>
@@ -78,7 +78,7 @@ const CastAndCrew = ({castAndCrew, classNameContent}: ICastAndCrewProps) => {
   //Searching and Filtering For Actor
   function searchForActor(actorSearch: string) {
     const actorSearchLow = actorSearch.toLowerCase();
-    if (actorSearch === "") {
+    if (actorSearchLow === "") {
       console.log("alle actors anzeigen");
       setFilteredActors(castAndCrew);
     } else {
@@ -107,21 +107,22 @@ const CastAndCrew = ({castAndCrew, classNameContent}: ICastAndCrewProps) => {
       //   })
       // );
     }
-  };
+  }
 
   //Listen if the Enter-Button is pressed
   function keyPressEvent(event: any) {
     if (event.key === "Enter") {
       searchForActor(searchActor);
     }
-  };
+  }
 
   //Set Scroll Width
   function getScrollWidth(): number {
     const actorContainer = document.getElementById("actorContainer");
-    if (!!actorContainer) return actorContainer.scrollWidth - actorContainer.offsetWidth
-    else return 0
-  };
+    if (!!actorContainer)
+      return actorContainer.scrollWidth - actorContainer.offsetWidth;
+    else return 0;
+  }
 
   //Scroll Actors Right
   function scrollRight(): void {
@@ -133,7 +134,7 @@ const CastAndCrew = ({castAndCrew, classNameContent}: ICastAndCrewProps) => {
         setScrollActors(scrollWidth);
       }
     }
-  };
+  }
 
   //Scroll Actors Left
   function scrollLeft(): void {
@@ -145,8 +146,7 @@ const CastAndCrew = ({castAndCrew, classNameContent}: ICastAndCrewProps) => {
         setScrollActors(scrollWidth);
       }
     }
-  };
-
+  }
 };
 
 export default CastAndCrew;

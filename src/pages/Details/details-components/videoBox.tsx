@@ -1,35 +1,37 @@
 import classes from "./videoBox.module.scss";
 import React from "react";
-import {IVideoResult} from "../../../models/interfaces/interfaces";
+import { IVideoResult } from "../../../models/interfaces/interfaces";
 
 interface IVideoBoxProps {
-  videos: IVideoResult[]
+  videos: IVideoResult[];
 }
 
-const VideoBox = ({videos}: IVideoBoxProps) => {
-
-  return (<>
-    <div><i>Trailer</i></div>
-    <div className={classes.videoContainer}>
-      {videos.map((video, index) => {
-        return (
-          <div key={index}
-               className={classes.videoBox}>
-            <iframe
-              width="260"
-              loading="lazy"
-              src={"https://www.youtube.com/embed/" + video.key}
-              allowFullScreen
-            ></iframe>
-            <div className={classes.videoName}
-                 title={video.name}>
-              {video.name}
+const VideoBox = ({ videos }: IVideoBoxProps) => {
+  return (
+    <>
+      <div>
+        <i>Trailer</i>
+      </div>
+      <div className={classes.videoContainer}>
+        {videos.map((video, index) => {
+          return (
+            <div key={index} className={classes.videoBox}>
+              <iframe
+                width="260"
+                loading="lazy"
+                title={video.name}
+                src={"https://www.youtube.com/embed/" + video.key}
+                allowFullScreen
+              ></iframe>
+              <div className={classes.videoName} title={video.name}>
+                {video.name}
+              </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
-  </>)
-}
+          );
+        })}
+      </div>
+    </>
+  );
+};
 
-export default VideoBox
+export default VideoBox;

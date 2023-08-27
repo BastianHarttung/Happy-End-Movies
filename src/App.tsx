@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import { observer } from "mobx-react";
 import "dotenv/config";
+import { firebaseAuth } from "./firebase-config";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { ROUTES } from "./models/routes";
 import globalStore from "./stores/global-store";
 
@@ -19,8 +21,8 @@ import Showroom from "./pages/Showroom/Showroom";
 import DetailsTv from "./pages/Details/DetailsTv";
 import ModalUserSettings from "./components/Modal-UserSettings";
 import ModalPasswordReset from "./components/ModalPasswordReset";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { firebaseAuth } from "./firebase-config";
+import LoadingSpinner from "./components/LoadingSpinner";
+
 
 function App() {
   const {
@@ -35,9 +37,8 @@ function App() {
     loadDarkModeFromLocalStorage();
   }, [loadDarkModeFromLocalStorage]);
 
-  useEffect(() => {
-    if (loading || error) return;
-  }, [user, loading]);
+  if (loading) return <LoadingSpinner />;
+  if (error) return <>Error</>;
 
   return (
     <BrowserRouter basename="/happy-end-movies">

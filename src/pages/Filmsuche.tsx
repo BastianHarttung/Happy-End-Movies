@@ -51,7 +51,7 @@ const Filmsuche = () => {
           length={22}
           size={19}
           searchMovie={(movieName) =>
-            searchingOnTmdb(movieName, searchCategory)
+            handleSearch(movieName, searchCategory)
           }
           saveSearchFor={(movieName) => setSearchFor(movieName)}
         />

@@ -27,15 +27,15 @@ const Pagination = ({
   // Set Dots
   useEffect(() => {
     if (activePage > 4) {
-      setDots({ ...dots, before: true });
+      setDots((prevState) => ({ ...prevState, before: true }));
     } else if (activePage <= 4) {
-      setDots({ ...dots, before: false });
+      setDots((prevState) => ({ ...prevState, before: false }));
     } else if (activePage <= totalPages[totalPages.length - 1] - 4) {
-      setDots({ ...dots, after: true });
+      setDots((prevState) => ({ ...prevState, after: true }));
     } else if (activePage > totalPages[totalPages.length - 1] - 4) {
-      setDots({ ...dots, after: false });
+      setDots((prevState) => ({ ...prevState, after: false }));
     }
-  }, []);
+  }, [activePage, totalPages]);
 
   return (
     <section className={classes.paginationSection}>

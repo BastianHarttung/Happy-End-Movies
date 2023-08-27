@@ -1,18 +1,15 @@
 import React from "react";
-import Header from "../components/Menu/Header";
-import Footer from "../components/Menu/Footer";
 import { Outlet } from "react-router-dom";
+import Header from "../components/Menu/Header";
 
 function Menu() {
-   return (
-      <>
-         <Header />
+  return (
+    <>
+      <Header />
 
-         <Outlet />
-
-         {/*<Footer />*/}
-      </>
-   );
+      <Outlet />
+    </>
+  );
 }
 
 export default Menu;

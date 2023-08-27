@@ -1,7 +1,7 @@
+import classes from "./detailInfos.module.scss";
 import React from "react";
 import { imageUrlBig } from "../../../constants";
-import classes from "./detailInfos.module.scss";
-import { FaKaaba, FaMeh, FaSadTear, FaSmileBeam } from "react-icons/fa";
+import { FaMeh, FaSadTear, FaSmileBeam } from "react-icons/fa";
 import emptyImage from "../../../assets/img/movie-poster.png";
 import FSK0Logo from "../../../assets/img/FSK_0.svg";
 import FSK6Logo from "../../../assets/img/FSK_6.svg";
@@ -10,8 +10,8 @@ import FSK16Logo from "../../../assets/img/FSK_16.svg";
 import FSK18Logo from "../../../assets/img/FSK_18.svg";
 import { THasHappyEnd } from "../../../models/types";
 import { EHasHappyEnd } from "../../../models/enums";
-import VotingRing from "./votingRing";
 import { IGenre } from "../../../models/interfaces/interfaces";
+import VotingRing from "./votingRing";
 
 interface IDetailInfosProps {
   title: string;
@@ -113,12 +113,12 @@ const DetailInfos = ({
                         ? FSK6Logo
                         : fsk === 12
                         ? FSK12Logo
-                        : fsk == 16
+                        : fsk === 16
                         ? FSK16Logo
                         : fsk === 18
                         ? FSK18Logo
                         : ""
-                    } // https://altersfreigaben.de/images/rating/de/${fsk}_90.png
+                    }
                     className={classes.fsk}
                     alt={fsk.toString()}
                     title={`FSK ${fsk}`}

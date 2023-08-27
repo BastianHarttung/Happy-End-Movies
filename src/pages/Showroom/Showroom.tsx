@@ -12,7 +12,7 @@ const Showroom = () => {
   const { filteredMedias, filteredDbLength, databaseStore, paginationStore } =
     showroomStore;
 
-  const { activePage, totalPages, pageLength, setActivePage } = paginationStore;
+  const { activePage, pageLength, setActivePage } = paginationStore;
 
   const index: number = activePage * pageLength;
 

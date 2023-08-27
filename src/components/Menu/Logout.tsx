@@ -1,13 +1,14 @@
 import classes from "./Logout.module.scss";
-import { IoSettingsOutline } from "react-icons/all";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import iconSignout from "../../assets/icons/sign-out-alt_light.svg";
-import globalStore from "../../stores/global-store";
 import { observer } from "mobx-react";
-import { ROUTES } from "../../models/routes";
+import { IoSettingsOutline } from "react-icons/all";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { firebaseAuth } from "../../firebase-config";
-import { useEffect } from "react";
+import iconSignout from "../../assets/icons/sign-out-alt_light.svg";
+import globalStore from "../../stores/global-store";
+import { ROUTES } from "../../models/routes";
+import LoadingSpinner from "../LoadingSpinner";
 
 interface ILogoutProps {
   isHandy: boolean;
@@ -40,13 +41,13 @@ const Logout = ({ isHandy }: ILogoutProps) => {
   };
 
   useEffect(() => {
-    if (loading || error) return;
     if (!user) return navigate(ROUTES.LOGIN);
-    console.log(user);
     setUserData(user);
-  }, [user, loading]);
+  }, [user, navigate, setUserData]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner />;
+
+  if (error) return <>Error {error.message}</>;
 
   return (
     <div className={classes.logoutLinkContainer}>
