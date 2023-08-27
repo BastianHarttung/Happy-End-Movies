@@ -1,12 +1,17 @@
-import React, {useState} from 'react';
-import {imageUrlBig} from "../../../constants";
+import React from "react";
+import { imageUrlBig } from "../../../constants";
 import classes from "./detailInfos.module.scss";
-import {FaMeh, FaSadTear, FaSmileBeam} from "react-icons/fa";
+import { FaKaaba, FaMeh, FaSadTear, FaSmileBeam } from "react-icons/fa";
 import emptyImage from "../../../assets/img/movie-poster.png";
-import {THasHappyEnd} from "../../../models/types";
-import {EHasHappyEnd} from "../../../models/enums";
+import FSK0Logo from "../../../assets/img/FSK_0.svg";
+import FSK6Logo from "../../../assets/img/FSK_6.svg";
+import FSK12Logo from "../../../assets/img/FSK_12.svg";
+import FSK16Logo from "../../../assets/img/FSK_16.svg";
+import FSK18Logo from "../../../assets/img/FSK_18.svg";
+import { THasHappyEnd } from "../../../models/types";
+import { EHasHappyEnd } from "../../../models/enums";
 import VotingRing from "./votingRing";
-import {IGenre} from "../../../models/interfaces/interfaces";
+import { IGenre } from "../../../models/interfaces/interfaces";
 
 interface IDetailInfosProps {
   title: string;
@@ -22,51 +27,60 @@ interface IDetailInfosProps {
 }
 
 const DetailInfos = ({
-                       title,
-                       posterPath,
-                       hasHappyEnd,
-                       backdropPath,
-                       fsk,
-                       releaseDate,
-                       runtime,
-                       genres,
-                       voteAverage,
-                       classNameContent,
-                     }: IDetailInfosProps) => {
-
+  title,
+  posterPath,
+  hasHappyEnd,
+  backdropPath,
+  fsk,
+  releaseDate,
+  runtime,
+  genres,
+  voteAverage,
+  classNameContent,
+}: IDetailInfosProps) => {
   //Berechnet die Laufzeit in Stunden und Minuten
-  const laufzeitInStunden = (laufzeit: number): { stunden: number, minuten: number } => {
+  const laufzeitInStunden = (
+    laufzeit: number
+  ): { stunden: number; minuten: number } => {
     const laufzeitStunden = Math.floor(laufzeit / 60);
     const restminuten = laufzeit - laufzeitStunden * 60;
-    return {stunden: laufzeitStunden, minuten: restminuten};
-  }
+    return { stunden: laufzeitStunden, minuten: restminuten };
+  };
 
   const happyEndSmiley = () => {
-    if (hasHappyEnd === EHasHappyEnd.TRUE) return (
-      <FaSmileBeam
-        className={classes.happyEndSmileyOverall}
-        style={{color: "var(--green)"}}
-        title="Happy End"
-      />)
-    else if (hasHappyEnd === EHasHappyEnd.FALSE) return (
-      <FaSadTear
-        className={classes.happyEndSmileyOverall}
-        style={{color: "var(--red)"}}
-        title="Kein Happy End"
-      />)
-    else if (hasHappyEnd === EHasHappyEnd.NEUTRAL) return (
-      <FaMeh
-        className={classes.happyEndSmileyOverall}
-        style={{color: "var(--orange)"}}
-        title="Ende neutral"
-      />)
-    else return (
+    if (hasHappyEnd === EHasHappyEnd.TRUE)
+      return (
+        <FaSmileBeam
+          className={classes.happyEndSmileyOverall}
+          style={{ color: "var(--green)" }}
+          title="Happy End"
+        />
+      );
+    else if (hasHappyEnd === EHasHappyEnd.FALSE)
+      return (
+        <FaSadTear
+          className={classes.happyEndSmileyOverall}
+          style={{ color: "var(--red)" }}
+          title="Kein Happy End"
+        />
+      );
+    else if (hasHappyEnd === EHasHappyEnd.NEUTRAL)
+      return (
         <FaMeh
           className={classes.happyEndSmileyOverall}
-          style={{color: "var(--gray)"}}
+          style={{ color: "var(--orange)" }}
+          title="Ende neutral"
+        />
+      );
+    else
+      return (
+        <FaMeh
+          className={classes.happyEndSmileyOverall}
+          style={{ color: "var(--gray)" }}
           title="Kein Voting vorhanden"
-        />)
-  }
+        />
+      );
+  };
 
   return (
     <div className={classNameContent}>
@@ -92,7 +106,19 @@ const DetailInfos = ({
               {fsk <= 100 && (
                 <div className={classes.fskInfo}>
                   <img
-                    src={`https://altersfreigaben.de/images/rating/de/${fsk}_90.png`}
+                    src={
+                      fsk === 0
+                        ? FSK0Logo
+                        : fsk === 6
+                        ? FSK6Logo
+                        : fsk === 12
+                        ? FSK12Logo
+                        : fsk == 16
+                        ? FSK16Logo
+                        : fsk === 18
+                        ? FSK18Logo
+                        : ""
+                    } // https://altersfreigaben.de/images/rating/de/${fsk}_90.png
                     className={classes.fsk}
                     alt={fsk.toString()}
                     title={`FSK ${fsk}`}
@@ -100,13 +126,10 @@ const DetailInfos = ({
                 </div>
               )}
 
-              <p className={classes.releaseYear}>
-                {releaseDate.slice(0, 4)}
-              </p>
+              <p className={classes.releaseYear}>{releaseDate.slice(0, 4)}</p>
 
               <p>
-                {runtime} min (
-                {laufzeitInStunden(runtime).stunden} Std.{" "}
+                {runtime} min ({laufzeitInStunden(runtime).stunden} Std.{" "}
                 {laufzeitInStunden(runtime).minuten} min.)
               </p>
             </div>
@@ -119,24 +142,20 @@ const DetailInfos = ({
                   </div>
                 ))}
               </div>
-
             </div>
           </div>
 
           <div className={`${classes["voting-container"]}`}>
-
-            {voteAverage > 0 && <VotingRing progress={Math.round(voteAverage * 10)}
-                                            radius={35}/>}
+            {voteAverage > 0 && (
+              <VotingRing progress={Math.round(voteAverage * 10)} radius={35} />
+            )}
 
             {happyEndSmiley()}
-
           </div>
-
         </div>
       </div>
     </div>
   );
-
 };
 
 export default DetailInfos;

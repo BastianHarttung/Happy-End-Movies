@@ -5,7 +5,8 @@ import { ButtonStart } from "../styleComponents";
 import ImageFilmsuche from "../assets/icons/filmsuche_web_search.svg";
 import ImageShowroom from "../assets/icons/showroom_home_cinema.svg";
 import ImageEinstellungen from "../assets/icons/einstellungen_designer.svg";
-
+import Footer from "../components/Menu/Footer";
+import React from "react";
 
 const Hauptmenue = () => {
   const buttons = [
@@ -33,19 +34,22 @@ const Hauptmenue = () => {
   ];
 
   return (
-    <main className={classes.hauptmenueSection}>
-      <div className={classes.buttonContainer}>
-        {buttons.map((button) => (
-          <ButtonStart
-            key={button.order}
-            label={button.label}
-            description={button.description}
-            linkTo={button.linkTo}
-            image={button.image}
-          />
-        ))}
-      </div>
-    </main>
+    <>
+      <main className={classes.hauptmenueSection}>
+        <div className={classes.buttonContainer}>
+          {buttons.map((button) => (
+            <ButtonStart
+              key={button.order}
+              label={button.label}
+              description={button.description}
+              linkTo={button.linkTo}
+              image={button.image}
+            />
+          ))}
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 };
 

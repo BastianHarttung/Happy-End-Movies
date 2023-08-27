@@ -45,7 +45,7 @@ const Filmsuche = () => {
   };
 
   return (
-    <div className={classes.filmsucheSection}>
+    <main className={classes.filmsucheSection}>
       <div className={classes.filmsucheContainer}>
         <SearchBar
           length={22}
@@ -146,7 +146,7 @@ const Filmsuche = () => {
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 };
 

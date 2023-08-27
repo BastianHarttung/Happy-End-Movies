@@ -10,7 +10,7 @@ function Menu() {
 
          <Outlet />
 
-         <Footer />
+         {/*<Footer />*/}
       </>
    );
 }
