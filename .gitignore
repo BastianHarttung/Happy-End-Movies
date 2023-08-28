@@ -27,3 +27,6 @@ yarn-error.log*
 
 # webstorm
 /.idea
+
+# Lock-Files
+pnpm-lock.yaml

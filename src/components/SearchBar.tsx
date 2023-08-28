@@ -1,5 +1,5 @@
 import classes from "./SearchBar.module.scss";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { TCategorySearch } from "../models/types";
 
@@ -18,11 +18,15 @@ const SearchBar = ({
   searchMovie,
   saveSearchFor,
 }: ISearchBarProps) => {
-  // const locationHashString: string = window.location.hash
-  //   .substring(1)
-  //   .split("%20")
-  //   .join(" ");
-  // const [movieName, setMovieName] = useState<string>(locationHashString);
+
+  /**
+   * Listen if the Enter-Button is pressed
+   */
+  function keyPressEvent(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") {
+      searchMovie(value);
+    }
+  }
 
   // Debouncing to only start searching after a typing delay
   useEffect(() => {
@@ -58,15 +62,6 @@ const SearchBar = ({
       </div>
     </div>
   );
-
-  /**
-   * Listen if the Enter-Button is pressed
-   */
-  function keyPressEvent(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === "Enter") {
-      searchMovie(value);
-    }
-  }
 };
 
 export default SearchBar;
