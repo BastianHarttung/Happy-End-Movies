@@ -21,8 +21,7 @@ import Showroom from "./pages/Showroom/Showroom";
 import DetailsTv from "./pages/Details/DetailsTv";
 import ModalUserSettings from "./components/Modals/Modal-UserSettings";
 import ModalPasswordReset from "./components/Modals/ModalPasswordReset";
-import LoadingSpinner from "./components/Loaders/LoadingSpinner";
-
+import LoadingMovieStreifen from "./components/Loaders/LoadingMovieStreifen";
 
 function App() {
   const {
@@ -37,7 +36,12 @@ function App() {
     loadDarkModeFromLocalStorage();
   }, [loadDarkModeFromLocalStorage]);
 
-  if (loading) return <LoadingSpinner />;
+  if (loading)
+    return (
+      <main>
+        <LoadingMovieStreifen />;
+      </main>
+    );
   if (error) return <>Error</>;
 
   return (

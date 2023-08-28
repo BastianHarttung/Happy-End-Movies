@@ -20,20 +20,24 @@ class FilmsucheStore {
     this.searchCategory = selectedSearchCategory;
   };
 
-  // Search Movie by clicking the Search Button
+  // Search Movie after clicking the "Search" Button
   public searchingOnTmdb = async (
     searchString: string,
     searchCategory: TCategorySearch = "multi"
   ): Promise<void> => {
     if (searchString.length > 0) {
       this.searchStarted = true;
-      const data = await this.tmdbStore.setDataFromTmdb(
-        searchString,
-        searchCategory,
-        this.paginationStore.activePage
-      );
-      this.paginationStore.setPagesArray(data.total_pages);
-      window.location.hash = searchString;
+      this.searchCategory = searchCategory;
+      this.tmdbStore
+        .setDataFromTmdb(
+          searchString,
+          searchCategory,
+          this.paginationStore.activePage
+        )
+        .then((response) => {
+          this.paginationStore.setPagesArray(response.total_pages);
+          window.location.hash = searchString;
+        });
     } else {
       this.resetSearch();
     }

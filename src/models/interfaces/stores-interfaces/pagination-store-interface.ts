@@ -10,6 +10,4 @@ export interface IPaginationStoreInterface {
   setActivePage(pageNumber: number): void,
 
   setPagesArray(totalPages: number): void,
-
-  makePageArray(numberPages: number): number[],
 }

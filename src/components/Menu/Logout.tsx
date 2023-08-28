@@ -8,7 +8,7 @@ import { firebaseAuth } from "../../firebase-config";
 import iconSignout from "../../assets/icons/sign-out-alt_light.svg";
 import globalStore from "../../stores/global-store";
 import { ROUTES } from "../../models/routes";
-import LoadingSpinner from "../Loaders/LoadingSpinner";
+import LoadingMovieStreifen from "../Loaders/LoadingMovieStreifen";
 
 interface ILogoutProps {
   isHandy: boolean;
@@ -45,7 +45,7 @@ const Logout = ({ isHandy }: ILogoutProps) => {
     setUserData(user);
   }, [user, navigate, setUserData]);
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <LoadingMovieStreifen />;
 
   if (error) return <>Error {error.message}</>;
 

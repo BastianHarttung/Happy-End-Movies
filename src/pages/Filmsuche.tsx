@@ -5,6 +5,7 @@ import { observer } from "mobx-react";
 import SearchResultBox from "../components/SearchResultBox";
 import SearchBar from "../components/SearchBar";
 import Pagination from "../components/Pagination";
+import LoadingMovieStreifen from "../components/Loaders/LoadingMovieStreifen";
 import { Button } from "../styleComponents";
 import filmsucheStore from "../stores/page-stores/filmsuche-store";
 import { TCategory, TCategorySearch } from "../models/types";
@@ -29,6 +30,7 @@ const Filmsuche = () => {
       searchResult,
       searchTotalResults,
       popularMedias,
+      isLoadingTmdb,
       getPopularMoviesFromTmdb,
     },
     paginationStore: { pagesArray, activePage, setActivePage },
@@ -49,6 +51,10 @@ const Filmsuche = () => {
   const handleSearchResultBoxClick = (id: number, category: TCategory) => {
     navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(category, id.toString()));
   };
+
+  useEffect(() => {
+    searchingOnTmdb(searchFor, searchCategory);
+  }, [activePage]);
 
   return (
     <main className={classes.filmsucheSection}>
@@ -108,25 +114,29 @@ const Filmsuche = () => {
 
         {searchStarted && !!searchTotalResults ? (
           <>
-            <div className={classes.resultSection}>
-              {searchedMedias.map((movie, index) => (
-                <SearchResultBox
-                  key={index}
-                  id={movie.id}
-                  hasHappyEnd={null}
-                  category={movie.media_type || searchCategory}
-                  mediaType={movie.media_type}
-                  movieName={"name" in movie ? movie.name : movie.title}
-                  posterPath={
-                    "poster_path" in movie
-                      ? movie.poster_path
-                      : movie.profile_path
-                  }
-                  personGender={"gender" in movie ? movie.gender : 0}
-                  onClick={handleSearchResultBoxClick}
-                />
-              ))}
-            </div>
+            {isLoadingTmdb ? (
+              <LoadingMovieStreifen />
+            ) : (
+              <div className={classes.resultSection}>
+                {searchedMedias.map((movie, index) => (
+                  <SearchResultBox
+                    key={index}
+                    id={movie.id}
+                    hasHappyEnd={null}
+                    category={movie.media_type || searchCategory}
+                    mediaType={movie.media_type}
+                    movieName={"name" in movie ? movie.name : movie.title}
+                    posterPath={
+                      "poster_path" in movie
+                        ? movie.poster_path
+                        : movie.profile_path
+                    }
+                    personGender={"gender" in movie ? movie.gender : 0}
+                    onClick={handleSearchResultBoxClick}
+                  />
+                ))}
+              </div>
+            )}
             <Pagination
               totalPages={pagesArray}
               activePage={activePage}

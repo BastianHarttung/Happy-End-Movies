@@ -37,12 +37,14 @@ const Pagination = ({
     }
   }, [activePage, totalPages]);
 
+
   return (
     <section className={classes.paginationSection}>
       <div className={classes.pageContainer}>
         <img
           src={ArrowLeftIcon}
-          alt="Last"
+          alt="Previous"
+          title="Vorherige Seite"
           className={classes.pageArrow}
           onClick={() => changePage(Math.max(1, activePage - 1))}
         />
@@ -86,10 +88,11 @@ const Pagination = ({
         <img
           src={ArrowRightIcon}
           alt="Next"
+          title="Nächste Seite"
           className={classes.pageArrow}
-          onClick={() =>
-            changePage(Math.min(activePage + 1, totalPages.length))
-          }
+          onClick={() => {
+            changePage(Math.min(activePage + 1, totalPages.length));
+          }}
         />
       </div>
 

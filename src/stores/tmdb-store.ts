@@ -48,8 +48,6 @@ class TmdbStore {
 
   searchResult: string = ""; // To show String which Results are for
 
-  // searchCategory: TCategorySearch = "multi";
-
   searchTotalResults: number = 0;
 
   popularMedias: TSearchResults[] = [];
@@ -68,6 +66,7 @@ class TmdbStore {
   };
 
   public getPopularMoviesFromTmdb = (): void => {
+    this.isLoadingTmdb = true;
     fetch(trendingMoviesUrl)
       .then(async (response) => {
         const data = await response.json();
@@ -77,6 +76,9 @@ class TmdbStore {
       })
       .catch((error) => {
         console.log("Fetching Error Popular Movies", error.message);
+      })
+      .finally(() => {
+        this.isLoadingTmdb = false;
       });
   };
 
@@ -86,27 +88,17 @@ class TmdbStore {
     activePage: number
   ): Promise<ISearch> => {
     this.isLoadingTmdb = true;
-    // this.searchCategory = searchCategory;
     this.searchResult = searchString;
 
-    let data: ISearch = {
-      page: 0,
-      results: [],
-      total_pages: 0,
-      total_results: 0,
-    };
-
-    this.fetchJsonFromTmdb(searchString, activePage, searchCategory).then(
-      (tmdbData) => {
-        runInAction(() => {
-          this.searchTotalResults = tmdbData.total_results;
-          this.searchedMedias = tmdbData.results;
-          this.isLoadingTmdb = false;
-        });
-        window.location.hash = searchString;
-        data = tmdbData;
-      }
+    const data = await this.fetchJsonFromTmdb(
+      searchString,
+      activePage,
+      searchCategory
     );
+    this.searchTotalResults = data.total_results;
+    this.searchedMedias = data.results;
+    this.isLoadingTmdb = false;
+
     return data;
   };
 
@@ -227,6 +219,7 @@ class TmdbStore {
   //Calculate has_happy_end by counting happyEnd_Voting TODO Move to database-store
   private calculateHappyEnd(movie: any): THasHappyEnd {
     let happyCount = 0;
+
     if (movie.userSelections) {
       Object.keys(movie.userSelections).forEach((user) => {
         if (movie.userSelections[user].happyEnd_Voting === EHasHappyEnd.TRUE)
@@ -266,6 +259,7 @@ class TmdbStore {
     const response = await fetch(castUrlMovie);
     let data = await response.json();
     let directorArray = [];
+
     for (let i = 0; i < data.crew.length; i++) {
       if (data.crew[i].job === "Director") {
         directorArray.push(data.crew[i]);

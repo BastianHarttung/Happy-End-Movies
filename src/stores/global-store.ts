@@ -1,5 +1,5 @@
 // MobX
-import { makeAutoObservable } from "mobx";
+import { action, makeAutoObservable } from "mobx";
 //Firebase
 import {
   User,
@@ -21,7 +21,6 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
-
 import { IUser } from "../models/interfaces/interfaces";
 
 class GlobalStore {
@@ -34,7 +33,12 @@ class GlobalStore {
   colorTheme: string = "";
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {
+      logInWithEmailAndPassword: action,
+      setUserData: action,
+      logout: action,
+      registerWithEmailAndPassword: action,
+    });
   }
 
   // User Settings Modal
@@ -90,25 +94,25 @@ class GlobalStore {
         password
       );
 
-      await this.setUserData(res.user);
+      // await this.setUserData(res.user);
 
-      // const docSnap = await getDoc(doc(firestoreDb, "users", res.user.uid));
-      //
-      // let name = "";
-      //
-      // if (docSnap.exists()) {
-      //   name = docSnap.data().name;
-      // } else {
-      //   // doc.data() will be undefined in this case
-      //   console.log("No such document!");
-      // }
-      // console.log(name);
-      //
-      // this.userData = {
-      //   userId: res.user.uid,
-      //   email: res.user.email || "",
-      //   name: name,
-      // };
+      const docSnap = await getDoc(doc(firestoreDb, "users", res.user.uid));
+
+      let name = "";
+
+      if (docSnap.exists()) {
+        name = docSnap.data().name;
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+      console.log(name);
+
+      this.userData = {
+        userId: res.user.uid,
+        email: res.user.email || "",
+        name: name,
+      };
     } catch (err: any) {
       console.error(err);
       alert(err.message);
