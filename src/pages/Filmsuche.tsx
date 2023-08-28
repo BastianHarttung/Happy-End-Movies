@@ -11,15 +11,21 @@ import { TCategory, TCategorySearch } from "../models/types";
 import { ROUTES } from "../models/routes";
 
 const Filmsuche = () => {
+  const locationHashString: string = window.location.hash
+    .substring(1)
+    .split("%20")
+    .join(" ");
+
   const navigate = useNavigate();
-  const [searchFor, setSearchFor] = useState("");
+  const [searchFor, setSearchFor] = useState<string>(locationHashString);
 
   const {
     searchStarted,
+    searchCategory,
+    setSearchCategory,
     searchingOnTmdb,
     tmdbStore: {
       searchedMedias,
-      searchCategory,
       searchResult,
       searchTotalResults,
       popularMedias,
@@ -36,6 +42,7 @@ const Filmsuche = () => {
     searchString: string,
     category: TCategorySearch
   ) => {
+    setSearchCategory(category);
     await searchingOnTmdb(searchString, category);
   };
 
@@ -47,6 +54,7 @@ const Filmsuche = () => {
     <main className={classes.filmsucheSection}>
       <div className={classes.filmsucheContainer}>
         <SearchBar
+          value={searchFor}
           length={22}
           size={19}
           searchMovie={(movieName) => handleSearch(movieName, searchCategory)}
@@ -106,7 +114,7 @@ const Filmsuche = () => {
                   key={index}
                   id={movie.id}
                   hasHappyEnd={null}
-                  category={searchCategory}
+                  category={movie.media_type || searchCategory}
                   mediaType={movie.media_type}
                   movieName={"name" in movie ? movie.name : movie.title}
                   posterPath={
@@ -133,7 +141,7 @@ const Filmsuche = () => {
                 key={index}
                 id={movie.id}
                 hasHappyEnd={null}
-                category={searchCategory}
+                category={movie.media_type}
                 mediaType={movie.media_type}
                 movieName={"title" in movie ? movie.title : movie.name}
                 posterPath={

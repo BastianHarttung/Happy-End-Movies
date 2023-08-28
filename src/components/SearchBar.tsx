@@ -4,6 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import { TCategorySearch } from "../models/types";
 
 interface ISearchBarProps {
+  value: string;
   length: number;
   size?: number;
   searchMovie: (movieName: string, searchCategory?: TCategorySearch) => void;
@@ -11,28 +12,29 @@ interface ISearchBarProps {
 }
 
 const SearchBar = ({
+  value,
   length,
   size = 50,
   searchMovie,
   saveSearchFor,
 }: ISearchBarProps) => {
-  const locationHashString: string = window.location.hash
-    .substring(1)
-    .split("%20")
-    .join(" ");
-  const [movieName, setMovieName] = useState<string>(locationHashString);
+  // const locationHashString: string = window.location.hash
+  //   .substring(1)
+  //   .split("%20")
+  //   .join(" ");
+  // const [movieName, setMovieName] = useState<string>(locationHashString);
 
   // Debouncing to only start searching after a typing delay
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (!!movieName.trim()) {
+      if (!!value.trim()) {
         console.log("Searching...");
-        searchMovie(movieName.trim());
+        searchMovie(value.trim());
       }
     }, 800);
 
     return () => clearTimeout(timeout);
-  }, [movieName]);
+  }, [value]);
 
   return (
     <div className={classes.searchBarContainer}>
@@ -43,20 +45,13 @@ const SearchBar = ({
           type="search"
           size={length}
           placeholder="Suche"
-          value={movieName}
+          value={value}
           onKeyPress={(event) => keyPressEvent(event)}
-          onChange={(e) => {
-            saveSearchFor(e.target.value);
-            setMovieName(e.target.value);
-          }}
+          onChange={(e) => saveSearchFor(e.target.value)}
         />
 
         <FaSearch
-          onClick={() => {
-            searchMovie(movieName);
-            setMovieName("");
-            window.location.hash = "";
-          }}
+          onClick={() => searchMovie(value)}
           style={{ width: size + 5, height: size + 5 }}
           className={classes.searchButton}
         />
@@ -69,7 +64,7 @@ const SearchBar = ({
    */
   function keyPressEvent(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter") {
-      searchMovie(movieName);
+      searchMovie(value);
     }
   }
 };

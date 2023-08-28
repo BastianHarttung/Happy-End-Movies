@@ -20,6 +20,7 @@ const Sidebar = ({ sidebarOpen, onCloseSidebar }: ISidebarProps) => {
     fskPosAge,
     filterHappyEnd,
     filterCategory,
+    searchFor,
     startFiltering,
     setSearchFor,
     setFilterCategory,
@@ -47,6 +48,7 @@ const Sidebar = ({ sidebarOpen, onCloseSidebar }: ISidebarProps) => {
       <div>
         <div className={classes.searchContainer}>
           <SearchBar
+            value={searchFor}
             length={13}
             size={15}
             searchMovie={(movieName, searchCategory) =>

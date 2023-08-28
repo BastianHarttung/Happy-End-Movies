@@ -48,7 +48,7 @@ class TmdbStore {
 
   searchResult: string = ""; // To show String which Results are for
 
-  searchCategory: TCategorySearch = "multi";
+  // searchCategory: TCategorySearch = "multi";
 
   searchTotalResults: number = 0;
 
@@ -86,7 +86,7 @@ class TmdbStore {
     activePage: number
   ): Promise<ISearch> => {
     this.isLoadingTmdb = true;
-    this.searchCategory = searchCategory;
+    // this.searchCategory = searchCategory;
     this.searchResult = searchString;
 
     let data: ISearch = {

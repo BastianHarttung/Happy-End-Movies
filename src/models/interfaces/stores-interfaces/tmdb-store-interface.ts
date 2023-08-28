@@ -7,7 +7,7 @@ import {IPersonAllData} from "../person-interfaces";
 export interface ITmdbStoreInterface {
   searchedMedias: TSearchResults[];
   searchResult: string;
-  searchCategory: TCategorySearch;
+  // searchCategory: TCategorySearch;
   searchTotalResults: number;
   popularMedias: TSearchResults[];
   isLoadingTmdb: boolean;
