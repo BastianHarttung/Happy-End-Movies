@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import {
   castUrl,
   imagesUrl,
@@ -55,7 +55,7 @@ class TmdbStore {
   isLoadingTmdb: boolean = false;
 
   constructor() {
-    makeAutoObservable(this, { setDataFromTmdb: action });
+    makeAutoObservable(this);
   }
 
   public resetTmdbStore = () => {
@@ -67,6 +67,7 @@ class TmdbStore {
 
   public getPopularMoviesFromTmdb = (): void => {
     this.isLoadingTmdb = true;
+
     fetch(trendingMoviesUrl)
       .then(async (response) => {
         const data = await response.json();
@@ -78,7 +79,9 @@ class TmdbStore {
         console.log("Fetching Error Popular Movies", error.message);
       })
       .finally(() => {
-        this.isLoadingTmdb = false;
+        runInAction(() => {
+          this.isLoadingTmdb = false;
+        });
       });
   };
 
@@ -95,9 +98,11 @@ class TmdbStore {
       activePage,
       searchCategory
     );
-    this.searchTotalResults = data.total_results;
-    this.searchedMedias = data.results;
-    this.isLoadingTmdb = false;
+    runInAction(() => {
+      this.searchTotalResults = data.total_results;
+      this.searchedMedias = data.results;
+      this.isLoadingTmdb = false;
+    });
 
     return data;
   };

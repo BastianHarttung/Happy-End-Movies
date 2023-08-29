@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 12px;
 }
 
 .startImage {
@@ -17,7 +18,7 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 80px;
+  gap: 40px;
   margin: 0 16px;
 }
 
@@ -28,7 +29,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 0px;
+  border: 0;
   border-radius: 10px;
   text-align: center;
   padding: 8px;

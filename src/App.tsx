@@ -25,6 +25,7 @@ import LoadingMovieStreifen from "./components/Loaders/LoadingMovieStreifen";
 
 function App() {
   const {
+    userData,
     openUserSettings,
     openPasswordResetModal,
     loadDarkModeFromLocalStorage,
@@ -41,11 +42,11 @@ function App() {
     if (user) {
       setUserData(user);
     }
-  }, [user]);
+  }, [user, setUserData]);
 
   if (loading)
     return (
-      <main style={{ width: "100%" }} className="d-flex-center">
+      <main className="d-flex-center">
         <LoadingMovieStreifen />;
       </main>
     );
@@ -62,7 +63,10 @@ function App() {
 
           {user && (
             <Route path="" element={<Menu />}>
-              <Route path={ROUTES.START} element={<Hauptmenue />} />
+              <Route
+                path={ROUTES.START}
+                element={<Hauptmenue username={userData?.name || ""} />}
+              />
               <Route path={ROUTES.FILMSUCHE} element={<Filmsuche />} />
               <Route path={ROUTES.SHOWROOM} element={<Showroom />} />
               <Route path="/detailansicht">

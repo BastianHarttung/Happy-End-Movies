@@ -1,38 +1,23 @@
 import classes from "./Logout.module.scss";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react";
 import { IoSettingsOutline } from "react-icons/all";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { firebaseAuth } from "../../firebase-config";
 import iconSignout from "../../assets/icons/sign-out-alt_light.svg";
 import globalStore from "../../stores/global-store";
 import { ROUTES } from "../../models/routes";
-import LoadingMovieStreifen from "../Loaders/LoadingMovieStreifen";
 
 interface ILogoutProps {
   isHandy: boolean;
 }
 
 const Logout = ({ isHandy }: ILogoutProps) => {
-  const { userData, openUserSettingsModal, logout, setUserData } = globalStore;
-
-  const [user, loading, error] = useAuthState(firebaseAuth);
+  const { userData, openUserSettingsModal, logout } = globalStore;
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout().then(() => navigate(ROUTES.LOGIN));
   };
-
-  useEffect(() => {
-    if (!user) return navigate(ROUTES.LOGIN);
-    setUserData(user);
-  }, [user, navigate, setUserData]);
-
-  if (loading) return <LoadingMovieStreifen />;
-
-  if (error) return <>Error {error.message}</>;
 
   return (
     <div className={classes.logoutLinkContainer}>
