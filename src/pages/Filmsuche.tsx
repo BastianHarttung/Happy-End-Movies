@@ -18,6 +18,7 @@ const Filmsuche = () => {
     .join(" ");
 
   const navigate = useNavigate();
+
   const [searchFor, setSearchFor] = useState<string>(locationHashString);
 
   const {

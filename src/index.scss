@@ -26,6 +26,7 @@ body {
 
   --main-color: #5e81f8;
   --main-color-bright: #bcd6ff;
+  --main-color-transpa: rgba(94, 129, 248, 0.15);
   --main-color-white: rgba(230, 237, 255);
   --main-color-dark: #062eba;
 
@@ -56,6 +57,7 @@ body {
   &.theme-orange {
     --main-color: #c07300;
     --main-color-bright: #eeac6a;
+    --main-color-transpa: rgba(192, 115, 0, 0.15);
     --main-color-white: #e1c1a5;
     --main-color-dark: #6c4505;
   }

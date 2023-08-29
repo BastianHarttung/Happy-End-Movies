@@ -29,14 +29,14 @@ const UserSelectionSection = ({
   classNameContent,
 }: IUserSelectionSectionProps) => {
   const { userData } = globalStore;
-  console.log(userData);
+
   const { saveMovieToDb } = databaseStore;
 
   const navigate = useNavigate();
 
   const [userSelection, setUserSelection] = useState<IUserSelections>({
-    [userData?.userId || ""]: {
-      happyEnd_Voting: "neutral",
+    [userData?.userId || "0"]: {
+      happyEnd_Voting: null,
       haveSeen: false,
     },
   });
@@ -123,7 +123,7 @@ const UserSelectionSection = ({
       )}
 
       <Button
-        name="In Datenbank speichern und zum Showroom"
+        name="In Showroom speichern"
         onClick={saveMediaInDB}
         style={{ fontSize: "1em" }}
       />

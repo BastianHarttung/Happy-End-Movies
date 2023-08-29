@@ -45,7 +45,7 @@ function App() {
 
   if (loading)
     return (
-      <main>
+      <main style={{ width: "100%" }} className="d-flex-center">
         <LoadingMovieStreifen />;
       </main>
     );
