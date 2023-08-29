@@ -28,6 +28,7 @@ function App() {
     openUserSettings,
     openPasswordResetModal,
     loadDarkModeFromLocalStorage,
+    setUserData,
   } = globalStore;
 
   const [user, loading, error] = useAuthState(firebaseAuth);
@@ -35,6 +36,12 @@ function App() {
   useEffect(() => {
     loadDarkModeFromLocalStorage();
   }, [loadDarkModeFromLocalStorage]);
+
+  useEffect(() => {
+    if (user) {
+      setUserData(user);
+    }
+  }, [user]);
 
   if (loading)
     return (

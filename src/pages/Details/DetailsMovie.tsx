@@ -16,17 +16,14 @@ const DetailsMovie = () => {
 
   const {selectedMovie, isLoading, checkLocalStorage, setSelectedMediaOrPersonForDetails} = detailsStore;
 
-  const [movie, setMovie] = useState(selectedMovie)
-
   const urlParams = useParams();
 
   useEffect(() => {
     if (urlParams) {
       checkLocalStorage("selectedMovie", Number(urlParams.id))
       setSelectedMediaOrPersonForDetails(Number(urlParams.id), "movie")
-
     }
-  }, []);
+  }, [urlParams]);
 
   return (
     <main className={classes.detailsMediaPage}>

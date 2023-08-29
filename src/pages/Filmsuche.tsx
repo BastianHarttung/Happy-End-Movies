@@ -115,7 +115,9 @@ const Filmsuche = () => {
         {searchStarted && !!searchTotalResults ? (
           <>
             {isLoadingTmdb ? (
-              <LoadingMovieStreifen />
+              <div className={classes.resultSection}>
+                <LoadingMovieStreifen />
+              </div>
             ) : (
               <div className={classes.resultSection}>
                 {searchedMedias.map((movie, index) => (

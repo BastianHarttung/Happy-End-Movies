@@ -19,7 +19,6 @@ import { ITvAllInfos } from "../../../models/interfaces/tv-interfaces";
 import { ROUTES } from "../../../models/routes";
 import { THasHappyEnd, TUserSelections } from "../../../models/types";
 
-
 interface IUserSelectionSectionProps {
   selectedMedia: IMovieAllInfos | ITvAllInfos;
   classNameContent?: string;
@@ -30,6 +29,7 @@ const UserSelectionSection = ({
   classNameContent,
 }: IUserSelectionSectionProps) => {
   const { userData } = globalStore;
+  console.log(userData);
   const { saveMovieToDb } = databaseStore;
 
   const navigate = useNavigate();
@@ -41,82 +41,10 @@ const UserSelectionSection = ({
     },
   });
 
-  return (
-    <div className={`${classes.userSelectionContainer} ${classNameContent}`}>
-      <div>
-        <div className={classes.gesehen}>Schon gesehen?</div>
-        <div className={classes.eyes}>
-          <FaRegEye
-            onClick={() => handleClickUserSelection("haveSeen", true)}
-            className={
-              userSelection[userData?.userId || ""].haveSeen
-                ? classes.eyeGreen
-                : classes.eye
-            }
-          />
-          <FaRegEyeSlash
-            onClick={() => handleClickUserSelection("haveSeen", false)}
-            className={
-              userSelection[userData?.userId || ""].haveSeen
-                ? classes.eye
-                : classes.eyeRed
-            }
-          />
-        </div>
-      </div>
+  const userHaveSeen = userSelection[userData?.userId || ""]?.haveSeen;
 
-      {userSelection[userData?.userId || ""].haveSeen && (
-        <div>
-          <div className={classes.happyEnd}>Dein Happy End ?</div>
-
-          <div className={classes.smileys}>
-            <FaSmileBeam
-              onClick={() =>
-                handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.TRUE)
-              }
-              className={
-                userSelection[userData?.userId || ""].happyEnd_Voting ===
-                EHasHappyEnd.TRUE
-                  ? classes.smileyLaugh
-                  : classes.smiley
-              }
-            ></FaSmileBeam>
-            <FaMeh
-              onClick={() =>
-                handleClickUserSelection(
-                  "happyEnd_Voting",
-                  EHasHappyEnd.NEUTRAL
-                )
-              }
-              className={
-                userSelection[userData?.userId || ""].happyEnd_Voting ===
-                EHasHappyEnd.NEUTRAL
-                  ? classes.smileyNeutral
-                  : classes.smiley
-              }
-            ></FaMeh>
-            <FaSadTear
-              onClick={() =>
-                handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.FALSE)
-              }
-              className={
-                userSelection[userData?.userId || ""].happyEnd_Voting ===
-                EHasHappyEnd.FALSE
-                  ? classes.smileySad
-                  : classes.smiley
-              }
-            ></FaSadTear>
-          </div>
-        </div>
-      )}
-
-      <Button
-        name="In Datenbank speichern und zum Showroom"
-        onClick={saveMediaInDB}
-        style={{ fontSize: "1em" }}
-      />
-    </div>
-  );
+  const userHappyEndVoting =
+    userSelection[userData?.userId || ""]?.happyEnd_Voting;
 
   //Change state for User Selection
   function handleClickUserSelection(
@@ -135,6 +63,72 @@ const UserSelectionSection = ({
     const mediaForDB = { ...selectedMedia, userSelections: userSelection };
     saveMovieToDb(mediaForDB).then(() => navigate(ROUTES.SHOWROOM));
   }
+
+  return (
+    <div className={`${classes.userSelectionContainer} ${classNameContent}`}>
+      <div>
+        <div className={classes.gesehen}>Schon gesehen?</div>
+        <div className={classes.eyes}>
+          <FaRegEye
+            onClick={() => handleClickUserSelection("haveSeen", true)}
+            className={userHaveSeen ? classes.eyeGreen : classes.eye}
+          />
+          <FaRegEyeSlash
+            onClick={() => handleClickUserSelection("haveSeen", false)}
+            className={userHaveSeen ? classes.eye : classes.eyeRed}
+          />
+        </div>
+      </div>
+
+      {userHaveSeen && (
+        <div>
+          <div className={classes.happyEnd}>Dein Happy End ?</div>
+
+          <div className={classes.smileys}>
+            <FaSmileBeam
+              onClick={() =>
+                handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.TRUE)
+              }
+              className={
+                userHappyEndVoting === EHasHappyEnd.TRUE
+                  ? classes.smileyLaugh
+                  : classes.smiley
+              }
+            ></FaSmileBeam>
+            <FaMeh
+              onClick={() =>
+                handleClickUserSelection(
+                  "happyEnd_Voting",
+                  EHasHappyEnd.NEUTRAL
+                )
+              }
+              className={
+                userHappyEndVoting === EHasHappyEnd.NEUTRAL
+                  ? classes.smileyNeutral
+                  : classes.smiley
+              }
+            ></FaMeh>
+            <FaSadTear
+              onClick={() =>
+                handleClickUserSelection("happyEnd_Voting", EHasHappyEnd.FALSE)
+              }
+              className={
+                userHappyEndVoting === EHasHappyEnd.FALSE
+                  ? classes.smileySad
+                  : classes.smiley
+              }
+            ></FaSadTear>
+          </div>
+        </div>
+      )}
+
+      <Button
+        name="In Datenbank speichern und zum Showroom"
+        onClick={saveMediaInDB}
+        style={{ fontSize: "1em" }}
+      />
+    </div>
+  );
 };
 
 export default observer(UserSelectionSection);

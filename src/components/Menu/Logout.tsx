@@ -21,21 +21,6 @@ const Logout = ({ isHandy }: ILogoutProps) => {
 
   const navigate = useNavigate();
 
-  // const fetchUserName = async () => {
-  //   try {
-  //     const q = query(
-  //       collection(firestoreDb, "users"),
-  //       where("uid", "==", user?.uid)
-  //     );
-  //     const doc = await getDocs(q);
-  //     const data = doc.docs[0].data();
-  //     setName(data.name);
-  //   } catch (err) {
-  //     console.error(err);
-  //     alert("Ein Fehler ist während des Datenübernahme des Users passiert");
-  //   }
-  // };
-
   const handleLogout = () => {
     logout().then(() => navigate(ROUTES.LOGIN));
   };
