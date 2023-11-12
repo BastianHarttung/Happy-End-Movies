@@ -10,53 +10,58 @@ import ImagesVideosSection from "./details-components/imagesVideosSection";
 import UserSelectionSection from "./details-components/userSelectionSection";
 import { useParams } from "react-router-dom";
 import LoadingMovieStreifen from "../../components/Loaders/LoadingMovieStreifen";
+import globalStore from "../../stores/global-store";
 
 const DetailsMovie = () => {
-  const { selectedTv, isLoading } = detailsStore;
+  const { userData } = globalStore;
 
-  const [tv, setTv] = useState(selectedTv);
+  const {
+    selectedTv,
+    isLoading,
+    checkLocalStorage,
+    setSelectedMediaOrPersonForDetails,
+  } = detailsStore;
 
   const urlParams = useParams();
 
   useEffect(() => {
-    const storage = localStorage.getItem("selectedTv");
-    if (storage && urlParams) {
-      const storageTv = JSON.parse(storage);
-      if (storageTv.id.toString() === urlParams.id) setTv(storageTv);
+    if (userData && urlParams) {
+      checkLocalStorage("selectedTv", Number(urlParams.id));
+      setSelectedMediaOrPersonForDetails(Number(urlParams.id), "tv");
     }
-  }, [urlParams]);
+  }, [userData, urlParams]);
 
   return (
     <main className={classes.detailsMediaPage}>
       {isLoading && <LoadingMovieStreifen />}
-      {tv && (
+      {!isLoading && selectedTv && (
         <>
           <section className={classes.mediaSection}>
             <DetailInfos
               classNameContent={classes.sectionContent}
-              title={tv.original_name}
-              fsk={tv.fsk}
-              posterPath={tv.poster_path}
-              backdropPath={tv.backdrop_path}
-              hasHappyEnd={tv.has_happy_end}
-              releaseDate={tv.first_air_date}
-              runtime={calculateAverageRunTime(tv.episode_run_time)}
-              genres={tv.genres}
-              voteAverage={tv.vote_average}
+              title={selectedTv.original_name}
+              fsk={selectedTv.fsk}
+              posterPath={selectedTv.poster_path}
+              backdropPath={selectedTv.backdrop_path}
+              hasHappyEnd={selectedTv.has_happy_end}
+              releaseDate={selectedTv.first_air_date}
+              runtime={calculateAverageRunTime(selectedTv.episode_run_time)}
+              genres={selectedTv.genres}
+              voteAverage={selectedTv.vote_average}
             />
           </section>
 
           <section className={classes.beschreibungSection}>
             <Beschreibung
-              tagline={tv.tagline}
-              overview={tv.overview}
+              tagline={selectedTv.tagline}
+              overview={selectedTv.overview}
               className={classes.sectionContent}
             />
           </section>
 
           <section className={classes.actorSection}>
             <CastAndCrew
-              castAndCrew={tv.castAndCrew}
+              castAndCrew={selectedTv.castAndCrew}
               classNameContent={classes.sectionContent}
             />
           </section>
@@ -64,14 +69,14 @@ const DetailsMovie = () => {
           <section className={classes.imagesVideosSection}>
             <ImagesVideosSection
               classNameContent={classes.sectionContent}
-              images={tv.images}
-              videos={tv.videos.results}
+              images={selectedTv.images}
+              videos={selectedTv.videos.results}
             />
           </section>
 
           <section className={classes.userSelectionSection}>
             <UserSelectionSection
-              selectedMedia={tv}
+              selectedMedia={selectedTv}
               classNameContent={classes.sectionContent}
             />
           </section>
@@ -79,14 +84,14 @@ const DetailsMovie = () => {
       )}
     </main>
   );
-
-  // Average Runtime for Tv Show
-  function calculateAverageRunTime(runtimeArray: number[]): number {
-    const averageRunTime = runtimeArray.reduce((avg, value, _, { length }) => {
-      return avg + value / length;
-    }, 0);
-    return Math.ceil(averageRunTime);
-  }
 };
 
 export default observer(DetailsMovie);
+
+// Average Runtime for Tv Show
+function calculateAverageRunTime(runtimeArray: number[]): number {
+  const averageRunTime = runtimeArray.reduce((avg, value, _, { length }) => {
+    return avg + value / length;
+  }, 0);
+  return Math.ceil(averageRunTime);
+}
