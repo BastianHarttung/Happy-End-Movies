@@ -1,20 +1,20 @@
 @font-face {
   font-family: "FontAwesomeRegular";
-  src: url("assets/fonts/fa-regular-400.woff") format("woff")
+  src: url("assets/fonts/fa-regular-400.woff") format("woff");
 }
 
 @font-face {
   font-family: "FontAwesomeSolid";
-  src: url("assets/fonts/fa-solid-900.woff") format("woff")
+  src: url("assets/fonts/fa-solid-900.woff") format("woff");
 }
 
 body {
   background-color: var(--background-color);
   margin: 0;
   overflow-x: hidden;
-  font-family: 'Roboto', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
+  font-family: "Roboto", "Poppins", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--font-color);
@@ -74,11 +74,14 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-track {
   border: 1px solid var(--gray-light);
-
 }
 
 body::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, var(--main-color) 0%, var(--main-color-white) 100%);;
+  background: linear-gradient(
+    90deg,
+    var(--main-color) 0%,
+    var(--main-color-white) 100%
+  );
   //border: 1px solid var(--gray);
   //border-radius: 5px;
 }
@@ -109,12 +112,16 @@ body::-webkit-scrollbar-button:vertical:single-button:increment:hover {
   border-color: #000000 transparent transparent transparent;
 }
 
-
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-  monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
+main {
+  min-height: calc(100vh - 130px);
+}
+
+// Flexbox --------------------
 .d-flex-center {
   display: flex;
   justify-content: center;
@@ -125,6 +132,10 @@ code {
   display: flex;
 }
 
-main {
-  min-height: calc(100vh - 130px);
+.gap-2 {
+  gap: 0.5em;
+}
+
+.gap-4 {
+  gap: 1em;
 }

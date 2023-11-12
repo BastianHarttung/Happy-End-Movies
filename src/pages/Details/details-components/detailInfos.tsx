@@ -8,12 +8,13 @@ import FSK6Logo from "../../../assets/img/FSK_6.svg";
 import FSK12Logo from "../../../assets/img/FSK_12.svg";
 import FSK16Logo from "../../../assets/img/FSK_16.svg";
 import FSK18Logo from "../../../assets/img/FSK_18.svg";
-import { THasHappyEnd } from "../../../models/types";
+import { TCategoryMedia, THasHappyEnd } from "../../../models/types";
 import { EHasHappyEnd } from "../../../models/enums";
-import { IGenre } from "../../../models/interfaces/interfaces";
+import { IGenre, TStatus } from "../../../models/interfaces/interfaces";
 import VotingRing from "./votingRing";
 
 interface IDetailInfosProps {
+  category: TCategoryMedia;
   title: string;
   posterPath: string;
   backdropPath: string;
@@ -23,10 +24,14 @@ interface IDetailInfosProps {
   runtime: number;
   genres: IGenre[];
   voteAverage: number;
+  staffeln?: number;
+  folgen?: number;
+  status: TStatus;
   classNameContent?: string;
 }
 
 const DetailInfos = ({
+  category,
   title,
   posterPath,
   hasHappyEnd,
@@ -36,8 +41,13 @@ const DetailInfos = ({
   runtime,
   genres,
   voteAverage,
+  staffeln,
+  folgen,
+  status,
   classNameContent,
 }: IDetailInfosProps) => {
+  const isTv = category === "tv";
+
   //Berechnet die Laufzeit in Stunden und Minuten
   const laufzeitInStunden = (
     laufzeit: number
@@ -102,7 +112,7 @@ const DetailInfos = ({
         <div className={classes.infoSection}>
           <div>
             <h2 className={classes.title}>{title}</h2>
-            <div className="d-flex-row">
+            <div className="d-flex-row gap-4">
               {fsk <= 100 && (
                 <div className={classes.fskInfo}>
                   <img
@@ -129,8 +139,14 @@ const DetailInfos = ({
               <p className={classes.releaseYear}>{releaseDate.slice(0, 4)}</p>
 
               <p>
-                {runtime} min ({laufzeitInStunden(runtime).stunden} Std.{" "}
-                {laufzeitInStunden(runtime).minuten} min.)
+                {isTv && <span>Folge: ca. </span>}
+                <span>{runtime} min </span>
+                {runtime >= 60 && (
+                  <span>
+                    ({laufzeitInStunden(runtime).stunden} Std.{" "}
+                    {laufzeitInStunden(runtime).minuten} min.)
+                  </span>
+                )}
               </p>
             </div>
 
@@ -143,6 +159,16 @@ const DetailInfos = ({
                 ))}
               </div>
             </div>
+
+            {isTv && (
+              <>
+                <div>Staffeln: {staffeln}</div>
+                <div>Folgen: {folgen}</div>
+              </>
+            )}
+            <p>
+              <b>Status:</b> {status ? translateStatus(status) : ""}
+            </p>
           </div>
 
           <div className={`${classes["voting-container"]}`}>
@@ -159,3 +185,11 @@ const DetailInfos = ({
 };
 
 export default DetailInfos;
+
+function translateStatus(status: TStatus): string {
+  return status === "Ended"
+    ? "Beendet"
+    : status === "Released"
+    ? "Veröffentlicht"
+    : status;
+}

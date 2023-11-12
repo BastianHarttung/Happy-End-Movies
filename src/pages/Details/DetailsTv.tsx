@@ -1,5 +1,5 @@
 import classes from "./Details.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { observer } from "mobx-react";
 import detailsStore from "../../stores/page-stores/details-store";
 //Components
@@ -38,6 +38,7 @@ const DetailsMovie = () => {
         <>
           <section className={classes.mediaSection}>
             <DetailInfos
+              category={"tv"}
               classNameContent={classes.sectionContent}
               title={selectedTv.original_name}
               fsk={selectedTv.fsk}
@@ -47,6 +48,9 @@ const DetailsMovie = () => {
               releaseDate={selectedTv.first_air_date}
               runtime={calculateAverageRunTime(selectedTv.episode_run_time)}
               genres={selectedTv.genres}
+              staffeln={selectedTv.number_of_seasons}
+              folgen={selectedTv.number_of_episodes}
+              status={selectedTv.status}
               voteAverage={selectedTv.vote_average}
             />
           </section>

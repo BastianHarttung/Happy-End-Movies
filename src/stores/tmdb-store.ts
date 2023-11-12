@@ -41,6 +41,7 @@ import {
 import { EHasHappyEnd } from "../models/enums";
 import { ITmdbStoreInterface } from "../models/interfaces/stores-interfaces/tmdb-store-interface";
 
+
 class TmdbStore {
   globalStore = globalStore;
 
@@ -246,7 +247,7 @@ class TmdbStore {
     const response = await fetch(castUrlMovie);
     let data = await response.json();
     const directors = await TmdbStore.getDirectorFromMovie<ICrewMovie>(id);
-    return data.cast.concat(directors);
+    return [...directors, ...data.cast];
   };
 
   private static async getCastFromMedia<T>(
@@ -271,14 +272,6 @@ class TmdbStore {
       }
     }
     return directorArray;
-  }
-
-  //Concat Cast and Directors (TODO not sure if needed)
-  public concatCastAndCrew(
-    castArray: ICastMovie[] | ICastTv[],
-    crewArray: ICrewMovie[] | ICrewTv[]
-  ): (ICrewMovie | ICastMovie | ICrewTv | ICastTv)[] {
-    return [...castArray, ...crewArray];
   }
 
   //-----------------------------------TV Show fetches ---------------------------------------------

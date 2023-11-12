@@ -38,6 +38,7 @@ const DetailsMovie = () => {
         <>
           <section className={classes.mediaSection}>
             <DetailInfos
+              category={"movie"}
               title={selectedMovie.title}
               fsk={selectedMovie.fsk}
               posterPath={selectedMovie.poster_path}
@@ -46,6 +47,7 @@ const DetailsMovie = () => {
               releaseDate={selectedMovie.release_date}
               runtime={selectedMovie.runtime}
               genres={selectedMovie.genres}
+              status={selectedMovie.status}
               voteAverage={selectedMovie.vote_average}
               classNameContent={classes.sectionContent}
             />
