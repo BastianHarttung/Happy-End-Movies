@@ -89,7 +89,7 @@ const SearchResultBox = ({
 
   function setImageForPoster(): string {
     if (!!posterPath) return imageUrlBig + posterPath;
-    else if (!!!posterPath && category === "person") {
+    else if (!posterPath && category === "person") {
       if (personGender === 2) return emptyImageMan;
       if (personGender === 1) return emptyImageWoman;
       else return emptyImagePerson

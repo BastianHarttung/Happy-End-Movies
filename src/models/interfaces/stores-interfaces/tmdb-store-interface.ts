@@ -1,4 +1,4 @@
-import {TCategory, TCategoryMedia, TCategorySearch, TSearchResults} from "../../types";
+import {TCategory, TCategorySearch, TSearchResults} from "../../types";
 import {ISearch} from "../interfaces";
 import {IMovieAllInfos} from "../movie-interfaces";
 import {ITvAllInfos} from "../tv-interfaces";
