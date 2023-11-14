@@ -3,9 +3,9 @@ import { emptyPerson, emptyTvShow } from "../../constants";
 import { IMovieAllInfos } from "../../models/interfaces/movie-interfaces";
 import { ITvAllInfos } from "../../models/interfaces/tv-interfaces";
 import { IPersonAllData } from "../../models/interfaces/person-interfaces";
+import { TCategory, THasHappyEnd, TStorageKey } from "../../models/types";
 import tmdbStore from "../tmdb-store";
 import databaseStore from "../database-store";
-import { TCategory, THasHappyEnd, TStorageKey } from "../../models/types";
 
 class DetailsStore {
   selectedMovie: IMovieAllInfos | null = null;
@@ -35,13 +35,13 @@ class DetailsStore {
     this.isLoading = true;
     // TODO check first if movie is in database
     if (searchCategory === "movie") {
-      const selectMovie = await this.tmdbStore.getAllDataForMovie(id, "movie");
+      const selectMovie = await this.tmdbStore.getAllDataForMovie(id);
       runInAction(() => {
         this.selectedMovie = selectMovie;
       });
       localStorage.setItem("selectedMovie", JSON.stringify(this.selectedMovie));
     } else if (searchCategory === "tv") {
-      const selectTv = await this.tmdbStore.getAllDataForTv(id, "tv");
+      const selectTv = await this.tmdbStore.getAllDataForTv(id);
       runInAction(() => {
         this.selectedTv = selectTv;
       });

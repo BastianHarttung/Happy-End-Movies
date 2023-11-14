@@ -41,7 +41,6 @@ import {
 import { EHasHappyEnd } from "../models/enums";
 import { ITmdbStoreInterface } from "../models/interfaces/stores-interfaces/tmdb-store-interface";
 
-
 class TmdbStore {
   globalStore = globalStore;
 
@@ -123,15 +122,15 @@ class TmdbStore {
   };
 
   public getSelectedMediaOrPerson = async (
-    object: any,
+    id: number,
     searchCategory: TCategory
   ): Promise<void> => {
     if (searchCategory === "movie") {
-      await this.getAllDataForMovie(object, "movie");
+      await this.getAllDataForMovie(id);
     } else if (searchCategory === "tv") {
-      await this.getAllDataForTv(object, "tv");
+      await this.getAllDataForTv(id);
     } else {
-      await this.getAllDataForPerson(object);
+      await this.getAllDataForPerson(id);
     }
   };
 
@@ -146,11 +145,8 @@ class TmdbStore {
 
   //-------------------------------Movie Fetches--------------------------------------------------------------
   // Collecting all Data from Movie
-  public getAllDataForMovie = async (
-    id: number,
-    searchCategory: TCategoryMedia = "movie"
-  ): Promise<IMovieAllInfos> => {
-    console.log("getAllDataForMovie tmdb", id, searchCategory);
+  public getAllDataForMovie = async (id: number): Promise<IMovieAllInfos> => {
+    console.log("getAllDataForMovie tmdb", id);
     const details: IMovieDetails =
       await TmdbStore.getDetailWatchInfos<IMovieDetails>(id, "movie");
     const images: IImagesWatchFetching =
@@ -172,7 +168,7 @@ class TmdbStore {
     const completeMovieInfo: IMovieAllInfos = {
       ...details,
       images,
-      category: searchCategory,
+      category: "movie",
       fsk,
       userSelections: defaultUserSelection,
       has_happy_end: null,
@@ -275,10 +271,7 @@ class TmdbStore {
   }
 
   //-----------------------------------TV Show fetches ---------------------------------------------
-  public getAllDataForTv = async (
-    id: number,
-    searchCategory: TCategoryMedia
-  ): Promise<ITvAllInfos> => {
+  public getAllDataForTv = async (id: number): Promise<ITvAllInfos> => {
     const details: ITvDetails = await TmdbStore.getDetailWatchInfos<ITvDetails>(
       id,
       "tv"
@@ -295,7 +288,7 @@ class TmdbStore {
     const completeTvInfo: ITvAllInfos = {
       ...details,
       images,
-      category: searchCategory,
+      category: "tv",
       fsk,
       userSelections: defaultUserSelection,
       has_happy_end: null,
@@ -325,12 +318,14 @@ class TmdbStore {
 
   //-------------------------------------Person fetches---------------------------------------------
   // Collecting all Data from Person
-  public getAllDataForPerson = async (object: any): Promise<IPersonAllData> => {
-    const personKnownFor: IPersonSearch =
-      await TmdbStore.getInfosForPersonFromApi(object.name);
+  public getAllDataForPerson = async (
+    personId: number
+  ): Promise<IPersonAllData> => {
     const personDetails: IPersonFetching =
-      await TmdbStore.getDetailPersonInfosFromApi(object.id);
-    return { ...object, ...personKnownFor, ...personDetails };
+      await TmdbStore.getDetailPersonInfosFromApi(personId);
+    const personKnownFor: IPersonSearch =
+      await TmdbStore.getInfosForPersonFromApi(personDetails.name);
+    return { ...personKnownFor, ...personDetails };
   };
 
   //Get known_for movies and other infos from person

@@ -1,19 +1,21 @@
 import classes from "./personBox.module.scss";
-import {imageUrlSmall} from "../../../constants";
+import { imageUrlSmall } from "../../../constants";
 import imageActorMan from "../../../assets/img/actor.png";
 import imageActorWoman from "../../../assets/img/actor_girl.png";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import tmdbStore from "../../../stores/tmdb-store";
-import {ICastMovie, ICrewMovie} from "../../../models/interfaces/movie-interfaces";
-import {ICastTv, ICrewTv} from "../../../models/interfaces/tv-interfaces";
-
+import {
+  ICastMovie,
+  ICrewMovie,
+} from "../../../models/interfaces/movie-interfaces";
+import { ICastTv, ICrewTv } from "../../../models/interfaces/tv-interfaces";
 
 interface IPersonBoxProps {
-  person: ICastMovie | ICrewMovie | ICastTv | ICrewTv,
+  person: ICastMovie | ICrewMovie | ICastTv | ICrewTv;
 }
 
-const PersonBox = ({person}: IPersonBoxProps) => {
-  const {getSelectedMediaOrPerson} = tmdbStore;
+const PersonBox = ({ person }: IPersonBoxProps) => {
+  const { getSelectedMediaOrPerson } = tmdbStore;
 
   const navigate = useNavigate();
 
@@ -21,7 +23,7 @@ const PersonBox = ({person}: IPersonBoxProps) => {
     <div
       className={classes.actorProfile}
       onClick={async () => {
-        await getSelectedMediaOrPerson(person, "person");
+        await getSelectedMediaOrPerson(person.id, "person");
         navigate(`/detailansicht/person/${person.id}`);
       }}
     >
@@ -31,8 +33,8 @@ const PersonBox = ({person}: IPersonBoxProps) => {
           person.profile_path
             ? imageUrlSmall + person.profile_path
             : person.gender === 2
-              ? imageActorMan
-              : imageActorWoman
+            ? imageActorMan
+            : imageActorWoman
         }
         alt={person.name}
         title={person.name}
@@ -47,15 +49,17 @@ const PersonBox = ({person}: IPersonBoxProps) => {
       ) : (
         ""
       )}
-      {"roles" in person && person.roles ? person.roles.map((role, index) => {
-        if (role.character !== "") {
-          return (
-            <p key={index} className={classes.character}>
-              "{role.character}"
-            </p>
-          );
-        } else return "";
-      }) : ""}
+      {"roles" in person && person.roles
+        ? person.roles.map((role, index) => {
+            if (role.character !== "") {
+              return (
+                <p key={index} className={classes.character}>
+                  "{role.character}"
+                </p>
+              );
+            } else return "";
+          })
+        : ""}
     </div>
   );
 };

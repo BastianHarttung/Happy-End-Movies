@@ -20,11 +20,11 @@ export interface ITmdbStoreInterface {
 
   fetchJsonFromTmdb(movieName: string, pageNumber: number, searchCategory: TCategorySearch): Promise<ISearch>;
 
-  getSelectedMediaOrPerson(object: any, searchCategory: TCategory): Promise<void>;
+  getSelectedMediaOrPerson(id:number, searchCategory: TCategory): Promise<void>;
 
-  getAllDataForMovie(id: number, searchCategory: TCategoryMedia): Promise<IMovieAllInfos>;
+  getAllDataForMovie(id: number): Promise<IMovieAllInfos>;
 
-  getAllDataForTv(id: number, searchCategory: TCategoryMedia): Promise<ITvAllInfos>
+  getAllDataForTv(id: number): Promise<ITvAllInfos>
 
   getAllDataForPerson(id: number): Promise<IPersonAllData>;
 }
