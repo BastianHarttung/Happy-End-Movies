@@ -21,7 +21,7 @@ interface ISearchResultBoxProps {
   id: number,
   category: TCategorySearch,
   mediaType?: TCategory | undefined,
-  movieName: string,
+  movieName?: string,
   posterPath: string,
   hasHappyEnd: THasHappyEnd | null,
   personGender?: TGender,

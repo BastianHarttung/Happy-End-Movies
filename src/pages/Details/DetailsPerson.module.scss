@@ -1,89 +1,94 @@
 .detailsPersonSection {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0;
 }
 
 .personContainer {
-    max-width: 900px;
-    display: flex;
-    margin-bottom: 30px;
+  max-width: 900px;
+  display: flex;
+  margin-bottom: 30px;
 }
 
 .bigPic {
-    height: 400px;
-    width: 270px;
-    object-fit: cover;
-    margin: 0px 20px;
+  height: 400px;
+  width: 270px;
+  object-fit: cover;
+  margin: 0px 20px;
 }
 
 .imagesContainer {
-    width: 415px;
-    display: flex;
-    overflow-x: auto;
+  width: 415px;
+  display: flex;
+  overflow-x: auto;
 }
 
 .imagesContainer img {
-    width: 83px;
+  width: 83px;
 }
 
 /*Scrollbar*/
 .imagesContainer::-webkit-scrollbar {
-    height: 10px;
-    width: 5px;
+  height: 10px;
+  width: 5px;
 }
 
 .imagesContainer::-webkit-scrollbar-track {
-    border: 1px solid var(--gray);
-    border-radius: 5px;
+  border: 1px solid var(--gray);
+  border-radius: 5px;
 }
 
 .imagesContainer::-webkit-scrollbar-thumb {
-    background: linear-gradient(270deg, var(--main-color) 0%, var(--main-color-white) 100%);;
-    border: 1px solid var(--gray);
-    border-radius: 5px;
+  background: linear-gradient(
+    270deg,
+    var(--main-color) 0%,
+    var(--main-color-white) 100%
+  );
+  border: 1px solid var(--gray);
+  border-radius: 5px;
 }
 
-
 .personInfosContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .personContainer h2 {
-    text-align: center;
+  text-align: center;
 }
 
-.birthday {
-    margin-bottom: 10px;
+.days_container {
+  display: flex;
+  flex-direction: column;
 }
 
+.birthday,
 .deathday {
-    margin-bottom: 10px;
+  display: flex;
 }
 
 .biographySection {
-    width: 100%;
-    background-color: var(--main-color-white);
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  background-color: var(--main-color-white);
+  display: flex;
+  justify-content: center;
 }
 
 .biography {
-    width: 80%;
-    text-align: justify;
-    padding: 30px 0;
+  width: 80%;
+  text-align: justify;
+  padding: 30px 0;
 }
 
 /*----------------Bekannt für------------------------------*/
 .knownForHeading {
-    color: #494949;
-    font-size: 24px;
+  color: #494949;
+  font-size: 24px;
 }
 
 .knownForContainer {
-    display: flex;
+  display: flex;
 }

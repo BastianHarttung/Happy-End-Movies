@@ -1,6 +1,6 @@
 import classes from "./DetailsPerson.module.scss";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { observer } from "mobx-react";
 import { FaBirthdayCake, FaCross } from "react-icons/all";
 import globalStore from "../../stores/global-store";
@@ -12,6 +12,8 @@ import imageActorWoman from "../../assets/img/actor_girl.png";
 //Components
 import SearchResultBox from "../../components/SearchResultBox";
 import LoadingMovieStreifen from "../../components/Loaders/LoadingMovieStreifen";
+import { TCategory } from "../../models/types";
+import { ROUTES } from "../../models/routes";
 
 const DetailsPerson = () => {
   const {
@@ -25,8 +27,17 @@ const DetailsPerson = () => {
 
   const urlParams = useParams();
 
-  const age = calculateAge(new Date().toString());
-  const deathAge = calculateAge(selectedPerson.deathday);
+  const navigate = useNavigate();
+
+  const age = calculateAge(new Date(selectedPerson.birthday), new Date());
+  const deathAge = calculateAge(
+    new Date(selectedPerson.birthday),
+    selectedPerson.deathday ? new Date(selectedPerson.deathday) : null
+  );
+
+  const handleSearchResultBoxClick = (id: number, category: TCategory) => {
+    navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(category, id.toString()));
+  };
 
   useEffect(() => {
     if (userData && urlParams) {
@@ -60,7 +71,7 @@ const DetailsPerson = () => {
             <div className={classes.personInfosContainer}>
               <h2>{selectedPerson.name}</h2>
 
-              {selectedPerson.homepage ? (
+              {selectedPerson.homepage && (
                 <a
                   href={selectedPerson.homepage}
                   target="_blank"
@@ -68,28 +79,25 @@ const DetailsPerson = () => {
                 >
                   {selectedPerson.homepage}
                 </a>
-              ) : (
-                ""
               )}
 
-              <div className={classes.birthday}>
-                <FaBirthdayCake></FaBirthdayCake>
-                <span>
-                  {" "}
-                  {selectedPerson.birthday} ({age} Jahre)
-                </span>
-              </div>
-
-              {selectedPerson.deathday ? (
-                <div className={classes.deathday}>
-                  <FaCross></FaCross>
+              <div className={`${classes.days_container} gap-4`}>
+                <div className={`${classes.birthday} gap-2`}>
+                  <FaBirthdayCake />
                   <span>
-                    {selectedPerson.deathday} ({deathAge} Jahre)
+                    {formatDate(selectedPerson.birthday)} ({age} Jahre)
                   </span>
                 </div>
-              ) : (
-                ""
-              )}
+
+                {selectedPerson.deathday && (
+                  <div className={`${classes.deathday} gap-2`}>
+                    <FaCross />
+                    <span>
+                      {formatDate(selectedPerson.deathday)} ({deathAge} Jahre)
+                    </span>
+                  </div>
+                )}
+              </div>
 
               <div>
                 <b>Geburtsort:</b> {selectedPerson.place_of_birth}
@@ -134,9 +142,9 @@ const DetailsPerson = () => {
                   category={movie.media_type}
                   id={movie.id}
                   hasHappyEnd={null}
-                  movieName={movie.title}
+                  movieName={movie.title || movie.name}
                   posterPath={movie.poster_path}
-                  onClick={() => {}}
+                  onClick={handleSearchResultBoxClick}
                 />
               );
             })}
@@ -145,18 +153,27 @@ const DetailsPerson = () => {
       )}
     </main>
   );
-
-  // Calculate Age of Person Today
-  function calculateAge(calculateDay: string | null): number {
-    const birthday = new Date(selectedPerson.birthday);
-    if (calculateDay) {
-      const monthDiff = new Date(calculateDay).getTime() - birthday.getTime();
-      const ageDate = new Date(monthDiff);
-      const year = ageDate.getUTCFullYear();
-      const age = Math.abs(year - 1970);
-      return age;
-    } else return 0;
-  }
 };
 
 export default observer(DetailsPerson);
+
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+}
+
+// Calculate Age of Person Today
+export function calculateAge(
+  StartDate: Date,
+  EndDate: Date | null
+): number | null {
+  if (EndDate) {
+    const monthDiff = StartDate.getTime() - EndDate.getTime();
+    const ageDate = new Date(monthDiff);
+    const year = ageDate.getUTCFullYear();
+    return Math.abs(year - 1969);
+  } else return null;
+}
