@@ -7,6 +7,7 @@ import Sidebar from "./sidebar/sidebar";
 import SearchResultBox from "../../components/SearchResultBox";
 //Pictures
 import FilterIcon from "../../assets/icons/filter.svg";
+import LoadingBars from "../../components/Loaders/LoadingBars";
 
 const Showroom = () => {
   const { filteredMedias, filteredDbLength, databaseStore, paginationStore } =
@@ -106,7 +107,7 @@ const Showroom = () => {
           </div>
         ) : filteredMedias.length === 0 ? (
           <div className={classes.filteredMoviesContainer}>
-            <div className={classes.loader}>Loading...</div>
+            <LoadingBars />
           </div>
         ) : (
           "Load"

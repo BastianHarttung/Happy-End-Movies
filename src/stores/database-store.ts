@@ -33,7 +33,7 @@ class DatabaseStore {
   /**
    * Sort Movies from Database by Title
    */
-  sortMovies(moviesArray: (IMovieAllInfos | ITvAllInfos)[]): (IMovieAllInfos | ITvAllInfos)[] {
+  private sortMovies(moviesArray: (IMovieAllInfos | ITvAllInfos)[]): (IMovieAllInfos | ITvAllInfos)[] {
     moviesArray.sort((a, b) => {
         let aName = "";
         let bName = "";
