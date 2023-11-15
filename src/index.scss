@@ -118,7 +118,7 @@ code {
 }
 
 main {
-  min-height: calc(100vh - 130px);
+  min-height: calc(100svh - 60px - 70px); // full-Height - height Header - height Footer
 }
 
 // Flexbox --------------------
@@ -126,6 +126,10 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.flex-column {
+  flex-direction: column;
 }
 
 .d-flex-row {

@@ -34,6 +34,7 @@ const DetailsMovie = () => {
   return (
     <main className={classes.detailsMediaPage}>
       {isLoading && <LoadingMovieStreifen />}
+
       {!isLoading && selectedMovie && (
         <>
           <section className={classes.mediaSection}>

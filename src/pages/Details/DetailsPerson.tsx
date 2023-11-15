@@ -48,9 +48,16 @@ const DetailsPerson = () => {
 
   return (
     <main>
-      {isLoading && <LoadingMovieStreifen />}
+      {isLoading && (
+        <div
+          style={{ minHeight: "calc(100svh - 60px)" }}
+          className={`d-flex-center flex-column`}
+        >
+          <LoadingMovieStreifen />
+        </div>
+      )}
 
-      {!isLoading && selectedPerson && (
+      {(!isLoading && selectedPerson) && (
         <section className={classes.detailsPersonSection}>
           <div className={classes.personContainer}>
             <div>
