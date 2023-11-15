@@ -30,7 +30,7 @@ const DetailsMovie = () => {
       setSelectedMediaOrPersonForDetails(Number(urlParams.id), "tv");
     }
   }, [userData, urlParams]);
-
+  
   return (
     <main className={classes.detailsMediaPage}>
       {isLoading && <LoadingMovieStreifen />}

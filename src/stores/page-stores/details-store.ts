@@ -22,7 +22,7 @@ class DetailsStore {
 
   hasHappyEnd: THasHappyEnd = "neutral";
 
-  isLoading: boolean = false;
+  isLoading: boolean = true;
 
   constructor() {
     makeAutoObservable(this);

@@ -46,18 +46,22 @@ const DetailsPerson = () => {
     }
   }, [userData, urlParams]);
 
-  return (
-    <main>
-      {isLoading && (
+  if (isLoading) {
+    return (
+      <>
         <div
           style={{ minHeight: "calc(100svh - 60px)" }}
           className={`d-flex-center flex-column`}
         >
           <LoadingMovieStreifen />
         </div>
-      )}
+      </>
+    );
+  }
 
-      {(!isLoading && selectedPerson) && (
+  return (
+    <main>
+      {!isLoading && selectedPerson && (
         <section className={classes.detailsPersonSection}>
           <div className={classes.personContainer}>
             <div>
@@ -129,33 +133,37 @@ const DetailsPerson = () => {
             </div>
           </div>
 
-          <section className={classes.biographySection}>
-            <div className={classes.biography}>
-              {selectedPerson.biography && (
-                <span>
-                  <b>Biografie:</b> {selectedPerson.biography}
-                </span>
-              )}
+          {selectedPerson.biography && (
+            <section className={classes.biographySection}>
+              <div className={classes.biography}>
+                {selectedPerson.biography && (
+                  <span>
+                    <b>Biografie:</b> {selectedPerson.biography}
+                  </span>
+                )}
+              </div>
+            </section>
+          )}
+
+          <section className={classes.person_movies_section}>
+            <div className={classes.knownForHeading}>Bekannt für</div>
+
+            <div className={classes.knownForContainer}>
+              {selectedPerson.known_for?.map((movie) => {
+                return (
+                  <SearchResultBox
+                    key={movie.id}
+                    category={movie.media_type}
+                    id={movie.id}
+                    hasHappyEnd={null}
+                    movieName={movie.title || movie.name}
+                    posterPath={movie.poster_path}
+                    onClick={handleSearchResultBoxClick}
+                  />
+                );
+              })}
             </div>
           </section>
-
-          <div className={classes.knownForHeading}>Bekannt für</div>
-
-          <div className={classes.knownForContainer}>
-            {selectedPerson.known_for?.map((movie) => {
-              return (
-                <SearchResultBox
-                  key={movie.id}
-                  category={movie.media_type}
-                  id={movie.id}
-                  hasHappyEnd={null}
-                  movieName={movie.title || movie.name}
-                  posterPath={movie.poster_path}
-                  onClick={handleSearchResultBoxClick}
-                />
-              );
-            })}
-          </div>
         </section>
       )}
     </main>

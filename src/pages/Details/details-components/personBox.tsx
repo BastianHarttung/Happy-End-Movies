@@ -40,17 +40,21 @@ const PersonBox = ({ person }: IPersonBoxProps) => {
         title={person.name}
         loading="lazy"
       />
-      <h5 className={classes.actorName}>{person.name}</h5>
 
-      {"character" in person && person.character ? (
-        <p className={classes.character}>"{person.character}"</p>
-      ) : "job" in person && person.job === "Director" ? (
-        "Regie"
-      ) : (
-        ""
-      )}
-      {"roles" in person && person.roles
-        ? person.roles.map((role, index) => {
+      <div className={classes.actor_container}>
+        <h5 className={classes.actorName}>{person.name}</h5>
+
+        {"character" in person && person.character ? (
+          <p className={classes.character}>"{person.character}"</p>
+        ) : "job" in person && person.job === "Director" ? (
+          <p className={classes.directorName}>REGIE</p>
+        ) : (
+          ""
+        )}
+
+        {"roles" in person &&
+          person.roles &&
+          person.roles.map((role, index) => {
             if (role.character !== "") {
               return (
                 <p key={index} className={classes.character}>
@@ -58,8 +62,8 @@ const PersonBox = ({ person }: IPersonBoxProps) => {
                 </p>
               );
             } else return "";
-          })
-        : ""}
+          })}
+      </div>
     </div>
   );
 };

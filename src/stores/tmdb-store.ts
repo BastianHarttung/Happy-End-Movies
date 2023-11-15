@@ -262,7 +262,7 @@ class TmdbStore {
     let data = await response.json();
     let directorArray = [];
 
-    for (let i = 0; i < data.crew.length; i++) {
+    for (let i = 0; i < data.crew?.length; i++) {
       if (data.crew[i].job === "Director") {
         directorArray.push(data.crew[i]);
       }
