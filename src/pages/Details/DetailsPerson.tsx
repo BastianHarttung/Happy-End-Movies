@@ -12,8 +12,6 @@ import imageActorWoman from "../../assets/img/actor_girl.png";
 //Components
 import SearchResultBox from "../../components/SearchResultBox";
 import LoadingMovieStreifen from "../../components/Loaders/LoadingMovieStreifen";
-import { TCategory } from "../../models/types";
-import { ROUTES } from "../../models/routes";
 
 const DetailsPerson = () => {
   const {
@@ -27,17 +25,11 @@ const DetailsPerson = () => {
 
   const urlParams = useParams();
 
-  const navigate = useNavigate();
-
   const age = calculateAge(new Date(selectedPerson.birthday), new Date());
   const deathAge = calculateAge(
     new Date(selectedPerson.birthday),
     selectedPerson.deathday ? new Date(selectedPerson.deathday) : null
   );
-
-  // const handleSearchResultBoxClick = (id: number, category: TCategory) => {
-  //   navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(category, id.toString()));
-  // };
 
   useEffect(() => {
     if (userData && urlParams) {
