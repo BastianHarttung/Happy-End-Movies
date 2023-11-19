@@ -5,7 +5,7 @@ import { ITvAllInfos } from "../../models/interfaces/tv-interfaces";
 import { IPersonAllData } from "../../models/interfaces/person-interfaces";
 import { TCategory, THasHappyEnd, TStorageKey } from "../../models/types";
 import tmdbStore from "../tmdb-store";
-import databaseStore from "../database-store";
+
 
 class DetailsStore {
   selectedMovie: IMovieAllInfos | null = null;
@@ -16,11 +16,9 @@ class DetailsStore {
 
   tmdbStore = tmdbStore;
 
-  databaseStore = databaseStore;
+  // haveSeen: boolean = false;
 
-  haveSeen: boolean = false;
-
-  hasHappyEnd: THasHappyEnd = "neutral";
+  // hasHappyEnd: THasHappyEnd = "neutral";
 
   isLoading: boolean = true;
 

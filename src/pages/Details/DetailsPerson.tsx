@@ -35,9 +35,9 @@ const DetailsPerson = () => {
     selectedPerson.deathday ? new Date(selectedPerson.deathday) : null
   );
 
-  const handleSearchResultBoxClick = (id: number, category: TCategory) => {
-    navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(category, id.toString()));
-  };
+  // const handleSearchResultBoxClick = (id: number, category: TCategory) => {
+  //   navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(category, id.toString()));
+  // };
 
   useEffect(() => {
     if (userData && urlParams) {
@@ -158,7 +158,7 @@ const DetailsPerson = () => {
                     hasHappyEnd={null}
                     movieName={movie.title || movie.name}
                     posterPath={movie.poster_path}
-                    onClick={handleSearchResultBoxClick}
+                    // onClick={handleSearchResultBoxClick}
                   />
                 );
               })}

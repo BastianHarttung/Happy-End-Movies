@@ -1,11 +1,16 @@
-import {makeAutoObservable} from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import databaseStore from "../database-store";
 import paginationStore from "../pagination-store";
 import filterFormStore from "../filter-form-store";
-import {TCategoryFilter, TCategoryMedia, TCategorySearch, THappyEndFilter} from "../../models/types";
-import {EHappyEndFilter, EHasHappyEnd} from "../../models/enums";
-import {IMovieAllInfos} from "../../models/interfaces/movie-interfaces";
-import {ITvAllInfos} from "../../models/interfaces/tv-interfaces";
+import {
+  TCategoryFilter,
+  TCategoryMedia,
+  TCategorySearch,
+  THappyEndFilter,
+} from "../../models/types";
+import { EHappyEndFilter, EHasHappyEnd } from "../../models/enums";
+import { IMovieAllInfos } from "../../models/interfaces/movie-interfaces";
+import { ITvAllInfos } from "../../models/interfaces/tv-interfaces";
 
 class ShowroomStore {
   sidebarOpen: boolean = false;
@@ -22,11 +27,28 @@ class ShowroomStore {
 
   filterFormStore = filterFormStore; // TODO
 
+  isLoading = true;
+
   constructor() {
-    makeAutoObservable(this)
+    makeAutoObservable(this);
+    this.initialLoadMovies();
   }
 
-  searchMovieDb = (movieName: string, searchCategory: TCategorySearch | undefined) => {
+  initialLoadMovies = () => {
+    this.isLoading = true;
+    this.databaseStore.loadMoviesFromDbAndSetStates().then(() => {
+      runInAction(() => {
+        this.filteredMedias = this.databaseStore.dbMedias;
+        this.filteredDbLength = this.databaseStore.dbLength;
+        this.isLoading = false;
+      });
+    });
+  };
+
+  searchMovieDb = (
+    movieName: string,
+    searchCategory: TCategorySearch | undefined
+  ) => {
     if (movieName.length === 0) {
       this.filteredMedias = this.databaseStore.dbMedias;
       this.filteredDbLength = this.databaseStore.dbMedias.length;
@@ -35,19 +57,22 @@ class ShowroomStore {
       window.location.hash = movieName;
       this.filterMoviesByName(movieName, searchCategory as TCategoryMedia);
     }
-  }
+  };
 
   /**
    * Filter Movies with search
    * @param {string} movieName
    * @param {string} searchCategory eg 'movie' || 'tv'
    */
-  private filterMoviesByName(movieName: string, searchCategory: TCategoryMedia): void {
+  private filterMoviesByName(
+    movieName: string,
+    searchCategory: TCategoryMedia
+  ): void {
     const movieFilter = this.databaseStore.dbMedias.filter((movie) => {
-        return "title" in movie ? movie.title.toLowerCase().includes(movieName.toLowerCase())
-          : movie.original_name.toLowerCase().includes(movieName.toLowerCase())
-      },
-    );
+      return "title" in movie
+        ? movie.title.toLowerCase().includes(movieName.toLowerCase())
+        : movie.original_name.toLowerCase().includes(movieName.toLowerCase());
+    });
     this.filteredMedias = movieFilter;
     this.filteredDbLength = movieFilter.length;
   }
@@ -59,14 +84,29 @@ class ShowroomStore {
    * @param {string} happyEnd
    * @param {number} fskPosAge fsk Age
    */
-  filterDatabase = (movies: any[], category: TCategoryFilter, happyEnd: THappyEndFilter, fskPosAge: number) => {
+  filterDatabase = (
+    movies: any[],
+    category: TCategoryFilter,
+    happyEnd: THappyEndFilter,
+    fskPosAge: number
+  ) => {
     console.log("filterDatabase", movies, category, happyEnd, fskPosAge);
-    if (category !== "allCategories" || happyEnd !== EHappyEndFilter.ALL_ENDS || fskPosAge < 18) {
+    if (
+      category !== "allCategories" ||
+      happyEnd !== EHappyEndFilter.ALL_ENDS ||
+      fskPosAge < 18
+    ) {
       const filteredByCategory = this.filterMoviesByCategory(movies, category);
       //console.log(filteredByCategory)
-      const filteredByCategoryAndHappyEnd = this.filterMoviesByHappyEnd(filteredByCategory, happyEnd);
+      const filteredByCategoryAndHappyEnd = this.filterMoviesByHappyEnd(
+        filteredByCategory,
+        happyEnd
+      );
       //console.log(filteredByCategoryAndHappyEnd)
-      const filtered = this.filterMoviesByFsk(filteredByCategoryAndHappyEnd, fskPosAge);
+      const filtered = this.filterMoviesByFsk(
+        filteredByCategoryAndHappyEnd,
+        fskPosAge
+      );
       console.log(filtered);
       this.filteredMedias = filtered;
       this.filteredDbLength = filtered.length;
@@ -78,7 +118,7 @@ class ShowroomStore {
       this.filteredDbLength = movies.length;
       this.filterActive = false;
     }
-  }
+  };
 
   /**
    * Filter Movies by Category
@@ -89,15 +129,18 @@ class ShowroomStore {
   private filterMoviesByCategory(movies: any[], category: TCategoryFilter) {
     if (category !== "allCategories") {
       console.log("filterCategory", category);
-      return movies.filter(movie => movie.category === category);
+      return movies.filter((movie) => movie.category === category);
     } else return movies;
   }
 
   // Filter Movies with or without HappyEnd
   private filterMoviesByHappyEnd(movies: any[], hasHappyEnd: THappyEndFilter) {
-    if (hasHappyEnd === EHasHappyEnd.TRUE || hasHappyEnd === EHasHappyEnd.FALSE) {
+    if (
+      hasHappyEnd === EHasHappyEnd.TRUE ||
+      hasHappyEnd === EHasHappyEnd.FALSE
+    ) {
       console.log("filterHappyEnd", hasHappyEnd);
-      return movies.filter(movie => movie.has_happy_end === hasHappyEnd);
+      return movies.filter((movie) => movie.has_happy_end === hasHappyEnd);
     } else return movies;
   }
 
@@ -105,10 +148,9 @@ class ShowroomStore {
   private filterMoviesByFsk(movies: any[], fskPosAge: number) {
     if (fskPosAge < 18) {
       console.log("filterFsk", fskPosAge);
-      return movies.filter(movie => movie.fsk <= fskPosAge);
+      return movies.filter((movie) => movie.fsk <= fskPosAge);
     } else return movies;
   }
-
 }
 
 const showroomStore = new ShowroomStore();

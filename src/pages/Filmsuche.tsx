@@ -1,6 +1,5 @@
 import classes from "./Filmsuche.module.scss";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react";
 import SearchResultBox from "../components/SearchResultBox";
 import SearchBar from "../components/SearchBar";
@@ -8,16 +7,13 @@ import Pagination from "../components/Pagination";
 import LoadingMovieStreifen from "../components/Loaders/LoadingMovieStreifen";
 import { Button } from "../styleComponents";
 import filmsucheStore from "../stores/page-stores/filmsuche-store";
-import { TCategory, TCategorySearch } from "../models/types";
-import { ROUTES } from "../models/routes";
+import { TCategorySearch } from "../models/types";
 
 const Filmsuche = () => {
   const locationHashString: string = window.location.hash
     .substring(1)
     .split("%20")
     .join(" ");
-
-  const navigate = useNavigate();
 
   const [searchFor, setSearchFor] = useState<string>(locationHashString);
 
@@ -47,10 +43,6 @@ const Filmsuche = () => {
   ) => {
     setSearchCategory(category);
     await searchingOnTmdb(searchString, category);
-  };
-
-  const handleSearchResultBoxClick = (id: number, category: TCategory) => {
-    navigate(ROUTES.DETAILS_WITH_CATEGORY_ID(category, id.toString()));
   };
 
   useEffect(() => {
@@ -135,7 +127,6 @@ const Filmsuche = () => {
                         : movie.profile_path
                     }
                     personGender={"gender" in movie ? movie.gender : 0}
-                    onClick={handleSearchResultBoxClick}
                   />
                 ))}
               </div>
@@ -162,7 +153,6 @@ const Filmsuche = () => {
                     ? movie.poster_path
                     : movie.profile_path
                 }
-                onClick={handleSearchResultBoxClick}
               />
             ))}
           </div>

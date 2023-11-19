@@ -26,8 +26,8 @@ class DatabaseStore {
     const movieDataArray = data.docs.map((doc) => ({...doc.data()}));
     console.log(movieDataArray)
     const movieArraySort = this.sortMovies(movieDataArray as (IMovieAllInfos | ITvAllInfos)[]);
-    this.dbLength = movieDataArray.length;
     this.dbMedias = movieArraySort;
+    this.dbLength = movieDataArray.length;
   }
 
   /**

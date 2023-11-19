@@ -8,12 +8,16 @@ import SearchResultBox from "../../components/SearchResultBox";
 //Pictures
 import FilterIcon from "../../assets/icons/filter.svg";
 import LoadingBars from "../../components/Loaders/LoadingBars";
+import Pagination from "../../components/Pagination";
+
 
 const Showroom = () => {
-  const { filteredMedias, filteredDbLength, databaseStore, paginationStore } =
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+
+  const { filteredMedias, filteredDbLength, paginationStore, isLoading } =
     showroomStore;
 
-  const { activePage, pageLength, setActivePage } = paginationStore;
+  const { activePage, pageLength, pagesArray, setActivePage } = paginationStore;
 
   const index: number = activePage * pageLength;
 
@@ -24,12 +28,6 @@ const Showroom = () => {
     Math.max(pageLength, pageLength * (activePage + 1))
   );
 
-  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    databaseStore.loadMoviesFromDbAndSetStates();
-  }, []);
-
   /**
    * Scrolling Sidebar
    */
@@ -38,6 +36,7 @@ const Showroom = () => {
     const position = window.pageYOffset;
     setScrollPosition(Math.max(0, 60 - position));
   };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
@@ -67,7 +66,13 @@ const Showroom = () => {
           />
         </div>
 
-        {filteredMedias.length > 0 ? (
+        {isLoading && (
+          <div className={classes.filteredMoviesContainer}>
+            <LoadingBars />
+          </div>
+        )}
+
+        {!isLoading && filteredMedias.length > 0 && (
           <div className={classes.filteredMoviesContainer}>
             <div className={classes.filteredMoviesResult}>
               {filteredMoviesPart.map((movie) => (
@@ -75,7 +80,6 @@ const Showroom = () => {
                   key={movie.id}
                   id={movie.id}
                   category={movie.category}
-                  // movie={movie}
                   movieName={
                     "title" in movie && movie.title
                       ? movie.title
@@ -85,32 +89,19 @@ const Showroom = () => {
                   }
                   hasHappyEnd={movie.has_happy_end}
                   posterPath={movie.poster_path}
-                  onClick={() => {}} //TODO
                 />
               ))}
             </div>
+
             <div className={classes.infosContainer}>
-              {Array.from(Array(pages).keys()).map((page) => (
-                <span
-                  key={page + 1}
-                  onClick={() => setActivePage(page)}
-                  className={
-                    activePage === page
-                      ? classes.activePageBtn
-                      : classes.pageBtn
-                  }
-                >
-                  {page + 1}
-                </span>
-              ))}
+              <Pagination
+                totalPages={pagesArray}
+                activePage={activePage}
+                changePage={(page: number) => setActivePage(page)}
+                totalResults={filteredDbLength}
+              />
             </div>
           </div>
-        ) : filteredMedias.length === 0 ? (
-          <div className={classes.filteredMoviesContainer}>
-            <LoadingBars />
-          </div>
-        ) : (
-          "Load"
         )}
       </div>
     </section>
