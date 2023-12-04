@@ -15,21 +15,16 @@ import globalStore from "../../stores/global-store";
 const DetailsMovie = () => {
   const { userData } = globalStore;
 
-  const {
-    selectedMovie,
-    isLoading,
-    checkLocalStorage,
-    setSelectedMediaOrPersonForDetails,
-  } = detailsStore;
+  const { selectedMovie, isLoading, setSelectedMediaOrPersonForDetails } =
+    detailsStore;
 
   const urlParams = useParams();
 
   useEffect(() => {
     if (userData && urlParams) {
-      checkLocalStorage("selectedMovie", Number(urlParams.id));
       setSelectedMediaOrPersonForDetails(Number(urlParams.id), "movie");
     }
-  }, [userData, urlParams]);
+  }, [userData, urlParams, setSelectedMediaOrPersonForDetails]);
 
   return (
     <main className={classes.detailsMediaPage}>

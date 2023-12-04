@@ -18,7 +18,6 @@ const DetailsMovie = () => {
   const {
     selectedTv,
     isLoading,
-    checkLocalStorage,
     setSelectedMediaOrPersonForDetails,
   } = detailsStore;
 
@@ -26,10 +25,9 @@ const DetailsMovie = () => {
 
   useEffect(() => {
     if (userData && urlParams) {
-      checkLocalStorage("selectedTv", Number(urlParams.id));
       setSelectedMediaOrPersonForDetails(Number(urlParams.id), "tv");
     }
-  }, [userData, urlParams]);
+  }, [userData, urlParams,setSelectedMediaOrPersonForDetails]);
   
   return (
     <main className={classes.detailsMediaPage}>

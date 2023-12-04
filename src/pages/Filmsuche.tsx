@@ -35,7 +35,7 @@ const Filmsuche = () => {
 
   useEffect(() => {
     getPopularMoviesFromTmdb();
-  }, []);
+  }, [getPopularMoviesFromTmdb]);
 
   const handleSearch = async (
     searchString: string,
@@ -47,7 +47,7 @@ const Filmsuche = () => {
 
   useEffect(() => {
     searchingOnTmdb(searchFor, searchCategory);
-  }, [activePage]);
+  }, [activePage, searchFor, searchCategory, searchingOnTmdb]);
 
   return (
     <main className={classes.filmsucheSection}>

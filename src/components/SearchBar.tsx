@@ -38,7 +38,7 @@ const SearchBar = ({
     }, 800);
 
     return () => clearTimeout(timeout);
-  }, [value]);
+  }, [value, searchMovie]);
 
   return (
     <div className={classes.searchBarContainer}>

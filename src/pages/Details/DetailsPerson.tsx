@@ -1,6 +1,6 @@
 import classes from "./DetailsPerson.module.scss";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { observer } from "mobx-react";
 import { FaBirthdayCake, FaCross } from "react-icons/all";
 import globalStore from "../../stores/global-store";
@@ -14,12 +14,8 @@ import SearchResultBox from "../../components/SearchResultBox";
 import LoadingMovieStreifen from "../../components/Loaders/LoadingMovieStreifen";
 
 const DetailsPerson = () => {
-  const {
-    selectedPerson,
-    isLoading,
-    checkLocalStorage,
-    setSelectedMediaOrPersonForDetails,
-  } = detailsStore;
+  const { selectedPerson, isLoading, setSelectedMediaOrPersonForDetails } =
+    detailsStore;
 
   const { userData } = globalStore;
 
@@ -33,10 +29,9 @@ const DetailsPerson = () => {
 
   useEffect(() => {
     if (userData && urlParams) {
-      checkLocalStorage("selectedPerson", Number(urlParams.id));
       setSelectedMediaOrPersonForDetails(Number(urlParams.id), "person");
     }
-  }, [userData, urlParams]);
+  }, [userData, urlParams, setSelectedMediaOrPersonForDetails]);
 
   if (isLoading) {
     return (

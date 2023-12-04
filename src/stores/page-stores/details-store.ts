@@ -5,7 +5,7 @@ import { ITvAllInfos } from "../../models/interfaces/tv-interfaces";
 import { IPersonAllData } from "../../models/interfaces/person-interfaces";
 import { TCategory, TStorageKey } from "../../models/types";
 import tmdbStore from "../tmdb-store";
-
+import databaseStore from "../database-store";
 
 class DetailsStore {
   selectedMovie: IMovieAllInfos | null = null;
@@ -16,9 +16,7 @@ class DetailsStore {
 
   tmdbStore = tmdbStore;
 
-  // haveSeen: boolean = false;
-
-  // hasHappyEnd: THasHappyEnd = "neutral";
+  databaseStore = databaseStore;
 
   isLoading: boolean = true;
 
@@ -31,34 +29,51 @@ class DetailsStore {
     searchCategory: TCategory
   ): Promise<void> => {
     this.isLoading = true;
+
+    const category = searchCategory === "tv" ? "tvs" : "movies";
+
     // TODO check first if movie is in database
+    this.databaseStore
+      .loadMovieFromDb(category, id.toString())
+      .then((response) => {
+        if (response !== null) {
+          if (searchCategory === "movie")
+            runInAction(() => {
+              this.selectedMovie = response as IMovieAllInfos;
+            });
+          if (searchCategory === "tv")
+            runInAction(() => {
+              this.selectedTv = response as ITvAllInfos;
+            });
+        }
+      });
+
     if (searchCategory === "movie") {
       const selectMovie = await this.tmdbStore.getAllDataForMovie(id);
       runInAction(() => {
         this.selectedMovie = selectMovie;
       });
-      localStorage.setItem("selectedMovie", JSON.stringify(this.selectedMovie));
+      // localStorage.setItem("selectedMovie", JSON.stringify(this.selectedMovie));
     } else if (searchCategory === "tv") {
       const selectTv = await this.tmdbStore.getAllDataForTv(id);
       runInAction(() => {
         this.selectedTv = selectTv;
       });
-      localStorage.setItem("selectedTv", JSON.stringify(this.selectedTv));
+      // localStorage.setItem("selectedTv", JSON.stringify(this.selectedTv));
     } else {
       const selectPerson = await this.tmdbStore.getAllDataForPerson(id);
       runInAction(() => {
         this.selectedPerson = selectPerson;
       });
-      localStorage.setItem(
-        "selectedPerson",
-        JSON.stringify(this.selectedPerson)
-      );
+      // localStorage.setItem(
+      //   "selectedPerson",
+      //   JSON.stringify(this.selectedPerson)
+      // );
     }
     runInAction(() => {
       this.isLoading = false;
     });
   };
-
   checkLocalStorage = (storageKey: TStorageKey, paramId: number) => {
     const storage = localStorage.getItem(storageKey);
     if (storage) {

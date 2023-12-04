@@ -21,7 +21,7 @@ const Showroom = () => {
 
   const index: number = activePage * pageLength;
 
-  const pages = Math.ceil(filteredDbLength / pageLength);
+  // const pages = Math.ceil(filteredDbLength / pageLength);
 
   const filteredMoviesPart = filteredMedias.slice(
     index,
