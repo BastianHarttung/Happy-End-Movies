@@ -2,7 +2,7 @@ import classes from "./DetailsPerson.module.scss";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react";
-import { FaBirthdayCake, FaCross } from "react-icons/all";
+import { FaBirthdayCake, FaCross } from "react-icons/fa";
 import globalStore from "../../stores/global-store";
 import detailsStore from "../../stores/page-stores/details-store";
 import { imageUrlBig, imageUrlSmall } from "../../constants";

@@ -1,6 +1,6 @@
 import classes from "./input-string.module.scss";
-import React, {CSSProperties} from "react";
-import {v4 as uuid4} from "uuid";
+import React, { CSSProperties, useId } from "react";
+
 
 interface IInputStringProps {
   changeInput: (value: string) => void;
@@ -17,31 +17,32 @@ interface IInputStringProps {
 }
 
 export const InputString = ({
-                       changeInput,
-                       value,
-                       showError,
-                       isDirty,
-                       handleBlur,
-                       label,
-                       placeholder,
-                       initialValue = "",
-                       type = "text",
-                       style,
-                       icon,
-                       ...restProps
-                     }: IInputStringProps) => {
+                              changeInput,
+                              value,
+                              showError,
+                              isDirty,
+                              handleBlur,
+                              label,
+                              placeholder,
+                              initialValue = "",
+                              type = "text",
+                              style,
+                              icon,
+                              ...restProps
+                            }: IInputStringProps) => {
+  const inputId = useId();
 
   const containerClasses = `
     ${classes.inputContainer} 
     ${showError ? classes.invalid : ""} 
-    ${(!!initialValue ?? isDirty) ? classes.dirty : ""}`;
+    ${(!!initialValue || isDirty) ? classes.dirty : ""}`;
 
 
   return (
     <div className={containerClasses}>
       {!!label && <label htmlFor={label}>{label}:</label>}
       <input
-        id={uuid4()}
+        id={inputId}
         type={type}
         placeholder={showError ? `Bitte korrekt ausfüllen.` : placeholder}
         value={value}
@@ -50,7 +51,7 @@ export const InputString = ({
         style={style}
         {...restProps}
       />
-      {icon && <img src={icon} alt="Name"/>}
+      {icon && <img src={icon} alt="Name" />}
     </div>
   );
 };

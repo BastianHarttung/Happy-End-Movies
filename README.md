@@ -36,18 +36,24 @@ By clicking on a Movie you come to the Details Section.
 
 ![showroom.png](src/assets/img/readme/showroom.png)
 
-## First start
+## For Developer
+
+- use Node v16
+- React v18
+- React router dom v6
+- Typescript v4.9
+- MobX v6
+
+### First start
 
 You first have to install all dependencies by running
-`npm install`
+`npm install` eventually with `npm install --legacy-peer-deps`
 
-## Available Scripts
+### Available Scripts
 
 In the project directory, you can run:
 
-### `npm start` or
-
-### `yarn start`
+`npm start` or `yarn start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

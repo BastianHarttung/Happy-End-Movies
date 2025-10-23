@@ -1,7 +1,7 @@
 import classes from "./Logout.module.scss";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react";
-import { IoSettingsOutline } from "react-icons/all";
+import { IoSettingsOutline } from "react-icons/io5";
 import iconSignout from "../../assets/icons/sign-out-alt_light.svg";
 import globalStore from "../../stores/global-store";
 import { ROUTES } from "../../models/routes";

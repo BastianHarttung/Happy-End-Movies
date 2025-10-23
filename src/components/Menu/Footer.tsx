@@ -1,6 +1,6 @@
 import classes from "./Footer.module.scss";
 import {Link} from "react-router-dom";
-import {FaGithubSquare} from "react-icons/all";
+import { FaGithubSquare } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -9,7 +9,7 @@ const Footer = () => {
          target="_blank"
          rel="noreferrer"
          className={classes.iconContainer}>
-        <FaGithubSquare/>
+        <FaGithubSquare />
       </a>
       <div>
         <Link className={classes.link} to="/impressum">Impressum</Link>

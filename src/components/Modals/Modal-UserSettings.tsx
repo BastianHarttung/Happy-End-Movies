@@ -1,7 +1,7 @@
 import classes from "./Modal-UserSettings.module.scss";
 import React from "react";
 import {observer} from "mobx-react";
-import {BsMoon, BsSun} from "react-icons/all";
+import {BsMoon, BsSun} from "react-icons/bs";
 import {Button} from "../../styleComponents";
 import globalStore from "../../stores/global-store";
 

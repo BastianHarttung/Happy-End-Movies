@@ -30,3 +30,4 @@ yarn-error.log*
 
 # Lock-Files
 pnpm-lock.yaml
+package-lock.json
