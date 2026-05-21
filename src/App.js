@@ -23,7 +23,6 @@ import {
 } from "./constants";
 import firestoreDb from "./firebase-config";
 import { doc, setDoc } from "firebase/firestore";
-import "dotenv/config";
 import globalStore from "./stores/global-store";
 import WrongUrl from "./pages/WrongUrl";
 
@@ -37,10 +36,10 @@ function App() {
 
    useEffect(() => {
       loadDarkModeFromLocalStorage();
-   }, []);
+   }, [loadDarkModeFromLocalStorage]);
 
    return (
-      <BrowserRouter basename="/happy-end-movies">
+      <BrowserRouter>
          <div>
             {openUserSettings && (
                <ModalUserSettings

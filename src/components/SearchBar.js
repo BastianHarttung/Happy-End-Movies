@@ -1,5 +1,5 @@
 import classes from "./SearchBar.module.scss";
-import {FaSearch} from "react-icons/all";
+import {FaSearch} from "react-icons/fa";
 import {useState, useEffect} from "react";
 
 const SearchBar = (props) => {

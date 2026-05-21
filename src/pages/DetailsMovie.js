@@ -14,7 +14,7 @@ import {
    FaChevronLeft,
    FaRegEyeSlash,
    FaRegEye,
-} from "react-icons/all";
+} from "react-icons/fa";
 import { imageUrl } from "../constants";
 import PersonBox from "../components/PersonBox";
 import { Button } from "../styleComponents/ButtonStyleComp";

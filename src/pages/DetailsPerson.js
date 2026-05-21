@@ -1,7 +1,7 @@
 import classes from "./DetailsPerson.module.scss";
 import {imageUrl, imageUrlSmall} from "../constants";
 import {useEffect, useState} from "react";
-import {FaBirthdayCake, FaCross} from "react-icons/all";
+import {FaBirthdayCake, FaCross} from "react-icons/fa";
 import imageActorMan from "../assets/img/actor.png";
 import imageActorWoman from "../assets/img/actor_girl.png";
 import SearchResultBox from "../components/SearchResultBox";

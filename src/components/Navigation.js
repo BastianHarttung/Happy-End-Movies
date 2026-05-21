@@ -3,7 +3,7 @@ import icons_search_light from "../assets/icons/search_light.svg";
 import icon_projector from "../assets/icons/projector_light.svg";
 import classes from "./Navigation.module.scss";
 import iconSignout from "../assets/icons/sign-out-alt_light.svg";
-import { IoSettingsOutline } from "react-icons/all";
+import { IoSettingsOutline } from "react-icons/io5";
 import globalStore from "../stores/global-store";
 
 const Navigation = ({ isHandy, openModalUserSettings }) => {
@@ -43,7 +43,9 @@ const Navigation = ({ isHandy, openModalUserSettings }) => {
             <Link to="/" className={classes.logoutLink}>
                <div className={classes.linkContainer}>
                   {!isHandy && <div>Logout</div>}
-                  <img src={iconSignout} className={classes.icons} />
+                  <img src={iconSignout}
+                       alt="Signout"
+                       className={classes.icons} />
                </div>
             </Link>
          </div>

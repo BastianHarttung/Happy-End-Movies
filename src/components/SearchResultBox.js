@@ -3,7 +3,7 @@ import emptyImage from "../assets/img/movie-poster.png"
 import emptyImageMan from "../assets/img/actor_man_white.png"
 import emptyImageWoman from "../assets/img/actor_girl_white.png"
 import {imageUrl} from "../constants";
-import {FaSmileBeam, FaSadTear} from "react-icons/all";
+import {FaSmileBeam, FaSadTear} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import iconPopcorn from "../assets/icons/popcorn_solid.svg"

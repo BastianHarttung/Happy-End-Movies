@@ -3,7 +3,7 @@ import classes from "./Modal-UserSettings.module.scss";
 import { Button } from "../styleComponents/ButtonStyleComp";
 import globalStore from "../stores/global-store";
 import { observer } from "mobx-react";
-import { BsMoon, BsSun } from "react-icons/all";
+import { BsMoon, BsSun } from "react-icons/bs";
 
 function ModalUserSettings({ openModalUser }) {
    const { darkMode, toggleDarkMode, setColorTheme } = globalStore;

@@ -46,7 +46,7 @@ function ColorIndicator(props) {
                    type="range"
                    value={fskPos}
                    onChange={(e) => {
-                       setFskPos(e.target.value);
+                       setFskPos(Number(e.target.value));
                        props.setFskPos(fskColors[e.target.value].fsk)
                    }}/>
 

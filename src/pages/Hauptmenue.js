@@ -1,7 +1,7 @@
 import image from '../assets/img/hauptmenue_movie-night.png'
 import classes from './Hauptmenue.module.scss'
 import {useNavigate} from "react-router-dom";
-import {MdArrowForwardIos} from "react-icons/all";
+import {MdArrowForwardIos} from "react-icons/md";
 
 const Hauptmenue = (props) => {
     const navigate = useNavigate();
